@@ -1,0 +1,382 @@
+const modules: ModuleCollectionType = {
+  'osc1': {
+    type: 'oscillator',
+    title: 'JSOscillator',
+    color: colors.yellow,
+    inputs: ['fm', 'frequency'],
+    outputs: ['saw', 'square', 'sine', 'triangle'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'Freq',
+      size: LARGE_KNOB,
+      min: 10,
+      max: 134,
+      step: 1,
+      log: true,
+      value: 17956,
+      position: {
+        x: 100,
+        y: 75,
+      }
+    }, {
+      type: STEP_ROTARY,
+      label: 'Range',
+      size: LARGE_KNOB,
+      position: {
+        x: 100,
+        y: 160,
+      },
+      min: 0,
+      max: 4,
+      step: 1,
+      value: 2,
+      steps: ['32','16','8','4','2'],
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'FM',
+      size: MEDIUM_KNOB,
+      min: 0,
+      max: 10,
+      position: {
+        x: 40,
+        y: 100,
+      }
+    }],
+    position: {
+      x: 300,
+      y: 20
+    },
+    dimensions: {
+      height: 230,
+      width: 200,
+    }
+  },
+  'lfo1': {
+    type: 'lfo',
+    title: 'LFO',
+    color: colors.yellow,
+    outputs: ['saw', 'square', 'sine', 'triangle'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'Freq',
+      size: LARGE_KNOB,
+      position: {
+        x: 60,
+        y: 75,
+      }
+    }],
+    position: {
+      x: 20,
+      y: 20
+    },
+    dimensions: {
+      height: 160,
+      width: 160,
+    }
+  },
+  'filter1': {
+    type: 'filter',
+    title: 'JSFilter',
+    color: colors.blue,
+    inputs: ['audio-in','fm', 'frequency', 'rm'],
+    outputs: ['audio-out'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'Level',
+      size: LARGE_KNOB,
+      position: {
+        x: 40,
+        y: 75,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'Freq',
+      size: LARGE_KNOB,
+      position: {
+        x: 110,
+        y: 75,
+      }
+    }, {
+      type: STEP_ROTARY,
+      label: 'Res',
+      size: LARGE_KNOB,
+      position: {
+        x: 110,
+        y: 160,
+      },
+      steps: ['32','16','8','4','2'],
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'FM',
+      size: MEDIUM_KNOB,
+      position: {
+        x: 165,
+        y: 100,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'RM',
+      size: MEDIUM_KNOB,
+      position: {
+        x: 165,
+        y: 185,
+      }
+    }],
+    position: {
+      x: 520,
+      y: 20
+    },
+    dimensions: {
+      height: 270,
+      width: 200,
+    }
+  },
+  'mixer1': {
+    type: 'mixer',
+    title: 'Mixer',
+    color: colors.pink,
+    inputs: ['audio-1', 'audio-2', 'audio-3', 'audio-4'],
+    outputs: ['audio-out'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'In 1',
+      size: LARGE_KNOB,
+      position: {
+        x: 80,
+        y: 75,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'In 2',
+      size: LARGE_KNOB,
+      position: {
+        x: 150,
+        y: 75,
+      },
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'In 3',
+      size: LARGE_KNOB,
+      position: {
+        x: 80,
+        y: 160,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'In 4',
+      size: LARGE_KNOB,
+      position: {
+        x: 150,
+        y: 160,
+      },
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'Out',
+      size: LARGE_KNOB,
+      position: {
+        x: 115,
+        y: 245,
+      }
+    }],
+    position: {
+      x: 20,
+      y: 220
+    },
+    dimensions: {
+      height: 310,
+      width: 200,
+    }
+  },
+  'envelope1': {
+    type: 'envelope',
+    title: 'Envelope',
+    color: colors.green,
+    inputs: ['audio-in'],
+    outputs: ['audio-out'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'Attack',
+      size: LARGE_KNOB,
+      position: {
+        x: 50,
+        y: 75,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'Decay',
+      size: LARGE_KNOB,
+      position: {
+        x: 130,
+        y: 75,
+      },
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'Sustain',
+      size: LARGE_KNOB,
+      position: {
+        x: 50,
+        y: 160,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'Release',
+      size: LARGE_KNOB,
+      position: {
+        x: 130,
+        y: 160,
+      },
+    }],
+    position: {
+      x: 250,
+      y: 270
+    },
+    dimensions: {
+      height: 250,
+      width: 180,
+    }
+  },
+  'jsamp1': {
+    type: 'amplifier',
+    title: 'JSAmp',
+    color: colors.pink,
+    inputs: ['audio-in', 'VC'],
+    outputs: ['audio-out'],
+    controls: [{
+      type: CONTROL_ROTARY,
+      label: 'Freq',
+      size: LARGE_KNOB,
+      position: {
+        x: 80,
+        y: 75,
+      }
+    }, {
+      type: CONTROL_ROTARY,
+      label: 'VC',
+      size: MEDIUM_KNOB,
+      position: {
+        x: 135,
+        y: 100,
+      }
+    }],
+    position: {
+      x: 470,
+      y: 320
+    },
+    dimensions: {
+      height: 185,
+      width: 170,
+    }
+  },
+}
+
+const collisionDetection = () => {
+  const {key} = activeModule
+  let collision: Array<CollisionType> = []
+  const xStart = modules[key].position.x
+  const yStart = modules[key].position.y
+  const xEnd = modules[key].position.x + modules[key].dimensions.width
+  const yEnd = modules[key].position.y + modules[key].dimensions.height
+
+  Object.values(modules).some(mod => {
+    if (mod.title === modules[key].title) {
+      return false
+    }
+    const {x, y} = mod.position
+    const {width, height} = mod.dimensions
+    if (
+      xStart < x + width
+      && xEnd > x
+      && yStart < y + height
+      && yEnd > y
+    ) {
+      collision.push({
+        x,
+        y,
+        width,
+        height,
+      })
+    }
+  })
+  return collision
+}
+
+function moveBlock(event: MouseEvent) {
+  const {key} = activeModule
+  const {layerX, layerY, movementX, movementY} = event
+  mooved = true
+  const oldPosition = {
+    ...modules[key].position,
+  }
+  const newX = layerX - activeModule.x
+  const newY = layerY - activeModule.y
+
+  if (
+    Math.abs(movementX) >= 1
+    || Math.abs(movementY) >= 1
+  ) {
+    modules[key].position.x = newX
+    modules[key].position.y = newY
+    const collisions = collisionDetection()
+
+    // TODO: Make it more fluid when colliding
+    if (collisions.length === 0) {
+      requestAnimationFrame(draw)
+    } else {
+      modules[key].position = {
+        ...oldPosition,
+      }
+      const { dimensions } = modules[key]
+      let needDraw = true
+
+      collisions.forEach(collision => {
+        if (
+          modules[key].position.x + dimensions.width > collision.x
+          && modules[key].position.x < collision.x + collision.width
+        ) {
+          if (
+            newY + dimensions.height > collision.y
+            && newY + dimensions.height / 2 < collision.y + collision.height / 2
+          ) {
+            // The top
+            modules[key].position.x = newX
+            modules[key].position.y = collision.y - dimensions.height;
+          } else if (
+            newY < collision.y + collision.height
+            && newY + dimensions.height / 2 > collision.y + collision.height / 2
+          ) {
+            // The bottom
+            modules[key].position.x = newX
+            modules[key].position.y = collision.y + collision.height;
+          } else {
+            needDraw = false
+          }
+        } else if (
+          modules[key].position.y < collision.y + collision.height
+          && modules[key].position.y + dimensions.height > collision.y
+        ) {
+          if (
+            newX < collision.x + collision.width
+            && newX + dimensions.width / 2 > collision.x + collision.width / 2
+          ) {
+            // The right
+            modules[key].position.x = collision.x + collision.width
+            modules[key].position.y = newY;
+          } else if (
+            newX + dimensions.width > collision.x
+            && newX + dimensions.width / 2 < collision.x + collision.width / 2
+          ) {
+            // The left
+            modules[key].position.x = collision.x - dimensions.width
+            modules[key].position.y = newY;
+          } else {
+            needDraw = false
+          }
+        } else {
+          needDraw = false
+        }
+      })
+      // needDraw = true
+      needDraw && requestAnimationFrame(draw)
+    }
+  }
+}
