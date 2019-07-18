@@ -47,7 +47,7 @@ export class Lfo extends ModuleBase implements ILfo, IParentModule {
 
   addOutputs() {
     Lfo.outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, Lfo.outputTypes.length - index, output)
+      const component = new SynthModuleOutput(this.canvas, this, Lfo.outputTypes.length - index - 1, output)
       this.outputs.push({
         type: output,
         node: this.getOutputConnection(output),

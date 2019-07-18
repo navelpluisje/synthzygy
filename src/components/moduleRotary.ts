@@ -46,7 +46,6 @@ export class SynthModuleRotary implements ISynthModuleRotary {
 
   setValue(value: number) {
     this.value = value
-    console.log('setValue')
     // this.drawRotaryValue(true)
     this.callback(this.value)
   }
@@ -148,11 +147,14 @@ export class SynthModuleRotary implements ISynthModuleRotary {
 
   setRotaryValue(event: MouseEvent): void {
     let newValue = 0
+    const steps = (this.valueData.max - this.valueData.min) / this.valueData.step
+    // TODO: Optimize the value calculation
     if (this.valueData.log) {
-      newValue = Math.sqrt(this.value) + (this.mouseStart.y - event.layerY) * Math.abs(event.movementY || 1) / this.valueData.max
+      newValue = Math.sqrt(this.value) + (this.mouseStart.y - event.layerY) * Math.abs(event.movementY) / this.valueData.max
     } else {
-      newValue = this.value + (this.mouseStart.y - event.layerY) / this.valueData.max
+      newValue = this.value + (((this.mouseStart.y - event.layerY) / steps) * Math.abs(event.movementY)) / this.valueData.max
     }
+    this.mouseStart.y = event.layerY
     this.value = roundByStepSize(
       Math.max(
         Math.min(

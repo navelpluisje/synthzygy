@@ -1,6 +1,7 @@
 import { PositionType } from 'src/types';
 import { colors } from '../constants';
 import { IParentModule } from '@interfaces/index';
+import { drawIcon } from './icons';
 
 export interface ISynthModuleInput {
   draw(): void
@@ -30,10 +31,12 @@ export class SynthModuleInput implements ISynthModuleInput {
 
     const yStart = y + height - size * this.index
     this.canvas.beginPath()
-    this.canvas.moveTo(x, yStart)
-    this.canvas.lineTo(x + size, yStart);
-    this.canvas.lineTo(x + size, yStart + size);
+    this.canvas.moveTo(x + size, yStart)
+    this.canvas.lineTo(x + size, yStart - size);
+    this.canvas.lineTo(x, yStart - size);
     this.canvas.stroke();
+
+    drawIcon(this.canvas, this.type, this.getIconPosition())
   }
 
   getPosition(): PositionType {
@@ -45,6 +48,19 @@ export class SynthModuleInput implements ISynthModuleInput {
 
     return {
       x: xInput + 15,
+      y: yInput - 15
+    }
+  }
+
+  getIconPosition(): PositionType {
+    const { height } = this.parent.dimensions
+    const { x, y } = this.parent.position
+
+    const yInput = y + height - 30 * this.index // top-left
+    const xInput = x
+
+    return {
+      x: xInput + 42,
       y: yInput - 15
     }
   }

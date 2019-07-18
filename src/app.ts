@@ -1,18 +1,10 @@
-import { IModule } from '@interfaces/moduleInterface';
-import { PositionType, ActiveOutputType, OutputType } from 'src/types';
+import { PositionType, OutputType } from 'src/types';
 import { Connection } from './components/connection';
 import { SynthModuleRotary } from './components/moduleRotary';
 import { Lfo, ILfo } from '@modules/lfo';
 import { Oscillator, IOscillator } from '@modules/oscillator';
-import {
-  ActiveModuleType,
-  InputType,
-  ModuleCollectionType,
-  // NewConnectionType,
-  ModuleType,
-  CollisionType,
-  ActiveControlType
-} from './types'
+import { Mixer, IMixer } from '@modules/mixer';
+import { ModuleType, ActiveControlType } from './types'
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
 const rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
@@ -25,7 +17,7 @@ let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
 
 let modules: {
-  [key: string]: IOscillator | ILfo,
+  [key: string]: IOscillator | ILfo | IMixer,
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
@@ -164,12 +156,10 @@ function onMouseUp(event: MouseEvent) {
       if (module.activeInput) {
         connections.push(new Connection(newConnection.start, module.activeInput))
         newConnection = null
-        console.log(connections)
         // activeInput = connectedModule.activeInput
       }
     })
 
-    console.log(connections)
     modules[activeModule].onMouseUp(event)
     modules[activeModule].unset()
   }
@@ -248,9 +238,11 @@ if (canvas.getContext) {
   SynthModuleRotary.rotaryCanvas = rotaryCtx
   Connection.canvas = ctx
 
-  modules.osc1 = new Oscillator(ctx, act, {x: 700, y: 200})
-  modules.lfo1 = new Lfo(ctx, act, {x: 400, y: 200})
+  modules.osc1 = new Oscillator(ctx, act, {x: 300, y: 50})
+  modules.osc2 = new Oscillator(ctx, act, {x: 300, y: 300})
+  modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
+  modules.mixer1 = new Mixer(ctx, act, {x: 600, y: 50})
 
-  modules.osc1.getNode().outputSaw().connect(act.destination)
+  modules.mixer1.getNode().outputAudio().connect(act.destination)
 }
 draw()

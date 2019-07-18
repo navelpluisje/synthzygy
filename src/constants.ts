@@ -7,6 +7,8 @@ export const STEP_ROTARY = 'step'
 export const CONTROL_ROTARY = 'rotary'
 export const CONTROL_SWITCH = 'switch'
 
+export const ICON_SIZE = 0.7
+
 export const colors: ColorsType = {
   green: 'hsl(166, 42%, 74%)',
   yellow: 'hsl(96, 67%, 87%)',

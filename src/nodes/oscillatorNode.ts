@@ -134,8 +134,8 @@ export class JsOscillatorNode implements IJsOscillatorNode {
     return this.frequencyConstant
   }
 
-  connectFM(): AudioParam {
-    return this.frequencyConstant.gain
+  connectFM(): GainNode {
+    return this.frequencyConstant
   }
 
   disconnectFM(lfo: OscillatorNode | GainNode): void {

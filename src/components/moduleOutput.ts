@@ -1,6 +1,7 @@
 import { PositionType } from './../types';
 import { colors } from '../constants';
 import { IParentModule } from '@interfaces/index';
+import { drawIcon } from './icons';
 
 export interface ISynthModuleOutput {
   draw(): void
@@ -29,10 +30,12 @@ export class SynthModuleOutput {
     this.canvas.strokeStyle = colors.transBlack
     const yStart = y + height - size * this.index
     this.canvas.beginPath()
-    this.canvas.moveTo(x + width, yStart)
-    this.canvas.lineTo(x + width - size, yStart);
-    this.canvas.lineTo(x + width - size, yStart + size);
+    this.canvas.moveTo(x + width - size, yStart)
+    this.canvas.lineTo(x + width - size, yStart - size);
+    this.canvas.lineTo(x + width, yStart - size);
     this.canvas.stroke();
+
+    drawIcon(this.canvas, this.type, this.getIconPosition())
   }
 
   getPosition(): PositionType {
@@ -40,10 +43,23 @@ export class SynthModuleOutput {
     const { x, y } = this.parent.position
 
     const yOutput = y + height - 30 * this.index // top-left
-    const xOutput = x + width
+    const xOutput = x + width - 30
 
     return {
-      x: xOutput - 15,
+      x: xOutput + 15,
+      y: yOutput - 15
+    }
+  }
+
+  getIconPosition(): PositionType {
+    const { height, width } = this.parent.dimensions
+    const { x, y } = this.parent.position
+
+    const yOutput = y + height - 30 * this.index // top-left
+    const xOutput = x + width - 30
+
+    return {
+      x: xOutput - 12,
       y: yOutput - 15
     }
   }
@@ -59,7 +75,7 @@ export class SynthModuleOutput {
     if (xPos < xOutput && xOutput < (xPos + 30)) {
       if (yPos < yOutput  && (yOutput - 30) < yPos) {
         return {
-          x: xOutput - 15,
+          x: xOutput + 15,
           y: yOutput - 15
         }
       }

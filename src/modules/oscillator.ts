@@ -4,7 +4,7 @@ import { SynthModule } from '@components/synthModule';
 import { SynthModuleInput } from '@components/moduleInput';
 import { SynthModuleOutput } from '@components/moduleOutput';
 import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType, ControlType, ActiveOutputType } from '../types';
+import { PositionType, ControlType } from '../types';
 import { colors, CONTROL_ROTARY, LARGE_KNOB, STEP_ROTARY, MEDIUM_KNOB } from '../constants';
 import { IParentModule, IModule } from '@interfaces/index';
 
@@ -74,7 +74,7 @@ export class Oscillator extends ModuleBase implements IOscillator, IParentModule
 
   addInputs() {
     Oscillator.inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, Oscillator.inputTypes.length - index, input)
+      const component = new SynthModuleInput(this.canvas, this, Oscillator.inputTypes.length - index - 1, input)
       this.inputs.push({
         type: input,
         node: this.getInputConnection(input),
@@ -85,7 +85,7 @@ export class Oscillator extends ModuleBase implements IOscillator, IParentModule
 
   addOutputs() {
     Oscillator.outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, Oscillator.outputTypes.length - index, output)
+      const component = new SynthModuleOutput(this.canvas, this, Oscillator.outputTypes.length - index - 1, output)
       this.outputs.push({
         type: output,
         node: this.getOutputConnection(output),

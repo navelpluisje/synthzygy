@@ -1,11 +1,7 @@
 import { IModule } from '@interfaces/index';
 import { ISynthModuleRotary } from '@components/moduleRotary';
-import { ActiveOutputType, OutputType, PositionType, InputType, ActiveInputType } from 'src/types';
+import { OutputType, PositionType, InputType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
-/**
- * This will be the base module class
- * Contains all the repeating stuff
- */
 
 export class ModuleBase implements IModule {
   title = 'JSOscillator'

@@ -1,6 +1,5 @@
-import { PositionType, OutputType, InputType } from '../types';
+import { OutputType, InputType } from '../types';
 import { colors } from 'src/constants';
-import { timingSafeEqual } from 'crypto';
 
 export class Connection {
   static canvas: CanvasRenderingContext2D
@@ -52,7 +51,7 @@ export class Connection {
   }
 
   connect() {
-    this.start.node.connect(this.end.node)
+    this.start.node.connect((<AudioNode>this.end.node))
   }
 
   disconnect() {
