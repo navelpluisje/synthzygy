@@ -1,9 +1,9 @@
 import { PositionType, OutputType } from 'src/types';
 import { Connection } from './components/connection';
 import { SynthModuleRotary } from './components/moduleRotary';
-import { Lfo, ILfo } from '@modules/lfo';
-import { Oscillator, IOscillator } from '@modules/oscillator';
-import { Mixer, IMixer } from '@modules/mixer';
+import { Lfo } from '@modules/lfo';
+import { Oscillator } from '@modules/oscillator';
+import { Mixer } from '@modules/mixer';
 import { ModuleType, ActiveControlType } from './types'
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
@@ -17,7 +17,7 @@ let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
 
 let modules: {
-  [key: string]: IOscillator | ILfo | IMixer,
+  [key: string]: Oscillator | Lfo | Mixer,
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
@@ -212,8 +212,8 @@ function onMouseDown({layerX, layerY}: MouseEvent) {
 
 rotaryCanvas.addEventListener('mousedown', onMouseDown);
 
-let oscillator: IOscillator
-let lfo: ILfo
+let oscillator: Oscillator
+let lfo: Lfo
 
 
 function draw() {

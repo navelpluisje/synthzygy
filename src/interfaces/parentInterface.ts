@@ -1,6 +1,6 @@
 import { PositionType, DimensionType } from '../types';
 
-export interface IParentModule {
+export interface ParentModule {
   position: PositionType
   dimensions: DimensionType
 }

@@ -1,7 +1,7 @@
-import { IParentModule } from './parentInterface'
-import { IModule } from './moduleInterface'
+import { ParentModule } from './parentInterface'
+import { Module } from './moduleInterface'
 
 export {
-  IParentModule,
-  IModule,
+  ParentModule,
+  Module,
 }

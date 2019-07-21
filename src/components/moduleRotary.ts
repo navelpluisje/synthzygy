@@ -1,6 +1,6 @@
 import { colors } from '../constants';
 import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
-import { IParentModule } from 'src/interfaces';
+import { ParentModule } from 'src/interfaces';
 import { knobSizes } from 'src/constants';
 import { roundByStepSize } from '@utilities/numeric';
 
@@ -19,13 +19,13 @@ export class SynthModuleRotary implements ISynthModuleRotary {
   type: string
   active: boolean = false
   mouseStart: PositionType
-  parent: IParentModule
+  parent: ParentModule
   valueData: any
   value: number
   label: string
   callback: Function
 
-  constructor(canvas: CanvasRenderingContext2D, parent: IParentModule, control: ControlType, callback: Function) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, control: ControlType, callback: Function) {
     const { min, max, log, step } = control
     this.canvas = canvas
     this.parent = parent

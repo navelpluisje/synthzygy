@@ -1,17 +1,17 @@
-import { JsLfoNode, IJsLfoNode } from '@nodes/lfoNode'
+import { JsLfoNode } from '@nodes/lfoNode'
 import { SynthModule } from '@components/synthModule';
 import { SynthModuleOutput } from '@components/moduleOutput';
 import { SynthModuleRotary } from '@components/moduleRotary';
 import { PositionType, ControlType, DimensionType } from '../types';
 import { colors, CONTROL_ROTARY, LARGE_KNOB } from '../constants';
-import { IParentModule, IModule } from '@interfaces/index';
+import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from './moduleBase';
 
-export interface ILfo extends IModule{
-  getNode(): IJsLfoNode
+export interface Lfo extends Module{
+  getNode(): JsLfoNode
 }
 
-export class Lfo extends ModuleBase implements ILfo, IParentModule {
+export class Lfo extends ModuleBase implements Lfo, ParentModule {
   static outputTypes = ['saw', 'square', 'sine', 'triangle']
   static controlTypes: Array<ControlType> = [{
     type: CONTROL_ROTARY,
@@ -35,7 +35,7 @@ export class Lfo extends ModuleBase implements ILfo, IParentModule {
     height: 160,
     width: 160,
   }
-  node: IJsLfoNode
+  node: JsLfoNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)

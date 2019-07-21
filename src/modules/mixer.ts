@@ -1,18 +1,18 @@
 import { ModuleBase } from './moduleBase';
-import { MixerNode, IMixerNode } from '@nodes/mixerNode'
+import { MixerNode } from '@nodes/mixerNode'
 import { SynthModule } from '@components/synthModule';
 import { SynthModuleInput } from '@components/moduleInput';
 import { SynthModuleOutput } from '@components/moduleOutput';
 import { SynthModuleRotary } from '@components/moduleRotary';
 import { PositionType, ControlType } from '../types';
 import { colors, CONTROL_ROTARY, LARGE_KNOB, MEDIUM_KNOB } from '../constants';
-import { IParentModule, IModule } from '@interfaces/index';
+import { ParentModule, Module } from '@interfaces/index';
 
-export type IMixer = IModule & {
-  getNode(): IMixerNode
+export interface Mixer extends Module {
+  getNode(): MixerNode
 }
 
-export class Mixer extends ModuleBase implements IMixer, IParentModule {
+export class Mixer extends ModuleBase implements Mixer, ParentModule {
   static inputTypes = ['audio-in-1', 'audio-in-2', 'audio-in-3', 'audio-in-4']
   static outputTypes = ['audio-out']
   static controlTypes: Array<ControlType> = [{
@@ -86,7 +86,7 @@ export class Mixer extends ModuleBase implements IMixer, IParentModule {
     width: 200,
   }
   active: boolean = false
-  node: IMixerNode
+  node: MixerNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)

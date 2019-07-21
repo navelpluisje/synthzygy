@@ -1,4 +1,4 @@
-export interface IMixerNode {
+export interface MixerNode {
   // Controls
   setAudio(index: string): Function
   // In and Outputs
@@ -10,7 +10,7 @@ type MixerValues = {
   [key: string]: number,
 }
 
-export class MixerNode implements IMixerNode {
+export class MixerNode implements MixerNode {
   context: AudioContext
   audioIn1: GainNode
   audioIn2: GainNode

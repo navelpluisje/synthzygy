@@ -1,18 +1,18 @@
 import { ModuleBase } from './moduleBase';
-import { JsOscillatorNode, IJsOscillatorNode } from '@nodes/oscillatorNode'
+import { JsOscillatorNode } from '@nodes/oscillatorNode'
 import { SynthModule } from '@components/synthModule';
 import { SynthModuleInput } from '@components/moduleInput';
 import { SynthModuleOutput } from '@components/moduleOutput';
 import { SynthModuleRotary } from '@components/moduleRotary';
 import { PositionType, ControlType } from '../types';
 import { colors, CONTROL_ROTARY, LARGE_KNOB, STEP_ROTARY, MEDIUM_KNOB } from '../constants';
-import { IParentModule, IModule } from '@interfaces/index';
+import { ParentModule, Module } from '@interfaces/index';
 
-export type IOscillator = IModule & {
-  getNode(): IJsOscillatorNode
+export interface Oscillator extends Module {
+  getNode(): JsOscillatorNode
 }
 
-export class Oscillator extends ModuleBase implements IOscillator, IParentModule {
+export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
   static inputTypes = ['fm', 'frequency']
   static outputTypes = ['saw', 'square', 'sine', 'triangle']
   static controlTypes: Array<ControlType> = [{
@@ -61,7 +61,7 @@ export class Oscillator extends ModuleBase implements IOscillator, IParentModule
     width: 200,
   }
   active: boolean = false
-  node: IJsOscillatorNode
+  node: JsOscillatorNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)

@@ -1,6 +1,6 @@
 import { PositionType } from './../types';
 import { colors } from '../constants';
-import { IParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 
 export interface ISynthModuleOutput {
@@ -9,13 +9,13 @@ export interface ISynthModuleOutput {
 }
 
 export class SynthModuleOutput {
-  parent: IParentModule
+  parent: ParentModule
   index: number
   canvas: CanvasRenderingContext2D
   type: string
   active: boolean = false
 
-  constructor(canvas: CanvasRenderingContext2D, parent: IParentModule, index: number, type: string) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, index: number, type: string) {
     this.canvas = canvas
     this.parent = parent
     this.index = index

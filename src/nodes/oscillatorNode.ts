@@ -1,4 +1,4 @@
-export interface IJsOscillatorNode {
+export interface JsOscillatorNode {
   // Controls
   setFrequency(frequency: number): void
   setDetune(detune: number): void
@@ -14,7 +14,7 @@ export interface IJsOscillatorNode {
   outputTriangle(): OscillatorNode
 }
 
-export class JsOscillatorNode implements IJsOscillatorNode {
+export class JsOscillatorNode implements JsOscillatorNode {
   frequency: number
   detune: number
   fm: number
