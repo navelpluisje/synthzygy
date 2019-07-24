@@ -29,6 +29,19 @@ export class ModuleBase implements Module {
     this.controls.length && this.controls.forEach(control => control.draw())
   }
 
+  getSelectedInput(event: MouseEvent): InputType | null {
+    const { layerX, layerY } = event
+    this.inputs.some(input => {
+      const position = input.component.isInputClicked(layerX, layerY)
+      if (position) {
+        this.activeInput = input
+        return true
+      }
+    })
+
+    return this.activeInput
+  }
+
   onMouseDown(xPos: number, yPos: number): boolean {
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.outputs.some(output => {
@@ -62,14 +75,7 @@ export class ModuleBase implements Module {
   }
 
   onMouseUp(event: MouseEvent): void {
-    const { layerX, layerY } = event
-    this.inputs.some(input => {
-      const position = input.component.isInputClicked(layerX, layerY)
-      if (position) {
-        this.activeInput = input
-        return true
-      }
-    })
+    this.unset()
   }
 
   unset() {

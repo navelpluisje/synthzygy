@@ -1,5 +1,5 @@
 import { OutputType, InputType } from '../types';
-import { colors } from 'src/constants';
+import { Colors } from 'src/constants';
 
 export class Connection {
   static canvas: CanvasRenderingContext2D
@@ -8,6 +8,7 @@ export class Connection {
   end: InputType
 
   constructor(start: OutputType, end: InputType) {
+    console.log('yes')
     this.start = start
     this.end = end
 
@@ -21,7 +22,7 @@ export class Connection {
     const offset = end.x < start.x ? -.25 : .25
     Connection.canvas.lineWidth = 4
     // Create the plugs first
-    Connection.canvas.strokeStyle = colors.transBlack
+    Connection.canvas.strokeStyle = Colors.TransBlack
     Connection.canvas.beginPath();
     Connection.canvas.arc(start.x, start.y, 8, 0, Math.PI * 2)
     Connection.canvas.stroke();

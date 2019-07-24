@@ -39,6 +39,18 @@ export type ControlType = {
   log?: boolean,
 }
 
+export type ModuleOutputType = {
+  icon: string,
+  position: PositionType,
+}
+
+export type ModuleInputType = {
+  icon: string,
+  showIcon?: boolean,
+  position: PositionType,
+  connection?: PositionType[]
+}
+
 export type ModuleType = {
   type: string,
   title: string,

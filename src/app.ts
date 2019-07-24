@@ -4,7 +4,9 @@ import { SynthModuleRotary } from './components/moduleRotary';
 import { Lfo } from '@modules/lfo';
 import { Oscillator } from '@modules/oscillator';
 import { Mixer } from '@modules/mixer';
+import { Vca } from '@modules/vca';
 import { ModuleType, ActiveControlType } from './types'
+import { Envelope } from '@modules/envelope';
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
 const rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
@@ -17,7 +19,7 @@ let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
 
 let modules: {
-  [key: string]: Oscillator | Lfo | Mixer,
+  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope,
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
@@ -32,20 +34,6 @@ type NewConnectionType = {
 let newConnection: NewConnectionType | null = null
 
 const connections: Array<Connection> = []
-
-// const setConnection = (event: MouseEvent) => {
-//   const xStart = activeOutput.xPos + 15
-//   const yStart = activeOutput.yPos + 15
-//   const xEnd = event.layerX
-//   const yEnd = event.layerY
-//   newConnection = {
-//     xStart,
-//     yStart,
-//     xEnd,
-//     yEnd,
-//   };
-//   requestAnimationFrame(draw)
-// }
 
 const drawConnection = (ctx: CanvasRenderingContext2D) => {
   const tightness = 100
@@ -88,44 +76,6 @@ const drawConnection = (ctx: CanvasRenderingContext2D) => {
   ctx.shadowBlur = 0
 }
 
-const blockInputs = (ctx: CanvasRenderingContext2D, block: ModuleType) => {
-  const { inputs, dimensions: { height }, position: {x, y} } = block
-  const size = 30
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.6';
-  inputs.forEach((name: string, index: number) => {
-    const yStart = y + height - size * (inputs.length - index)
-    ctx.beginPath()
-    ctx.moveTo(x, yStart)
-    ctx.lineTo(x + size, yStart);
-    ctx.lineTo(x + size, yStart + size);
-    ctx.stroke();
-  })
-}
-
-// const detectInput = (x: number, y: number, endModule: ActiveModuleType) => {
-//   const { inputs, dimensions: { height }, position } = modules[endModule.key]
-//   let activeInput: InputType | null = null;
-//   inputs.some((name, index) => {
-//     const yPos = position.y + height - 30 * (inputs.length - index) // top-left
-//     const xPos = position.x
-
-//     if (xPos < x && x < (xPos + 30)) {
-//       if (yPos < y && y < (yPos + 30)) {
-//         activeInput = {
-//           name,
-//           index,
-//           xPos,
-//           yPos,
-//         };
-//         return true
-//       }
-//     }
-//   });
-
-//   return activeInput
-// }
-
-
 function onMouseMove(event: MouseEvent) {
   // TODO: Get the activeModule
   // If it's the module, move it around. => Redraw everything
@@ -141,22 +91,17 @@ function onMouseMove(event: MouseEvent) {
   requestAnimationFrame(draw)
 }
 
-
 function onMouseUp(event: MouseEvent) {
   // TODO: What do we do when we stop
   // Reset all mouse related stuff
   // In case of a new connection, add the connection
   if (newConnection !== null) {
     const { layerX, layerY } = event
-    let connectedModule = null
     Object.entries(modules).some(([key, module]) => {
       if (!module.onMouseDown(layerX, layerY)) { return false }
-      connectedModule = module;
-      module.onMouseUp(event)
-      if (module.activeInput) {
-        connections.push(new Connection(newConnection.start, module.activeInput))
-        newConnection = null
-        // activeInput = connectedModule.activeInput
+      const input = module.getSelectedInput(event)
+      if (input) {
+        connections.push(new Connection(newConnection.start, input))
       }
     })
 
@@ -201,20 +146,9 @@ function onMouseDown({layerX, layerY}: MouseEvent) {
   })
   rotaryCanvas.addEventListener('mousemove', onMouseMove)
   rotaryCanvas.addEventListener('mouseup', onMouseUp)
-
-  // const lf = lfo.getNode()
-  // const ocs = oscillator.getNode()
-  // // lfo.outputSquare().connect(act.destination)
-  // ocs.connectFM(lf.outputSine())
-  // ocs.outputSine().connect(act.destination)
-  // ocs.outputSquare().connect(act.destination)
 }
 
 rotaryCanvas.addEventListener('mousedown', onMouseDown);
-
-let oscillator: Oscillator
-let lfo: Lfo
-
 
 function draw() {
   ctx.fillStyle = '#0f0326';
@@ -238,10 +172,12 @@ if (canvas.getContext) {
   SynthModuleRotary.rotaryCanvas = rotaryCtx
   Connection.canvas = ctx
 
-  modules.osc1 = new Oscillator(ctx, act, {x: 300, y: 50})
-  modules.osc2 = new Oscillator(ctx, act, {x: 300, y: 300})
+  modules.osc1 = new Oscillator(ctx, act, {x: 225, y: 50})
+  modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})
   modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
-  modules.mixer1 = new Mixer(ctx, act, {x: 600, y: 50})
+  modules.mixer1 = new Mixer(ctx, act, {x: 440, y: 50})
+  modules.vca1 = new Vca(ctx, act, {x: 440, y: 330})
+  modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
 
   modules.mixer1.getNode().outputAudio().connect(act.destination)
 }

@@ -1,4 +1,4 @@
-import { colors } from '../constants';
+import { Colors } from '../constants';
 import { PositionType, DimensionType } from '../types';
 import { fillRoundedRect } from '@utilities/roundedRect';
 
@@ -26,7 +26,7 @@ export class SynthModule {
     // Draw the block itself
     fillRoundedRect(this.canvas, x, y, width, height, radius)
     // Draw the light shadow
-    this.canvas.fillStyle = colors.transWhite
+    this.canvas.fillStyle = Colors.TransWhite
     this.canvas.beginPath();
     this.canvas.moveTo(x + radius, y);
     this.canvas.lineTo(x + width - radius, y);
@@ -56,10 +56,10 @@ export class SynthModule {
     const {x, y} = this.position
     const {width, height} = this.dimensions
 
-    this.canvas.font='24px Gruppo';
+    this.canvas.font='20px Gruppo, sans-serif';
     this.canvas.textAlign='center';
     this.canvas.textBaseline = 'middle';
-    this.canvas.fillStyle = colors.transBlack;
+    this.canvas.fillStyle = Colors.TransBlack;
     const rectHeight = 40;
     const rectWidth = width;
     const rectX = x;

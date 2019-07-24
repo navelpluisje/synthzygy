@@ -7,12 +7,16 @@ import { drawSawIcon as saw } from './sawIcon';
 import { drawSineIcon as sine } from './sineIcon';
 import { drawSquareIcon as square } from './squareIcon';
 import { drawTriangleIcon as triangle } from './triangleIcon';
+import { drawEnvelopeIcon as envelope } from './envelopeIcon';
+import { drawGateIcon as gate } from './gateIcon';
 
 export {
   arrowIn,
   arrowOut,
   audio,
+  envelope,
   fm,
+  gate,
   saw,
   sine,
   splitIcon,

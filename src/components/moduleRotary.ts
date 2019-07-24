@@ -1,4 +1,4 @@
-import { colors } from '../constants';
+import { Colors } from '../constants';
 import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
 import { ParentModule } from 'src/interfaces';
 import { knobSizes } from 'src/constants';
@@ -59,7 +59,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     const yPos = this.position.y + this.parent.position.y
     this.canvas.lineWidth = 1
     this.canvas.lineCap = 'round'
-    this.canvas.strokeStyle = colors.transBlack
+    this.canvas.strokeStyle = Colors.TransBlack
 
     for (let i = 0; i < 11; i++) {
       this.canvas.save()
@@ -78,8 +78,8 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     const yPos = this.position.y + this.parent.position.y
 
     this.canvas.save()
-    this.canvas.fillStyle = colors.transWhite
-    this.canvas.strokeStyle = colors.transBlack
+    this.canvas.fillStyle = Colors.TransWhite
+    this.canvas.strokeStyle = Colors.TransBlack
     this.canvas.lineWidth = 2
     this.canvas.beginPath()
     this.canvas.arc(xPos, yPos, this.knobSize.radius, 0, Math.PI * 2, true) // Outer circle
@@ -104,7 +104,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
       this.knobSize.radius * 2
     )
     canvas.save()
-    canvas.strokeStyle = colors.transBlack
+    canvas.strokeStyle = Colors.TransBlack
     canvas.lineWidth = 4
     canvas.lineCap = 'round'
     canvas.translate(xPos, yPos)
@@ -120,10 +120,10 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     const xPos = this.position.x + this.parent.position.x
     const yLabel = this.position.y + this.parent.position.y + this.knobSize.radius + this.knobSize.baseOffset * 1.5
 
-    this.canvas.font='16px Raleway'
+    this.canvas.font='13px Raleway, sans-serif'
     this.canvas.textAlign='center'
     this.canvas.textBaseline = 'middle'
-    this.canvas.fillStyle = colors.transBlack
+    this.canvas.fillStyle = Colors.TransBlack
     const rectHeight = 16
     this.canvas.fillText(this.label, xPos, yLabel + (rectHeight / 2))
   }

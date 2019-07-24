@@ -1,5 +1,5 @@
-import { PositionType } from './../types';
-import { colors } from '../constants';
+import { PositionType, ModuleOutputType } from './../types';
+import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 
@@ -10,73 +10,67 @@ export interface ISynthModuleOutput {
 
 export class SynthModuleOutput {
   parent: ParentModule
-  index: number
   canvas: CanvasRenderingContext2D
   type: string
+  position: PositionType
   active: boolean = false
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, index: number, type: string) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, output: ModuleOutputType) {
     this.canvas = canvas
     this.parent = parent
-    this.index = index
-    this.type = type
+    this.type = output.icon
+    this.position = output.position
   }
 
   draw() {
-    const {height, width } = this.parent.dimensions
-    const { x, y } = this.parent.position
-    const size = 30
+    const { x, y } = this.getPosition()
 
-    this.canvas.strokeStyle = colors.transBlack
-    const yStart = y + height - size * this.index
+    this.canvas.save()
+    this.canvas.strokeStyle = Colors.TransBlack
     this.canvas.beginPath()
-    this.canvas.moveTo(x + width - size, yStart)
-    this.canvas.lineTo(x + width - size, yStart - size);
-    this.canvas.lineTo(x + width, yStart - size);
+    this.canvas.arc(x, y, 10, 0, 2 * Math.PI)
     this.canvas.stroke();
+    this.canvas.beginPath()
+    this.canvas.fillStyle = Colors.TransBlack
+    this.canvas.arc(x, y, 6, 0, 2 * Math.PI)
+    this.canvas.fill()
+    this.canvas.beginPath()
+    this.canvas.moveTo(x - 10, y)
+    this.canvas.lineTo(x - 15, y)
+    this.canvas.stroke();
+    this.canvas.restore()
 
     drawIcon(this.canvas, this.type, this.getIconPosition())
   }
 
   getPosition(): PositionType {
-    const { height, width } = this.parent.dimensions
-    const { x, y } = this.parent.position
-
-    const yOutput = y + height - 30 * this.index // top-left
-    const xOutput = x + width - 30
+    const { x: parX, y: parY } = this.parent.position
+    const { x, y } = this.position
 
     return {
-      x: xOutput + 15,
-      y: yOutput - 15
+      x: x + parX,
+      y: y + parY,
     }
   }
 
   getIconPosition(): PositionType {
-    const { height, width } = this.parent.dimensions
-    const { x, y } = this.parent.position
-
-    const yOutput = y + height - 30 * this.index // top-left
-    const xOutput = x + width - 30
+    const { x, y } = this.getPosition()
 
     return {
-      x: xOutput - 12,
-      y: yOutput - 15
+      x: x - 25,
+      y: y,
     }
   }
 
   isOutputClicked(xPos: number, yPos: number): PositionType | null {
     this.active = false
-    const { height, width } = this.parent.dimensions
-    const { x, y } = this.parent.position
+    const { x, y } = this.getPosition()
 
-    const yOutput = y + height - 30 * this.index // top-left
-    const xOutput = x + width
-
-    if (xPos < xOutput && xOutput < (xPos + 30)) {
-      if (yPos < yOutput  && (yOutput - 30) < yPos) {
+    if (xPos > x -15 && xPos < x + 15) {
+      if (yPos > y - 15  && yPos < y + 15) {
         return {
-          x: xOutput + 15,
-          y: yOutput - 15
+          x,
+          y,
         }
       }
     }

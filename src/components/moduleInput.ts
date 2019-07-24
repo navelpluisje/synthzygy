@@ -1,5 +1,6 @@
+import { ModuleInputType } from './../types';
 import { PositionType } from 'src/types';
-import { colors } from '../constants';
+import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 
@@ -11,73 +12,88 @@ export interface ISynthModuleInput {
 
 export class SynthModuleInput implements ISynthModuleInput {
   parent: ParentModule
-  index: number
   canvas: CanvasRenderingContext2D
   type: string
+  position: PositionType
   active: boolean = false
+  connections?: PositionType[]
+  showIcon: boolean
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, index: number, type: string) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, input: ModuleInputType) {
     this.canvas = canvas
     this.parent = parent
-    this.index = index
-    this.type = type
+    this.type = input.icon
+    this.position = input.position
+    this.connections = input.connection || []
+    this.showIcon = input.showIcon || false
   }
 
   draw() {
-    const { height } = this.parent.dimensions
-    const { x, y } = this.parent.position
-    const size = 30
-    this.canvas.strokeStyle = colors.transBlack
+    const { x, y } = this.getPosition()
 
-    const yStart = y + height - size * this.index
+    this.canvas.save()
+    this.canvas.strokeStyle = Colors.TransBlack
     this.canvas.beginPath()
-    this.canvas.moveTo(x + size, yStart)
-    this.canvas.lineTo(x + size, yStart - size);
-    this.canvas.lineTo(x, yStart - size);
+    this.canvas.arc(x, y, 10, 0, 2 * Math.PI)
     this.canvas.stroke();
+    this.canvas.beginPath()
+    this.canvas.arc(x, y, 6, 0, 2 * Math.PI)
+    this.canvas.fill()
+    if (this.showIcon) {
+      this.canvas.beginPath()
+      this.canvas.moveTo(x + 10, y)
+      this.canvas.lineTo(x + 15, y)
+      this.canvas.stroke();
+    }
+    this.canvas.restore()
 
-    drawIcon(this.canvas, this.type, this.getIconPosition())
+    this.drawConnection()
+    this.showIcon && drawIcon(this.canvas, this.type, this.getIconPosition())
   }
 
   getPosition(): PositionType {
-    const { height } = this.parent.dimensions
-    const { x, y } = this.parent.position
-
-    const yInput = y + height - 30 * this.index // top-left
-    const xInput = x
+    const { x: parX, y: parY } = this.parent.position
+    const { x, y } = this.position
 
     return {
-      x: xInput + 15,
-      y: yInput - 15
+      x: x + parX,
+      y: y + parY,
     }
   }
 
   getIconPosition(): PositionType {
-    const { height } = this.parent.dimensions
-    const { x, y } = this.parent.position
-
-    const yInput = y + height - 30 * this.index // top-left
-    const xInput = x
+    const { x, y } = this.getPosition()
 
     return {
-      x: xInput + 42,
-      y: yInput - 15
+      x: x + 25,
+      y: y,
     }
   }
 
+  drawConnection() {
+    const {x: startX, y: startY} = this.getPosition()
+    const {x: parX, y: parY} = this.parent.position
+    this.canvas.save()
+    this.canvas.strokeStyle = Colors.TransBlack
+    this.canvas.lineWidth = 1.5
+    this.canvas.setLineDash([5, 5])
+    this.canvas.beginPath()
+    this.canvas.moveTo(startX + 10, startY)
+    this.connections.forEach(({x, y}) => {
+      this.canvas.lineTo(x + parX, y + parY)
+    })
+    this.canvas.stroke()
+    this.canvas.restore()
+  }
+
   isInputClicked(xPos: number, yPos: number): boolean {
-    const { height } = this.parent.dimensions
-    const { x, y } = this.parent.position
+    const { x, y } = this.getPosition()
 
-    const yInput = y + height - 30 * this.index // top-left
-    const xInput = x
-
-    if (xPos > xInput && (xInput + 30) > xPos) {
-      if (yPos < yInput && (yInput - 30) < yPos) {
+    if (xPos > x -15 && xPos < x + 15) {
+      if (yPos > y - 15  && yPos < y + 15) {
         return true
       }
     }
-
     return false
   }
 

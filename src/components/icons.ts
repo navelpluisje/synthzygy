@@ -7,9 +7,16 @@ export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, positi
     case 'audio':
       icon.audio(ctx, position)
       break
-    case 'fm':
+    case 'cv':
+    case 'envelope':
+      icon.envelope(ctx, position)
+      break
+    case 'frequency':
       icon.fm(ctx, position)
       icon.arrowIn(ctx, position)
+      break
+    case 'gate':
+      icon.gate(ctx, position)
       break
     case 'saw':
       icon.saw(ctx, position)
