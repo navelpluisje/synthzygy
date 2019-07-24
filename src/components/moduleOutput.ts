@@ -14,24 +14,26 @@ export class SynthModuleOutput {
   type: string
   position: PositionType
   active: boolean = false
+  color: string
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, output: ModuleOutputType) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, output: ModuleOutputType, color: string) {
     this.canvas = canvas
     this.parent = parent
     this.type = output.icon
     this.position = output.position
+    this.color = color
   }
 
   draw() {
     const { x, y } = this.getPosition()
 
     this.canvas.save()
-    this.canvas.strokeStyle = Colors.TransBlack
+    this.canvas.strokeStyle = this.color
+    this.canvas.fillStyle = this.color
     this.canvas.beginPath()
     this.canvas.arc(x, y, 10, 0, 2 * Math.PI)
     this.canvas.stroke();
     this.canvas.beginPath()
-    this.canvas.fillStyle = Colors.TransBlack
     this.canvas.arc(x, y, 6, 0, 2 * Math.PI)
     this.canvas.fill()
     this.canvas.beginPath()
@@ -40,7 +42,7 @@ export class SynthModuleOutput {
     this.canvas.stroke();
     this.canvas.restore()
 
-    drawIcon(this.canvas, this.type, this.getIconPosition())
+    drawIcon(this.canvas, this.type, this.getIconPosition(), this.color)
   }
 
   getPosition(): PositionType {

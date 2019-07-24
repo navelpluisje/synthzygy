@@ -2,9 +2,10 @@ import { Module } from '@interfaces/index';
 import { ISynthModuleRotary } from '@components/moduleRotary';
 import { OutputType, PositionType, InputType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
+import { Colors } from 'src/constants';
 
 export class ModuleBase implements Module {
-  title = 'JSOscillator'
+  title = 'title'
   inputs: Array<InputType> = []
   outputs: Array<OutputType> = []
   controls: Array<ISynthModuleRotary> = []
@@ -15,6 +16,7 @@ export class ModuleBase implements Module {
   position: PositionType
   canvas: CanvasRenderingContext2D
   container: SynthModule
+  color = Colors.ModuleBackground
 
   constructor(canvas: CanvasRenderingContext2D, position: PositionType) {
     this.position = position

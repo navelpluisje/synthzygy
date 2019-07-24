@@ -2,10 +2,10 @@ import { setIconStyle, drawCircle, setPositionAndSize } from "./iconHelpers";
 import { PositionType } from "src/types";
 import { ICON_SIZE } from "src/constants";
 
-export const drawTriangleIcon = (ctx: CanvasRenderingContext2D, position: PositionType) => {
+export const drawTriangleIcon = (ctx: CanvasRenderingContext2D, position: PositionType, color: string) => {
   const {x, y} = position
   ctx.save()
-  setIconStyle(ctx)
+  setIconStyle(ctx, color)
   setPositionAndSize(ctx, x, y, ICON_SIZE)
   ctx.beginPath()
   drawCircle(ctx)

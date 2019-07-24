@@ -9,9 +9,9 @@ export const splitIcon = (icon: string): string[] => icon.toLowerCase().split('-
  * Get the styling used for icons
  * @param ctx The canvas context to set the values to
  */
-export const setIconStyle = (ctx: CanvasRenderingContext2D) => {
-  ctx.fillStyle = 'rgba(254, 254, 254, .4)'
-  ctx.strokeStyle = 'rgba(0, 0, 0, .6)'
+export const setIconStyle = (ctx: CanvasRenderingContext2D, color: string) => {
+  ctx.fillStyle = 'rgba(254, 254, 254, .0)'
+  ctx.strokeStyle = color
   ctx.lineWidth = 1
 }
 

@@ -18,7 +18,6 @@ export interface Oscillator extends Module {
 export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
   type =  'oscillator'
   title =  'Oscillator'
-  color = Colors.Yellow
   dimensions = {
     height: 190,
     width: 180,
@@ -37,7 +36,7 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input)
+      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentGenerator)
       this.inputs.push({
         type: input.icon,
         node: this.getInputConnection(input.icon),
@@ -48,7 +47,7 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentGenerator)
       this.outputs.push({
         type: output.icon,
         node: this.getOutputConnection(output.icon),

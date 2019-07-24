@@ -59,7 +59,7 @@ export class SynthModule {
     this.canvas.font='20px Gruppo, sans-serif';
     this.canvas.textAlign='center';
     this.canvas.textBaseline = 'middle';
-    this.canvas.fillStyle = Colors.TransBlack;
+    this.canvas.fillStyle = Colors.ModuleTitle;
     const rectHeight = 40;
     const rectWidth = width;
     const rectX = x;

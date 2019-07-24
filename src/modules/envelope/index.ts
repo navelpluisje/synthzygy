@@ -18,7 +18,6 @@ export interface Envelope extends Module {
 export class Envelope extends ModuleBase implements Envelope, ParentModule {
   type = 'envelope'
   title = 'Envelope'
-  color = Colors.Green
   dimensions = {
     height: 210,
     width: 140,
@@ -37,7 +36,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input)
+      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEnvelope)
       this.inputs.push({
         type: input.icon,
         node: this.getInputConnection(input.icon),
@@ -48,7 +47,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEnvelope)
       this.outputs.push({
         type: output.icon,
         node: this.node.output(),

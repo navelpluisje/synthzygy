@@ -48,18 +48,18 @@ const drawConnection = (ctx: CanvasRenderingContext2D) => {
   // Create the plugs first
   ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'
   ctx.beginPath();
-  ctx.arc(startX, startY, 8, 0, Math.PI * 2)
+  ctx.arc(startX, startY, 5, 0, Math.PI * 2)
   ctx.stroke();
   ctx.beginPath();
-  ctx.arc(endX, endY, 8, 0, Math.PI * 2)
+  ctx.arc(endX, endY, 5, 0, Math.PI * 2)
   ctx.stroke();
 
   // Create the actual cable
   ctx.lineCap = 'round'
   ctx.shadowBlur = 1
   ctx.shadowColor = 'black'
-  ctx.strokeStyle = `hsla(${connectionColor}, 50%, 50%, 0.5)`
-  ctx.lineWidth = 6
+  ctx.strokeStyle = `hsla(${connectionColor}, 50%, 50%, 0.7)`
+  ctx.lineWidth = 4
   ctx.beginPath();
   ctx.moveTo(startX, startY);
   ctx.bezierCurveTo(

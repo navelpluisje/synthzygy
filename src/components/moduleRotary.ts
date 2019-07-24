@@ -57,9 +57,10 @@ export class SynthModuleRotary implements ISynthModuleRotary {
   drawRotaryRing() {
     const xPos = this.position.x + this.parent.position.x
     const yPos = this.position.y + this.parent.position.y
+    this.canvas.save()
     this.canvas.lineWidth = 1
     this.canvas.lineCap = 'round'
-    this.canvas.strokeStyle = Colors.TransBlack
+    this.canvas.strokeStyle = Colors.ControlBorder
 
     for (let i = 0; i < 11; i++) {
       this.canvas.save()
@@ -71,6 +72,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
       this.canvas.stroke()
       this.canvas.restore()
     }
+    this.canvas.restore()
   }
 
   drawRotaryBase() {
@@ -78,9 +80,9 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     const yPos = this.position.y + this.parent.position.y
 
     this.canvas.save()
-    this.canvas.fillStyle = Colors.TransWhite
-    this.canvas.strokeStyle = Colors.TransBlack
-    this.canvas.lineWidth = 2
+    this.canvas.fillStyle = Colors.ControlBackground
+    this.canvas.strokeStyle = Colors.ControlBorder
+    this.canvas.lineWidth = 1
     this.canvas.beginPath()
     this.canvas.arc(xPos, yPos, this.knobSize.radius, 0, Math.PI * 2, true) // Outer circle
     this.canvas.stroke()
@@ -104,9 +106,8 @@ export class SynthModuleRotary implements ISynthModuleRotary {
       this.knobSize.radius * 2
     )
     canvas.save()
-    canvas.strokeStyle = Colors.TransBlack
-    canvas.lineWidth = 4
-    canvas.lineCap = 'round'
+    canvas.strokeStyle = Colors.ControlMarker
+    canvas.lineWidth = 2
     canvas.translate(xPos, yPos)
     canvas.rotate(Math.PI * .65 + Math.PI * pos)
     canvas.beginPath()
@@ -120,10 +121,10 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     const xPos = this.position.x + this.parent.position.x
     const yLabel = this.position.y + this.parent.position.y + this.knobSize.radius + this.knobSize.baseOffset * 1.5
 
-    this.canvas.font='13px Raleway, sans-serif'
-    this.canvas.textAlign='center'
+    this.canvas.font ='13px Raleway, sans-serif'
+    this.canvas.textAlign ='center'
     this.canvas.textBaseline = 'middle'
-    this.canvas.fillStyle = Colors.TransBlack
+    this.canvas.fillStyle = Colors.ControlLabel
     const rectHeight = 16
     this.canvas.fillText(this.label, xPos, yLabel + (rectHeight / 2))
   }

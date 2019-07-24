@@ -18,7 +18,6 @@ export interface Vca extends Module {
 export class Vca extends ModuleBase implements Vca, ParentModule {
   type = 'vca'
   title = 'Vca'
-  color = Colors.Pink
   dimensions = {
     height: 140,
     width: 135,
@@ -37,7 +36,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input)
+      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
         type: input.icon,
         node: this.getInputConnection(input.icon),
@@ -48,7 +47,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentAudioPath)
       this.outputs.push({
         type: output.icon,
         node: this.node.output(),

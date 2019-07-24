@@ -16,7 +16,6 @@ export interface Lfo extends Module{
 export class Lfo extends ModuleBase implements Lfo, ParentModule {
   type =  'lfo'
   title = 'Lfo'
-  color = Colors.Yellow
   dimensions: DimensionType = {
     height: 160,
     width: 140,
@@ -33,7 +32,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentGenerator)
       this.outputs.push({
         type: output.icon,
         node: this.getOutputConnection(output.icon),

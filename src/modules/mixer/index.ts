@@ -18,7 +18,6 @@ export interface Mixer extends Module {
 export class Mixer extends ModuleBase implements Mixer, ParentModule {
   type = 'mixer'
   title = 'Mixer'
-  color = Colors.Pink
   dimensions = {
     height: 245,
     width: 165,
@@ -37,7 +36,7 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input)
+      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
         type: input.icon,
         node: this.getInputConnection(input.icon),
@@ -48,7 +47,7 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentAudioPath)
       this.outputs.push({
         type: output.icon,
         node: this.getOutputConnection(output.icon),

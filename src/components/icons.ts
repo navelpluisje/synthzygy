@@ -1,34 +1,34 @@
 import { PositionType } from 'src/types'
 import * as icon from './icons/index'
 
-export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, position: PositionType) => {
+export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, position: PositionType, color: string) => {
   const [type, direction] = icon.splitIcon(iconType)
   switch (type) {
     case 'audio':
-      icon.audio(ctx, position)
+      icon.audio(ctx, position, color)
       break
     case 'cv':
     case 'envelope':
-      icon.envelope(ctx, position)
+      icon.envelope(ctx, position, color)
       break
     case 'frequency':
-      icon.fm(ctx, position)
+      icon.fm(ctx, position, color)
       icon.arrowIn(ctx, position)
       break
     case 'gate':
-      icon.gate(ctx, position)
+      icon.gate(ctx, position, color)
       break
     case 'saw':
-      icon.saw(ctx, position)
+      icon.saw(ctx, position, color)
       break
     case 'sine':
-      icon.sine(ctx, position)
+      icon.sine(ctx, position, color)
       break
     case 'square':
-      icon.square(ctx, position)
+      icon.square(ctx, position, color)
       break
     case 'triangle':
-      icon.triangle(ctx, position)
+      icon.triangle(ctx, position, color)
       break
     default:
       console.warn(`Icon ${icon} is not available`)

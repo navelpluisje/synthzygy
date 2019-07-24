@@ -18,21 +18,24 @@ export class SynthModuleInput implements ISynthModuleInput {
   active: boolean = false
   connections?: PositionType[]
   showIcon: boolean
+  color: string
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, input: ModuleInputType) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, input: ModuleInputType, color: string) {
     this.canvas = canvas
     this.parent = parent
     this.type = input.icon
     this.position = input.position
     this.connections = input.connection || []
     this.showIcon = input.showIcon || false
+    this.color = color
   }
 
   draw() {
     const { x, y } = this.getPosition()
 
     this.canvas.save()
-    this.canvas.strokeStyle = Colors.TransBlack
+    this.canvas.strokeStyle = this.color
+    this.canvas.fillStyle = this.color
     this.canvas.beginPath()
     this.canvas.arc(x, y, 10, 0, 2 * Math.PI)
     this.canvas.stroke();
@@ -48,7 +51,7 @@ export class SynthModuleInput implements ISynthModuleInput {
     this.canvas.restore()
 
     this.drawConnection()
-    this.showIcon && drawIcon(this.canvas, this.type, this.getIconPosition())
+    this.showIcon && drawIcon(this.canvas, this.type, this.getIconPosition(), this.color)
   }
 
   getPosition(): PositionType {
@@ -74,7 +77,7 @@ export class SynthModuleInput implements ISynthModuleInput {
     const {x: startX, y: startY} = this.getPosition()
     const {x: parX, y: parY} = this.parent.position
     this.canvas.save()
-    this.canvas.strokeStyle = Colors.TransBlack
+    this.canvas.strokeStyle = this.color
     this.canvas.lineWidth = 1.5
     this.canvas.setLineDash([5, 5])
     this.canvas.beginPath()
