@@ -1,22 +1,22 @@
 import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB } from "src/constants";
+import { CONTROL_ROTARY, MEDIUM_KNOB, LARGE_KNOB, SMALL_KNOB } from "src/constants";
 
 export const controlTypes: ControlType[] = [{
   type: CONTROL_ROTARY,
-  label: 'Attack',
-  size: MEDIUM_KNOB,
+  label: 'Frequency',
+  size: LARGE_KNOB,
   min: 0,
   max: 10,
   step: 0.01,
   log: false,
   value: 5,
   position: {
-    x: 40,
-    y: 65,
+    x: 90,
+    y: 71,
   }
 }, {
   type: CONTROL_ROTARY,
-  label: 'Decay',
+  label: 'Level in',
   size: MEDIUM_KNOB,
   min: 0,
   max: 10,
@@ -24,12 +24,12 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 5,
   position: {
-    x: 100,
-    y: 65,
+    x: 120,
+    y: 213,
   }
 }, {
   type: CONTROL_ROTARY,
-  label: 'Sustain',
+  label: 'Q',
   size: MEDIUM_KNOB,
   min: 0,
   max: 10,
@@ -37,20 +37,33 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 5,
   position: {
-    x: 40,
-    y: 135,
+    x: 120,
+    y: 148,
   }
 }, {
   type: CONTROL_ROTARY,
-  label: 'Release',
-  size: MEDIUM_KNOB,
+  label: 'CV Freq',
+  size: SMALL_KNOB,
   min: 0,
   max: 10,
   step: 0.01,
   log: false,
   value: 5,
   position: {
-    x: 100,
-    y: 135,
+    x: 60,
+    y: 148,
+  }
+}, {
+  type: CONTROL_ROTARY,
+  label: 'CV Q',
+  size: SMALL_KNOB,
+  min: 0,
+  max: 10,
+  step: 0.01,
+  log: false,
+  value: 5,
+  position: {
+    x: 60,
+    y: 213,
   }
 }]

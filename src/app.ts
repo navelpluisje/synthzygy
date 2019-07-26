@@ -1,4 +1,5 @@
-import { AudioOut } from './modules/audio-out/index';
+import { Filter } from '@modules/filter';
+import { AudioOut } from '@modules/audio-out';
 import { PositionType, OutputType } from 'src/types';
 import { Connection } from './components/connection';
 import { SynthModuleRotary } from './components/moduleRotary';
@@ -20,7 +21,7 @@ let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
 
 let modules: {
-  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut,
+  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter,
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
@@ -183,7 +184,8 @@ if (canvas.getContext) {
   modules.vca1 = new Vca(ctx, act, {x: 440, y: 320})
   modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
   modules.audioOut1 = new AudioOut(ctx, act, {x: 805, y: 50})
+  modules.filter1 = new Filter(ctx, act, {x: 805, y: 250})
 
-  modules.mixer1.getNode().outputAudio().connect(act.destination)
+  // modules.mixer1.getNode().outputAudio().connect(act.destination)
 }
 draw()

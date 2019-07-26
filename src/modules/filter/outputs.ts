@@ -1,9 +1,9 @@
 import { ModuleOutputType } from "src/types";
 
 export const outputTypes: ModuleOutputType[] = [{
-  icon: 'envelope-out',
+  icon: 'audio-out',
   position: {
-    x: 120,
-    y: 190,
+    x: 150,
+    y: 270,
   },
 }]
