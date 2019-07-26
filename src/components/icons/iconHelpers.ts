@@ -33,14 +33,6 @@ export const setPositionAndSize = (
 }
 
 /**
- * Sets the styling used for the arrows in the icons
- * @param ctx The canvas context to set the value to
- */
-export const setArrowStyle = (ctx: CanvasRenderingContext2D) => {
-  ctx.fillStyle = 'rgba(0, 0, 0, .6)';
-}
-
-/**
  * Create the cricle where the icon is set into
  * @param ctx The canvas context to draw the icon -circle to
  */

@@ -13,7 +13,7 @@ export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, positi
       break
     case 'frequency':
       icon.fm(ctx, position, color)
-      icon.arrowIn(ctx, position)
+      icon.arrowIn(ctx, position, color)
       break
     case 'gate':
       icon.gate(ctx, position, color)
@@ -36,10 +36,10 @@ export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, positi
   if (direction) {
     switch (direction) {
       case 'in':
-        icon.arrowIn(ctx, position)
+        icon.arrowIn(ctx, position, color)
         break
       case 'out':
-        icon.arrowOut(ctx, position)
+        icon.arrowOut(ctx, position, color)
         break
       default:
         console.warn(`Direction ${direction} is not available`)

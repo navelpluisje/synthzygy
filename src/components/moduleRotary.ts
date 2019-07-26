@@ -155,7 +155,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
 
   drawRotaryLabel() {
     const xPos = this.position.x + this.parent.position.x
-    const yLabel = this.position.y + this.parent.position.y + this.knobSize.radius + this.knobSize.baseOffset * 1.5
+    const yLabel = this.position.y + this.parent.position.y + this.knobSize.radius + 6
 
     this.canvas.font ='13px Raleway, sans-serif'
     this.canvas.textAlign ='center'
