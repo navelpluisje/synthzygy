@@ -57,9 +57,9 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setOctave))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setFm))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setOctave, Colors.AccentGenerator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator))
   }
 
   private getOutputConnection(type: string) {

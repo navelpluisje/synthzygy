@@ -57,7 +57,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath))
   }
 
   private getInputConnection(type: string): AudioParam | GainNode {

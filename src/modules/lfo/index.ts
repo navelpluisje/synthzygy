@@ -42,7 +42,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator))
   }
 
   private getOutputConnection(type: string): OscillatorNode | GainNode {

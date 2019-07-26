@@ -1,3 +1,4 @@
+import { STEP_ROTARY } from './../constants';
 import { Colors } from '../constants';
 import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
 import { ParentModule } from 'src/interfaces';
@@ -23,9 +24,11 @@ export class SynthModuleRotary implements ISynthModuleRotary {
   valueData: any
   value: number
   label: string
+  color: string
   callback: Function
+  cap: CanvasLineCap
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, control: ControlType, callback: Function) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, control: ControlType, callback: Function, color: string = 'red') {
     const { min, max, log, step } = control
     this.canvas = canvas
     this.parent = parent
@@ -34,7 +37,10 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     this.valueData = { min, max, log, step }
     this.value = control.value
     this.label = control.label
+    this.type = control.type
     this.callback = callback
+    this.color = color
+    this.cap = this.type === STEP_ROTARY ? 'butt' : 'round'
   }
 
   draw() {
@@ -42,6 +48,9 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     this.drawRotaryBase()
     this.drawRotaryValue()
     this.label && this.drawRotaryLabel()
+    if (this.type === STEP_ROTARY) {
+      this.drawStepMarkers()
+    }
   }
 
   setValue(value: number) {
@@ -57,22 +66,40 @@ export class SynthModuleRotary implements ISynthModuleRotary {
   drawRotaryRing() {
     const xPos = this.position.x + this.parent.position.x
     const yPos = this.position.y + this.parent.position.y
-    this.canvas.save()
-    this.canvas.lineWidth = 1
-    this.canvas.lineCap = 'round'
-    this.canvas.strokeStyle = Colors.ControlBorder
 
-    for (let i = 0; i < 11; i++) {
-      this.canvas.save()
-      this.canvas.beginPath()
-      this.canvas.translate(xPos, yPos)
-      this.canvas.rotate(Math.PI / 6 * (i + 4))
-      this.canvas.moveTo(this.knobSize.radius + 6, 0)
-      this.canvas.lineTo(this.knobSize.radius + 3, 0)
-      this.canvas.stroke()
-      this.canvas.restore()
-    }
+    this.canvas.save()
+    this.canvas.beginPath()
+    this.canvas.translate(xPos, yPos)
+    this.canvas.arc(0, 0, this.knobSize.radius + 7, Math.PI * .75, Math.PI * 2.25)
+    this.canvas.strokeStyle = Colors.ControlRing
+    this.canvas.lineWidth = 4
+    this.canvas.lineCap = this.cap
+    this.canvas.stroke()
     this.canvas.restore()
+  }
+
+  drawStepMarkers() {
+    const {min, max, step} = this.valueData
+    const xPos = this.position.x + this.parent.position.x
+    const yPos = this.position.y + this.parent.position.y
+    const steps = (max - min) / step // Get the number of steps
+    const canvas = SynthModuleRotary.rotaryCanvas
+
+    canvas.save()
+    canvas.lineWidth = 3
+    canvas.strokeStyle = Colors.ModuleBackground
+
+    for (let i = 0; i <= steps; i++) {
+      canvas.save()
+      canvas.beginPath()
+      canvas.translate(xPos, yPos)
+      canvas.rotate(Math.PI * .75 + (Math.PI * 1.5 * i) / steps)
+      canvas.moveTo(this.knobSize.radius + 10, 0)
+      canvas.lineTo(this.knobSize.radius + 4, 0)
+      canvas.stroke()
+      canvas.restore()
+    }
+    canvas.restore()
   }
 
   drawRotaryBase() {
@@ -84,7 +111,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     this.canvas.strokeStyle = Colors.ControlBorder
     this.canvas.lineWidth = 1
     this.canvas.beginPath()
-    this.canvas.arc(xPos, yPos, this.knobSize.radius, 0, Math.PI * 2, true) // Outer circle
+    this.canvas.arc(xPos, yPos, this.knobSize.radius - 1, 0, Math.PI * 2, true) // Outer circle
     this.canvas.stroke()
     this.canvas.fill()
     this.canvas.restore()
@@ -93,26 +120,35 @@ export class SynthModuleRotary implements ISynthModuleRotary {
   drawRotaryValue() {
     const xPos = this.position.x + this.parent.position.x
     const yPos = this.position.y + this.parent.position.y
+
     const { min, max, log } = this.valueData
     const range = max - min
     const rangeOffset = 0 - min
-    const pos = Math.min(((log ? Math.sqrt(this.value + rangeOffset) : this.value + rangeOffset) / range) * 1.7, 1.7) || 0
+    const pos = Math.min(
+      (
+        (log
+          ? Math.sqrt(this.value) + rangeOffset
+          : this.value + rangeOffset
+        ) / range
+      ) * 1.5 * Math.PI,
+      1.5 + Math.PI
+    ) || 0
     const canvas = SynthModuleRotary.rotaryCanvas
 
     canvas.clearRect(
-      xPos - this.knobSize.radius,
-      yPos - this.knobSize.radius,
-      this.knobSize.radius * 2,
-      this.knobSize.radius * 2
+      xPos - (this.knobSize.radius + 10),
+      yPos - (this.knobSize.radius + 10),
+      this.knobSize.radius * 2 + 20,
+      this.knobSize.radius * 2 + 20
     )
+
     canvas.save()
-    canvas.strokeStyle = Colors.ControlMarker
-    canvas.lineWidth = 2
-    canvas.translate(xPos, yPos)
-    canvas.rotate(Math.PI * .65 + Math.PI * pos)
     canvas.beginPath()
-    canvas.moveTo(this.knobSize.radius - this.knobSize.baseOffset, 0)
-    canvas.lineTo((this.knobSize.radius - this.knobSize.baseOffset) / 2, 0)
+    canvas.translate(xPos, yPos)
+    canvas.arc(0, 0, this.knobSize.radius + 7, Math.PI * .75, pos + Math.PI * .75)
+    canvas.strokeStyle = this.color
+    canvas.lineWidth = 4
+    canvas.lineCap = this.cap
     canvas.stroke()
     canvas.restore()
   }
@@ -148,26 +184,39 @@ export class SynthModuleRotary implements ISynthModuleRotary {
 
   setRotaryValue(event: MouseEvent): void {
     let newValue = 0
-    const steps = (this.valueData.max - this.valueData.min) / this.valueData.step
+    const {min, max, log, step} = this.valueData
+    const steps = (max - min) / step // Get the number of steps
     // TODO: Optimize the value calculation
-    if (this.valueData.log) {
-      newValue = Math.sqrt(this.value) + (this.mouseStart.y - event.layerY) * Math.abs(event.movementY) / this.valueData.max
-    } else {
-      newValue = this.value + (((this.mouseStart.y - event.layerY) / steps) * Math.abs(event.movementY)) / this.valueData.max
-    }
-    this.mouseStart.y = event.layerY
-    this.value = roundByStepSize(
-      Math.max(
-        Math.min(
-          this.valueData.log ? newValue ** 2 : newValue,
-          this.valueData.log ? this.valueData.max ** 2: this.valueData.max
+    const mouseOffset = this.mouseStart.y - event.layerY
+
+    // If no mouseoffset, there is no change, so skip it
+    if (mouseOffset !== 0) {
+      if (log) {
+        newValue = Math.sqrt(this.value) + mouseOffset
+      } else {
+        newValue = this.value + (mouseOffset / steps) / max
+      }
+
+      // Get the rounded new Value
+      newValue = roundByStepSize(
+        Math.max(
+          Math.min(
+            log ? newValue ** 2 : newValue,
+            log ? max ** 2: max
+          ),
+          log ? min ** 2: min
         ),
-        this.valueData.log ? this.valueData.min ** 2: this.valueData.min
-      ),
-      this.valueData.step || 0.1
-    )
-    this.callback(this.value)
-    requestAnimationFrame(this.drawRotaryValue.bind(this, true))
+        step || 0.1
+      )
+
+      // If the value did not change, do not do a thing
+      if (this.value !== newValue) {
+        this.value = newValue
+        this.mouseStart.y = event.layerY
+        this.callback(this.value)
+        requestAnimationFrame(this.drawRotaryValue.bind(this, true))
+      }
+    }
   }
 
   unSet() {

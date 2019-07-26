@@ -57,10 +57,10 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAttack))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentEnvelope))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentEnvelope))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentEnvelope))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentEnvelope))
   }
 
   private getInputConnection(type: string): AudioParam | GainNode {

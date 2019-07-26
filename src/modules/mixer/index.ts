@@ -57,11 +57,11 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAudio('1')))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setAudio('2')))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setAudio('3')))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setAudio('4')))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[4], this.node.setAudio('out')))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAudio('1'), Colors.AccentAudioPath))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setAudio('2'), Colors.AccentAudioPath))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setAudio('3'), Colors.AccentAudioPath))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setAudio('4'), Colors.AccentAudioPath))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[4], this.node.setAudio('out'), Colors.AccentAudioPath))
   }
 
   private getOutputConnection(type: string) {

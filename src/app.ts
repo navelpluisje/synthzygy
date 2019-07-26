@@ -58,7 +58,7 @@ const drawConnection = (ctx: CanvasRenderingContext2D) => {
   ctx.lineCap = 'round'
   ctx.shadowBlur = 1
   ctx.shadowColor = 'black'
-  ctx.strokeStyle = `hsla(${connectionColor}, 50%, 50%, 0.7)`
+  ctx.strokeStyle = `#8c1c13`
   ctx.lineWidth = 4
   ctx.beginPath();
   ctx.moveTo(startX, startY);
@@ -151,10 +151,13 @@ function onMouseDown({layerX, layerY}: MouseEvent) {
 rotaryCanvas.addEventListener('mousedown', onMouseDown);
 
 function draw() {
-  ctx.fillStyle = '#0f0326';
-  ctx.strokeStyle = '#000000';
-  ctx.fillRect(0, 0, 1000, 600);
-  ctx.strokeRect(0, 0, 1000, 600);
+  const gradient = ctx.createLinearGradient(0, 0, 1000, 600)
+  gradient.addColorStop(0, '#404040')
+  gradient.addColorStop(1, '#303030')
+  ctx.fillStyle = gradient
+  ctx.strokeStyle = '#000000'
+  ctx.fillRect(0, 0, 1000, 600)
+  ctx.strokeRect(0, 0, 1000, 600)
 
   Object.values(modules).forEach(module => module.draw())
 
@@ -176,7 +179,7 @@ if (canvas.getContext) {
   modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})
   modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
   modules.mixer1 = new Mixer(ctx, act, {x: 440, y: 50})
-  modules.vca1 = new Vca(ctx, act, {x: 440, y: 330})
+  modules.vca1 = new Vca(ctx, act, {x: 440, y: 320})
   modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
 
   modules.mixer1.getNode().outputAudio().connect(act.destination)

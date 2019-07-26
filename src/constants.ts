@@ -13,29 +13,31 @@ export enum Colors {
   TransBlack = 'hsla(0, 0%, 0%, 0.6)',
   TransWhite = 'hsla(0, 0%, 100%, 0.02)',
   ModuleBackground = '#212121',
-  ModuleTitle = '#cccccc',
-  ControlLabel = '#cccccc',
-  ControlRing = '#cccccc',
-  ControlBorder = '#cccccc',
-  ControlMarker = '#cccccc',
-  ControlBackground = '#cccccc33',
+  ModuleTitle = '#d9e5d6',
+  ControlLabel = '#d9e5d6',
+  ControlRing = '#93827f',
+  ControlBorder = '#d9e5d6',
+  ControlMarker = '#d9e5d6',
+  ControlBackground = '#d9e5d633',
   AccentGenerator = '#c04d35',
   AccentAudioPath = '#e2712e',
   AccentEffect = '#dbb04a',
   AccentEnvelope = '#68a678',
+  AccentUtility = '#577590',
+  Connection = '#8c1c13',
 }
 
 export const knobSizes: KnobSizesType = {
   small: {
-    radius: 12,
+    radius: 11,
     baseOffset: 2,
   },
   medium: {
-    radius: 16,
+    radius: 15,
     baseOffset: 4,
   },
   large: {
-    radius: 22,
+    radius: 21,
     baseOffset: 6,
   },
 }
