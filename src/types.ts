@@ -42,11 +42,13 @@ export type ControlType = {
 
 export type ModuleOutputType = {
   icon: string,
+  type: 'audio' | 'cv' | 'gate',
   position: PositionType,
 }
 
 export type ModuleInputType = {
   icon: string,
+  type: 'audio' | 'cv' | 'gate',
   showIcon?: boolean,
   position: PositionType,
   connection?: PositionType[]

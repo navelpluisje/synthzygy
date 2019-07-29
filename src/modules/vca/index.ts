@@ -62,7 +62,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
 
   private getInputConnection(type: string): AudioParam | GainNode {
     switch (type) {
-      case 'gate':
+      case 'cv-in':
         return this.node.connectGate()
       case 'audio-in':
         return this.node.connectAudioIn()

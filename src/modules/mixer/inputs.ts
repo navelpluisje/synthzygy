@@ -2,6 +2,7 @@ import { ModuleInputType } from "src/types";
 
 export const inputTypes: ModuleInputType[] = [{
   icon: 'audio-in-1',
+  type: 'audio',
   position: {
     x: 20,
     y: 65,
@@ -12,6 +13,7 @@ export const inputTypes: ModuleInputType[] = [{
   }]
 }, {
   icon: 'audio-in-2',
+  type: 'audio',
   position: {
     x: 20,
     y: 100,
@@ -31,6 +33,7 @@ export const inputTypes: ModuleInputType[] = [{
   }]
 }, {
   icon: 'audio-in-3',
+  type: 'audio',
   position: {
     x: 20,
     y: 135,
@@ -41,6 +44,7 @@ export const inputTypes: ModuleInputType[] = [{
   }]
 }, {
   icon: 'audio-in-4',
+  type: 'audio',
   position: {
     x: 20,
     y: 170,

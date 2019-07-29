@@ -2,6 +2,7 @@ import { ModuleInputType } from "src/types";
 
 export const inputTypes: ModuleInputType[] = [{
   icon: 'cv-in',
+  type: 'cv',
   position: {
     x: 20,
     y: 155,
@@ -15,6 +16,7 @@ export const inputTypes: ModuleInputType[] = [{
   }]
 }, {
   icon: 'freq',
+  type: 'cv',
   position: {
     x: 20,
     y: 125,

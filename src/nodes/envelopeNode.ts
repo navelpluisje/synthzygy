@@ -34,7 +34,7 @@ export class EnvelopeNode implements EnvelopeNode {
 
   createGainNodes() {
     this.gainNode = this.context.createGain()
-    this.gainNode.gain.setValueAtTime(this.attack, this.context.currentTime)
+    this.gainNode.gain.setValueAtTime(0, this.context.currentTime)
   }
 
   setAttack = (attack: number): void => {
