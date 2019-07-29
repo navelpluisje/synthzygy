@@ -11,7 +11,7 @@ export const controlTypes: ControlType[] = [{
   log: true,
   value: 0,
   position: {
-    x: 45,
+    x: 35,
     y: 65,
   }
 }]

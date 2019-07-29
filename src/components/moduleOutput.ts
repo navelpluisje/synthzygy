@@ -3,12 +3,12 @@ import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 
-export interface ISynthModuleOutput {
+export interface SynthModuleOutput {
   draw(): void
-  isOutputClicked(xPos: number, yPos: number): boolean
+  isOutputClicked(xPos: number, yPos: number): PositionType | null
 }
 
-export class SynthModuleOutput {
+export class SynthModuleOutput implements SynthModuleOutput {
   parent: ParentModule
   canvas: CanvasRenderingContext2D
   type: string

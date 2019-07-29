@@ -2,7 +2,6 @@ export interface OutputNode {
   // Controls
   setGain(gain: number): void
   // Inputs
-  connectGate(): AudioParam | GainNode
   connectAudioIn(): AudioParam | GainNode  // Outputs
 }
 

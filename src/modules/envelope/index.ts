@@ -63,9 +63,9 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentEnvelope))
   }
 
-  private getInputConnection(type: string): AudioParam | GainNode {
+  private getInputConnection(type: string): AudioParam | GainNode | Function {
     switch (type) {
-      case 'gate':
+      case 'gate-in':
         return this.node.connectGate()
       case 'audio-in':
         return this.node.connectAudioIn()

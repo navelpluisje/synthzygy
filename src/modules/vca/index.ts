@@ -20,7 +20,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
   title = 'Vca'
   dimensions = {
     height: 140,
-    width: 135,
+    width: 130,
   }
   active: boolean = false
   node: VcaNode

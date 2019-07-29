@@ -7,9 +7,11 @@ import { SynthModuleRotary } from '@components/moduleRotary';
 import { PositionType } from '../../types';
 import { Colors } from '../../constants';
 import { ParentModule, Module } from '@interfaces/index';
+import { buttons } from './buttons'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
+import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
 
 export interface Filter extends Module {
   getNode(): FilterNode
@@ -21,7 +23,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
   dimensions = {
     height: 290,
     width: 170,
-}
+  }
   active: boolean = false
   node: FilterNode
 
@@ -32,6 +34,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     this.addOutputs()
     this.addInputs()
     this.addControls()
+    this.addButtonControls()
   }
 
   addInputs() {
@@ -54,6 +57,10 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
         component,
       })
     })
+  }
+
+  addButtonControls() {
+    this.buttons.push(new SynthModuleButtonGroup(this.canvas, this, buttons, this.node.setFilterType, Colors.AccentEffect))
   }
 
   addControls() {

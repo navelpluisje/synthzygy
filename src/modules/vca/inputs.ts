@@ -7,7 +7,7 @@ export const inputTypes: ModuleInputType[] = [{
     y: 65,
   },
   connection: [{
-    x: 43,
+    x: 40,
     y: 65,
   }]
 }, {

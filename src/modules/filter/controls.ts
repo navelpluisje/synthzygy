@@ -11,7 +11,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 5,
   position: {
-    x: 90,
+    x: 110,
     y: 71,
   }
 }, {
@@ -42,7 +42,7 @@ export const controlTypes: ControlType[] = [{
   }
 }, {
   type: CONTROL_ROTARY,
-  label: 'CV Freq',
+  label: 'cv Freq',
   size: SMALL_KNOB,
   min: 0,
   max: 10,
@@ -55,7 +55,7 @@ export const controlTypes: ControlType[] = [{
   }
 }, {
   type: CONTROL_ROTARY,
-  label: 'CV Q',
+  label: 'cv Q',
   size: SMALL_KNOB,
   min: 0,
   max: 10,

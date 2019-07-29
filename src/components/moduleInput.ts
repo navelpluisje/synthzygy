@@ -4,13 +4,13 @@ import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 
-export interface ISynthModuleInput {
+export interface SynthModuleInput {
   draw(): void
   getPosition(): PositionType
   isInputClicked(xPos: number, yPos: number): boolean
 }
 
-export class SynthModuleInput implements ISynthModuleInput {
+export class SynthModuleInput implements SynthModuleInput {
   parent: ParentModule
   canvas: CanvasRenderingContext2D
   type: string

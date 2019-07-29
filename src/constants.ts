@@ -6,6 +6,7 @@ export const LARGE_KNOB = 'large';
 export const STEP_ROTARY = 'step'
 export const CONTROL_ROTARY = 'rotary'
 export const CONTROL_SWITCH = 'switch'
+export const TRIGGER_BUTTON = 'trigger'
 
 export const ICON_SIZE = 0.7
 

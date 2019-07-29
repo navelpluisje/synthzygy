@@ -18,7 +18,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
   title = 'Lfo'
   dimensions: DimensionType = {
     height: 160,
-    width: 140,
+    width: 130,
   }
   node: JsLfoNode
 

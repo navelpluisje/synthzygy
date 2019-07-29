@@ -1,13 +1,14 @@
 import { Filter } from '@modules/filter';
 import { AudioOut } from '@modules/audio-out';
 import { PositionType, OutputType } from 'src/types';
-import { Connection } from './components/connection';
-import { SynthModuleRotary } from './components/moduleRotary';
+import { Connection } from '@components/connection';
+import { SynthModuleRotary } from '@components/moduleRotary';
+import { GateTrigger } from '@modules/gateTrigger/index';
 import { Lfo } from '@modules/lfo';
 import { Oscillator } from '@modules/oscillator';
 import { Mixer } from '@modules/mixer';
 import { Vca } from '@modules/vca';
-import { ModuleType, ActiveControlType } from './types'
+import { ActiveControlType } from './types'
 import { Envelope } from '@modules/envelope';
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
@@ -21,7 +22,7 @@ let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
 
 let modules: {
-  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter,
+  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger,
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
@@ -83,8 +84,9 @@ function onMouseMove(event: MouseEvent) {
   // If it's the module, move it around. => Redraw everything
   // If it's a control handle the control stuff
   // If it's an output, draw the connection
-  modules[activeModule].onMouseMove(event)
-  if (modules[activeModule].activeOutput) {
+  mooved = true
+  activeModule && modules[activeModule].onMouseMove(event)
+  if (activeModule && modules[activeModule].activeOutput) {
     newConnection.end.position = {
       x: event.layerX,
       y: event.layerY,
@@ -97,24 +99,28 @@ function onMouseUp(event: MouseEvent) {
   // TODO: What do we do when we stop
   // Reset all mouse related stuff
   // In case of a new connection, add the connection
-  if (newConnection !== null) {
-    const { layerX, layerY } = event
-    Object.entries(modules).some(([key, module]) => {
-      if (!module.onMouseDown(layerX, layerY)) { return false }
-      const input = module.getSelectedInput(event)
-      if (input) {
-        connections.push(new Connection(newConnection.start, input))
-      }
-    })
-
-    modules[activeModule].onMouseUp(event)
-    modules[activeModule].unset()
+  if (activeModule && !mooved) {
+    // console.log('clicked')
+    modules[activeModule].onMouseClick(event)
+  } else {
+    // console.log('mooved')
+    mooved = false
+    if (newConnection !== null) {
+      const { layerX, layerY } = event
+      Object.entries(modules).some(([key, module]) => {
+        if (!module.onMouseDown(layerX, layerY)) { return false }
+        const input = module.getSelectedInput(event)
+        if (input) {
+          console.log(input)
+          connections.push(new Connection(newConnection.start, input))
+        }
+      })
+    }
   }
-  // if (!mooved) {
-  //   // console.log('clicked')
-  // } else {
-  //   // console.log('mooved')
-  // }
+  Object.values(modules).forEach(module => {
+    module.onMouseUp(event)
+    module.unset()
+  })
 
 
   mooved = false;
@@ -148,6 +154,7 @@ function onMouseDown({layerX, layerY}: MouseEvent) {
   })
   rotaryCanvas.addEventListener('mousemove', onMouseMove)
   rotaryCanvas.addEventListener('mouseup', onMouseUp)
+  requestAnimationFrame(draw)
 }
 
 rotaryCanvas.addEventListener('mousedown', onMouseDown);
@@ -185,7 +192,6 @@ if (canvas.getContext) {
   modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
   modules.audioOut1 = new AudioOut(ctx, act, {x: 805, y: 50})
   modules.filter1 = new Filter(ctx, act, {x: 805, y: 250})
-
-  // modules.mixer1.getNode().outputAudio().connect(act.destination)
+  modules.trigger1 = new GateTrigger(ctx, act, {x: 635, y: 280})
 }
 draw()

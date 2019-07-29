@@ -1,3 +1,4 @@
+import { GateNode } from './nodes/gateNode';
 import { SynthModuleOutput } from "@components/moduleOutput";
 import { SynthModuleInput } from "@components/moduleInput";
 
@@ -128,13 +129,13 @@ export type ActiveControlType = {
 
 export type OutputType = {
   type: string,
-  node: OscillatorNode | GainNode,
+  node: OscillatorNode | GainNode | GateNode,
   component: SynthModuleOutput,
 }
 
 export type InputType = {
   type: string,
-  node: AudioParam | GainNode,
+  node: AudioParam | GainNode | Function,
   component: SynthModuleInput,
 }
 

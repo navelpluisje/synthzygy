@@ -36,7 +36,7 @@ export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentUtility)
       this.inputs.push({
         type: input.icon,
-        node: this.getInputConnection(input.icon),
+        node: this.node.connectAudioIn(),
         component,
       })
     })
@@ -44,15 +44,6 @@ export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
 
   addControls() {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentUtility))
-  }
-
-  private getInputConnection(type: string): AudioParam | GainNode {
-    switch (type) {
-      case 'gate':
-        return this.node.connectGate()
-      case 'audio-in':
-        return this.node.connectAudioIn()
-    }
   }
 
   getNode() {

@@ -4,14 +4,9 @@ import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
 import { ParentModule } from 'src/interfaces';
 import { knobSizes } from 'src/constants';
 import { roundByStepSize } from '@utilities/numeric';
+import { SynthModuleControl } from '@interfaces/moduleControl';
 
-export interface ISynthModuleRotary {
-  draw(): void
-  isRotaryClicked(xPos: number, yPos: number): boolean
-  setRotaryValue(event: MouseEvent): void
-}
-
-export class SynthModuleRotary implements ISynthModuleRotary {
+export class SynthModuleRotary implements SynthModuleControl {
   static rotaryCanvas: CanvasRenderingContext2D
   position: PositionType
   knobSize: KnobSizeType
@@ -165,12 +160,12 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     this.canvas.fillText(this.label, xPos, yLabel + (rectHeight / 2))
   }
 
-  isRotaryClicked(x: number, y: number): boolean {
-    const xPos = this.parent.position.x + this.position.x - this.knobSize.radius
-    const yPos = this.parent.position.y + this.position.y - this.knobSize.radius
+  isControlPressed(xPos: number, yPos: number): boolean {
+    const x = this.parent.position.x + this.position.x - this.knobSize.radius
+    const y = this.parent.position.y + this.position.y - this.knobSize.radius
 
-    if (xPos < x && x < (xPos + this.knobSize.radius * 3)) {
-      if (yPos < y && y < (yPos + this.knobSize.radius * 3)) {
+    if (x < xPos && xPos < (x + this.knobSize.radius * 3)) {
+      if (y < yPos && yPos < (y + this.knobSize.radius * 3)) {
         this.active = true;
         this.mouseStart = {
           x,
@@ -182,7 +177,7 @@ export class SynthModuleRotary implements ISynthModuleRotary {
     return false
   }
 
-  setRotaryValue(event: MouseEvent): void {
+  onMouseMove(event: MouseEvent): void {
     let newValue = 0
     const {min, max, log, step} = this.valueData
     const steps = (max - min) / step // Get the number of steps
@@ -218,6 +213,20 @@ export class SynthModuleRotary implements ISynthModuleRotary {
       }
     }
   }
+
+  isControlReleased(x: number, y: number): boolean {
+    const xPos = this.parent.position.x + this.position.x - this.knobSize.radius
+    const yPos = this.parent.position.y + this.position.y - this.knobSize.radius
+
+    if (xPos < x && x < (xPos + this.knobSize.radius * 3)) {
+      if (yPos < y && y < (yPos + this.knobSize.radius * 3)) {
+        this.active = false;
+        return true
+      }
+    }
+    return false
+  }
+
 
   unSet() {
     this.active = false

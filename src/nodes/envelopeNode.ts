@@ -5,7 +5,7 @@ export interface EnvelopeNode {
   setSustain(sustain: number): void
   setRelease(release: number): void
   // Inputs
-  connectGate(): AudioParam | GainNode
+  connectGate(): Function
   connectAudioIn(): AudioParam | GainNode  // Outputs
 }
 
@@ -65,13 +65,16 @@ export class EnvelopeNode implements EnvelopeNode {
     return adsArray
   }
 
+  trigger(value: number) {
+    console.log(`Go envelope: ${value}`)
+  }
 
   connect(): GainNode {
     return this.gainNode
   }
 
-  connectGate(): AudioParam {
-    return this.gainNode.gain
+  connectGate(): Function {
+    return this.trigger
   }
 
   output(): GainNode {

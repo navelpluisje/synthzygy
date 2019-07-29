@@ -1,14 +1,18 @@
 import { Module } from '@interfaces/index';
-import { ISynthModuleRotary } from '@components/moduleRotary';
+import { SynthModuleRotary } from '@components/moduleRotary';
 import { OutputType, PositionType, InputType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
 import { Colors } from 'src/constants';
+import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
+import { SynthModuleTriggerButton } from '@components/moduleTriggerButton';
+import { SynthModuleControl } from '@interfaces/moduleControl';
 
 export class ModuleBase implements Module {
   title = 'title'
   inputs: Array<InputType> = []
   outputs: Array<OutputType> = []
-  controls: Array<ISynthModuleRotary> = []
+  controls: Array<SynthModuleRotary | SynthModuleTriggerButton> = []
+  buttons: SynthModuleButtonGroup[] = []
   activeOutput: OutputType = null
   activeInput: InputType = null
   activeControl: number | null = null
@@ -29,6 +33,7 @@ export class ModuleBase implements Module {
     this.inputs.length && this.inputs.forEach(input => input.component.draw())
     this.outputs.length && this.outputs.forEach(output => output.component.draw())
     this.controls.length && this.controls.forEach(control => control.draw())
+    this.buttons.length && this.buttons.forEach(button => button.draw())
   }
 
   getSelectedInput(event: MouseEvent): InputType | null {
@@ -56,7 +61,7 @@ export class ModuleBase implements Module {
 
     if (this.activeOutput === null) {
       this.controls.some((control, index) => {
-        const clicked = control.isRotaryClicked(xPos, yPos)
+        const clicked = control.isControlPressed(xPos, yPos)
         if (clicked) {
           this.activeControl = index
         }
@@ -70,13 +75,26 @@ export class ModuleBase implements Module {
   onMouseMove(event: MouseEvent): void {
     if (!this.active) { return }
     if (this.activeControl !== null) {
-      this.controls[this.activeControl].setRotaryValue(event)
+      this.controls[this.activeControl].onMouseMove(event)
     } else {
       // this.position = position
     }
   }
 
   onMouseUp(event: MouseEvent): void {
+    const { layerX, layerY } = event
+    this.controls.forEach((control, index) => {
+      control.isControlReleased(layerX, layerY)
+      this.activeControl = null
+    })
+    this.unset()
+  }
+
+  onMouseClick(event: MouseEvent): void {
+    const {layerX, layerY} = event
+    this.buttons.forEach((control, index) => {
+       control.isButtonClicked(layerX, layerY)
+    })
     this.unset()
   }
 
