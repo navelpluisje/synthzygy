@@ -120,12 +120,7 @@ export class SynthModuleRotary implements SynthModuleControl {
     const range = max - min
     const rangeOffset = 0 - min
     const pos = Math.min(
-      (
-        (log
-          ? Math.sqrt(this.value) + rangeOffset
-          : this.value + rangeOffset
-        ) / range
-      ) * 1.5 * Math.PI,
+      ((this.value + rangeOffset) / range) * 1.5 * Math.PI,
       1.5 + Math.PI
     ) || 0
     const canvas = SynthModuleRotary.rotaryCanvas
@@ -182,8 +177,12 @@ export class SynthModuleRotary implements SynthModuleControl {
     const {min, max, log, step} = this.valueData
     const steps = (max - min) / step // Get the number of steps
     let stepSize = 1;
+    let logSize = 1;
     if (steps < 100) {
       stepSize = 100 / steps
+    }
+    if (steps > 5000) {
+      logSize = 2
     }
     // TODO: Optimize the value calculation
     const mouseOffset = this.mouseStart.y - event.layerY
@@ -191,23 +190,22 @@ export class SynthModuleRotary implements SynthModuleControl {
     // If no mouseoffset, there is no change, so skip it
     if (mouseOffset !== 0 && mouseOffset >= stepSize || mouseOffset <= stepSize) {
       if (log) {
-        newValue = Math.sqrt(this.value) + mouseOffset / stepSize
+        newValue = this.value + (mouseOffset / stepSize) * step * (Math.abs(event.movementY) ** logSize || 1)
       } else {
-        newValue = this.value + (mouseOffset / stepSize * steps) / max
+        newValue = this.value + (mouseOffset / stepSize) * step
       }
 
       // Get the rounded new Value
       newValue = roundByStepSize(
         Math.max(
           Math.min(
-            log ? newValue ** 2 : newValue,
-            log ? max ** 2: max
+            newValue,
+            max
           ),
-          log ? min ** 2: min
+          min
         ),
         step || 0.1
       )
-
       // If the value did not change, do not do a thing
       if (this.value !== newValue) {
         this.value = newValue

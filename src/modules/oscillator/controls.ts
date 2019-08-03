@@ -5,9 +5,9 @@ export const controlTypes: Array<ControlType> = [{
   type: CONTROL_ROTARY,
   label: 'Freq',
   size: MEDIUM_KNOB,
-  min: 10,
-  max: 134,
-  step: 1,
+  min: 100,
+  max: 17956,
+  step: .1,
   log: true,
   value: 440,
   position: {
@@ -33,7 +33,7 @@ export const controlTypes: Array<ControlType> = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 10,
-  step: 1,
+  step: .05,
   value: 0,
   log: false,
   position: {
