@@ -50,12 +50,14 @@ export class Connection {
   }
 
   connect() {
+    console.log(this)
     switch (this.start.type) {
       case 'gate':
         this.start.gate.connect(this.end.gate)
         break
       case 'audio':
-        this.start.node.connect(<AudioParam>this.end.node)
+        // @ts-ignore
+        this.start.node.connect(<AudioParam | AudioWorklet>this.end.node)
         break
     }
   }

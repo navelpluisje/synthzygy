@@ -1,4 +1,4 @@
-export interface JsLfoNode {
+export interface LfoNode {
   // Controls
   setFrequency(frequency: number): void
   // Outputs
@@ -8,7 +8,7 @@ export interface JsLfoNode {
   outputTriangle(): OscillatorNode
 }
 
-export class JsLfoNode implements JsLfoNode {
+export class LfoNode implements LfoNode {
   frequency: number
   context: AudioContext
   squareWave: OscillatorNode

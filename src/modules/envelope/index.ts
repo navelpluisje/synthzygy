@@ -39,7 +39,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEnvelope)
       this.inputs.push({
         type: input.type,
-        gate: this.node.connectGate(),
+        gate: this.node.inputGate(),
         component,
       })
     })

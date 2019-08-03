@@ -134,7 +134,7 @@ export type ActiveControlType = {
 
 export type OutputType = {
   type: string,
-  node?: AudioNode | OscillatorNode | GainNode,
+  node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode,
   gate?: GateNode,
   component: SynthModuleOutput,
 }

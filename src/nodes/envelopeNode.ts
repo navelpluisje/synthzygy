@@ -5,8 +5,8 @@ export interface EnvelopeNode {
   setSustain(sustain: number): void
   setRelease(release: number): void
   // Inputs
-  connectGate(): Function
-  connectAudioIn(): AudioParam | GainNode  // Outputs
+  inputGate(): Function
+  outputCv(): AudioWorklet
 }
 
 export class EnvelopeNode implements EnvelopeNode {
@@ -15,13 +15,13 @@ export class EnvelopeNode implements EnvelopeNode {
   sustain: number
   release: number
   context: AudioContext
-  gainNode: GainNode
+  gateNode: AudioWorkletNode
 
   constructor(
     context: AudioContext,
-    attack: number = 5,
-    decay: number = 5,
-    sustain: number = 5,
+    attack: number = 1,
+    decay: number = 1,
+    sustain: number = .5,
     release: number = 5,
     ) {
     this.context = context
@@ -29,12 +29,12 @@ export class EnvelopeNode implements EnvelopeNode {
     this.decay = decay
     this.sustain = sustain
     this.release = release
-    this.createGainNodes()
+    this.createGateNode()
   }
 
-  createGainNodes() {
-    this.gainNode = this.context.createGain()
-    this.gainNode.gain.setValueAtTime(0, this.context.currentTime)
+  createGateNode() {
+    this.gateNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.gateNode.parameters.get('value').setValueAtTime(0, this.context.currentTime)
   }
 
   setAttack = (attack: number): void => {
@@ -53,31 +53,65 @@ export class EnvelopeNode implements EnvelopeNode {
     this.release = release
   }
 
-  getAdsArray(start: number, base: number = 3000, spread: number = 0.1) {
-    const from = start || base || 0
-    const to = base > 0 ? base + this.decay + base * spread : this.decay
-    const adsArray = new Float32Array(5)
-    adsArray[0] = from
-    adsArray[1] = Math.abs(to - from) * 0.333
-    adsArray[2] = Math.abs(to - from) * 0.666
-    adsArray[3] = to
-    adsArray[4] = this.sustain * to
+  getAdsArray(): Float32Array {
+    const from = this.gateNode.parameters.get('value').value || 0
+    const to = this.sustain
+    const attackSteps = Math.floor(this.attack * 100)
+    const decaySteps = Math.floor(this.decay * 100)
+    const adsArray = new Float32Array(attackSteps + decaySteps)
+    for (let i = 0; i < attackSteps; i += 1) {
+      adsArray[i] = (from + ((1 - from) / attackSteps) * i)
+    }
+    for (let i = 0; i < decaySteps; i += 1) {
+      adsArray[i + attackSteps] = 1 + ((this.sustain - 1) / decaySteps) * i
+    }
+    console.log({from, to, attackSteps, decaySteps})
+    console.log(adsArray)
     return adsArray
   }
 
-  trigger(value: number) {
-    console.log(`Go envelope: ${value}`)
+  getAdsTime(): number {
+    const adsTime = this.attack + this.decay
+    return adsTime > 0 ? adsTime : 0.0001
   }
 
-  connect(): GainNode {
-    return this.gainNode
+  getReleaseArray(): Float32Array {
+    const from = this.gateNode.parameters.get('value').value || this.sustain
+    const to = 0
+    const releaseArray = new Float32Array(2)
+    releaseArray[0] = from
+    releaseArray[1] = to
+    return releaseArray
   }
 
-  connectGate(): Function {
+  getReleaseTime(): number {
+    return this.release > 0 ? this.release : 0.0001
+  }
+
+  trigger = (value: number) => {
+    this.gateNode.parameters.get('value').cancelAndHoldAtTime(0)
+    if (value === 1) {
+      this.gateNode.parameters.get('value').setValueCurveAtTime(
+        this.getAdsArray(),
+        this.context.currentTime,
+        this.getAdsTime() || 0.0001,
+      )
+    }
+    if (value === 0) {
+      this.gateNode.parameters.get('value').setValueCurveAtTime(
+        this.getReleaseArray(),
+        this.context.currentTime,
+        this.getReleaseTime() || 0.0001,
+      )
+    }
+
+  }
+
+  inputGate(): Function {
     return this.trigger
   }
 
-  output(): GainNode {
-    return this.gainNode
+  output(): AudioWorkletNode {
+    return this.gateNode
   }
 }

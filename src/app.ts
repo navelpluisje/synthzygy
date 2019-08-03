@@ -182,7 +182,7 @@ function draw() {
 }
 
 const getWorklets = async (act: AudioContext) => {
-  await act.audioWorklet.addModule('dist/cvInput.js')
+  await act.audioWorklet.addModule('dist/cvOutput.js')
 }
 
 let act: AudioContext;

@@ -1,5 +1,4 @@
 import { PositionType, ModuleOutputType } from './../types';
-import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 

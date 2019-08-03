@@ -1,4 +1,4 @@
-import { JsLfoNode } from '@nodes/lfoNode'
+import { LfoNode } from '@nodes/lfoNode'
 import { SynthModule } from '@components/synthModule';
 import { SynthModuleOutput } from '@components/moduleOutput';
 import { SynthModuleRotary } from '@components/moduleRotary';
@@ -10,7 +10,7 @@ import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 
 export interface Lfo extends Module{
-  getNode(): JsLfoNode
+  getNode(): LfoNode
 }
 
 export class Lfo extends ModuleBase implements Lfo, ParentModule {
@@ -20,11 +20,11 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
     height: 160,
     width: 130,
   }
-  node: JsLfoNode
+  node: LfoNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new JsLfoNode(context)
+    this.node = new LfoNode(context)
     this.container = new SynthModule(canvas, this.dimensions, position, this.color)
     this.addOutputs()
     this.addControls()
