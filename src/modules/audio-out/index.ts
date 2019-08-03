@@ -35,7 +35,7 @@ export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentUtility)
       this.inputs.push({
-        type: input.icon,
+        type: input.type,
         node: this.node.connectAudioIn(),
         component,
       })

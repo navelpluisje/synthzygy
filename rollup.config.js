@@ -4,14 +4,19 @@ import css from '@navelpluisje/rollup-plugin-css'
 import pkg from './package.json'
 
 export default [{
-  input: 'src/app.ts',
+  input: {
+    index: 'src/app.ts',
+    cvInput: 'src/processors/cvInput/index.ts',
+  },
   output: [
     {
-      file: pkg.main,
+      dir: 'dist',
+      name: '[name].js',
       format: 'cjs',
     },
     {
-      file: pkg.module,
+      dir: 'dist',
+      name: '[name].js',
       format: 'es',
     },
   ],

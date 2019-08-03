@@ -78,7 +78,7 @@ export class MixerNode implements MixerNode {
     }
   }
 
-  connectInput(index: string): GainNode {
+  input(index: string): GainNode {
     switch (index) {
       case '1':
         return this.audioIn1
@@ -91,7 +91,7 @@ export class MixerNode implements MixerNode {
     }
   }
 
-  outputAudio(): GainNode {
+  output(): GainNode {
     return this.audioOut
   }
 }

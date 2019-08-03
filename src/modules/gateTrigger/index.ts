@@ -35,7 +35,7 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentUtility)
       this.outputs.push({
         type: output.icon,
-        node: this.node,
+        gate: this.node,
         component,
       })
     })

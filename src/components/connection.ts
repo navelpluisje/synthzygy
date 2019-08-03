@@ -50,10 +50,17 @@ export class Connection {
   }
 
   connect() {
-    this.start.node.connect((<AudioNode>this.end.node))
+    switch (this.start.type) {
+      case 'gate':
+        this.start.gate.connect(this.end.gate)
+        break
+      case 'audio':
+        this.start.node.connect(<AudioParam>this.end.node)
+        break
+    }
   }
 
   disconnect() {
-    this.start.node.disconnect()
+    // this.start.node.disconnect()
   }
 }

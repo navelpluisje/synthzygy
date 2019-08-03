@@ -38,8 +38,8 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentGenerator)
       this.inputs.push({
-        type: input.icon,
-        node: this.getInputConnection(input.icon),
+        type: input.type,
+        node: this.getInputConnection(input.name),
         component,
       })
     })
@@ -49,8 +49,8 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentGenerator)
       this.outputs.push({
-        type: output.icon,
-        node: this.getOutputConnection(output.icon),
+        type: output.type,
+        node: this.getOutputConnection(output.name),
         component,
       })
     })
@@ -62,15 +62,15 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator))
   }
 
-  private getOutputConnection(type: string) {
+  private getOutputConnection(type: string): GainNode | OscillatorNode {
     switch (type) {
-      case 'saw':
+      case 'sawWave':
         return this.node.outputSaw()
-      case 'sine':
+      case 'sineWave':
         return this.node.outputSine()
-      case 'square':
+      case 'squareWave':
         return this.node.outputSquare()
-      case 'triangle':
+      case 'triangleWave':
         return this.node.outputTriangle()
     }
   }
@@ -78,9 +78,9 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
   private getInputConnection(type: string): AudioParam | GainNode {
     switch (type) {
       case 'fm':
-        return this.node.connectFM()
+        return this.node.inputCvFM()
       case 'frequency':
-        return this.node.connectFrequency()
+        return this.node.inputCvFrequency()
     }
   }
 

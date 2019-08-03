@@ -181,15 +181,19 @@ export class SynthModuleRotary implements SynthModuleControl {
     let newValue = 0
     const {min, max, log, step} = this.valueData
     const steps = (max - min) / step // Get the number of steps
+    let stepSize = 1;
+    if (steps < 100) {
+      stepSize = 100 / steps
+    }
     // TODO: Optimize the value calculation
     const mouseOffset = this.mouseStart.y - event.layerY
 
     // If no mouseoffset, there is no change, so skip it
-    if (mouseOffset !== 0) {
+    if (mouseOffset !== 0 && mouseOffset >= stepSize || mouseOffset <= stepSize) {
       if (log) {
-        newValue = Math.sqrt(this.value) + mouseOffset
+        newValue = Math.sqrt(this.value) + mouseOffset / stepSize
       } else {
-        newValue = this.value + (mouseOffset / steps) / max
+        newValue = this.value + (mouseOffset / stepSize * steps) / max
       }
 
       // Get the rounded new Value

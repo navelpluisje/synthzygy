@@ -20,6 +20,7 @@ let mooved: boolean = false
 let activeModule: string | null = null
 let activeControl: ActiveControlType | null = null
 let activeOutput: OutputType | null = null
+let init = true
 
 let modules: {
   [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger,
@@ -80,6 +81,10 @@ const drawConnection = (ctx: CanvasRenderingContext2D) => {
 }
 
 function onMouseMove(event: MouseEvent) {
+  if (init) {
+    init = false
+    act.resume()
+  }
   // TODO: Get the activeModule
   // If it's the module, move it around. => Redraw everything
   // If it's a control handle the control stuff
@@ -176,22 +181,31 @@ function draw() {
   newConnection && drawConnection(ctx)
 }
 
-let act: AudioContext;
-if (canvas.getContext) {
-  act = new AudioContext()
-  ctx = canvas.getContext('2d')
-  rotaryCtx = rotaryCanvas.getContext('2d')
-  SynthModuleRotary.rotaryCanvas = rotaryCtx
-  Connection.canvas = ctx
-
-  modules.osc1 = new Oscillator(ctx, act, {x: 225, y: 50})
-  modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})
-  modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
-  modules.mixer1 = new Mixer(ctx, act, {x: 440, y: 50})
-  modules.vca1 = new Vca(ctx, act, {x: 440, y: 320})
-  modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
-  modules.audioOut1 = new AudioOut(ctx, act, {x: 805, y: 50})
-  modules.filter1 = new Filter(ctx, act, {x: 805, y: 250})
-  modules.trigger1 = new GateTrigger(ctx, act, {x: 635, y: 280})
+const getWorklets = async (act: AudioContext) => {
+  await act.audioWorklet.addModule('dist/cvInput.js')
 }
-draw()
+
+let act: AudioContext;
+async function start() {
+  if (canvas.getContext) {
+    act = new AudioContext()
+    await getWorklets(act)
+    ctx = canvas.getContext('2d')
+    rotaryCtx = rotaryCanvas.getContext('2d')
+    SynthModuleRotary.rotaryCanvas = rotaryCtx
+    Connection.canvas = ctx
+
+    modules.osc1 = new Oscillator(ctx, act, {x: 225, y: 50})
+    modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})
+    modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
+    modules.mixer1 = new Mixer(ctx, act, {x: 440, y: 50})
+    modules.vca1 = new Vca(ctx, act, {x: 440, y: 320})
+    modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
+    modules.audioOut1 = new AudioOut(ctx, act, {x: 805, y: 50})
+    modules.filter1 = new Filter(ctx, act, {x: 805, y: 250})
+    modules.trigger1 = new GateTrigger(ctx, act, {x: 635, y: 280})
+  }
+  draw()
+}
+
+start()

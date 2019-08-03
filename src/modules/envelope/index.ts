@@ -38,8 +38,8 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEnvelope)
       this.inputs.push({
-        type: input.icon,
-        node: this.getInputConnection(input.icon),
+        type: input.type,
+        gate: this.node.connectGate(),
         component,
       })
     })
@@ -49,7 +49,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEnvelope)
       this.outputs.push({
-        type: output.icon,
+        type: output.type,
         node: this.node.output(),
         component,
       })
@@ -61,15 +61,6 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentEnvelope))
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentEnvelope))
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentEnvelope))
-  }
-
-  private getInputConnection(type: string): AudioParam | GainNode | Function {
-    switch (type) {
-      case 'gate-in':
-        return this.node.connectGate()
-      case 'audio-in':
-        return this.node.connectAudioIn()
-    }
   }
 
   getNode() {

@@ -41,8 +41,8 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEffect)
       this.inputs.push({
-        type: input.icon,
-        node: null,
+        type: input.type,
+        node: this.getInputConnection(input.name),
         component,
       })
     })
@@ -52,7 +52,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEffect)
       this.outputs.push({
-        type: output.icon,
+        type: output.type,
         node: this.node.output(),
         component,
       })
@@ -68,18 +68,20 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect))
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect))
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[4], this.node.setCvQ, Colors.AccentEffect))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect))
   }
 
-  // private getInputConnection(type: string): AudioParam | GainNode {
-    // switch (type) {
-    //   case 'gate':
-    //     return this.node.connectGate()
-    //   case 'audio-in':
-    //     return this.node.connectAudioIn()
-    // }
+  private getInputConnection(type: string): GainNode | BiquadFilterNode {
+    switch (type) {
+      case 'cvFreq':
+        return this.node.inputCvFrequency()
+      case 'cvQ':
+        return this.node.inputCvQ()
+      case 'audioIn':
+        return this.node.input()
+    }
 
-  // }
+  }
 
   getNode(): FilterNode {
     return this.node

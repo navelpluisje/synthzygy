@@ -34,7 +34,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentGenerator)
       this.outputs.push({
-        type: output.icon,
+        type: output.type,
         node: this.getOutputConnection(output.icon),
         component,
       })

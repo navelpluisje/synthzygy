@@ -1,15 +1,19 @@
+import { outputTypes } from "@modules/oscillator/outputs";
+
 export interface VcaNode {
   // Controls
   setGain(gain: number): void
   // Inputs
-  connectGate(): AudioParam | GainNode
-  connectAudioIn(): AudioParam | GainNode  // Outputs
+  input(): GainNode
+  inputCvGain(): GainNode
+  outputTypes(): GainNode
 }
 
 export class VcaNode implements VcaNode {
   gain: number
   context: AudioContext
   gainNode: GainNode
+  cvNode: GainNode
 
   constructor(
     context: AudioContext,
@@ -23,6 +27,10 @@ export class VcaNode implements VcaNode {
   createGainNode() {
     this.gainNode = this.context.createGain()
     this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
+
+    this.cvNode = this.context.createGain()
+    this.cvNode.gain.setValueAtTime(1, this.context.currentTime)
+    this.cvNode.connect(this.gainNode.gain)
   }
 
   setGain = (gain: number): void => {
@@ -30,12 +38,12 @@ export class VcaNode implements VcaNode {
     this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
   }
 
-  connectAudioIn(): GainNode {
+  input(): GainNode {
     return this.gainNode
   }
 
-  connectGate(): AudioParam {
-    return this.gainNode.gain
+  inputCvGain(): GainNode {
+    return this.cvNode
   }
 
   output(): GainNode {

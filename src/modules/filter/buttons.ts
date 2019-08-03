@@ -10,15 +10,15 @@ export const buttons: ModuleButtonsList = {
     width: 40,
   },
   direction: 'vertical',
-  active: 'lp',
+  active: 'lowpass',
   buttons: [{
     label: 'hp',
-    value: 'hp',
+    value: 'highpass',
   }, {
     label: 'bp',
-    value: 'bp',
+    value: 'bandpass',
   }, {
     label: 'lp',
-    value: 'lp',
+    value: 'lowpass',
   }]
 }

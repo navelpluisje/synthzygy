@@ -1,6 +1,7 @@
 import { ModuleOutputType } from "src/types";
 
 export const outputTypes: ModuleOutputType[] = [{
+  name: 'sawWave',
   icon: 'saw',
   type: 'audio',
   position: {
@@ -8,6 +9,7 @@ export const outputTypes: ModuleOutputType[] = [{
     y: 50,
   },
 }, {
+  name: 'squareWave',
   icon: 'square',
   type: 'audio',
   position: {
@@ -15,6 +17,7 @@ export const outputTypes: ModuleOutputType[] = [{
     y: 80,
   },
 }, {
+  name: 'sineWave',
   icon: 'sine',
   type: 'audio',
   position: {
@@ -22,6 +25,7 @@ export const outputTypes: ModuleOutputType[] = [{
     y: 110,
   },
 }, {
+  name: 'triangleWave',
   icon: 'triangle',
   type: 'audio',
   position: {

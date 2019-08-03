@@ -1,6 +1,8 @@
 import { ModuleOutputType } from "src/types";
 
+// TODO: This needs to be a connection in stead of an icon
 export const outputTypes: ModuleOutputType[] = [{
+  name: 'gateOut',
   icon: 'gate-out',
   type: 'gate',
   position: {

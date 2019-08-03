@@ -1,3 +1,5 @@
+import { inputTypes } from "@modules/oscillator/inputs";
+
 export interface FilterNode {
   // Controls
   setFrequency(frequency: number): void
@@ -7,20 +9,24 @@ export interface FilterNode {
   setCvFrequency(amount: number): void
   setCvQ(amount: number): void
   // Inputs
-  connectFrequency(): AudioParam
-  connectQ(): AudioParam
+  inputCvFrequency(): GainNode
+  inputCvQ(): GainNode
+  input(): BiquadFilterNode
   output(): BiquadFilterNode
 }
 
 export class FilterNode implements FilterNode {
   frequency: number
   q: number
+  level: number
+  cvFreq: number
+  cvQ: number
   type: BiquadFilterType
   context: AudioContext
   filterNode: BiquadFilterNode
-  qConstant: GainNode
-  frequencyConstant: GainNode
-  detuneConstant: ConstantSourceNode
+  cvFreqNode: GainNode
+  cvQNode: GainNode
+  levelNode: GainNode
 
   constructor(
     context: AudioContext,
@@ -33,6 +39,22 @@ export class FilterNode implements FilterNode {
 
   createFilterNode() {
     this.filterNode = this.context.createBiquadFilter()
+    this.filterNode.frequency.setValueAtTime(2000, this.context.currentTime)
+    this.filterNode.Q.setValueAtTime(20, this.context.currentTime)
+    this.filterNode.gain.setValueAtTime(3, this.context.currentTime)
+
+    this.levelNode = this.context.createGain()
+    this.levelNode.gain.setValueAtTime(.5, this.context.currentTime)
+
+    this.cvFreqNode = this.context.createGain()
+    this.cvFreqNode.gain.setValueAtTime(5, this.context.currentTime)
+
+    this.cvQNode = this.context.createGain()
+    this.cvQNode.gain.setValueAtTime(5, this.context.currentTime)
+
+    this.levelNode.connect(this.filterNode)
+    this.cvFreqNode.connect(this.filterNode.frequency)
+    this.cvQNode.connect(this.filterNode.Q)
   }
 
   setFrequency = (frequency: number): void => {
@@ -50,24 +72,31 @@ export class FilterNode implements FilterNode {
     this.filterNode.type = this.type
   }
 
-  setInputLevel(level: number): void {
-    // TODO: add funcionalty
+  setInputLevel = (level: number): void => {
+    this.level = level
+    this.levelNode.gain.setValueAtTime(this.level, this.context.currentTime)
   }
 
-  setCvFrequency(amount: number): void {
-    // TODO: add funcionalty
+  setCvFrequency = (amount: number): void => {
+    this.cvFreq = amount
+      this.cvFreqNode.gain.setValueAtTime(this.cvFreq, this.context.currentTime)
   }
 
-  SetCvQ(amount: number): void {
-    // TODO: add funcionalty
+  SetCvQ = (amount: number): void => {
+    this.cvQ = amount
+    this.cvQNode.gain.setValueAtTime(this.cvQ, this.context.currentTime)
   }
 
-  connectFrequency(): AudioParam {
-    return this.filterNode.frequency
+  inputCvFrequency(): GainNode {
+    return this.cvFreqNode
   }
 
-  connectQ(): AudioParam {
-    return this.filterNode.Q
+  inputCvQ(): GainNode {
+    return this.cvQNode
+  }
+
+  input(): GainNode {
+    return this.levelNode
   }
 
   output(): BiquadFilterNode {

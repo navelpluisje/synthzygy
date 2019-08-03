@@ -41,13 +41,16 @@ export type ControlType = {
 }
 
 export type ModuleOutputType = {
-  icon: string,
+  name: string,
+  icon?: string,
   type: 'audio' | 'cv' | 'gate',
+  showIcon?: boolean,
   position: PositionType,
 }
 
 export type ModuleInputType = {
-  icon: string,
+  name: string,
+  icon?: string,
   type: 'audio' | 'cv' | 'gate',
   showIcon?: boolean,
   position: PositionType,
@@ -131,16 +134,15 @@ export type ActiveControlType = {
 
 export type OutputType = {
   type: string,
-  node: OscillatorNode | GainNode | GateNode,
+  node?: AudioNode | OscillatorNode | GainNode,
+  gate?: GateNode,
   component: SynthModuleOutput,
 }
 
 export type InputType = {
   type: string,
-  node: AudioParam | GainNode | Function,
+  node?: AudioNode | AudioParam,
+  gate?: Function,
+  cv?: AudioParam,
   component: SynthModuleInput,
 }
-
-
-
-

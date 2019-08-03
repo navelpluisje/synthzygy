@@ -38,8 +38,8 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
-        type: input.icon,
-        node: this.getInputConnection(input.icon),
+        type: input.type,
+        node: this.getInputConnection(input.name),
         component,
       })
     })
@@ -49,8 +49,8 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentAudioPath)
       this.outputs.push({
-        type: output.icon,
-        node: this.getOutputConnection(output.icon),
+        type: output.type,
+        node: this.getOutputConnection(output.name),
         component,
       })
     })
@@ -66,21 +66,21 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
 
   private getOutputConnection(type: string) {
     switch (type) {
-      case 'audio-out':
-        return this.node.outputAudio()
+      case 'audioOut':
+        return this.node.output()
     }
   }
 
-  private getInputConnection(type: string): AudioParam | GainNode {
+  private getInputConnection(type: string): GainNode {
     switch (type) {
-      case 'audio-in-1':
-        return this.node.connectInput('1')
-      case 'audio-in-2':
-        return this.node.connectInput('2')
-      case 'audio-in-3':
-        return this.node.connectInput('3')
-      case 'audio-in-4':
-        return this.node.connectInput('4')
+      case 'audioIn1':
+        return this.node.input('1')
+      case 'audioIn2':
+        return this.node.input('2')
+      case 'audioIn3':
+        return this.node.input('3')
+      case 'audioIn4':
+        return this.node.input('4')
     }
   }
 

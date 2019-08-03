@@ -13,3 +13,6 @@ https://coolors.co/93827f-e2712e-c04d35-dbb04a-68a678
 
 ## Chorus:
 https://github.com/GoogleChromeLabs/web-audio-samples/blob/master/archive/demos/lib/chorus.js
+
+# Inputs
+All inputs are GainNodes. With the gain you are able to set the amount of cv used

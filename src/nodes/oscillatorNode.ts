@@ -5,9 +5,8 @@ export interface JsOscillatorNode {
   setFm(fm: number): void
   setOctave(octave: number): void
   // Inputs
-  connectFM(): AudioParam | GainNode
-  disconnectFM(lfo: OscillatorNode): void
-  connectFrequency(): AudioParam | GainNode  // Outputs
+  inputCvFM(): GainNode
+  inputCvFrequency(): GainNode  // Outputs
   outputSaw(): OscillatorNode
   outputSine(): GainNode
   outputSquare(): OscillatorNode
@@ -25,8 +24,8 @@ export class JsOscillatorNode implements JsOscillatorNode {
   sineWave: OscillatorNode
   triangleWave: OscillatorNode
   sineBoost: GainNode
-  fmAmount: GainNode
-  frequencyConstant: GainNode
+  cvFmNode: GainNode
+  cvFrequencyNode: GainNode
   detuneConstant: ConstantSourceNode
 
   constructor(
@@ -67,18 +66,23 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.sineBoost = this.context.createGain()
     this.sineBoost.gain.setValueAtTime(3, this.context.currentTime)
 
-    this.fmAmount = this.context.createGain()
-    this.fmAmount.gain.setValueAtTime(this.fm, this.context.currentTime)
+    this.cvFmNode = this.context.createGain();
+    this.cvFmNode.gain.setValueAtTime(1, this.context.currentTime)
 
-    this.frequencyConstant = this.context.createGain()
-    this.frequencyConstant.gain.setValueAtTime(0, this.context.currentTime)
+    this.cvFrequencyNode = this.context.createGain();
+    this.cvFrequencyNode.gain.setValueAtTime(1, this.context.currentTime)
   }
 
   connectNodes() {
-    this.frequencyConstant.connect(this.squareWave.frequency)
-    this.frequencyConstant.connect(this.sawWave.frequency)
-    this.frequencyConstant.connect(this.sineWave.frequency)
-    this.frequencyConstant.connect(this.triangleWave.frequency)
+    this.cvFrequencyNode.connect(this.squareWave.frequency)
+    this.cvFrequencyNode.connect(this.sawWave.frequency)
+    this.cvFrequencyNode.connect(this.sineWave.frequency)
+    this.cvFrequencyNode.connect(this.triangleWave.frequency)
+
+    this.cvFmNode.connect(this.squareWave.frequency)
+    this.cvFmNode.connect(this.sawWave.frequency)
+    this.cvFmNode.connect(this.sineWave.frequency)
+    this.cvFmNode.connect(this.triangleWave.frequency)
 
     this.sineWave.connect(this.sineBoost)
   }
@@ -121,7 +125,8 @@ export class JsOscillatorNode implements JsOscillatorNode {
   }
 
   setFm = (fm: number): void => {
-    this.frequencyConstant.gain.setValueAtTime(fm, this.context.currentTime)
+    this.fm = fm
+    this.cvFmNode.gain.setValueAtTime(this.fm, this.context.currentTime)
   }
 
   setOctave = (octave: number): void => {
@@ -129,17 +134,12 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.handleFrequencyChange()
   }
 
-  connectFrequency(): GainNode {
-    // return this.fmAmount.gain
-    return this.frequencyConstant
+  inputCvFrequency(): GainNode {
+    return this.cvFrequencyNode
   }
 
-  connectFM(): GainNode {
-    return this.frequencyConstant
-  }
-
-  disconnectFM(lfo: OscillatorNode | GainNode): void {
-    lfo.disconnect(this.frequencyConstant)
+  inputCvFM(): GainNode {
+    return this.cvFmNode
   }
 
   outputSaw(): OscillatorNode {

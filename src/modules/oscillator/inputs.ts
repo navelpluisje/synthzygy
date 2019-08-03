@@ -1,8 +1,9 @@
 import { ModuleInputType } from "src/types";
 
 export const inputTypes: ModuleInputType[] = [{
+  name: 'fm',
   icon: 'cv-in',
-  type: 'cv',
+  type: 'audio',
   position: {
     x: 20,
     y: 155,
@@ -15,8 +16,9 @@ export const inputTypes: ModuleInputType[] = [{
     y: 140,
   }]
 }, {
+  name: 'frequency',
   icon: 'freq',
-  type: 'cv',
+  type: 'audio',
   position: {
     x: 20,
     y: 125,

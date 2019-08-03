@@ -32,9 +32,9 @@ export const controlTypes: Array<ControlType> = [{
   label: 'FM',
   size: MEDIUM_KNOB,
   min: 0,
-  max: 20,
-  step: 0.1,
-  value: 10,
+  max: 10,
+  step: 1,
+  value: 0,
   log: false,
   position: {
     x: 85,

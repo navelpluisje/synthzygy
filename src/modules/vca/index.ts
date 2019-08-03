@@ -34,12 +34,21 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     this.addControls()
   }
 
+  getKey(type: string): string {
+    switch (type) {
+      case 'audio':
+        return 'node'
+      case 'cv':
+        return 'cv'
+    }
+  }
+
   addInputs() {
     inputTypes.forEach((input, index) => {
       const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
-        type: input.icon,
-        node: this.getInputConnection(input.icon),
+        type: input.type,
+        node: this.getInputConnection(input.name),
         component,
       })
     })
@@ -49,7 +58,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     outputTypes.forEach((output, index) => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentAudioPath)
       this.outputs.push({
-        type: output.icon,
+        type: output.type,
         node: this.node.output(),
         component,
       })
@@ -60,12 +69,12 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath))
   }
 
-  private getInputConnection(type: string): AudioParam | GainNode {
+  private getInputConnection(type: string): GainNode {
     switch (type) {
-      case 'cv-in':
-        return this.node.connectGate()
-      case 'audio-in':
-        return this.node.connectAudioIn()
+      case 'cvGain':
+        return this.node.inputCvGain()
+      case 'audioIn':
+        return this.node.input()
     }
   }
 
