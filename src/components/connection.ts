@@ -50,7 +50,6 @@ export class Connection {
   }
 
   connect() {
-    console.log(this)
     switch (this.start.type) {
       case 'gate':
         this.start.gate.connect(this.end.gate)
