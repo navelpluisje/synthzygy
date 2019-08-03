@@ -116,7 +116,6 @@ function onMouseUp(event: MouseEvent) {
         if (!module.onMouseDown(layerX, layerY)) { return false }
         const input = module.getSelectedInput(event)
         if (input) {
-          console.log(input)
           connections.push(new Connection(newConnection.start, input))
         }
       })

@@ -65,8 +65,6 @@ export class EnvelopeNode implements EnvelopeNode {
     for (let i = 0; i < decaySteps; i += 1) {
       adsArray[i + attackSteps] = 1 + ((this.sustain - 1) / decaySteps) * i
     }
-    console.log({from, to, attackSteps, decaySteps})
-    console.log(adsArray)
     return adsArray
   }
 
