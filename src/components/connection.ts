@@ -1,52 +1,66 @@
+import { PositionType } from './../types';
 import { OutputType, InputType } from '../types';
 import { Colors } from 'src/constants';
 
+type ConnectionColors = {
+  [key: string]: string,
+}
+
 export class Connection {
-  static canvas: CanvasRenderingContext2D
+  static connectionColors: ConnectionColors = {
+    gate: 'blue',
+    audio: 'red',
+  }
 
   start: OutputType
   end: InputType
+  type: string
 
-  constructor(start: OutputType, end: InputType) {
+  constructor(start: OutputType, end?: InputType) {
     this.start = start
-    this.end = end
-    this.connect()
+    this.type = start.type
+    end && (this.end = end)
   }
 
-  draw() {
+  setEnd(end: InputType) {
+    this.end = end
+  }
+
+  draw(canvas: CanvasRenderingContext2D, endPosition?: PositionType) {
     const start = this.start.component.getPosition()
-    const end = this.end.component.getPosition()
+    const end = endPosition || this.end.component.getPosition()
     const tightness = 100
     const offset = end.x < start.x ? -.25 : .25
-    Connection.canvas.lineWidth = 4
+
+    canvas.lineWidth = 4
     // Create the plugs first
-    Connection.canvas.strokeStyle = Colors.TransBlack
-    Connection.canvas.beginPath();
-    Connection.canvas.arc(start.x, start.y, 5, 0, Math.PI * 2)
-    Connection.canvas.stroke();
-    Connection.canvas.beginPath();
-    Connection.canvas.arc(end.x, end.y, 5, 0, Math.PI * 2)
-    Connection.canvas.stroke();
+    canvas.strokeStyle = Colors.TransBlack
+    canvas.beginPath();
+    canvas.arc(start.x, start.y, 5, 0, Math.PI * 2)
+    canvas.stroke();
+    canvas.beginPath();
+    canvas.arc(end.x, end.y, 5, 0, Math.PI * 2)
+    canvas.stroke();
 
     // Create the actual cable
-    Connection.canvas.lineCap = 'round'
-    Connection.canvas.shadowBlur = 1
-    Connection.canvas.shadowColor = 'black'
-    Connection.canvas.strokeStyle = `hsla(0, 50%, 50%, 0.7)`
-    Connection.canvas.lineWidth = 4
-    Connection.canvas.beginPath();
-    Connection.canvas.moveTo(start.x, start.y);
-    Connection.canvas.bezierCurveTo(
+    canvas.lineCap = 'round'
+    canvas.shadowBlur = 1
+    canvas.shadowColor = 'black'
+    canvas.strokeStyle = Connection.connectionColors[this.type]// `hsla(0, 50%, 50%, 0.7)`
+    canvas.lineWidth = 4
+    canvas.beginPath();
+    canvas.moveTo(start.x, start.y);
+    canvas.bezierCurveTo(
       start.x + Math.abs(start.x - end.x) * offset,
       start.y + tightness,
       end.x - Math.abs(start.x - end.x) * offset,
       end.y + tightness,
       end.x,
       end.y);
-    Connection.canvas.stroke();
+    canvas.stroke();
     // reset som stuff
-    Connection.canvas.lineWidth = 1
-    Connection.canvas.shadowBlur = 0
+    canvas.lineWidth = 1
+    canvas.shadowBlur = 0
   }
 
   connect() {
@@ -55,8 +69,7 @@ export class Connection {
         this.start.gate.connect(this.end.gate)
         break
       case 'audio':
-        // @ts-ignore
-        this.start.node.connect(<AudioParam | AudioWorklet>this.end.node)
+        this.start.node.connect(<AudioNode>this.end.node)
         break
     }
   }

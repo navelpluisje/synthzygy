@@ -1,7 +1,7 @@
 import { Filter } from '@modules/filter';
 import { AudioOut } from '@modules/audio-out';
 import { PositionType, OutputType } from 'src/types';
-import { Connection } from '@components/connection';
+import { ConnectionList } from '@components/ConnectionList';
 import { SynthModuleRotary } from '@components/moduleRotary';
 import { GateTrigger } from '@modules/gateTrigger/index';
 import { Lfo } from '@modules/lfo';
@@ -19,13 +19,11 @@ ListModuleItem()
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
 const rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
+const connectionCanvas = <HTMLCanvasElement>document.getElementById('canvas-connection')
 const rackHeight = 267;
 
-let connectionColor = 0
 let mooved: boolean = false
 let activeModule: string | null = null
-let activeControl: ActiveControlType | null = null
-let activeOutput: OutputType | null = null
 let init = true
 
 let modules: {
@@ -33,6 +31,7 @@ let modules: {
 } = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
+let connectionCtx: CanvasRenderingContext2D
 
 type NewConnectionType = {
   start: OutputType | null,
@@ -41,50 +40,7 @@ type NewConnectionType = {
   } | null
 }
 
-let newConnection: NewConnectionType | null = null
-
-const connections: Array<Connection> = []
-
-const drawConnection = (ctx: CanvasRenderingContext2D) => {
-  const tightness = 100
-  const startPosition = newConnection.start.component.getPosition()
-  const startX = startPosition.x
-  const startY = startPosition.y
-  const endX = newConnection.end.position.x
-  const endY = newConnection.end.position.y
-
-  const offset = endX < startX ? -.25 : .25
-  ctx.lineWidth = 4
-  // Create the plugs first
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'
-  ctx.beginPath();
-  ctx.arc(startX, startY, 5, 0, Math.PI * 2)
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(endX, endY, 5, 0, Math.PI * 2)
-  ctx.stroke();
-
-  // Create the actual cable
-  ctx.lineCap = 'round'
-  ctx.shadowBlur = 1
-  ctx.shadowColor = 'black'
-  ctx.strokeStyle = `#8c1c13`
-  ctx.lineWidth = 4
-  ctx.beginPath();
-  ctx.moveTo(startX, startY);
-  ctx.bezierCurveTo(
-    startX + Math.abs(startX - endX) * offset,
-    startY + tightness,
-    endX - Math.abs(startX - endX) * offset,
-    endY + tightness,
-    endX,
-    endY
-  );
-  ctx.stroke();
-  // reset som stuff
-  ctx.lineWidth = 1
-  ctx.shadowBlur = 0
-}
+const connections: ConnectionList = new ConnectionList()
 
 function onMouseMove(event: MouseEvent) {
   if (init) {
@@ -98,10 +54,7 @@ function onMouseMove(event: MouseEvent) {
   mooved = true
   activeModule && modules[activeModule].onMouseMove(event)
   if (activeModule && modules[activeModule].activeOutput) {
-    newConnection.end.position = {
-      x: event.layerX,
-      y: event.layerY,
-    }
+    connections.onMouseMove(event)
   }
   requestAnimationFrame(draw)
 }
@@ -116,13 +69,13 @@ function onMouseUp(event: MouseEvent) {
   } else {
     // console.log('mooved')
     mooved = false
-    if (newConnection !== null) {
+    if (connections.hasNewConnection()) {
       const { layerX, layerY } = event
       Object.entries(modules).some(([key, module]) => {
         if (!module.onMouseDown(layerX, layerY)) { return false }
         const input = module.getSelectedInput(event)
         if (input) {
-          connections.push(new Connection(newConnection.start, input))
+          connections.onMouseUp(input)
         }
       })
     }
@@ -134,47 +87,33 @@ function onMouseUp(event: MouseEvent) {
 
 
   mooved = false;
-  activeControl = null
   activeModule = null
-  newConnection = null
-  rotaryCanvas.removeEventListener('mousemove', onMouseMove)
-  rotaryCanvas.removeEventListener('mouseup', onMouseUp)
+  connectionCanvas.removeEventListener('mousemove', onMouseMove)
+  connectionCanvas.removeEventListener('mouseup', onMouseUp)
   requestAnimationFrame(draw)
 }
 
-function onMouseDown({layerX, layerY}: MouseEvent) {
+function onMouseDown(event: MouseEvent) {
+  const {layerX, layerY} = event
   Object.entries(modules).some(([key, module]) => {
     if (!module.onMouseDown(layerX, layerY)) { return false }
     activeModule = key;
     if (module.activeOutput) {
-      newConnection = {
-        start: null,
-        end: {
-          position: {
-            x: layerX,
-            y: layerY,
-          }
-        }
-      }
-      activeOutput = module.activeOutput
-      newConnection.start = module.activeOutput
+      connections.setNewConnection(module.activeOutput, event)
     } else if (module) {
 
     }
   })
-  rotaryCanvas.addEventListener('mousemove', onMouseMove)
-  rotaryCanvas.addEventListener('mouseup', onMouseUp)
+  connectionCanvas.addEventListener('mousemove', onMouseMove)
+  connectionCanvas.addEventListener('mouseup', onMouseUp)
   requestAnimationFrame(draw)
 }
 
-rotaryCanvas.addEventListener('mousedown', onMouseDown);
+connectionCanvas.addEventListener('mousedown', onMouseDown);
 
 function draw() {
   Object.values(modules).forEach(module => module.draw())
-  // connectionColor = 0
-  connections.forEach(connection => connection.draw())
-  // connectionColor += 60
-  newConnection && drawConnection(ctx)
+  connections.draw()
 }
 
 const getWorklets = async (act: AudioContext) => {
@@ -188,8 +127,9 @@ async function start() {
     await getWorklets(act)
     ctx = canvas.getContext('2d')
     rotaryCtx = rotaryCanvas.getContext('2d')
+    connectionCtx = connectionCanvas.getContext('2d')
     SynthModuleRotary.rotaryCanvas = rotaryCtx
-    Connection.canvas = ctx
+    ConnectionList.canvas = connectionCtx
 
     modules.osc1 = new Oscillator(ctx, act, {x: 225, y: 50})
     modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})

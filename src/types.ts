@@ -141,7 +141,7 @@ export type OutputType = {
 
 export type InputType = {
   type: string,
-  node?: AudioNode | AudioParam,
+  node?: AudioNode | AudioParam | AudioWorkletNode,
   gate?: Function,
   cv?: AudioParam,
   component: SynthModuleInput,
