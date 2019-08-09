@@ -36,7 +36,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEnvelope)
+      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentModulator)
       this.inputs.push({
         type: input.type,
         gate: this.node.inputGate(),
@@ -47,7 +47,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEnvelope)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentModulator)
       this.outputs.push({
         type: output.type,
         node: this.node.output(),
@@ -57,10 +57,10 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentEnvelope))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentEnvelope))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentEnvelope))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentEnvelope))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator))
   }
 
   getNode() {

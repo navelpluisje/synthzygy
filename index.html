@@ -2,6 +2,7 @@
   <head>
     <title>Canvas</title>
     <link href="https://fonts.googleapis.com/css?family=Gruppo|Raleway&display=swap" rel="stylesheet">
+    <link href="./src/style/app.css" rel="stylesheet">
     <style>
       canvas {
         position: absolute
@@ -9,8 +10,28 @@
     </style>
   </head>
   <body>
-    <canvas id="canvas" height="600" width="1000"></canvas>
-    <canvas id="canvas-rotary" height="600" width="1000"></canvas>
+    <section class="main">
+      <aside>
+        <header>npModular</header>
+        <dl class="modules">
+          <np-modulegroup group="Generators" name="generators">
+            <np-moduleitem name="oscillator">Oscillator</np-moduleitem>
+            <np-moduleitem name="noise">Noise</np-moduleitem>
+          </np-modulegroup>
+          <np-modulegroup group="Modulators" name="modulators">
+            <np-moduleitem name="envelope">Envelope</np-moduleitem>
+            <np-moduleitem name="lfo">Lfo</np-moduleitem>
+          </np-modulegroup>
+          <np-modulegroup group="Effects" name="effects">
+            <np-moduleitem name="filter">Filer</np-moduleitem>
+          </np-modulegroup>
+        </dl>
+      </aside>
+      <main>
+        <canvas id="canvas" height="600" width="1000"></canvas>
+        <canvas id="canvas-rotary" height="600" width="1000"></canvas>
+      </main>
+    </section>
     <script src="./dist/index.js"></script>
   </body>
 </html>

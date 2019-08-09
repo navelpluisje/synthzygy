@@ -1,0 +1,5 @@
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: .25rem .5rem .25rem 0;
+}

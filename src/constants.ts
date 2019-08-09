@@ -23,7 +23,7 @@ export enum Colors {
   AccentGenerator = '#c04d35',
   AccentAudioPath = '#e2712e',
   AccentEffect = '#dbb04a',
-  AccentEnvelope = '#68a678',
+  AccentModulator = '#68a678',
   AccentUtility = '#577590',
   Connection = '#8c1c13',
 }
@@ -43,3 +43,48 @@ export const knobSizes: KnobSizesType = {
   },
 }
 
+export const AvailableModules = [{
+  name: 'generators',
+  title: 'Generators',
+  modules: [{
+    name: 'oscilator',
+    title: 'Oscillator',
+  }]
+}, {
+  name: 'modulators',
+  title: 'Modulators',
+  modules: [{
+    name: 'envelope',
+    title: 'Envelope',
+  }, {
+    name: 'lfo',
+    title: 'Lfo',
+  }]
+}, {
+  name: 'effects',
+  title: 'Effects',
+  modules: [{
+    name: 'filter',
+    title: 'Filter',
+  }]
+}, {
+  name: 'utilities',
+  title: 'Utilities',
+  modules: [{
+    name: 'output',
+    title: 'Output',
+  }, {
+    name: 'gate',
+    title: 'Gate trigger',
+  }]
+}, {
+  name: 'audio',
+  title: 'Audio',
+  modules: [{
+    name: 'mixer',
+    title: 'Mixer',
+  }, {
+    name: 'vca',
+    title: 'Vca',
+  }]
+}]

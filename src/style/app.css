@@ -1,0 +1,39 @@
+body {
+  font-family: Raleway, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'sidebar main';
+  height: 100vh;
+}
+
+aside {
+  background: var(--module-background);
+  color: var(--module-title);
+  grid-area: sidebar;
+}
+
+aside > header {
+  font-family: Gruppo, sans-serif;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+main {
+  background-image: linear-gradient(-10deg, #404040, #303030);
+  grid-area: main;
+}
+
+dl {
+  padding: 1rem;
+}
+
+
+dd li {
+  padding: .25rem 0;
+}

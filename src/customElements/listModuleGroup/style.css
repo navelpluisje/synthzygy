@@ -1,0 +1,29 @@
+dd {
+  background-color: #303030;
+  border-radius: .25rem;
+  border-width: 0 0 0 .125rem;
+  border-color: var(--accent-generator);
+  border-style: solid;
+  margin: 0 0 .5rem;
+  padding: .5rem 0 .5rem 1rem;
+}
+
+dd.generators { border-color: var(--accent-generator); }
+dd.modulators { border-color: var(--accent-modulator); }
+dd.effects { border-color: var(--accent-effect); }
+dd.utilities { border-color: var(--accent-utility); }
+dd.audio { border-color: var(--accent-audio-path); }
+
+dd > h4 {
+  font-family: Gruppo, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0 0 .25rem;
+}
+
+dd > ul {
+  font-size: .8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 .5rem;
+}

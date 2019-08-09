@@ -1,11 +1,11 @@
-import { ModuleBase } from '../moduleBase';
-import { OutputNode } from '@nodes/outputNode'
-import { SynthModule } from '@components/synthModule';
 import { SynthModuleInput } from '@components/moduleInput';
 import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType } from '../../types';
-import { Colors } from '../../constants';
+import { SynthModule } from '@components/synthModule';
 import { ParentModule, Module } from '@interfaces/index';
+import { ModuleBase } from '@modules/moduleBase';
+import { OutputNode } from '@nodes/outputNode'
+import { PositionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 

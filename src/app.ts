@@ -10,6 +10,12 @@ import { Mixer } from '@modules/mixer';
 import { Vca } from '@modules/vca';
 import { ActiveControlType } from './types'
 import { Envelope } from '@modules/envelope';
+import { setCssColors } from '@utilities/colors'
+import ListModuleGroup from './customElements/listModuleGroup'
+import ListModuleItem from './customElements/listModuleItem'
+
+ListModuleGroup()
+ListModuleItem()
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
 const rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
@@ -164,16 +170,7 @@ function onMouseDown({layerX, layerY}: MouseEvent) {
 rotaryCanvas.addEventListener('mousedown', onMouseDown);
 
 function draw() {
-  const gradient = ctx.createLinearGradient(0, 0, 1000, 600)
-  gradient.addColorStop(0, '#404040')
-  gradient.addColorStop(1, '#303030')
-  ctx.fillStyle = gradient
-  ctx.strokeStyle = '#000000'
-  ctx.fillRect(0, 0, 1000, 600)
-  ctx.strokeRect(0, 0, 1000, 600)
-
   Object.values(modules).forEach(module => module.draw())
-
   // connectionColor = 0
   connections.forEach(connection => connection.draw())
   // connectionColor += 60
@@ -206,5 +203,5 @@ async function start() {
   }
   draw()
 }
-
+setCssColors()
 start()

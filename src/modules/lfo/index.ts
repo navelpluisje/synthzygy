@@ -32,7 +32,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentGenerator)
+      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentModulator)
       this.outputs.push({
         type: output.type,
         node: this.getOutputConnection(output.icon),
@@ -42,7 +42,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator))
   }
 
   private getOutputConnection(type: string): OscillatorNode | GainNode {
