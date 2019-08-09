@@ -14,18 +14,19 @@ export interface Lfo extends Module{
 }
 
 export class Lfo extends ModuleBase implements Lfo, ParentModule {
-  type =  'lfo'
-  title = 'Lfo'
-  dimensions: DimensionType = {
+  static dimensions: DimensionType = {
     height: 160,
     width: 130,
   }
+
+  type =  'lfo'
+  title = 'Lfo'
   node: LfoNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new LfoNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color)
     this.addOutputs()
     this.addControls()
   }

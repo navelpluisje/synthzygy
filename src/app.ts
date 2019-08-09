@@ -1,15 +1,6 @@
-import { Filter } from '@modules/filter';
-import { AudioOut } from '@modules/audio-out';
-import { PositionType, OutputType } from 'src/types';
+import { ModuleList } from '@components/moduleList';
 import { ConnectionList } from '@components/ConnectionList';
 import { SynthModuleRotary } from '@components/moduleRotary';
-import { GateTrigger } from '@modules/gateTrigger/index';
-import { Lfo } from '@modules/lfo';
-import { Oscillator } from '@modules/oscillator';
-import { Mixer } from '@modules/mixer';
-import { Vca } from '@modules/vca';
-import { ActiveControlType } from './types'
-import { Envelope } from '@modules/envelope';
 import { setCssColors } from '@utilities/colors'
 import ListModuleGroup from './customElements/listModuleGroup'
 import ListModuleItem from './customElements/listModuleItem'
@@ -17,32 +8,46 @@ import ListModuleItem from './customElements/listModuleItem'
 ListModuleGroup()
 ListModuleItem()
 
+// Canvasses
 const canvas = <HTMLCanvasElement>document.getElementById('canvas')
 const rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
 const connectionCanvas = <HTMLCanvasElement>document.getElementById('canvas-connection')
-const rackHeight = 267;
 
 let mooved: boolean = false
-let activeModule: string | null = null
 let init = true
 
-let modules: {
-  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger,
-} = {}
 let ctx: CanvasRenderingContext2D
 let rotaryCtx: CanvasRenderingContext2D
 let connectionCtx: CanvasRenderingContext2D
 
-type NewConnectionType = {
-  start: OutputType | null,
-  end: {
-    position: PositionType,
-  } | null
-}
-
+let modules: ModuleList
 const connections: ConnectionList = new ConnectionList()
 
+function onMouseDown(event: MouseEvent) {
+  // Left mouse button used
+  if (event.button === 0 && !event.ctrlKey) {
+    if (modules.moduleSelected(event)) {
+      const module = modules.getActiveModule()
+      if (module.activeOutput) {
+        connections.setNewConnection(module.activeOutput, event)
+      }
+    }
+  }
+  // right button clicked
+  if (event.button === 2 || (event.button === 0 && event.ctrlKey)) {
+    // Do stuff for the right click
+    // If connection input/output > remove connection
+    connections.removeConnection(event)
+  }
+
+  connectionCanvas.addEventListener('mousemove', onMouseMove)
+  connectionCanvas.addEventListener('mouseup', onMouseUp)
+  requestAnimationFrame(draw)
+}
+
 function onMouseMove(event: MouseEvent) {
+  // TODO: Need to make a nicer fix for this.
+  // Neeeded 'cause Chrome will not start the audio
   if (init) {
     init = false
     act.resume()
@@ -52,9 +57,13 @@ function onMouseMove(event: MouseEvent) {
   // If it's a control handle the control stuff
   // If it's an output, draw the connection
   mooved = true
-  activeModule && modules[activeModule].onMouseMove(event)
-  if (activeModule && modules[activeModule].activeOutput) {
-    connections.onMouseMove(event)
+  const module = modules.getActiveModule()
+  if (module) {
+    module.onMouseMove(event)
+
+    if (module && module.activeOutput) {
+      connections.updateConnection(event)
+    }
   }
   requestAnimationFrame(draw)
 }
@@ -63,56 +72,42 @@ function onMouseUp(event: MouseEvent) {
   // TODO: What do we do when we stop
   // Reset all mouse related stuff
   // In case of a new connection, add the connection
-  if (activeModule && !mooved) {
+
+  const module = modules.getActiveModule()
+
+  if (module && !mooved) {
     // console.log('clicked')
-    modules[activeModule].onMouseClick(event)
+    module.onMouseClick(event)
   } else {
     // console.log('mooved')
-    mooved = false
-    if (connections.hasNewConnection()) {
-      const { layerX, layerY } = event
-      Object.entries(modules).some(([key, module]) => {
-        if (!module.onMouseDown(layerX, layerY)) { return false }
-        const input = module.getSelectedInput(event)
+    if (modules.moduleSelected(event)) {
+      const endModule = modules.getActiveModule()
+
+      if (connections.hasNewConnection()) {
+        const input = endModule.getSelectedInput(event)
         if (input) {
-          connections.onMouseUp(input)
+          connections.createConnection(input)
         }
-      })
+      }
     }
   }
-  Object.values(modules).forEach(module => {
-    module.onMouseUp(event)
-    module.unset()
-  })
-
-
-  mooved = false;
-  activeModule = null
+  connections.removeNewConnection()
+  modules.onMouseUp(event)
+  mooved = false
   connectionCanvas.removeEventListener('mousemove', onMouseMove)
   connectionCanvas.removeEventListener('mouseup', onMouseUp)
   requestAnimationFrame(draw)
 }
 
-function onMouseDown(event: MouseEvent) {
-  const {layerX, layerY} = event
-  Object.entries(modules).some(([key, module]) => {
-    if (!module.onMouseDown(layerX, layerY)) { return false }
-    activeModule = key;
-    if (module.activeOutput) {
-      connections.setNewConnection(module.activeOutput, event)
-    } else if (module) {
-
-    }
-  })
-  connectionCanvas.addEventListener('mousemove', onMouseMove)
-  connectionCanvas.addEventListener('mouseup', onMouseUp)
-  requestAnimationFrame(draw)
-}
-
 connectionCanvas.addEventListener('mousedown', onMouseDown);
+// Prevent the context menu to disturb our creativity
+connectionCanvas.addEventListener('contextmenu', (event) => {
+  event.preventDefault()
+  return false
+});
 
 function draw() {
-  Object.values(modules).forEach(module => module.draw())
+  modules.draw()
   connections.draw()
 }
 
@@ -130,18 +125,18 @@ async function start() {
     connectionCtx = connectionCanvas.getContext('2d')
     SynthModuleRotary.rotaryCanvas = rotaryCtx
     ConnectionList.canvas = connectionCtx
+    modules = new ModuleList(ctx, act)
+    modules.addModule('test', 'oscillator')
 
-    modules.osc1 = new Oscillator(ctx, act, {x: 225, y: 50})
-    modules.osc2 = new Oscillator(ctx, act, {x: 225, y: 270})
-    modules.lfo1 = new Lfo(ctx, act, {x: 50, y: 50})
-    modules.mixer1 = new Mixer(ctx, act, {x: 440, y: 50})
-    modules.vca1 = new Vca(ctx, act, {x: 440, y: 320})
-    modules.envelope1 = new Envelope(ctx, act, {x: 635, y: 50})
-    modules.audioOut1 = new AudioOut(ctx, act, {x: 805, y: 50})
-    modules.filter1 = new Filter(ctx, act, {x: 805, y: 250})
-    modules.trigger1 = new GateTrigger(ctx, act, {x: 635, y: 280})
+    const menuitems = document.querySelectorAll('np-moduleitem')
+    menuitems.forEach(item => item.addEventListener('itemclick', ({target}) => {
+      // @ts-ignore
+      modules.addModule('test', target.name)
+      requestAnimationFrame(draw)
+    }))
   }
   draw()
 }
+
 setCssColors()
 start()

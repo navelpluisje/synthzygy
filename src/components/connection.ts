@@ -8,8 +8,8 @@ type ConnectionColors = {
 
 export class Connection {
   static connectionColors: ConnectionColors = {
-    gate: 'blue',
-    audio: 'red',
+    gate: 'hsla(167, 65%, 57%, .7)',
+    audio: 'hsla(347, 65%, 57%, .7)',
   }
 
   start: OutputType

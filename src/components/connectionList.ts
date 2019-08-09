@@ -11,13 +11,18 @@ export class ConnectionList {
     return this.newConnection !== null
   }
 
-  setNewConnection(start: OutputType, event: MouseEvent) {
+  public setNewConnection(start: OutputType, event: MouseEvent) {
     const { layerX: x, layerY: y} = event
     this.newConnection = new Connection(start)
     this.newPosition = {x, y}
   }
 
-  onMouseMove(event: MouseEvent) {
+  public removeNewConnection() {
+    this.newConnection = null
+    this.newPosition = null
+  }
+
+  public updateConnection(event: MouseEvent) {
     if (this.newConnection) {
       this.newPosition = {
         x: event.layerX,
@@ -26,15 +31,24 @@ export class ConnectionList {
     }
   }
 
-  onMouseUp(input: InputType) {
+  public createConnection(input: InputType) {
     const connection = new Connection(this.newConnection.start, input)
     connection.connect()
     this.connections.push(connection)
-    this.newConnection = null
-    this.newPosition = null
+    this.removeNewConnection()
   }
 
-  draw() {
+  public removeConnection(event: MouseEvent) {
+    const {layerX, layerY} = event
+    this.connections = this.connections.filter(connection => {
+      const inputSelected = connection.end.component.isInputClicked(layerX, layerY)
+      const outputSelected = connection.start.component.isOutputClicked(layerX, layerY) !== null
+      const result = !(outputSelected || inputSelected)
+      return result
+    })
+  }
+
+  public draw() {
     const canvas = ConnectionList.canvas
     canvas.clearRect(
       0,

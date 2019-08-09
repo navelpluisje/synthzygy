@@ -1,6 +1,5 @@
-import { ModuleInputType } from './../types';
+import { ModuleInputType, DimensionType } from './../types';
 import { PositionType } from 'src/types';
-import { Colors } from '../constants';
 import { ParentModule } from '@interfaces/index';
 import { drawIcon } from './icons';
 

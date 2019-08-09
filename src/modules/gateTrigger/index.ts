@@ -14,18 +14,19 @@ export interface GateTrigger extends Module{
 }
 
 export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule {
-  type =  'gateTrigger'
-  title = 'Gate'
-  dimensions: DimensionType = {
+  static dimensions: DimensionType = {
     height: 130,
     width: 100,
   }
+
+  type =  'gateTrigger'
+  title = 'Gate'
   node: GateNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new GateNode()
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, GateTrigger.dimensions, position, this.color)
     this.addOutputs()
     this.addControls()
   }

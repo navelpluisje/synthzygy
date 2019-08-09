@@ -18,19 +18,20 @@ export interface Filter extends Module {
 }
 
 export class Filter extends ModuleBase implements Filter, ParentModule {
-  type = 'filter'
-  title = 'Filter'
-  dimensions = {
+  static dimensions = {
     height: 290,
     width: 170,
   }
+
+  type = 'filter'
+  title = 'Filter'
   active: boolean = false
   node: FilterNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new FilterNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Filter.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()
@@ -49,7 +50,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
   }
 
   addOutputs() {
-    outputTypes.forEach((output, index) => {
+    outputTypes.forEach(output => {
       const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEffect)
       this.outputs.push({
         type: output.type,

@@ -14,19 +14,20 @@ export interface AudioOut extends Module {
 }
 
 export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
-  type = 'audioOut'
-  title = 'Output'
-  dimensions = {
+  static dimensions = {
     height: 155,
     width: 120,
   }
+
+  type = 'audioOut'
+  title = 'Output'
   active: boolean = false
   node: OutputNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new OutputNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, AudioOut.dimensions, position, this.color)
     this.addInputs()
     this.addControls()
   }

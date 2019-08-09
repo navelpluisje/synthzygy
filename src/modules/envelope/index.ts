@@ -16,19 +16,20 @@ export interface Envelope extends Module {
 }
 
 export class Envelope extends ModuleBase implements Envelope, ParentModule {
-  type = 'envelope'
-  title = 'Envelope'
-  dimensions = {
+  static dimensions = {
     height: 210,
     width: 140,
-}
+  }
+
+  type = 'envelope'
+  title = 'Envelope'
   active: boolean = false
   node: EnvelopeNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new EnvelopeNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()

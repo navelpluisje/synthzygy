@@ -1,5 +1,36 @@
 li {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   padding: .25rem .5rem .25rem 0;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 0;
+}
+
+button.generators {
+  border-color: var(--accent-generator);
+  color: var(--accent-generator);
+}
+button.modulators {
+  border-color: var(--accent-modulator);
+  color: var(--accent-modulator);
+}
+button.effects {
+  border-color: var(--accent-effect);
+  color: var(--accent-effect);
+}
+button.utilities {
+  border-color: var(--accent-utility);
+  color: var(--accent-utility);
+}
+button.audio {
+  border-color: var(--accent-audio-path);
+  color: var(--accent-audio-path);
 }

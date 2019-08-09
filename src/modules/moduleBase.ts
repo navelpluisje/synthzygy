@@ -5,7 +5,6 @@ import { SynthModule } from '@components/synthModule';
 import { Colors } from 'src/constants';
 import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
 import { SynthModuleTriggerButton } from '@components/moduleTriggerButton';
-import { SynthModuleControl } from '@interfaces/moduleControl';
 
 export class ModuleBase implements Module {
   title = 'title'
@@ -21,6 +20,7 @@ export class ModuleBase implements Module {
   canvas: CanvasRenderingContext2D
   container: SynthModule
   color = Colors.ModuleBackground
+  id: string = ''
 
   constructor(canvas: CanvasRenderingContext2D, position: PositionType) {
     this.position = position
@@ -49,7 +49,8 @@ export class ModuleBase implements Module {
     return this.activeInput
   }
 
-  onMouseDown(xPos: number, yPos: number): boolean {
+  onMouseDown(event: MouseEvent): boolean {
+    const {layerX: xPos, layerY: yPos} = event
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.outputs.some(output => {
       const position = output.component.isOutputClicked(xPos, yPos)
@@ -96,6 +97,10 @@ export class ModuleBase implements Module {
        control.isButtonClicked(layerX, layerY)
     })
     this.unset()
+  }
+
+  setId(id: string) {
+    this.id = id
   }
 
   unset() {

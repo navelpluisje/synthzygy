@@ -16,19 +16,20 @@ export interface Vca extends Module {
 }
 
 export class Vca extends ModuleBase implements Vca, ParentModule {
-  type = 'vca'
-  title = 'Vca'
-  dimensions = {
+  static dimensions = {
     height: 140,
     width: 130,
   }
+
+  type = 'vca'
+  title = 'Vca'
   active: boolean = false
   node: VcaNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new VcaNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Vca.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()

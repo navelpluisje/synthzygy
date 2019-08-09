@@ -16,19 +16,20 @@ export interface Oscillator extends Module {
 }
 
 export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
-  type =  'oscillator'
-  title =  'Oscillator'
-  dimensions = {
+  static dimensions = {
     height: 190,
     width: 180,
   }
+
+  type =  'oscillator'
+  title =  'Oscillator'
   active: boolean = false
   node: JsOscillatorNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new JsOscillatorNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Oscillator.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()

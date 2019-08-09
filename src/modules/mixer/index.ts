@@ -16,19 +16,20 @@ export interface Mixer extends Module {
 }
 
 export class Mixer extends ModuleBase implements Mixer, ParentModule {
-  type = 'mixer'
-  title = 'Mixer'
-  dimensions = {
+  static dimensions = {
     height: 245,
     width: 165,
   }
+
+  type = 'mixer'
+  title = 'Mixer'
   active: boolean = false
   node: MixerNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new MixerNode(context)
-    this.container = new SynthModule(canvas, this.dimensions, position, this.color)
+    this.container = new SynthModule(canvas, Mixer.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()

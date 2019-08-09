@@ -20,7 +20,7 @@ class ListModuleItem extends HTMLElement {
     shadowRoot.appendChild(styling.cloneNode(true))
 
     // Create Events
-    this.clickEvent = new CustomEvent('click', {
+    this.clickEvent = new CustomEvent('itemclick', {
       bubbles: true,
       cancelable: false,
     });
@@ -31,6 +31,7 @@ class ListModuleItem extends HTMLElement {
     this.group = this.getAttribute('group') || ''
     this.button = this.shadowRoot.querySelector('button')
 
+    this.button.classList.add(this.group)
     this.setEventBindings()
   }
 
