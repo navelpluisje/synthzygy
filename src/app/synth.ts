@@ -34,7 +34,7 @@ export class Synth {
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {
         const module = this.modules.getActiveModule()
-        if (module.activeOutput) {
+        if (module && module.activeOutput) {
           this.connections.setNewConnection(module.activeOutput, event)
         }
       }
