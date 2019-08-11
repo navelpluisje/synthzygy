@@ -27,7 +27,7 @@ export class ModuleBase implements Module {
     this.canvas = canvas
   }
 
-  draw(): void {
+  draw = (): void => {
     this.container.draw()
     this.container.drawTitle(this.title)
     this.inputs.length && this.inputs.forEach(input => input.component.draw())
@@ -77,8 +77,11 @@ export class ModuleBase implements Module {
     if (!this.active) { return }
     if (this.activeControl !== null) {
       this.controls[this.activeControl].onMouseMove(event)
-    } else {
-      // this.position = position
+    } else if (this.activeOutput === null) {
+
+      this.position.x = event.layerX
+      this.position.y = event.layerY
+      requestAnimationFrame(this.draw)
     }
   }
 

@@ -15,11 +15,13 @@ export class ConnectionList {
     const { layerX: x, layerY: y} = event
     this.newConnection = new Connection(start)
     this.newPosition = {x, y}
+    requestAnimationFrame(this.draw)
   }
 
   public removeNewConnection() {
     this.newConnection = null
     this.newPosition = null
+    requestAnimationFrame(this.draw)
   }
 
   public updateConnection(event: MouseEvent) {
@@ -28,6 +30,7 @@ export class ConnectionList {
         x: event.layerX,
         y: event.layerY,
       }
+      requestAnimationFrame(this.draw)
     }
   }
 
@@ -40,22 +43,26 @@ export class ConnectionList {
 
   public removeConnection(event: MouseEvent) {
     const {layerX, layerY} = event
+    const prevLength = this.connections.length
+
     this.connections = this.connections.filter(connection => {
       const inputSelected = connection.end.component.isInputClicked(layerX, layerY)
       const outputSelected = connection.start.component.isOutputClicked(layerX, layerY) !== null
-      const result = !(outputSelected || inputSelected)
-      return result
+      const keepConnection = !(outputSelected || inputSelected)
+      if (!keepConnection) {
+        connection.disconnect()
+      }
+      return keepConnection
     })
+
+    if (prevLength !== this.connections.length) {
+      requestAnimationFrame(this.draw)
+    }
   }
 
-  public draw() {
+  public draw = () => {
     const canvas = ConnectionList.canvas
-    canvas.clearRect(
-      0,
-      0,
-      1000,
-      600,
-    )
+    canvas.clearRect(0, 0, 1000, 600)
 
     this.connections.forEach(connection => connection.draw(canvas))
     if (this.newConnection) {

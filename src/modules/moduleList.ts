@@ -7,7 +7,7 @@ import { Envelope } from "@modules/envelope";
 import { AudioOut } from "@modules/audio-out";
 import { Filter } from "@modules/filter";
 import { GateTrigger } from "@modules/gateTrigger";
-import { throwStatement } from '@babel/types';
+import { SynthModuleRotary } from '../components/moduleRotary';
 
 type Modules = {
   [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger,
@@ -30,6 +30,7 @@ export class ModuleList {
     const position: PositionType = this.calculatePosition(Module.dimensions)
 
     this.modules[key] = new Module(this.canvas, this.audio, position)
+    requestAnimationFrame(this.draw)
   }
 
   private getModule(name: string) {
@@ -70,7 +71,15 @@ export class ModuleList {
     return this.modules[this.activeModuleId]
   }
 
-  public draw() {
+  public moveActiveModule(event: MouseEvent) {
+    this.getActiveModule().onMouseMove(event)
+    requestAnimationFrame(this.draw)
+  }
+
+  public draw = () => {
+    this.canvas.clearRect(0, 0, 1000, 600)
+    SynthModuleRotary.rotaryCanvas.clearRect(0, 0, 1000, 600)
+
     Object.values(this.modules).forEach(module => module.draw())
   }
 

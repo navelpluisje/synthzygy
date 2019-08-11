@@ -47,7 +47,7 @@ export const AvailableModules = [{
   name: 'generators',
   title: 'Generators',
   modules: [{
-    name: 'oscilator',
+    name: 'oscillator',
     title: 'Oscillator',
   }]
 }, {
@@ -71,8 +71,8 @@ export const AvailableModules = [{
   name: 'utilities',
   title: 'Utilities',
   modules: [{
-    name: 'output',
-    title: 'Output',
+    name: 'audioOut',
+    title: 'Audio Output',
   }, {
     name: 'gate',
     title: 'Gate trigger',

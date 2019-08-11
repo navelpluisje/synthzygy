@@ -75,6 +75,13 @@ export class Connection {
   }
 
   disconnect() {
-    // this.start.node.disconnect()
+    switch (this.start.type) {
+      case 'gate':
+        this.start.gate.disconnect()
+        break
+      case 'audio':
+        this.start.node.disconnect(<AudioNode>this.end.node)
+        break
+    }
   }
 }

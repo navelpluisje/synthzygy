@@ -31,7 +31,7 @@ class ListModuleItem extends HTMLElement {
     this.group = this.getAttribute('group') || ''
     this.button = this.shadowRoot.querySelector('button')
 
-    this.button.classList.add(this.group)
+    this.button.className = this.group
     this.setEventBindings()
   }
 

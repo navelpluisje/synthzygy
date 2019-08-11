@@ -2,8 +2,8 @@ import template from './template.html'
 import style from './style.css'
 
 class ListModuleGroup extends HTMLElement {
-  title: string = ''
-  name: string = ''
+  title: string
+  name: string
 
   constructor() {
     super()
@@ -32,9 +32,7 @@ class ListModuleGroup extends HTMLElement {
     this.shadowRoot.querySelector('dd').className = this.name
     this.shadowRoot.querySelector('ul').className = this.name
 
-    const slotNodes = this.shadowRoot.querySelector('slot').assignedElements()
-    slotNodes.forEach(node => node.setAttribute('group', this.name))
-    this.setEventBindings()
+    // this.setEventBindings()
   }
 
   setEventBindings() {
