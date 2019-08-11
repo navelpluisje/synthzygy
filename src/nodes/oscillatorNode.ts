@@ -70,7 +70,7 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.cvFmNode.gain.setValueAtTime(1, this.context.currentTime)
 
     this.cvFrequencyNode = this.context.createGain();
-    this.cvFrequencyNode.gain.setValueAtTime(1, this.context.currentTime)
+    this.cvFrequencyNode.gain.setValueAtTime(3, this.context.currentTime)
   }
 
   connectNodes() {

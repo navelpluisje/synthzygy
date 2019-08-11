@@ -18,7 +18,7 @@ export const controlTypes: Array<ControlType> = [{
   type: STEP_ROTARY,
   label: 'Range',
   size: SMALL_KNOB,
-  min: -2,
+  min: -3,
   max: 2,
   step: 1,
   log: false,

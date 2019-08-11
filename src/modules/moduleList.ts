@@ -6,11 +6,12 @@ import { Vca } from "@modules/vca";
 import { Envelope } from "@modules/envelope";
 import { AudioOut } from "@modules/audio-out";
 import { Filter } from "@modules/filter";
+import { Keyboard } from "@modules/keyboard";
 import { GateTrigger } from "@modules/gateTrigger";
 import { SynthModuleRotary } from '../components/moduleRotary';
 
 type Modules = {
-  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger,
+  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard,
 }
 
 export class ModuleList {
@@ -43,6 +44,8 @@ export class ModuleList {
         return Filter
       case 'gate':
         return GateTrigger
+      case 'keyboard':
+        return Keyboard
       case 'lfo':
         return Lfo
       case 'mixer':
@@ -58,7 +61,7 @@ export class ModuleList {
     const x = Object.keys(this.modules).length
 
     return {
-      x: x * 250,
+      x: x * 150,
       y: 20,
     }
   }

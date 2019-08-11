@@ -76,6 +76,9 @@ export const AvailableModules = [{
   }, {
     name: 'gate',
     title: 'Gate trigger',
+  }, {
+    name: 'keyboard',
+    title: 'Keyboard',
   }]
 }, {
   name: 'audio',
