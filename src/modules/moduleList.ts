@@ -9,6 +9,7 @@ import { Filter } from "@modules/filter";
 import { Keyboard } from "@modules/keyboard";
 import { GateTrigger } from "@modules/gateTrigger";
 import { SynthModuleRotary } from '../components/moduleRotary';
+import { Synth } from 'src/app/synth';
 
 type Modules = {
   [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard,
@@ -80,8 +81,9 @@ export class ModuleList {
   }
 
   public draw = () => {
-    this.canvas.clearRect(0, 0, 1000, 600)
-    SynthModuleRotary.rotaryCanvas.clearRect(0, 0, 1000, 600)
+    const {width, height} = Synth.canvasDimension
+    this.canvas.clearRect(0, 0, width, height)
+    SynthModuleRotary.rotaryCanvas.clearRect(0, 0, width, height)
 
     Object.values(this.modules).forEach(module => module.draw())
   }

@@ -1,35 +1,45 @@
 import { ModuleList } from "@modules/moduleList";
 import { ConnectionList } from "@components/ConnectionList";
 import { SynthModuleRotary } from "@components/moduleRotary";
+import { DimensionType } from "src/types";
 
 export class Synth {
-  moduleCanvas: HTMLCanvasElement
-  rotaryCanvas: HTMLCanvasElement
-  connectionCanvas: HTMLCanvasElement
-  modulesCtx: CanvasRenderingContext2D
-  rotaryCtx: CanvasRenderingContext2D
-  connectionCtx: CanvasRenderingContext2D
+  static canvasDimension: DimensionType = {
+    height: 600,
+    width: 1000,
+  }
+  private moduleCanvas: HTMLCanvasElement
+  private rotaryCanvas: HTMLCanvasElement
+  private connectionCanvas: HTMLCanvasElement
+  private modulesCtx: CanvasRenderingContext2D
+  private rotaryCtx: CanvasRenderingContext2D
+  private connectionCtx: CanvasRenderingContext2D
 
-  audioContext: AudioContext;
+  private synthArea: HTMLElement
+  private audioContext: AudioContext;
 
-  init: boolean = true
-  mooved: boolean = false
-  modules: ModuleList
-  connections: ConnectionList = new ConnectionList()
+  private init: boolean = true
+  private mooved: boolean = false
+  private modules: ModuleList
+  private connections: ConnectionList = new ConnectionList()
 
   constructor() {
     this.moduleCanvas = <HTMLCanvasElement>document.getElementById('canvas')
     this.rotaryCanvas = <HTMLCanvasElement>document.getElementById('canvas-rotary')
     this.connectionCanvas = <HTMLCanvasElement>document.getElementById('canvas-connection')
+
+    this.synthArea = document.querySelector('main')
     this.connectionCanvas.addEventListener('mousedown', this.onMouseDown);
     // Prevent the context menu to disturb our creativity
     this.connectionCanvas.addEventListener('contextmenu', (event) => {
       event.preventDefault()
       return false
     });
+    this.setSize()
+    window.addEventListener('resize', this.setSize)
   }
 
-  onMouseDown = (event: MouseEvent) => {
+ public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {
@@ -48,7 +58,7 @@ export class Synth {
     this.connectionCanvas.addEventListener('mouseup', this.onMouseUp)
   }
 
-  onMouseMove = (event: MouseEvent) => {
+  public onMouseMove = (event: MouseEvent) => {
     // TODO: Need to make a nicer fix for this.
     // Neeeded 'cause Chrome will not start the audio
     if (this.init) {
@@ -69,7 +79,7 @@ export class Synth {
     }
   }
 
-  onMouseUp = (event: MouseEvent) => {
+  public onMouseUp = (event: MouseEvent) => {
     const module = this.modules.getActiveModule()
 
     if (module && !this.mooved) {
@@ -96,16 +106,27 @@ export class Synth {
     // requestAnimationFrame(draw)
   }
 
-  getWorklets = async () => {
+  private getWorklets = async () => {
     await this.audioContext.audioWorklet.addModule('dist/cvOutput.js')
   }
 
-  addModule = (category: string, name: string) => {
+  public addModule = (category: string, name: string) => {
     // @ts-ignore
     this.modules.addModule(category, name)
   }
 
-  async start() {
+  private setSize = () => {
+    const {width, height} = this.synthArea.getBoundingClientRect()
+    Synth.canvasDimension = { width, height }
+    this.moduleCanvas.setAttribute('width', width.toString())
+    this.moduleCanvas.setAttribute('height', height.toString())
+    this.rotaryCanvas.setAttribute('width', width.toString())
+    this.rotaryCanvas.setAttribute('height', height.toString())
+    this.connectionCanvas.setAttribute('width', width.toString())
+    this.connectionCanvas.setAttribute('height', height.toString())
+  }
+
+  public async start() {
     if (this.moduleCanvas.getContext) {
       this.audioContext = new AudioContext()
       await this.getWorklets()

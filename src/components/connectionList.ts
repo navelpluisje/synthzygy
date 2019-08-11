@@ -1,5 +1,6 @@
 import { PositionType, OutputType, InputType } from 'src/types';
 import { Connection } from "./connection";
+import { Synth } from 'src/app/synth';
 
 export class ConnectionList {
   static canvas: CanvasRenderingContext2D
@@ -61,8 +62,9 @@ export class ConnectionList {
   }
 
   public draw = () => {
+    const {width, height} = Synth.canvasDimension
     const canvas = ConnectionList.canvas
-    canvas.clearRect(0, 0, 1000, 600)
+    canvas.clearRect(0, 0, width, height)
 
     this.connections.forEach(connection => connection.draw(canvas))
     if (this.newConnection) {
