@@ -124,6 +124,9 @@ export class Synth {
     this.rotaryCanvas.setAttribute('height', height.toString())
     this.connectionCanvas.setAttribute('width', width.toString())
     this.connectionCanvas.setAttribute('height', height.toString())
+
+    // this.modules && this.modules.draw()
+    // this.connections && this.connections.draw()
   }
 
   public async start() {

@@ -11,8 +11,9 @@ import { GateTrigger } from "@modules/gateTrigger";
 import { SynthModuleRotary } from '../components/moduleRotary';
 import { Synth } from 'src/app/synth';
 
+type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard
 type Modules = {
-  [key: string]: Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard,
+  [key: string]: Module,
 }
 
 export class ModuleList {
@@ -31,8 +32,12 @@ export class ModuleList {
     const key = new Date().getTime().toString()
     const position: PositionType = this.calculatePosition(Module.dimensions)
 
-    this.modules[key] = new Module(this.canvas, this.audio, position)
-    requestAnimationFrame(this.draw)
+    if (position.x > 0) {
+      this.modules[key] = new Module(this.canvas, this.audio, position)
+      requestAnimationFrame(this.draw)
+    } else {
+      alert(`Looks like there's no room for: ${name}`)
+    }
   }
 
   private getModule(name: string) {
@@ -44,6 +49,7 @@ export class ModuleList {
       case 'filter':
         return Filter
       case 'gate':
+      case 'gateTrigger':
         return GateTrigger
       case 'keyboard':
         return Keyboard
@@ -58,12 +64,52 @@ export class ModuleList {
     }
   }
 
-  private calculatePosition(dimensions: DimensionType): PositionType {
-    const x = Object.keys(this.modules).length
+  private doesCollide = (module: Module, position: PositionType, dimensions: DimensionType): boolean => {
+    const modDimensions = this.getModule(module.type).dimensions
+    if (
+      (
+        position.x > module.position.x + modDimensions.width
+        || position.x + dimensions.width < module.position.x
+      )
+      && position.x + dimensions.width < Synth.canvasDimension.width
+    ) {
+      return false
+    }
+    if (
+      (
+        position.y > module.position.y + modDimensions.height
+        || position.y + dimensions.height < module.position.y
+      )
+      && position.y + dimensions.height < Synth.canvasDimension.height
+    ) {
+      return false
+    }
+    return true
+  }
 
+  private calculatePosition(dimensions: DimensionType): PositionType {
+    const {width: canvasWidth, height: canvasHeight} = Synth.canvasDimension
+    let position = {
+      x: 10,
+      y: 10,
+    }
+    let collide = true
+
+    for (let y = 10; y < canvasHeight; y += 10) {
+      for (let x = 10; x < canvasWidth; x += 10) {
+        position = {x, y}
+        if (!Object.values(this.modules).some(module => this.doesCollide(module, position, dimensions))) {
+          collide = false
+          break
+        }
+      }
+      if (!collide) {
+        return position
+      }
+    }
     return {
-      x: x * 150,
-      y: 20,
+      x: 0,
+      y: 0,
     }
   }
 
