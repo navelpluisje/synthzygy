@@ -43,9 +43,6 @@ export class SynthModuleRotary implements SynthModuleControl {
     this.drawRotaryBase()
     this.drawRotaryValue()
     this.label && this.drawRotaryLabel()
-    if (this.type === STEP_ROTARY) {
-      this.drawStepMarkers()
-    }
   }
 
   setValue(value: number) {
@@ -141,6 +138,10 @@ export class SynthModuleRotary implements SynthModuleControl {
     canvas.lineCap = this.cap
     canvas.stroke()
     canvas.restore()
+    if (this.type === STEP_ROTARY) {
+      this.drawStepMarkers()
+    }
+
   }
 
   drawRotaryLabel() {

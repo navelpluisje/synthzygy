@@ -85,6 +85,7 @@ export class Synth {
     if (module && !this.mooved) {
       // console.log('clicked')
       module.onMouseClick(event)
+      this.modules.draw()
     } else if (module && this.mooved) {
       // console.log('mooved')
       if (this.modules.moduleSelected(event) && this.connections.hasNewConnection()) {

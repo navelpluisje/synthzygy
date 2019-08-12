@@ -44,7 +44,7 @@ export class FilterNode implements FilterNode {
     this.filterNode.gain.setValueAtTime(3, this.context.currentTime)
 
     this.levelNode = this.context.createGain()
-    this.levelNode.gain.setValueAtTime(.5, this.context.currentTime)
+    this.levelNode.gain.setValueAtTime(1, this.context.currentTime)
 
     this.cvFreqNode = this.context.createGain()
     this.cvFreqNode.gain.setValueAtTime(5, this.context.currentTime)
