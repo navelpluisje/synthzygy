@@ -8,7 +8,7 @@ export interface Module {
   onMouseUp(event: MouseEvent): void
   unset(): void
   setId(id: string): void
-  activeOutput: OutputType
-  activeInput: InputType
-  activeControl: number
+  getActiveOutput(): OutputType
+  getActiveInput(): InputType
+  getActiveControl(): number
 }

@@ -44,8 +44,8 @@ export class Synth {
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {
         const module = this.modules.getActiveModule()
-        if (module && module.activeOutput) {
-          this.connections.setNewConnection(module.activeOutput, event)
+        if (module && module.hasActiveOutput()) {
+          this.connections.setNewConnection(module.getActiveOutput(), event)
         }
       }
     }
@@ -68,9 +68,9 @@ export class Synth {
     this.mooved = true
     const module = this.modules.getActiveModule()
     if (module) {
-      if (module.activeOutput !== null) {
+      if (module.hasActiveOutput()) {
         this.connections.updateConnection(event)
-      } else if (module.activeControl !== null) {
+      } else if (module.hasActiveControl()) {
         module.onMouseMove(event)
       } else {
         this.modules.moveActiveModule(event)

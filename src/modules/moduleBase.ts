@@ -7,20 +7,22 @@ import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
 import { SynthModuleTriggerButton } from '@components/moduleTriggerButton';
 
 export class ModuleBase implements Module {
-  title = 'title'
-  inputs: Array<InputType> = []
-  outputs: Array<OutputType> = []
-  controls: Array<SynthModuleRotary | SynthModuleTriggerButton> = []
-  buttons: SynthModuleButtonGroup[] = []
-  activeOutput: OutputType = null
-  activeInput: InputType = null
-  activeControl: number | null = null
-  active: boolean = false
-  position: PositionType
-  canvas: CanvasRenderingContext2D
-  container: SynthModule
-  color = Colors.ModuleBackground
-  id: string = ''
+  protected title = 'title'
+  protected inputs: Array<InputType> = []
+  protected outputs: Array<OutputType> = []
+  protected controls: Array<SynthModuleRotary | SynthModuleTriggerButton> = []
+  protected buttons: SynthModuleButtonGroup[] = []
+  protected activeOutput: OutputType = null
+  protected activeInput: InputType = null
+  protected activeControl: number | null = null
+  protected active: boolean = false
+  protected position: PositionType
+  protected offset: PositionType
+  protected canvas: CanvasRenderingContext2D
+  protected container: SynthModule
+  protected color = Colors.ModuleBackground
+  protected type: string = ''
+  protected id: string = ''
 
   constructor(canvas: CanvasRenderingContext2D, position: PositionType) {
     this.position = position
@@ -52,6 +54,10 @@ export class ModuleBase implements Module {
   onMouseDown(event: MouseEvent): boolean {
     const {layerX: xPos, layerY: yPos} = event
     this.active = this.container.isModuleClicked(xPos, yPos)
+    this.offset = {
+      x: xPos - this.position.x,
+      y: yPos - this.position.y,
+    }
     this.outputs.some(output => {
       const position = output.component.isOutputClicked(xPos, yPos)
       if (position) {
@@ -77,11 +83,11 @@ export class ModuleBase implements Module {
     if (!this.active) { return }
     if (this.activeControl !== null) {
       this.controls[this.activeControl].onMouseMove(event)
+      requestAnimationFrame(this.draw)
     } else if (this.activeOutput === null) {
 
-      this.position.x = event.layerX
-      this.position.y = event.layerY
-      requestAnimationFrame(this.draw)
+      this.position.x = event.layerX - this.offset.x
+      this.position.y = event.layerY - this.offset.y
     }
   }
 
@@ -102,8 +108,44 @@ export class ModuleBase implements Module {
     this.unset()
   }
 
-  setId(id: string) {
+  getPosition(): PositionType {
+    return this.position
+  }
+
+  getOffset(): PositionType {
+    return this.offset
+  }
+
+  getActiveOutput(): OutputType {
+    return this.activeOutput
+  }
+
+  hasActiveOutput(): boolean {
+    return this.activeOutput !== null
+  }
+
+  getActiveInput(): InputType {
+    return this.activeInput
+  }
+
+  getActiveControl(): number {
+    return this.activeControl
+  }
+
+  hasActiveControl(): boolean {
+    return this.activeControl !== null
+  }
+
+  getId(): string {
+    return this.id
+  }
+
+  setId(id: string): void {
     this.id = id
+  }
+
+  getType() {
+    return this.type
   }
 
   unset() {

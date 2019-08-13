@@ -47,7 +47,7 @@ export class SynthModuleTriggerButton implements SynthModuleControl {
 
   getPosition(): PositionType {
     const { x, y } = this.position
-    const { x: parX, y: parY} = this.parent.position
+    const { x: parX, y: parY} = this.parent.getPosition()
 
     return {
       x: x + parX,

@@ -89,7 +89,7 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
   }
 
   getPosition(): PositionType {
-    const { x: parX, y: parY } = this.parent.position
+    const { x: parX, y: parY } = this.parent.getPosition()
     const { x, y } = this.position
 
     return {

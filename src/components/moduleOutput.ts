@@ -45,7 +45,7 @@ export class SynthModuleOutput implements SynthModuleOutput {
   }
 
   getPosition(): PositionType {
-    const { x: parX, y: parY } = this.parent.position
+    const { x: parX, y: parY } = this.parent.getPosition()
     const { x, y } = this.position
 
     return {

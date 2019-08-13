@@ -56,8 +56,7 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   drawRotaryRing() {
-    const xPos = this.position.x + this.parent.position.x
-    const yPos = this.position.y + this.parent.position.y
+    const {x: xPos, y: yPos} = this.getRotaryPosition()
 
     this.canvas.save()
     this.canvas.beginPath()
@@ -72,8 +71,7 @@ export class SynthModuleRotary implements SynthModuleControl {
 
   drawStepMarkers() {
     const {min, max, step} = this.valueData
-    const xPos = this.position.x + this.parent.position.x
-    const yPos = this.position.y + this.parent.position.y
+    const {x: xPos, y: yPos} = this.getRotaryPosition()
     const steps = (max - min) / step // Get the number of steps
     const canvas = SynthModuleRotary.rotaryCanvas
 
@@ -95,8 +93,7 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   drawRotaryBase() {
-    const xPos = this.position.x + this.parent.position.x
-    const yPos = this.position.y + this.parent.position.y
+    const {x: xPos, y: yPos} = this.getRotaryPosition()
 
     this.canvas.save()
     this.canvas.fillStyle = Colors.ControlBackground
@@ -110,9 +107,7 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   drawRotaryValue() {
-    const xPos = this.position.x + this.parent.position.x
-    const yPos = this.position.y + this.parent.position.y
-
+    const {x: xPos, y: yPos} = this.getRotaryPosition()
     const { min, max, log } = this.valueData
     const range = max - min
     const rangeOffset = 0 - min
@@ -145,8 +140,8 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   drawRotaryLabel() {
-    const xPos = this.position.x + this.parent.position.x
-    const yLabel = this.position.y + this.parent.position.y + this.knobSize.radius + 6
+    const {x: xPos, y: yPos} = this.getRotaryPosition()
+    const yLabel = yPos + this.knobSize.radius + 6
 
     this.canvas.font ='13px Raleway, sans-serif'
     this.canvas.textAlign ='center'
@@ -157,8 +152,9 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   isControlPressed(xPos: number, yPos: number): boolean {
-    const x = this.parent.position.x + this.position.x - this.knobSize.radius
-    const y = this.parent.position.y + this.position.y - this.knobSize.radius
+    const {x: xRotPos, y: yRotPos} = this.getRotaryPosition()
+    const x = xRotPos - this.knobSize.radius
+    const y = yRotPos - this.knobSize.radius
 
     if (x < xPos && xPos < (x + this.knobSize.radius * 3)) {
       if (y < yPos && yPos < (y + this.knobSize.radius * 3)) {
@@ -218,8 +214,9 @@ export class SynthModuleRotary implements SynthModuleControl {
   }
 
   isControlReleased(x: number, y: number): boolean {
-    const xPos = this.parent.position.x + this.position.x - this.knobSize.radius
-    const yPos = this.parent.position.y + this.position.y - this.knobSize.radius
+    const {x: xRotPos, y: yRotPos} = this.getRotaryPosition()
+    const xPos = xRotPos - this.knobSize.radius
+    const yPos = yRotPos - this.knobSize.radius
 
     if (xPos < x && x < (xPos + this.knobSize.radius * 3)) {
       if (yPos < y && y < (yPos + this.knobSize.radius * 3)) {
@@ -230,6 +227,13 @@ export class SynthModuleRotary implements SynthModuleControl {
     return false
   }
 
+  private getRotaryPosition(): PositionType {
+    const {x: parentX, y: parentY} = this.parent.getPosition()
+    return {
+      x: this.position.x + parentX,
+      y: this.position.y + parentY,
+    }
+  }
 
   unSet() {
     this.active = false

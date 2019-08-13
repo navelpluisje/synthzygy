@@ -54,7 +54,7 @@ export class SynthModuleInput implements SynthModuleInput {
   }
 
   getPosition(): PositionType {
-    const { x: parX, y: parY } = this.parent.position
+    const { x: parX, y: parY } = this.parent.getPosition()
     const { x, y } = this.position
 
     return {
@@ -74,7 +74,7 @@ export class SynthModuleInput implements SynthModuleInput {
 
   drawConnection() {
     const {x: startX, y: startY} = this.getPosition()
-    const {x: parX, y: parY} = this.parent.position
+    const {x: parX, y: parY} = this.parent.getPosition()
     this.canvas.save()
     this.canvas.strokeStyle = this.color
     this.canvas.lineWidth = 1.5

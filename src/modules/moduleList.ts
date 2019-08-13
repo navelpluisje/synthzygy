@@ -34,6 +34,7 @@ export class ModuleList {
 
     if (position.x > 0) {
       this.modules[key] = new Module(this.canvas, this.audio, position)
+      this.modules[key].setId(key)
       requestAnimationFrame(this.draw)
     } else {
       alert(`Looks like there's no room for: ${name}`)
@@ -65,11 +66,12 @@ export class ModuleList {
   }
 
   private doesCollide = (module: Module, position: PositionType, dimensions: DimensionType): boolean => {
-    const modDimensions = this.getModule(module.type).dimensions
+    const modDimensions = this.getModule(module.getType()).dimensions
+    const modPosition = module.getPosition()
     if (
       (
-        position.x > module.position.x + modDimensions.width
-        || position.x + dimensions.width < module.position.x
+        position.x > modPosition.x + modDimensions.width
+        || position.x + dimensions.width < modPosition.x
       )
       && position.x + dimensions.width < Synth.canvasDimension.width
     ) {
@@ -77,8 +79,8 @@ export class ModuleList {
     }
     if (
       (
-        position.y > module.position.y + modDimensions.height
-        || position.y + dimensions.height < module.position.y
+        position.y > modPosition.y + modDimensions.height
+        || position.y + dimensions.height < modPosition.y
       )
       && position.y + dimensions.height < Synth.canvasDimension.height
     ) {
@@ -122,8 +124,23 @@ export class ModuleList {
   }
 
   public moveActiveModule(event: MouseEvent) {
-    this.getActiveModule().onMouseMove(event)
-    requestAnimationFrame(this.draw)
+    const activeModule = this.getActiveModule()
+    const offset = activeModule.getOffset()
+    const position = {
+      x: event.layerX - offset.x,
+      y: event.layerY - offset.y,
+    }
+    const dimensions = this.getModule(activeModule.type).dimensions
+
+    if (!Object.values(this.modules).some(module => {
+      if (module.getId() === activeModule.getId()) {
+        return false
+      }
+      return this.doesCollide(module, position, dimensions)
+    })) {
+      this.getActiveModule().onMouseMove(event)
+      this.draw()
+    }
   }
 
   public draw = () => {
