@@ -69,6 +69,9 @@ export const AvailableModules = [{
   }, {
     name: 'delay',
     title: 'Delay',
+  }, {
+    name: 'bitCrusher',
+    title: 'Bit Crusher',
   }]
 }, {
   name: 'utilities',

@@ -1,3 +1,4 @@
+import { BitCrusher } from './bitCrusher/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Lfo } from "@modules/lfo";
 import { Oscillator } from "@modules/oscillator";
@@ -12,7 +13,7 @@ import { Delay } from "@modules/delay";
 import { SynthModuleRotary } from '../components/moduleRotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay
+type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher
 type Modules = {
   [key: string]: Module,
 }
@@ -65,6 +66,8 @@ export class ModuleList {
         return Vca
       case 'delay':
         return Delay
+      case 'bitCrusher':
+        return BitCrusher
     }
   }
 

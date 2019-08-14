@@ -1,7 +1,7 @@
 import { CvOutput } from './cvOutput'
-import { DryWet } from './dryWet'
+import { BitCrusher } from './bitCrusher'
 
 // @ts-ignore
 registerProcessor('cv-output-processor', CvOutput)
 // @ts-ignore
-registerProcessor('dry-wet-processor', DryWet)
+registerProcessor('bitcrusher-processor', BitCrusher)

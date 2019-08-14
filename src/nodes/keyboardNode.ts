@@ -54,8 +54,8 @@ export class KeyboardNode implements KeyboardNode {
     const note = getNote(event.code)
     if (note > 0) {
       this.cvNode.parameters.get('value').setValueAtTime(note, this.context.currentTime)
+      this.trigger && this.trigger(1)
     }
-    this.trigger && this.trigger(1)
   }
 
   onKeyUp = (event: KeyboardEvent) => {

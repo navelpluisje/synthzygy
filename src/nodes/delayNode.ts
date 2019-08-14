@@ -1,5 +1,3 @@
-import { inputTypes } from "@modules/oscillator/inputs";
-
 export class DelayerNode {
   private feedback: number = .6
   private frequency: number = 1000
