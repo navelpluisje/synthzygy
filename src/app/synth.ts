@@ -108,7 +108,7 @@ export class Synth {
   }
 
   private getWorklets = async () => {
-    await this.audioContext.audioWorklet.addModule('dist/cvOutput.js')
+    await this.audioContext.audioWorklet.addModule('dist/processors.js')
   }
 
   public addModule = (category: string, name: string) => {
@@ -132,6 +132,7 @@ export class Synth {
 
   public async start() {
     if (this.moduleCanvas.getContext) {
+      console.log('start npModular')
       this.audioContext = new AudioContext()
       await this.getWorklets()
       this.modulesCtx = this.moduleCanvas.getContext('2d')

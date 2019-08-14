@@ -6,7 +6,7 @@ import pkg from './package.json'
 export default [{
   input: {
     index: 'src/app.ts',
-    cvOutput: 'src/processors/cvOutput/index.ts',
+    processors: 'src/processors/index.ts',
   },
   output: [
     {

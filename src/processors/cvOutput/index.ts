@@ -1,6 +1,6 @@
 
 // white-noise-processor.js
-class CvOutput extends AudioWorkletProcessor {
+export class CvOutput extends AudioWorkletProcessor {
   // Custom AudioParams can be defined with this static getter.
   static get parameterDescriptors() {
     return [{
@@ -25,5 +25,3 @@ class CvOutput extends AudioWorkletProcessor {
     return true
   }
 }
-
-registerProcessor('cv-output-processor', CvOutput)

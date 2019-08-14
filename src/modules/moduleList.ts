@@ -8,10 +8,11 @@ import { AudioOut } from "@modules/audio-out";
 import { Filter } from "@modules/filter";
 import { Keyboard } from "@modules/keyboard";
 import { GateTrigger } from "@modules/gateTrigger";
+import { Delay } from "@modules/delay";
 import { SynthModuleRotary } from '../components/moduleRotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard
+type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay
 type Modules = {
   [key: string]: Module,
 }
@@ -62,6 +63,8 @@ export class ModuleList {
         return Oscillator
       case 'vca':
         return Vca
+      case 'delay':
+        return Delay
     }
   }
 

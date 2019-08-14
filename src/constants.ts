@@ -66,6 +66,9 @@ export const AvailableModules = [{
   modules: [{
     name: 'filter',
     title: 'Filter',
+  }, {
+    name: 'delay',
+    title: 'Delay',
   }]
 }, {
   name: 'utilities',
