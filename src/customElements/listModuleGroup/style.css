@@ -15,15 +15,27 @@ dd.utilities { border-color: var(--accent-utility); }
 dd.audio { border-color: var(--accent-audio-path); }
 
 dd > h4 {
+  cursor: pointer;
   font-family: Gruppo, sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
   margin: 0 0 .25rem;
 }
 
-dd > ul {
+dd > section {
+  height: 0px;
+  overflow: hidden;
+  position: relative;
+  transition: height .4s ease;
+}
+
+dd ul {
+  bottom: 0;
+  box-sizing: border-box;
   font-size: .8rem;
   list-style: none;
   margin: 0;
   padding: 0 0 0 .5rem;
+  position: absolute;
+  width: 100%;
 }

@@ -8,6 +8,7 @@ li {
 button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
   font-family: monospace;
   font-size: 1.5rem;
   font-weight: 800;
