@@ -27,4 +27,17 @@ export const controlTypes: ControlType[] = [{
     x: 100,
     y: 65,
   },
+}, {
+  type: CONTROL_ROTARY,
+  label: 'Level',
+  size: MEDIUM_KNOB,
+  min: 0,
+  max: 1,
+  step: 0.01,
+  log: false,
+  value: .5,
+  position: {
+    x: 70,
+    y: 135,
+  },
 }]

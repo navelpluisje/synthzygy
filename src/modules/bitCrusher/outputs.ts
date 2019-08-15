@@ -6,6 +6,6 @@ export const outputTypes: ModuleOutputType[] = [{
   type: 'audio',
   position: {
     x: 120,
-    y: 125,
+    y: 185,
   },
 }]

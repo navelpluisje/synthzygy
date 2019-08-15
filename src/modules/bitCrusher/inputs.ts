@@ -6,7 +6,7 @@ export const inputTypes: ModuleInputType[] = [{
   type: 'audio',
   position: {
     x: 20,
-    y: 125,
+    y: 185,
   },
   showIcon: true,
 }]

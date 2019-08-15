@@ -17,7 +17,7 @@ export interface BitCrusher extends Module {
 
 export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
   static dimensions = {
-    height: 145,
+    height: 205,
     width: 140,
   }
 
@@ -60,6 +60,7 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
   addControls() {
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setBitDepth, Colors.AccentEffect))
     this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setFrequencyReduction, Colors.AccentEffect))
+    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setOutputLevel, Colors.AccentEffect))
   }
 
   private getInputConnection(type: string): GainNode {

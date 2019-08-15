@@ -2,6 +2,7 @@ export class BitCrusherNode {
   private bitDepth: number = 8
   private frequencyReduction: number = .5
   private dryWet: number = 1
+  private level: number = .5
   private context: AudioContext
   private inputNode: GainNode
   private outputNode: GainNode
@@ -51,6 +52,11 @@ export class BitCrusherNode {
     this.dryWet = dryWet
     this.dryNode.gain.setValueAtTime(1 - this.dryWet, this.context.currentTime)
     this.wetNode.gain.setValueAtTime(this.dryWet, this.context.currentTime)
+  }
+
+  public setOutputLevel = (level: number): void => {
+    this.level = level
+    this.outputNode.gain.setValueAtTime(this.level, this.context.currentTime)
   }
 
   public input(): GainNode {
