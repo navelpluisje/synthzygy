@@ -6,19 +6,19 @@ export const buttons: ModuleButtonsList = [{
     y: 45,
   },
   dimensions: {
-    height: 20,
-    width: 40,
+    height: 25,
+    width: 50,
   },
   direction: 'vertical',
-  active: 'lowpass',
+  active: 'stop',
   buttons: [{
-    label: 'hp',
-    value: 'highpass',
+    label: 'Start',
+    value: 'start',
   }, {
-    label: 'bp',
-    value: 'bandpass',
+    label: 'Stop',
+    value: 'stop',
   }, {
-    label: 'lp',
-    value: 'lowpass',
+    label: 'Reset',
+    value: 'reset',
   }]
 }]

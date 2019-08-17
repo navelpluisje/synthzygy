@@ -1,11 +1,8 @@
 import { ModuleBase } from '../moduleBase';
 import { VcaNode } from '@nodes/vcaNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleInput } from '@components/moduleInput';
-import { SynthModuleOutput } from '@components/moduleOutput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType } from '../../types';
-import { Colors } from '../../constants';
+import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
+import { PositionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
 import { controlTypes } from './controls';
 import { outputTypes } from './outputs';
@@ -46,7 +43,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentAudioPath)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
         type: input.type,
         node: this.getInputConnection(input.name),
@@ -57,7 +54,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentAudioPath)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentAudioPath)
       this.outputs.push({
         type: output.type,
         node: this.node.output(),
@@ -67,7 +64,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath))
   }
 
   private getInputConnection(type: string): GainNode {

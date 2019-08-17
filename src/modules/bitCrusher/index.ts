@@ -1,11 +1,8 @@
 import { ModuleBase } from '../moduleBase';
 import { BitCrusherNode } from '@nodes/bitCrusherNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleInput } from '@components/moduleInput';
-import { SynthModuleOutput } from '@components/moduleOutput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType } from '../../types';
-import { Colors } from '../../constants';
+import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
+import { PositionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -37,7 +34,7 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEffect)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect)
       this.inputs.push({
         type: input.type,
         node: this.getInputConnection(input.name),
@@ -48,7 +45,7 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
 
   addOutputs() {
     outputTypes.forEach(output => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEffect)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect)
       this.outputs.push({
         type: output.type,
         node: this.node.output(),
@@ -58,9 +55,9 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setBitDepth, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setFrequencyReduction, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setOutputLevel, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setBitDepth, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFrequencyReduction, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setOutputLevel, Colors.AccentEffect))
   }
 
   private getInputConnection(type: string): GainNode {

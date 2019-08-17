@@ -1,6 +1,5 @@
 import { ModuleList } from "@modules/moduleList";
-import { ConnectionList } from "@components/ConnectionList";
-import { SynthModuleRotary } from "@components/moduleRotary";
+import { ConnectionList, Rotary } from "@components/index";
 import { DimensionType } from "src/types";
 
 export class Synth {
@@ -139,7 +138,7 @@ export class Synth {
       this.rotaryCtx = this.rotaryCanvas.getContext('2d')
       this.connectionCtx = this.connectionCanvas.getContext('2d')
 
-      SynthModuleRotary.rotaryCanvas = this.rotaryCtx
+      Rotary.rotaryCanvas = this.rotaryCtx
       ConnectionList.canvas = this.connectionCtx
       this.modules = new ModuleList(this.modulesCtx, this.audioContext)
 

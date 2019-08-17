@@ -1,6 +1,6 @@
-import { ModuleInputType } from "src/types";
+import { SynthConnectorType } from "src/types";
 
-export const inputTypes: ModuleInputType[] = [{
+export const inputTypes: SynthConnectorType[] = [{
   name: 'fm',
   icon: 'cv-in',
   type: 'audio',

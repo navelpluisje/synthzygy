@@ -1,9 +1,7 @@
 import { LfoNode } from '@nodes/lfoNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleOutput } from '@components/moduleOutput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType, ControlType, DimensionType } from '../../types';
-import { Colors, CONTROL_ROTARY, MEDIUM_KNOB } from '../../constants';
+import { SynthModule, OutputConnector, Rotary } from '@components/index';
+import { PositionType, DimensionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { outputTypes } from './outputs';
@@ -33,7 +31,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentModulator)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator)
       this.outputs.push({
         type: output.type,
         node: this.getOutputConnection(output.icon),
@@ -43,7 +41,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator))
   }
 
   private getOutputConnection(type: string): OscillatorNode | GainNode {

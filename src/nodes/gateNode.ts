@@ -1,5 +1,3 @@
-import { disconnect } from "cluster";
-
 export interface GateNode {
   connect(trigger: Function): void
   disconnect(): void

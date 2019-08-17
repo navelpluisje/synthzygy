@@ -1,4 +1,4 @@
-import { STEP_ROTARY } from './../constants';
+import { STEP_ROTARY } from '../constants';
 import { Colors } from '../constants';
 import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
 import { ParentModule } from 'src/interfaces';
@@ -6,7 +6,7 @@ import { knobSizes } from 'src/constants';
 import { roundByStepSize } from '@utilities/numeric';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 
-export class SynthModuleRotary implements SynthModuleControl {
+export class Rotary implements SynthModuleControl {
   static rotaryCanvas: CanvasRenderingContext2D
   position: PositionType
   knobSize: KnobSizeType
@@ -73,7 +73,7 @@ export class SynthModuleRotary implements SynthModuleControl {
     const {min, max, step} = this.valueData
     const {x: xPos, y: yPos} = this.getRotaryPosition()
     const steps = (max - min) / step // Get the number of steps
-    const canvas = SynthModuleRotary.rotaryCanvas
+    const canvas = Rotary.rotaryCanvas
 
     canvas.save()
     canvas.lineWidth = 3
@@ -115,7 +115,7 @@ export class SynthModuleRotary implements SynthModuleControl {
       ((this.value + rangeOffset) / range) * 1.5 * Math.PI,
       1.5 + Math.PI
     ) || 0
-    const canvas = SynthModuleRotary.rotaryCanvas
+    const canvas = Rotary.rotaryCanvas
 
     canvas.clearRect(
       xPos - (this.knobSize.radius + 10),

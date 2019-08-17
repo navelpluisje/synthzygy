@@ -2,7 +2,7 @@ import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants';
 import { ParentModule } from '@interfaces/index';
 
-export interface SynthModuleButtonGroup {
+export interface ButtonGroup {
   draw(): void
   isButtonClicked(xPos: number, yPos: number): void
 }
@@ -14,7 +14,9 @@ type ModuleButtonType = {
 
 type DirectionType = 'vertical' | 'horizontal'
 
-export type ModuleButtonsList = {
+export type ModuleButtonsList = ModuleButtons[]
+
+export type ModuleButtons = {
   position: PositionType
   dimensions: DimensionType
   direction: DirectionType
@@ -22,9 +24,7 @@ export type ModuleButtonsList = {
   buttons: ModuleButtonType[]
 }
 
-export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
-  buttonHeight: number = 20
-  buttonWidth: number = 40
+export class ButtonGroup implements ButtonGroup {
   parent: ParentModule
   canvas: CanvasRenderingContext2D
   color: string
@@ -35,7 +35,7 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
   buttonDimension: DimensionType
   direction: DirectionType
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, buttons: ModuleButtonsList, callback: Function, color: string) {
+  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, buttons: ModuleButtons, callback: Function, color: string) {
     this.canvas = canvas
     this.parent = parent
     this.color = color
@@ -49,6 +49,7 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
 
   draw() {
     const { x, y } = this.getPosition()
+    const {width, height} = this.buttonDimension
     let buttonX = x;
     let buttonY = y;
 
@@ -62,13 +63,13 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
 
     this.buttons.forEach((button, index) => {
       if (this.direction === 'vertical') {
-        buttonY = y + index * this.buttonHeight
+        buttonY = y + index * height
       } else {
-        buttonX = x + index * this.buttonWidth
+        buttonX = x + index * width
       }
       this.canvas.fillStyle = Colors.ControlBackground
       this.canvas.beginPath()
-      this.canvas.rect(buttonX, buttonY, this.buttonWidth, this.buttonHeight)
+      this.canvas.rect(buttonX, buttonY, width, height)
       if (this.activeButton === button.value) {
         this.canvas.fillStyle = this.color
       }
@@ -82,7 +83,7 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
       this.canvas.shadowOffsetY = .5
       this.canvas.shadowBlur = 1
       this.canvas.shadowColor = Colors.ModuleBackground
-      this.canvas.fillText(button.label, buttonX + this.buttonWidth / 2, buttonY + this.buttonHeight / 2)
+      this.canvas.fillText(button.label, buttonX + width / 2, buttonY + height / 2)
       this.canvas.restore()
     })
     this.canvas.restore()
@@ -100,18 +101,19 @@ export class SynthModuleButtonGroup implements SynthModuleButtonGroup {
 
   isButtonClicked(xPos: number, yPos: number): void {
     const { x, y } = this.getPosition()
+    const {width, height} = this.buttonDimension
     let buttonX = x;
     let buttonY = y;
 
     this.buttons.some((button, index) => {
       if (this.direction === 'vertical') {
-        buttonY = y + index * this.buttonHeight
+        buttonY = y + index * height
       } else {
-        buttonX = x + index * this.buttonWidth
+        buttonX = x + index * width
       }
 
-      if (xPos > buttonX  && xPos < buttonX + this.buttonWidth) {
-        if (yPos > buttonY  && yPos < buttonY + this.buttonHeight) {
+      if (xPos > buttonX  && xPos < buttonX + width) {
+        if (yPos > buttonY  && yPos < buttonY + height) {
           this.activeButton = button.value
           this.callback(button.value)
           return true

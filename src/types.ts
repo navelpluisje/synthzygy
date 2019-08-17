@@ -1,6 +1,6 @@
-import { GateNode } from './nodes/gateNode';
-import { SynthModuleOutput } from "@components/moduleOutput";
-import { SynthModuleInput } from "@components/moduleInput";
+import { ClockNode } from '@nodes/clockNode';
+import { GateNode } from '@nodes/gateNode';
+import { OutputConnector, InputConnector } from "@components/index";
 
 export type KnobSizes = 'small' | 'medium' | 'large'
 
@@ -29,7 +29,7 @@ export type DimensionType = {
 
 export type ControlType = {
   type: string,
-  label: string,
+  label?: string,
   size: KnobSizes,
   position: PositionType,
   steps?: Array<string>,
@@ -40,15 +40,7 @@ export type ControlType = {
   log?: boolean,
 }
 
-export type ModuleOutputType = {
-  name: string,
-  icon?: string,
-  type: 'audio' | 'cv' | 'gate',
-  showIcon?: boolean,
-  position: PositionType,
-}
-
-export type ModuleInputType = {
+export type SynthConnectorType = {
   name: string,
   icon?: string,
   type: 'audio' | 'cv' | 'gate',
@@ -116,14 +108,14 @@ export type ActiveOutputType = {
   position: PositionType
   type: string;
   node: Function
-  component: SynthModuleOutput
+  component: OutputConnector
 } | null
 
 export type ActiveInputType = {
   position: PositionType
   type: string;
   node: Function
-  component: SynthModuleInput
+  component: InputConnector
 } | null
 
 export type ActiveControlType = {
@@ -135,8 +127,8 @@ export type ActiveControlType = {
 export type OutputType = {
   type: string,
   node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode,
-  gate?: GateNode,
-  component: SynthModuleOutput,
+  gate?: GateNode | ClockNode,
+  component: OutputConnector,
 }
 
 export type InputType = {
@@ -144,5 +136,5 @@ export type InputType = {
   node?: AudioNode | AudioParam | AudioWorkletNode,
   gate?: Function,
   cv?: AudioParam,
-  component: SynthModuleInput,
+  component: InputConnector,
 }

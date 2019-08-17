@@ -77,11 +77,14 @@ export const AvailableModules = [{
   name: 'utilities',
   title: 'Utilities',
   modules: [{
-    name: 'audioOut',
-    title: 'Audio Output',
-  }, {
     name: 'gate',
     title: 'Gate trigger',
+  }, {
+    name: 'sequencer',
+    title: 'Sequencer',
+  }, {
+    name: 'clock',
+    title: 'Clock',
   }, {
     name: 'keyboard',
     title: 'Keyboard',
@@ -90,6 +93,9 @@ export const AvailableModules = [{
   name: 'audio',
   title: 'Audio',
   modules: [{
+    name: 'audioOut',
+    title: 'Audio Output',
+  }, {
     name: 'mixer',
     title: 'Mixer',
   }, {

@@ -1,11 +1,8 @@
 import { ModuleBase } from '../moduleBase';
 import { EnvelopeNode } from '@nodes/envelopeNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleInput } from '@components/moduleInput';
-import { SynthModuleOutput } from '@components/moduleOutput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType } from '../../types';
-import { Colors } from '../../constants';
+import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
+import { PositionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -37,7 +34,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentModulator)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentModulator)
       this.inputs.push({
         type: input.type,
         gate: this.node.inputGate(),
@@ -48,7 +45,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentModulator)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator)
       this.outputs.push({
         type: output.type,
         node: this.node.output(),
@@ -58,10 +55,10 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator))
   }
 
   getNode() {

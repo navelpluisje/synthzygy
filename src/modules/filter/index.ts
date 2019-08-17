@@ -1,17 +1,13 @@
 import { ModuleBase } from '../moduleBase';
 import { FilterNode } from '@nodes/filterNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleInput } from '@components/moduleInput';
-import { SynthModuleOutput } from '@components/moduleOutput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { PositionType } from '../../types';
-import { Colors } from '../../constants';
+import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
+import { PositionType } from 'src/types';
+import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
 import { buttons } from './buttons'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
-import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
 
 export interface Filter extends Module {
   getNode(): FilterNode
@@ -40,7 +36,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentEffect)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect)
       this.inputs.push({
         type: input.type,
         node: this.getInputConnection(input.name),
@@ -51,7 +47,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
 
   addOutputs() {
     outputTypes.forEach(output => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentEffect)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect)
       this.outputs.push({
         type: output.type,
         node: this.node.output(),
@@ -61,15 +57,17 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
   }
 
   addButtonControls() {
-    this.buttons.push(new SynthModuleButtonGroup(this.canvas, this, buttons, this.node.setFilterType, Colors.AccentEffect))
+    buttons.forEach(buttonGroup => {
+      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentEffect))
+    })
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect))
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect))
   }
 
   private getInputConnection(type: string): GainNode | BiquadFilterNode {

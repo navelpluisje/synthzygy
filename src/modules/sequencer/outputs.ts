@@ -5,7 +5,15 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'envelope-out',
   type: 'audio',
   position: {
-    x: 120,
-    y: 190,
+    x: 550,
+    y: 120,
+  },
+}, {
+  name: 'envelopeOut',
+  icon: 'envelope-out',
+  type: 'audio',
+  position: {
+    x: 550,
+    y: 150,
   },
 }]

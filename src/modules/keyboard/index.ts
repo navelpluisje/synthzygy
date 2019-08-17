@@ -1,6 +1,5 @@
 import { KeyboardNode } from '@nodes/keyboardNode'
-import { SynthModule } from '@components/synthModule';
-import { SynthModuleOutput } from '@components/moduleOutput';
+import { SynthModule, OutputConnector } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
@@ -30,7 +29,7 @@ export class Keyboard extends ModuleBase implements Keyboard, ParentModule {
 
   addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new SynthModuleOutput(this.canvas, this, output, Colors.AccentUtility)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
       const key = output.type === 'gate' ? 'gate' : 'node'
       this.outputs.push({
         type: output.type,

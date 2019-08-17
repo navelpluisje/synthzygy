@@ -15,7 +15,7 @@ export class EnvelopeNode implements EnvelopeNode {
   sustain: number
   release: number
   context: AudioContext
-  gateNode: AudioWorkletNode
+  cvOutputNode: AudioWorkletNode
 
   constructor(
     context: AudioContext,
@@ -29,12 +29,12 @@ export class EnvelopeNode implements EnvelopeNode {
     this.decay = decay
     this.sustain = sustain
     this.release = release
-    this.createGateNode()
+    this.createCvOutputNode()
   }
 
-  createGateNode() {
-    this.gateNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.gateNode.parameters.get('value').setValueAtTime(0, this.context.currentTime)
+  createCvOutputNode() {
+    this.cvOutputNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.cvOutputNode.parameters.get('value').setValueAtTime(0, this.context.currentTime)
   }
 
   setAttack = (attack: number): void => {
@@ -54,7 +54,7 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   getAdsArray(): Float32Array {
-    const from = this.gateNode.parameters.get('value').value || 0
+    const from = this.cvOutputNode.parameters.get('value').value || 0
     const to = this.sustain
     const attackSteps = Math.floor(this.attack * 100)
     const decaySteps = Math.floor(this.decay * 100)
@@ -74,7 +74,7 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   getReleaseArray(): Float32Array {
-    const from = this.gateNode.parameters.get('value').value || this.sustain
+    const from = this.cvOutputNode.parameters.get('value').value || this.sustain
     const to = 0
     const releaseArray = new Float32Array(2)
     releaseArray[0] = from
@@ -87,16 +87,16 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   trigger = (value: number) => {
-    this.gateNode.parameters.get('value').cancelAndHoldAtTime(0)
+    this.cvOutputNode.parameters.get('value').cancelAndHoldAtTime(0)
     if (value === 1) {
-      this.gateNode.parameters.get('value').setValueCurveAtTime(
+      this.cvOutputNode.parameters.get('value').setValueCurveAtTime(
         this.getAdsArray(),
         this.context.currentTime,
         this.getAdsTime() || 0.0001,
       )
     }
     if (value === 0) {
-      this.gateNode.parameters.get('value').setValueCurveAtTime(
+      this.cvOutputNode.parameters.get('value').setValueCurveAtTime(
         this.getReleaseArray(),
         this.context.currentTime,
         this.getReleaseTime() || 0.0001,
@@ -110,6 +110,6 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   output(): AudioWorkletNode {
-    return this.gateNode
+    return this.cvOutputNode
   }
 }

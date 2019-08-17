@@ -4,7 +4,7 @@ import { Colors, knobSizes } from 'src/constants';
 import { ParentModule } from '@interfaces/index';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 
-export class SynthModuleTriggerButton implements SynthModuleControl {
+export class TriggerButton implements SynthModuleControl {
   parent: ParentModule
   canvas: CanvasRenderingContext2D
   color: string

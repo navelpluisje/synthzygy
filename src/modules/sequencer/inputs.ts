@@ -6,7 +6,7 @@ export const inputTypes: SynthConnectorType[] = [{
   type: 'gate',
   position: {
     x: 20,
-    y: 190,
+    y: 150,
   },
   showIcon: true,
 }]

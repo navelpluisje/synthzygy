@@ -1,17 +1,15 @@
 import { Module } from '@interfaces/index';
-import { SynthModuleRotary } from '@components/moduleRotary';
+import { Rotary, ButtonGroup, TriggerButton } from '@components/index';
 import { OutputType, PositionType, InputType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
 import { Colors } from 'src/constants';
-import { SynthModuleButtonGroup } from '@components/moduleButtonGroup';
-import { SynthModuleTriggerButton } from '@components/moduleTriggerButton';
 
 export class ModuleBase implements Module {
   protected title = 'title'
   protected inputs: Array<InputType> = []
   protected outputs: Array<OutputType> = []
-  protected controls: Array<SynthModuleRotary | SynthModuleTriggerButton> = []
-  protected buttons: SynthModuleButtonGroup[] = []
+  protected controls: Array<Rotary | TriggerButton> = []
+  protected buttons: ButtonGroup[] = []
   protected activeOutput: OutputType = null
   protected activeInput: InputType = null
   protected activeControl: number | null = null

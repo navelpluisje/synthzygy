@@ -1,5 +1,5 @@
 
-export class BitCrusher extends AudioWorkletProcessor {
+export class BitCrusherProcessor extends AudioWorkletProcessor {
   _phase: number = 0
   _lastSampleValue: number
 

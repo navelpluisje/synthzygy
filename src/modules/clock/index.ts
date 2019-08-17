@@ -1,5 +1,5 @@
-import { TriggerButton, SynthModule, OutputConnector } from '@components/index';
-import { GateNode } from '@nodes/gateNode'
+import { ClockNode } from '@nodes/clockNode'
+import { SynthModule, OutputConnector, Rotary } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants';
 import { ParentModule, Module } from '@interfaces/index';
@@ -7,24 +7,24 @@ import { ModuleBase } from '@modules/moduleBase';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 
-export interface GateTrigger extends Module{
-  getNode(): GateNode
+export interface Clock extends Module{
+  getNode(): ClockNode
 }
 
-export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule {
+export class Clock extends ModuleBase implements Clock, ParentModule {
   static dimensions: DimensionType = {
     height: 130,
     width: 100,
   }
 
-  type =  'gateTrigger'
-  title = 'Gate'
-  node: GateNode
+  type = 'clock'
+  title = 'Clock'
+  node: ClockNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new GateNode()
-    this.container = new SynthModule(canvas, GateTrigger.dimensions, position, this.color)
+    this.node = new ClockNode(context)
+    this.container = new SynthModule(canvas, Clock.dimensions, position, this.color)
     this.addOutputs()
     this.addControls()
   }
@@ -41,15 +41,8 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
   }
 
   addControls() {
-    this.controls.push(new TriggerButton(
-      this.canvas,
-      this,
-      controlTypes[0],
-      this.node.onKeyDown,
-      this.node.onKeyUp,
-      Colors.AccentUtility,
-    ))
-  }
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect))
+    }
 
   getNode() {
     return this.node

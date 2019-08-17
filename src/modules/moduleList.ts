@@ -1,19 +1,23 @@
-import { BitCrusher } from './bitCrusher/index';
 import { PositionType, DimensionType } from 'src/types';
-import { Lfo } from "@modules/lfo";
-import { Oscillator } from "@modules/oscillator";
-import { Mixer } from "@modules/mixer";
-import { Vca } from "@modules/vca";
-import { Envelope } from "@modules/envelope";
-import { AudioOut } from "@modules/audio-out";
-import { Filter } from "@modules/filter";
-import { Keyboard } from "@modules/keyboard";
-import { GateTrigger } from "@modules/gateTrigger";
-import { Delay } from "@modules/delay";
-import { SynthModuleRotary } from '../components/moduleRotary';
+import {
+  AudioOut,
+  BitCrusher,
+  Clock,
+  Delay,
+  Envelope,
+  Filter,
+  GateTrigger,
+  Keyboard,
+  Lfo,
+  Mixer,
+  Oscillator,
+  Sequencer,
+  Vca,
+ } from "./index";
+import { Rotary } from '../components/rotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher
+type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher | Clock | Sequencer
 type Modules = {
   [key: string]: Module,
 }
@@ -47,6 +51,12 @@ export class ModuleList {
     switch (name) {
       case 'audioOut':
         return AudioOut
+      case 'bitCrusher':
+        return BitCrusher
+      case 'clock':
+        return Clock
+      case 'delay':
+        return Delay
       case 'envelope':
         return Envelope
       case 'filter':
@@ -62,12 +72,10 @@ export class ModuleList {
         return Mixer
       case 'oscillator':
         return Oscillator
+      case 'sequencer':
+        return Sequencer
       case 'vca':
         return Vca
-      case 'delay':
-        return Delay
-      case 'bitCrusher':
-        return BitCrusher
     }
   }
 
@@ -152,7 +160,7 @@ export class ModuleList {
   public draw = () => {
     const {width, height} = Synth.canvasDimension
     this.canvas.clearRect(0, 0, width, height)
-    SynthModuleRotary.rotaryCanvas.clearRect(0, 0, width, height)
+    Rotary.rotaryCanvas.clearRect(0, 0, width, height)
 
     Object.values(this.modules).forEach(module => module.draw())
   }

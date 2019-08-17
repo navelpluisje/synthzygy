@@ -1,6 +1,4 @@
-import { SynthModuleInput } from '@components/moduleInput';
-import { SynthModuleRotary } from '@components/moduleRotary';
-import { SynthModule } from '@components/synthModule';
+import { InputConnector, Rotary, SynthModule } from '@components/index';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { OutputNode } from '@nodes/outputNode'
@@ -34,7 +32,7 @@ export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
 
   addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new SynthModuleInput(this.canvas, this, input, Colors.AccentUtility)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentAudioPath)
       this.inputs.push({
         type: input.type,
         node: this.node.connectAudioIn(),
@@ -44,7 +42,7 @@ export class AudioOut extends ModuleBase implements AudioOut, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new SynthModuleRotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentUtility))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath))
   }
 
   getNode() {
