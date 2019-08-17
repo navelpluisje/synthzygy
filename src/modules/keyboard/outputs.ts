@@ -9,6 +9,7 @@ export const outputTypes: SynthConnectorType[] = [{
     x: 80,
     y: 80,
   },
+  showIcon: true,
 }, {
   name: 'gateOut',
   icon: 'gate-out',
@@ -17,4 +18,5 @@ export const outputTypes: SynthConnectorType[] = [{
     x: 80,
     y: 110,
   },
+  showIcon: true,
 }]

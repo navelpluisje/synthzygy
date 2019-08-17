@@ -8,6 +8,7 @@ export const outputTypes: SynthConnectorType[] = [{
     x: 550,
     y: 120,
   },
+  showIcon: true,
 }, {
   name: 'envelopeOut',
   icon: 'envelope-out',
@@ -16,4 +17,5 @@ export const outputTypes: SynthConnectorType[] = [{
     x: 550,
     y: 150,
   },
+  showIcon: true,
 }]

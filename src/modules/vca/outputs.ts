@@ -8,4 +8,5 @@ export const outputTypes: SynthConnectorType[] = [{
     x: 110,
     y: 120,
   },
+  showIcon: true,
 }]

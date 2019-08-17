@@ -36,8 +36,8 @@ export class SynthConnector {
     this.canvas.arc(x, y, 6, 0, 2 * Math.PI)
     this.canvas.fill()
     this.canvas.beginPath()
-    this.canvas.moveTo(x - 10, y)
-    this.canvas.lineTo(x - 15, y)
+    this.canvas.moveTo(x + 10 * (this.iconOffset / Math.abs(this.iconOffset)), y)
+    this.canvas.lineTo(x + 15 * (this.iconOffset / Math.abs(this.iconOffset)), y)
     this.canvas.stroke();
     this.canvas.restore()
 
