@@ -14,6 +14,7 @@ export class EnvelopeNode implements EnvelopeNode {
   decay: number
   sustain: number
   release: number
+  level: number
   context: AudioContext
   cvOutputNode: AudioWorkletNode
 
@@ -22,13 +23,15 @@ export class EnvelopeNode implements EnvelopeNode {
     attack: number = 1,
     decay: number = 1,
     sustain: number = .5,
-    release: number = 5,
+    release: number = 1,
+    level: number = .8,
     ) {
     this.context = context
     this.attack = attack
     this.decay = decay
     this.sustain = sustain
     this.release = release
+    this.setLevel(.8)
     this.createCvOutputNode()
   }
 
@@ -50,7 +53,11 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   setRelease = (release: number): void => {
-    this.release = release
+    this.release = release / 10
+  }
+
+  setLevel = (level: number): void => {
+    this.level = level * 8
   }
 
   getAdsArray(): Float32Array {
@@ -59,12 +66,15 @@ export class EnvelopeNode implements EnvelopeNode {
     const attackSteps = Math.floor(this.attack * 100)
     const decaySteps = Math.floor(this.decay * 100)
     const adsArray = new Float32Array(attackSteps + decaySteps)
+
     for (let i = 0; i < attackSteps; i += 1) {
-      adsArray[i] = (from + ((1 - from) / attackSteps) * i)
+      adsArray[i] = (from + ((1 - from) / attackSteps) * i) * this.level
     }
+
     for (let i = 0; i < decaySteps; i += 1) {
-      adsArray[i + attackSteps] = 1 + ((this.sustain - 1) / decaySteps) * i
+      adsArray[i + attackSteps] = (1 + ((this.sustain - 1) / decaySteps) * i) * this.level
     }
+
     return adsArray
   }
 
@@ -74,7 +84,7 @@ export class EnvelopeNode implements EnvelopeNode {
   }
 
   getReleaseArray(): Float32Array {
-    const from = this.cvOutputNode.parameters.get('value').value || this.sustain
+    const from = this.cvOutputNode.parameters.get('value').value || this.sustain * this.level
     const to = 0
     const releaseArray = new Float32Array(2)
     releaseArray[0] = from

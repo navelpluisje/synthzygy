@@ -1,26 +1,31 @@
 export interface GateNode {
-  connect(trigger: Function): void
-  disconnect(): void
+  connect(trigger: Function, id: number): void
+  disconnect(id: number): void
   onKeyDown(): void
   onKeyUp(): void
 }
 
 export class GateNode implements GateNode{
-  trigger: Function
+  trigger: Record<number, Function> = {}
 
-  connect(trigger: Function): void {
-    this.trigger = trigger
+  connect(trigger: Function, id: number): void {
+    this.trigger[id] = trigger
   }
 
-  disconnect() {
-    this.trigger = null
+  disconnect(id: number) {
+    this.trigger[id] = null
+    delete this.trigger[id]
   }
 
   onKeyDown = () => {
-    this.trigger && this.trigger(1)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(1))
+    )
   }
 
   onKeyUp = () => {
-    this.trigger && this.trigger(0)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(0))
+    )
   }
 }

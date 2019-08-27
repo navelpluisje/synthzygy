@@ -1,5 +1,5 @@
 import { ModuleBase } from '../moduleBase';
-import { FilterNode } from '@nodes/filterNode'
+import { SequencerNode } from '@nodes/sequencerNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType } from 'src/types';
 import { Colors } from 'src/constants';
@@ -10,7 +10,7 @@ import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 
 export interface Sequencer extends Module {
-  getNode(): FilterNode
+  getNode(): SequencerNode
 }
 
 export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
@@ -22,11 +22,11 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   type = 'sequencer'
   title = 'Sequencer'
   active: boolean = false
-  node: FilterNode
+  node: SequencerNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new FilterNode(context)
+    this.node = new SequencerNode(context)
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
@@ -39,7 +39,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
       const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility)
       this.inputs.push({
         type: input.type,
-        gate: null, // this.node.inputGate(),
+        gate: this.node.inputGate(),
         component,
       })
     })
@@ -50,15 +50,26 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
       const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
       this.outputs.push({
         type: output.type,
-        node: this.node.output(),
+        node: this.getOutputConnection(output.name),
         component,
       })
     })
   }
 
+  private getOutputConnection(type: string): GainNode | AudioWorkletNode {
+    switch (type) {
+      case 'cvOutputA':
+        return this.node.outputA()
+      case 'cvOutputB':
+        return this.node.outputB()
+      case 'gateOutout':
+        return this.node.outputGate()
+    }
+  }
+
   addButtonControls() {
     buttons.forEach(buttonGroup => {
-      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentUtility))
+      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, null, Colors.AccentUtility))
     })
   }
 
@@ -68,7 +79,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     }
   }
 
-  getNode(): FilterNode {
+  getNode(): SequencerNode {
     return this.node
   }
 }

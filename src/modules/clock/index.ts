@@ -41,8 +41,8 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect))
-    }
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentUtility))
+  }
 
   getNode() {
     return this.node

@@ -1,17 +1,16 @@
 export class CvOutputProcessor extends AudioWorkletProcessor {
   // Custom AudioParams can be defined with this static getter.
-  static get parameterDescriptors() {
+  static get parameterDescriptors(): AudioParamDescriptor[] {
     return [{
       name: 'value',
       defaultValue: 0,
     }];
   }
 
-  process (inputs: Float32Array[][], outputs: Float32Array[][], parameters: Map<string, AudioParam>) {
+  process (inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>) {
     const output = outputs[0]
     output.forEach(channel => {
       for (let i = 0; i < channel.length; i++) {
-        // @ts-ignore
         const valueParam = parameters.value
         const value: number =
           valueParam.length > 1

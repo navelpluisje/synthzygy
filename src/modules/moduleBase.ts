@@ -27,7 +27,7 @@ export class ModuleBase implements Module {
     this.canvas = canvas
   }
 
-  draw = (): void => {
+  public draw = (): void => {
     this.container.draw()
     this.container.drawTitle(this.title)
     this.inputs.length && this.inputs.forEach(input => input.component.draw())

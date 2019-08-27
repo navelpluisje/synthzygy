@@ -15,10 +15,12 @@ export class Connection {
   start: OutputType
   end: InputType
   type: string
+  id: number
 
   constructor(start: OutputType, end?: InputType) {
     this.start = start
     this.type = start.type
+    this.id = new Date().getTime()
     end && (this.end = end)
   }
 
@@ -66,7 +68,7 @@ export class Connection {
   connect() {
     switch (this.start.type) {
       case 'gate':
-        this.start.gate.connect(this.end.gate)
+        this.start.gate.connect(this.end.gate, this.id)
         break
       case 'audio':
         this.start.node.connect(<AudioNode>this.end.node)
@@ -77,7 +79,7 @@ export class Connection {
   disconnect() {
     switch (this.start.type) {
       case 'gate':
-        this.start.gate.disconnect()
+        this.start.gate.disconnect(this.id)
         break
       case 'audio':
         this.start.node.disconnect(<AudioNode>this.end.node)

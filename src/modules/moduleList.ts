@@ -1,3 +1,4 @@
+import { Oscilloscope } from './oscilloscope/index';
 import { PositionType, DimensionType } from 'src/types';
 import {
   AudioOut,
@@ -17,7 +18,7 @@ import {
 import { Rotary } from '../components/rotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher | Clock | Sequencer
+type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher | Clock | Sequencer | Oscilloscope
 type Modules = {
   [key: string]: Module,
 }
@@ -72,6 +73,8 @@ export class ModuleList {
         return Mixer
       case 'oscillator':
         return Oscillator
+      case 'oscilloscope':
+        return Oscilloscope
       case 'sequencer':
         return Sequencer
       case 'vca':

@@ -1,5 +1,5 @@
 import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB } from "src/constants";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "src/constants";
 
 export const controlTypes: ControlType[] = [{
   type: CONTROL_ROTARY,
@@ -7,11 +7,11 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0.01,
   max: 10,
-  step: 0.01,
+  step: 0.05,
   log: false,
   value: 1,
   position: {
-    x: 40,
+    x: 70,
     y: 65,
   }
 }, {
@@ -20,11 +20,11 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0.01,
   max: 10,
-  step: 0.01,
+  step: 0.05,
   log: false,
   value: 1,
   position: {
-    x: 100,
+    x: 130,
     y: 65,
   }
 }, {
@@ -46,11 +46,24 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 10,
-  step: 0.01,
+  step: 0.05,
   log: false,
   value: 5,
   position: {
     x: 100,
+    y: 135,
+  }
+}, {
+  type: CONTROL_ROTARY,
+  label: 'level',
+  size: SMALL_KNOB,
+  min: 0,
+  max: 1,
+  step: 0.01,
+  log: false,
+  value: .8,
+  position: {
+    x: 160,
     y: 135,
   }
 }]

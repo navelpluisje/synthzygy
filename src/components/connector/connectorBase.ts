@@ -23,7 +23,7 @@ export class SynthConnector {
     this.color = color
   }
 
-  draw() {
+  public draw() {
     const { x, y } = this.getPosition()
 
     this.canvas.save()

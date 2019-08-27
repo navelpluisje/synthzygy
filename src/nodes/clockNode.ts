@@ -1,20 +1,25 @@
 export class ClockNode {
   private frequency: number = 10
   private pulseWidth: number = 0.5
-  private trigger: Function
+  private trigger: Record<number, Function> = {}
   private node: AudioWorkletNode
   private context: AudioContext
   private output: GainNode
 
   constructor(context: AudioContext) {
     this.context = context
+
     this.output = this.context.createGain()
     this.output.gain.setValueAtTime(0, this.context.currentTime)
+
     this.node = new AudioWorkletNode(this.context, 'clock-processor')
+    this.node.port.onmessage = this.handleMessage
+
+    this.node.connect(this.output)
+    this.output.connect(this.context.destination)
+
     this.setFrequency(this.frequency)
     this.setPulseWidth(this.pulseWidth)
-    this.node.port.onmessage = this.handleMessage
-    this.node.connect(this.output).connect(this.context.destination)
   }
 
   public setFrequency = (frequency: number) => {
@@ -28,22 +33,29 @@ export class ClockNode {
   }
 
   private handleMessage = (event: MessageEvent) => {
-    this.trigger && this.trigger(event.data.value)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(event.data.value))
+    )
   }
 
-  public connect(trigger: Function): void {
-    this.trigger = trigger
+  public connect(trigger: Function, id: number): void {
+    this.trigger[id] = trigger
   }
 
-  public disconnect() {
-    this.trigger = null
+  public disconnect(id: number) {
+    this.trigger[id] = null
+    delete this.trigger[id]
   }
 
   public onKeyDown = () => {
-    this.trigger && this.trigger(1)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(1))
+    )
   }
 
   public onKeyUp = () => {
-    this.trigger && this.trigger(0)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(0))
+    )
   }
 }

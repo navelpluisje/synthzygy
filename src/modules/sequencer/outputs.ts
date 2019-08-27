@@ -1,7 +1,16 @@
 import { SynthConnectorType } from "src/types";
 
 export const outputTypes: SynthConnectorType[] = [{
-  name: 'envelopeOut',
+  name: 'cvOutputA',
+  icon: 'envelope-out',
+  type: 'audio',
+  position: {
+    x: 550,
+    y: 90,
+  },
+  showIcon: true,
+}, {
+  name: 'cvOutputB',
   icon: 'envelope-out',
   type: 'audio',
   position: {
@@ -10,9 +19,9 @@ export const outputTypes: SynthConnectorType[] = [{
   },
   showIcon: true,
 }, {
-  name: 'envelopeOut',
-  icon: 'envelope-out',
-  type: 'audio',
+  name: 'gateOut',
+  icon: 'gate-out',
+  type: 'gate',
   position: {
     x: 550,
     y: 150,

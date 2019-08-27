@@ -15,7 +15,7 @@ export interface Envelope extends Module {
 export class Envelope extends ModuleBase implements Envelope, ParentModule {
   static dimensions = {
     height: 210,
-    width: 140,
+    width: 200,
   }
 
   type = 'envelope'
@@ -59,6 +59,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator))
     this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator))
     this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator))
   }
 
   getNode() {

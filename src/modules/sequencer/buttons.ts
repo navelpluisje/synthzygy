@@ -21,4 +21,22 @@ export const buttons: ModuleButtonsList = [{
     label: 'Reset',
     value: 'reset',
   }]
+}, {
+  position: {
+    x: 445,
+    y: 45,
+  },
+  dimensions: {
+    height: 25,
+    width: 35,
+  },
+  direction: 'horizontal',
+  active: '1-8',
+  buttons: [{
+    label: '1-8',
+    value: '1-8',
+  }, {
+    label: '9-16',
+    value: '9-16',
+  }]
 }]

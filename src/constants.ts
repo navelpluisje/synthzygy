@@ -88,6 +88,9 @@ export const AvailableModules = [{
   }, {
     name: 'keyboard',
     title: 'Keyboard',
+  }, {
+    name: 'oscilloscope',
+    title: 'Oscilloscope',
   }]
 }, {
   name: 'audio',

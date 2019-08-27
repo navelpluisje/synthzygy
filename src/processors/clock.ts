@@ -22,29 +22,28 @@ export class ClockProcessor extends AudioWorkletProcessor {
 
   constructor() {
     super()
-    this.count = 0;
+    this.count = 0
     this.value = 0
   }
 
-  process (inputs: Float32Array[][], outputs: Float32Array[][], parameters: Map<string, AudioParam>) {
+  process (inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>) {
     const output = outputs[0] // We only have and accept one output
-    // @ts-ignore
-    const width = parameters.pulseWidth.length === 1
-    // @ts-ignore
-    const freq = parameters.frequency.length === 1
+    const pulseWidth = parameters.pulseWidth
+    const frequency = parameters.frequency
+    const singlePulseWidth = pulseWidth.length === 1
+    const singleFrequency = frequency.length === 1
 
     output.forEach((channel) => {
       for (let i = 0; i < channel.length; i += 1) {
         this.count += 1
-        // @ts-ignore
-        const waveLength = sampleRate / parameters.frequency[freq ? 0 : i]
-        // @ts-ignore
-        const out = this.count < (waveLength * parameters.pulseWidth[width ? 0 : i]) ? 1 : 0
+        const waveLength = sampleRate / frequency[singleFrequency ? 0 : i]
+        const out = this.count < (waveLength * pulseWidth[singlePulseWidth ? 0 : i]) ? 1 : 0
+
         if (out !== this.value) {
-          this.port.postMessage({ value: this.value })
           this.value = out
+          this.port.postMessage({ value: this.value })
         }
-        if (this.count === waveLength) {
+        if (this.count >= waveLength) {
           this.count = 0
         }
         channel[i] = out
