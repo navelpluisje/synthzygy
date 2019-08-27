@@ -44,7 +44,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator))
   }
 
-  private getOutputConnection(type: string): OscillatorNode | GainNode {
+  private getOutputConnection(type: string): GainNode {
     switch (type) {
       case 'saw':
         return this.node.outputSaw()
