@@ -54,10 +54,10 @@ export const controlTypes: ControlType[] = [{
   label: 'Out',
   size: SMALL_KNOB,
   min: 0,
-  max: 1,
+  max: 2,
   step: .01,
   log: false,
-  value: .5,
+  value: 1,
   position: {
     x: 65,
     y: 205,
