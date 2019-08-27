@@ -96,7 +96,10 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.cvFmNode.connect(this.sineWave.frequency)
     this.cvFmNode.connect(this.triangleWave.frequency)
 
+    this.squareWave.connect(this.squareBoost)
+    this.sawWave.connect(this.sawBoost)
     this.sineWave.connect(this.sineBoost)
+    this.triangleWave.connect(this.triangleBoost)
   }
 
     /**
