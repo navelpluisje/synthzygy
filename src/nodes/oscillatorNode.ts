@@ -7,10 +7,10 @@ export interface JsOscillatorNode {
   // Inputs
   inputCvFM(): GainNode
   inputCvFrequency(): GainNode  // Outputs
-  outputSaw(): OscillatorNode
+  outputSaw(): GainNode
   outputSine(): GainNode
-  outputSquare(): OscillatorNode
-  outputTriangle(): OscillatorNode
+  outputSquare(): GainNode
+  outputTriangle(): GainNode
 }
 
 export class JsOscillatorNode implements JsOscillatorNode {
@@ -20,10 +20,13 @@ export class JsOscillatorNode implements JsOscillatorNode {
   octave: number
   context: AudioContext
   squareWave: OscillatorNode
+  squareBoost: GainNode
   sawWave: OscillatorNode
+  sawBoost: GainNode
   sineWave: OscillatorNode
-  triangleWave: OscillatorNode
   sineBoost: GainNode
+  triangleWave: OscillatorNode
+  triangleBoost: GainNode
   cvFmNode: GainNode
   cvFrequencyNode: GainNode
   detuneConstant: ConstantSourceNode
@@ -63,8 +66,17 @@ export class JsOscillatorNode implements JsOscillatorNode {
   }
 
   createGainNodes() {
+    this.squareBoost = this.context.createGain()
+    this.squareBoost.gain.setValueAtTime(5, this.context.currentTime)
+
+    this.sawBoost = this.context.createGain()
+    this.sawBoost.gain.setValueAtTime(5, this.context.currentTime)
+
     this.sineBoost = this.context.createGain()
-    this.sineBoost.gain.setValueAtTime(3, this.context.currentTime)
+    this.sineBoost.gain.setValueAtTime(5, this.context.currentTime)
+
+    this.triangleBoost = this.context.createGain()
+    this.triangleBoost.gain.setValueAtTime(5, this.context.currentTime)
 
     this.cvFmNode = this.context.createGain();
     this.cvFmNode.gain.setValueAtTime(1, this.context.currentTime)
@@ -142,19 +154,19 @@ export class JsOscillatorNode implements JsOscillatorNode {
     return this.cvFmNode
   }
 
-  outputSaw(): OscillatorNode {
-    return this.sawWave
+  outputSaw(): GainNode {
+    return this.sawBoost
   }
 
   outputSine(): GainNode {
     return this.sineBoost
   }
 
-  outputSquare(): OscillatorNode {
-    return this.squareWave
+  outputSquare(): GainNode {
+    return this.squareBoost
   }
 
-  outputTriangle(): OscillatorNode {
-    return this.triangleWave
+  outputTriangle(): GainNode {
+    return this.triangleBoost
   }
 }

@@ -60,7 +60,7 @@ export class Oscillator extends ModuleBase implements Oscillator, ParentModule {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator))
   }
 
-  private getOutputConnection(type: string): GainNode | OscillatorNode {
+  private getOutputConnection(type: string): GainNode {
     switch (type) {
       case 'sawWave':
         return this.node.outputSaw()

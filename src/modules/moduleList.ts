@@ -18,7 +18,20 @@ import {
 import { Rotary } from '../components/rotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo | Oscillator | Mixer | Vca | Envelope | AudioOut | Filter | GateTrigger | Keyboard | Delay | BitCrusher | Clock | Sequencer | Oscilloscope
+type Module = Lfo
+  | Oscillator
+  | Mixer
+  | Vca
+  | Envelope
+  | AudioOut
+  | Filter
+  | GateTrigger
+  | Keyboard
+  | Delay
+  | BitCrusher
+  | Clock
+  | Sequencer
+  | Oscilloscope
 type Modules = {
   [key: string]: Module,
 }
