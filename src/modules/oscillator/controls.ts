@@ -5,26 +5,26 @@ export const controlTypes: Array<ControlType> = [{
   type: CONTROL_ROTARY,
   label: 'Freq',
   size: MEDIUM_KNOB,
-  min: 100,
-  max: 17956,
-  step: .1,
+  min: 0,
+  max: 10,
+  step: .005,
   log: true,
-  value: 440,
+  value: 3,
   position: {
-    x: 85,
-    y: 65,
+    x: 95,
+    y: 95,
   }
 }, {
   type: STEP_ROTARY,
-  label: 'Range',
+  label: 'Octave',
   size: SMALL_KNOB,
-  min: -3,
-  max: 2,
+  min: 0,
+  max: 8,
   step: 1,
   log: false,
-  value: 0,
+  value: 3,
   position: {
-    x: 30,
+    x: 40,
     y: 65,
   },
 }, {
@@ -32,12 +32,25 @@ export const controlTypes: Array<ControlType> = [{
   label: 'FM',
   size: MEDIUM_KNOB,
   min: 0,
-  max: 10,
-  step: .05,
+  max: 1,
+  step: .005,
   value: 0,
   log: false,
   position: {
-    x: 85,
-    y: 140,
+    x: 95,
+    y: 170,
+  }
+}, {
+  type: CONTROL_ROTARY,
+  label: 'Detune',
+  size: SMALL_KNOB,
+  min: -1200,
+  max: 1200,
+  step: 10,
+  value: 0,
+  log: false,
+  position: {
+    x: 150,
+    y: 65,
   }
 }]

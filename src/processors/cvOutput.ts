@@ -9,6 +9,7 @@ export class CvOutputProcessor extends AudioWorkletProcessor {
 
   process (inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>) {
     const output = outputs[0]
+
     output.forEach(channel => {
       for (let i = 0; i < channel.length; i++) {
         const valueParam = parameters.value

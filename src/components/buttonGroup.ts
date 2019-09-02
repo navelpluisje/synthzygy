@@ -29,13 +29,21 @@ export class ButtonGroup implements ButtonGroup {
   canvas: CanvasRenderingContext2D
   color: string
   buttons: ModuleButtonType[]
-  activeButton: string
+  activeButton: string | null
   position: PositionType
   callback: Function
   buttonDimension: DimensionType
   direction: DirectionType
+  isToggle: boolean
 
-  constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, buttons: ModuleButtons, callback: Function, color: string) {
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    parent: ParentModule,
+    buttons: ModuleButtons,
+    callback: Function,
+    color: string,
+    isToggle: boolean = false,
+  ) {
     this.canvas = canvas
     this.parent = parent
     this.color = color
@@ -45,6 +53,7 @@ export class ButtonGroup implements ButtonGroup {
     this.direction = buttons.direction
     this.buttonDimension = buttons.dimensions
     this.callback = callback
+    this.isToggle = isToggle
   }
 
   draw() {
@@ -114,8 +123,12 @@ export class ButtonGroup implements ButtonGroup {
 
       if (xPos > buttonX  && xPos < buttonX + width) {
         if (yPos > buttonY  && yPos < buttonY + height) {
-          this.activeButton = button.value
-          this.callback(button.value)
+          if (this.isToggle && this.activeButton === button.value) {
+            this.activeButton = null
+          } else {
+            this.activeButton = button.value
+          }
+          this.callback(this.activeButton)
           return true
         }
       }

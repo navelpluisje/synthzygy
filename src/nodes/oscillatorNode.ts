@@ -6,7 +6,7 @@ export interface JsOscillatorNode {
   setOctave(octave: number): void
   // Inputs
   inputCvFM(): GainNode
-  inputCvFrequency(): GainNode  // Outputs
+  inputCvFrequency(): AudioWorkletNode  // Outputs
   outputSaw(): GainNode
   outputSine(): GainNode
   outputSquare(): GainNode
@@ -18,6 +18,7 @@ export class JsOscillatorNode implements JsOscillatorNode {
   detune: number
   fm: number
   octave: number
+  range: 'octave' | 'full' = 'full'
   context: AudioContext
   squareWave: OscillatorNode
   squareBoost: GainNode
@@ -28,15 +29,15 @@ export class JsOscillatorNode implements JsOscillatorNode {
   triangleWave: OscillatorNode
   triangleBoost: GainNode
   cvFmNode: GainNode
-  cvFrequencyNode: GainNode
+  cvFrequencyNode: AudioWorkletNode
   detuneConstant: ConstantSourceNode
 
   constructor(
     context: AudioContext,
-    frequency: number = 440,
+    frequency: number = 3,
     detune: number = 0,
     fm: number = 0,
-    octave: number = 0,
+    octave: number = 3,
   ) {
     this.context = context
     this.frequency = frequency
@@ -46,6 +47,13 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.createGainNodes()
     this.createOscillators()
     this.connectNodes()
+    this.setDefaultValues()
+  }
+
+  setDefaultValues() {
+    this.setFrequency(this.frequency)
+    this.setOctave(this.octave)
+    this.setRange(this.range)
   }
 
   createOscillators() {
@@ -58,6 +66,11 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.sawWave.type = 'sawtooth'
     this.sineWave.type = 'sine'
     this.triangleWave.type = 'triangle'
+
+    this.squareWave.frequency.setValueAtTime(0, this.context.currentTime)
+    this.sawWave.frequency.setValueAtTime(0, this.context.currentTime)
+    this.sineWave.frequency.setValueAtTime(0, this.context.currentTime)
+    this.triangleWave.frequency.setValueAtTime(0, this.context.currentTime)
 
     this.squareWave.start()
     this.sawWave.start()
@@ -81,45 +94,21 @@ export class JsOscillatorNode implements JsOscillatorNode {
     this.cvFmNode = this.context.createGain();
     this.cvFmNode.gain.setValueAtTime(1, this.context.currentTime)
 
-    this.cvFrequencyNode = this.context.createGain();
-    this.cvFrequencyNode.gain.setValueAtTime(3, this.context.currentTime)
+    this.cvFrequencyNode = new AudioWorkletNode(this.context, 'frequency-processor')
   }
 
   connectNodes() {
+    this.cvFmNode.connect(this.cvFrequencyNode.parameters.get('fm'))
+
     this.cvFrequencyNode.connect(this.squareWave.frequency)
     this.cvFrequencyNode.connect(this.sawWave.frequency)
     this.cvFrequencyNode.connect(this.sineWave.frequency)
     this.cvFrequencyNode.connect(this.triangleWave.frequency)
 
-    this.cvFmNode.connect(this.squareWave.frequency)
-    this.cvFmNode.connect(this.sawWave.frequency)
-    this.cvFmNode.connect(this.sineWave.frequency)
-    this.cvFmNode.connect(this.triangleWave.frequency)
-
     this.squareWave.connect(this.squareBoost)
     this.sawWave.connect(this.sawBoost)
     this.sineWave.connect(this.sineBoost)
     this.triangleWave.connect(this.triangleBoost)
-  }
-
-    /**
-   * Get the calculated frequency including the octave range
-   * Octave goes from -2 to 2 in steps of 1
-   * More info on notes and frequency calculations: https://pages.mtu.edu/~suits/NoteFreqCalcs.html
-   *
-   * @returns {number} The recalculated frequency for the oscillator
-   * @memberof JsOscillatorNode
-   */
-  getFrequency(): number {
-    return this.frequency * (2 ** this.octave)
-  }
-
-  handleFrequencyChange(): void {
-    const frequency = this.getFrequency()
-    this.sawWave.frequency.setValueAtTime(frequency, this.context.currentTime)
-    this.sineWave.frequency.setValueAtTime(frequency, this.context.currentTime)
-    this.squareWave.frequency.setValueAtTime(frequency, this.context.currentTime)
-    this.triangleWave.frequency.setValueAtTime(frequency, this.context.currentTime)
   }
 
   handleDetuneChange(): void {
@@ -131,7 +120,7 @@ export class JsOscillatorNode implements JsOscillatorNode {
 
   setFrequency = (frequency: number): void => {
     this.frequency = frequency
-    this.handleFrequencyChange()
+    this.cvFrequencyNode.parameters.get('frequency').setValueAtTime(this.frequency, this.context.currentTime)
   }
 
   setDetune = (detune: number): void => {
@@ -146,10 +135,15 @@ export class JsOscillatorNode implements JsOscillatorNode {
 
   setOctave = (octave: number): void => {
     this.octave = octave
-    this.handleFrequencyChange()
+    this.cvFrequencyNode.parameters.get('octave').setValueAtTime(this.octave, this.context.currentTime)
   }
 
-  inputCvFrequency(): GainNode {
+  setRange = (type: string | null) => {
+    this.range = type ? 'full' : 'octave'
+    this.cvFrequencyNode.parameters.get('range').setValueAtTime(this.range === 'full' ? 1 : 0, this.context.currentTime)
+  }
+
+  inputCvFrequency(): AudioWorkletNode {
     return this.cvFrequencyNode
   }
 

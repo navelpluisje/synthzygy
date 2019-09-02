@@ -5,8 +5,8 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'saw',
   type: 'audio',
   position: {
-    x: 160,
-    y: 80,
+    x: 170,
+    y: 120,
   },
   showIcon: true,
 }, {
@@ -14,8 +14,8 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'square',
   type: 'audio',
   position: {
-    x: 160,
-    y: 110,
+    x: 170,
+    y: 150,
   },
   showIcon: true,
 }, {
@@ -23,8 +23,8 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'sine',
   type: 'audio',
   position: {
-    x: 160,
-    y: 140,
+    x: 170,
+    y: 180,
   },
   showIcon: true,
 }, {
@@ -32,8 +32,8 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'triangle',
   type: 'audio',
   position: {
-    x: 160,
-    y: 170,
+    x: 170,
+    y: 210,
   },
   showIcon: true,
 }]

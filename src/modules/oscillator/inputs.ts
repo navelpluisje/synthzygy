@@ -6,14 +6,14 @@ export const inputTypes: SynthConnectorType[] = [{
   type: 'audio',
   position: {
     x: 20,
-    y: 155,
+    y: 195,
   },
   connection: [{
-    x: 45,
-    y: 155,
-  }, {
     x: 60,
-    y: 140,
+    y: 195,
+  }, {
+    x: 75,
+    y: 180,
   }]
 }, {
   name: 'frequency',
@@ -21,13 +21,13 @@ export const inputTypes: SynthConnectorType[] = [{
   type: 'audio',
   position: {
     x: 20,
-    y: 125,
+    y: 165,
   },
   connection: [{
     x: 45,
-    y: 125,
+    y: 165,
   }, {
-    x: 70,
-    y: 100,
+    x: 85,
+    y: 125,
   }]
 }]
