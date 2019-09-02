@@ -1,17 +1,15 @@
 # LFO
 
-<span style="margin-right: 1rem; float: left;">![Envelope](./images/lfo.png)</span>Low-frequency oscillation (LFO) is an electronic frequency which is usually below 20 Hz and creates a rhythmic pulse or sweep.
+![Envelope](./images/lfo.png)
+
+Low-frequency oscillation (LFO) is an electronic frequency which is usually below 20 Hz and creates a rhythmic pulse or sweep.
 
 [Read more](https://en.wikipedia.org/wiki/Low-frequency_oscillation)
-
-<hr style="width: 100%">
 
 ## Control
 * Frequency: Set the frequency of the LFO
   * min value: 0.01Hz
   * max value: 20Hz
-
----
 
 ## Outputs
 * Square wave
