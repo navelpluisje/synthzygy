@@ -1,3 +1,5 @@
+import { GateNode } from "./gateNode";
+
 export interface SequencerNode {
   // Controls
   setStepA(index: number, value: number): void
@@ -15,30 +17,13 @@ export interface SequencerNode {
   //outputs
   outputA(): AudioWorkletNode
   outputB(): AudioWorkletNode
-  outputGate(): GainNode
+  outputGate(): GateNode
 }
 
 export class SequencerNode implements SequencerNode {
-  private stepsA: Float32Array = new Float32Array([
-    110,
-    220,
-    330,
-    440,
-    330,
-    220,
-    110,
-    220,
-    330,
-    440,
-    330,
-    220,
-    110,
-    220,
-    330,
-    440,
-    330,
-  ])
-  private stepsB: Float32Array = new Float32Array(16)
+  private stepsA: Float32Array = new Float32Array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
+  private stepsB: Float32Array = new Float32Array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
+  private gates: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   private length: number = 16
   private running: boolean = false
   private currentStep: number = 0
@@ -47,11 +32,13 @@ export class SequencerNode implements SequencerNode {
   private context: AudioContext
   private cvOutputNodeA: AudioWorkletNode
   private cvOutputNodeB: AudioWorkletNode
+  private gateOutput: GateNode
 
   constructor(
     context: AudioContext,
     ) {
     this.context = context
+    this.gateOutput = new GateNode()
     this.createCvOutputNodes()
   }
 
@@ -83,6 +70,14 @@ export class SequencerNode implements SequencerNode {
     this.glideDuration = duration
   }
 
+  setStepAValue(index: number, value: number) {
+    this.stepsA[index] = value
+  }
+
+  setGateStep(index: number, value: boolean) {
+    this.gates[index] = value
+  }
+
   private createCvOutputNodes() {
     this.cvOutputNodeA = new AudioWorkletNode(this.context, 'cv-output-processor')
     this.cvOutputNodeA.parameters.get('value').setValueAtTime(0, this.context.currentTime)
@@ -110,6 +105,13 @@ export class SequencerNode implements SequencerNode {
         this.context.currentTime
       )
     }
+    if (this.gates[this.currentStep]) {
+      if (value === 1) {
+        this.gateOutput.onKeyDown()
+      } else {
+        this.gateOutput.onKeyUp()
+      }
+    }
   }
 
   inputGate(): Function {
@@ -122,5 +124,9 @@ export class SequencerNode implements SequencerNode {
 
   outputB(): AudioWorkletNode {
     return this.cvOutputNodeB
+  }
+
+  outputGate(): GateNode {
+    return this.gateOutput
   }
 }

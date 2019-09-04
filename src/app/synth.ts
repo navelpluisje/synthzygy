@@ -40,6 +40,7 @@ export class Synth {
 
  public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
+    console.log('Synth Mousedown')
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {
         const module = this.modules.getActiveModule()

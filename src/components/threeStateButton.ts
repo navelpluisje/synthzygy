@@ -25,18 +25,32 @@ export class ThreeStateButton {
     this.color = color
   }
 
-  public draw() {
+  public draw(overWrite = false) {
     const { x, y } = this.getPosition()
 
+    if (overWrite) {
+      this.canvas.save()
+      this.canvas.fillStyle = Colors.ModuleBackground
+      this.canvas.fillRect(x - 1, y - 1, this.size + 2, this.size + 2)
+      this.canvas.restore()
+    }
     this.canvas.save()
     this.canvas.beginPath()
     this.canvas.lineWidth = 2
     this.canvas.strokeStyle = this.color
-    this.canvas.fillStyle = Colors.ControlBackground
+    this.canvas.fillStyle = Colors.TransWhite
     this.canvas.arc(x, y, this.size, 0, 2 * Math.PI)
     this.canvas.fill()
     this.canvas.stroke()
     this.canvas.restore()
+    if (this.active) {
+      this.canvas.save()
+      this.canvas.beginPath()
+      this.canvas.fillStyle = this.color
+      this.canvas.arc(x, y, 4, 0, 2 * Math.PI)
+      this.canvas.fill()
+      this.canvas.restore()
+    }
   }
 
   getPosition(): PositionType {
@@ -59,7 +73,7 @@ export class ThreeStateButton {
     if (xPos > x - this.size  && xPos < x + this.size) {
       if (yPos > y - this.size  && yPos < y + this.size) {
         this.active = !this.active
-        this.onClick()
+        this.onClick(this.active)
         return true
       }
     }

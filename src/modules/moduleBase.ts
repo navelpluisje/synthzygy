@@ -25,9 +25,10 @@ export class ModuleBase implements Module {
   constructor(canvas: CanvasRenderingContext2D, position: PositionType) {
     this.position = position
     this.canvas = canvas
+    this.draw.bind(this)
   }
 
-  public draw = (): void => {
+  draw(): void {
     this.container.draw()
     this.container.drawTitle(this.title)
     this.inputs.length && this.inputs.forEach(input => input.component.draw())
@@ -50,6 +51,7 @@ export class ModuleBase implements Module {
   }
 
   onMouseDown(event: MouseEvent): boolean {
+    console.log('base : mouse down')
     const {layerX: xPos, layerY: yPos} = event
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.offset = {
@@ -59,6 +61,7 @@ export class ModuleBase implements Module {
     this.outputs.some(output => {
       const position = output.component.isOutputClicked(xPos, yPos)
       if (position) {
+        console.log('base : output clicked')
         this.activeOutput = output
         return true
       }
@@ -68,6 +71,7 @@ export class ModuleBase implements Module {
       this.controls.some((control, index) => {
         const clicked = control.isControlPressed(xPos, yPos)
         if (clicked) {
+          console.log('base : control clicked')
           this.activeControl = index
         }
         return clicked
@@ -81,7 +85,7 @@ export class ModuleBase implements Module {
     if (!this.active) { return }
     if (this.activeControl !== null) {
       this.controls[this.activeControl].onMouseMove(event)
-      requestAnimationFrame(this.draw)
+      requestAnimationFrame(this.draw.bind(this))
     } else if (this.activeOutput === null) {
 
       this.position.x = event.layerX - this.offset.x
