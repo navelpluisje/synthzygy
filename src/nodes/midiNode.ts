@@ -55,15 +55,11 @@ export class MidiNode {
       .from(midiAccess.outputs)
       .map(output => output[1]);
 
-    console.log(this.midiInputs)
-    console.log(this.midiOutputs)
-
     this.setMidiDevice('-1883882508')
 
   }
 
   setMidiDevice(id: string) {
-    console.log('set device', id)
     const input = this.midiInputs.filter(inp => inp.id === id);
     const output = this.midiOutputs.filter(outp => outp.id === id);
     if (input.length > 0) {
@@ -94,13 +90,11 @@ export class MidiNode {
   private setNote(midiNote: number) {
     // @ts-ignore
     const note = notes[midiNote].value
-    console.log(this.cvNoteNode.parameters.get('value').value, note)
     this.cvNoteNode.parameters.get('value').setValueAtTime(note, this.context.currentTime)
   }
 
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
     const [cmd, key, value] = message.data;
-    console.log({cmd, key, value})
     const command = MidiNode.substractCommand(cmd);
 
     if (this.port !== null && command.port !== this.port) {
