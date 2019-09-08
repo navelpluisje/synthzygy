@@ -1,4 +1,5 @@
 import { KeyboardNode } from '@nodes/keyboardNode'
+import { MidiNode } from '@nodes/midiNode'
 import { SynthModule, OutputConnector } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants';
@@ -6,24 +7,22 @@ import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { outputTypes } from './outputs';
 
-export interface Keyboard extends Module{
-  getNode(): KeyboardNode
-}
-
-export class Keyboard extends ModuleBase implements Keyboard, ParentModule {
+export class Midi extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
     height: 130,
     width: 100,
   }
 
-  type =  'keyboard'
-  title = 'Keyboard'
+  type =  'midi'
+  title = 'Midi'
   node: KeyboardNode
+  midiNode: MidiNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.node = new KeyboardNode(context)
-    this.container = new SynthModule(canvas, Keyboard.dimensions, position, this.color)
+    this.midiNode = new MidiNode(context)
+    this.container = new SynthModule(canvas, Midi.dimensions, position, this.color)
     this.addOutputs()
   }
 

@@ -5,7 +5,7 @@ import { Delay } from './delay';
 import { Envelope } from './envelope';
 import { Filter } from './filter';
 import { GateTrigger } from './gateTrigger';
-import { Keyboard } from './keyboard';
+import { Midi } from './midi';
 import { Lfo } from './lfo';
 import { Mixer } from './mixer';
 import { Oscillator } from './oscillator';
@@ -20,7 +20,7 @@ export {
   Envelope,
   Filter,
   GateTrigger,
-  Keyboard,
+  Midi,
   Lfo,
   Mixer,
   Oscillator,

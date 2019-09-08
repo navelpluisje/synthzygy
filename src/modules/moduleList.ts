@@ -8,7 +8,7 @@ import {
   Envelope,
   Filter,
   GateTrigger,
-  Keyboard,
+  Midi,
   Lfo,
   Mixer,
   Oscillator,
@@ -26,7 +26,7 @@ type Module = Lfo
   | AudioOut
   | Filter
   | GateTrigger
-  | Keyboard
+  | Midi
   | Delay
   | BitCrusher
   | Clock
@@ -78,8 +78,8 @@ export class ModuleList {
       case 'gate':
       case 'gateTrigger':
         return GateTrigger
-      case 'keyboard':
-        return Keyboard
+      case 'midi':
+        return Midi
       case 'lfo':
         return Lfo
       case 'mixer':

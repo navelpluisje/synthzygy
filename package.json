@@ -23,6 +23,7 @@
     "@movable/rollup-plugin-html": "^0.3.0",
     "@navelpluisje/rollup-plugin-css": "^1.0.0",
     "@types/jest": "^24.0.15",
+    "@types/webmidi": "^2.0.3",
     "jest": "^24.8.0",
     "rollup": "^1.12.4",
     "rollup-plugin-html": "^0.2.1",
