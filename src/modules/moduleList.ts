@@ -157,8 +157,8 @@ export class ModuleList {
     const activeModule = this.getActiveModule()
     const offset = activeModule.getOffset()
     const position = {
-      x: event.layerX - offset.x,
-      y: event.layerY - offset.y,
+      x: event.offsetX - offset.x,
+      y: event.offsetY - offset.y,
     }
     const dimensions = this.getModule(activeModule.type).dimensions
 

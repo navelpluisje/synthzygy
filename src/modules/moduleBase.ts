@@ -38,9 +38,9 @@ export class ModuleBase implements Module {
   }
 
   getSelectedInput(event: MouseEvent): InputType | null {
-    const { layerX, layerY } = event
+    const { offsetX, offsetY } = event
     this.inputs.some(input => {
-      const position = input.component.isInputClicked(layerX, layerY)
+      const position = input.component.isInputClicked(offsetX, offsetY)
       if (position) {
         this.activeInput = input
         return true
@@ -52,7 +52,7 @@ export class ModuleBase implements Module {
 
   onMouseDown(event: MouseEvent): boolean {
     console.log('base : mouse down')
-    const {layerX: xPos, layerY: yPos} = event
+    const {offsetX: xPos, offsetY: yPos} = event
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.offset = {
       x: xPos - this.position.x,
@@ -88,24 +88,24 @@ export class ModuleBase implements Module {
       requestAnimationFrame(this.draw.bind(this))
     } else if (this.activeOutput === null) {
 
-      this.position.x = event.layerX - this.offset.x
-      this.position.y = event.layerY - this.offset.y
+      this.position.x = event.offsetX - this.offset.x
+      this.position.y = event.offsetY - this.offset.y
     }
   }
 
   onMouseUp(event: MouseEvent): void {
-    const { layerX, layerY } = event
+    const { offsetX, offsetY } = event
     this.controls.forEach((control, index) => {
-      control.isControlReleased(layerX, layerY)
+      control.isControlReleased(offsetX, offsetY)
       this.activeControl = null
     })
     this.unset()
   }
 
   onMouseClick(event: MouseEvent): void {
-    const {layerX, layerY} = event
+    const {offsetX, offsetY} = event
     this.buttons.forEach((control, index) => {
-       control.isButtonClicked(layerX, layerY)
+       control.isButtonClicked(offsetX, offsetY)
     })
     this.unset()
   }

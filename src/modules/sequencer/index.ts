@@ -23,10 +23,9 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   type = 'sequencer'
   title = 'Sequencer'
   active: boolean = false
+  activeControlGroup: 'A' | 'B' = 'A'
   node: SequencerNode
   stepButtons: ThreeStateButton[] = []
-  gateSteps: boolean[] = Array.from({length: 16}, () => false);
-  stepValue: number[] = Array.from({length: 16}, () => 3);
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
@@ -80,9 +79,15 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   }
 
   private addButtonControls() {
-    buttons.forEach(buttonGroup => {
-      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, null, Colors.AccentUtility))
-    })
+    this.buttons.push(new ButtonGroup(this.canvas, this, buttons[0], this.node.handleTransportClick, Colors.AccentUtility))
+    this.buttons.push(new ButtonGroup(this.canvas, this, buttons[1], this.handleGroupClick, Colors.AccentUtility))
+  }
+
+  public handleGroupClick = (group: 'A' | 'B') => {
+    this.activeControlGroup = group
+    const stepValues: Float32Array = this.node.getStepValues(group)
+    this.controls.forEach((control, index) => control.setValue(stepValues[index]))
+    this.draw()
   }
 
   onMouseDown(event: MouseEvent): boolean {
@@ -91,7 +96,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     if (!this.active) {
       return false
     }
-    const {layerX: xPos, layerY: yPos} = event
+    const {offsetX: xPos, offsetY: yPos} = event
     this.offset = {
       x: xPos - this.position.x,
       y: yPos - this.position.y,
@@ -137,7 +142,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   }
 
   private setStepValue = (index: number) => (value: number) => {
-    this.node.setStepAValue(index, value)
+    this.node.setStepAValue(index, this.activeControlGroup, value)
   }
 
   private addControls() {

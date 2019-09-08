@@ -21,8 +21,8 @@ export interface SequencerNode {
 }
 
 export class SequencerNode implements SequencerNode {
-  private stepsA: Float32Array = new Float32Array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
-  private stepsB: Float32Array = new Float32Array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
+  private stepsA: Float32Array = new Float32Array([4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4])
+  private stepsB: Float32Array = new Float32Array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
   private gates: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   private length: number = 16
   private running: boolean = false
@@ -47,11 +47,12 @@ export class SequencerNode implements SequencerNode {
   }
 
   start(): void {
-    this.running = true
+    this.running = !this.running
   }
 
   stop(): void {
     this.running = false
+    this.currentStep = 0
   }
 
   reset(): void {
@@ -70,8 +71,17 @@ export class SequencerNode implements SequencerNode {
     this.glideDuration = duration
   }
 
-  setStepAValue(index: number, value: number) {
-    this.stepsA[index] = value
+  setStepAValue(index: number, group: 'A' | 'B', value: number) {
+    switch(group) {
+      case 'A':
+        this.stepsA[index] = value
+        break
+      case 'B':
+        this.stepsB[index] = value
+        break
+      default:
+        this.stepsA[index] = value
+    }
   }
 
   setGateStep(index: number, value: boolean) {
@@ -93,7 +103,27 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
+  public handleTransportClick = (value: string) => {
+    switch (value) {
+      case 'start':
+        this.start()
+        break
+      case 'stop':
+        this.stop()
+        break
+      case 'reset':
+        this.reset()
+        break
+      default:
+        console.warn(`Invalid value (${value}) given for 'handleTransportClick'. Should be: start, stop or reset`)
+    }
+  }
+
   trigger = (value: number) => {
+    if (!this.running) {
+      return
+    }
+
     if (value === 1) {
       this.setNextStep()
       this.cvOutputNodeA.parameters.get('value').setValueAtTime(
@@ -111,6 +141,17 @@ export class SequencerNode implements SequencerNode {
       } else {
         this.gateOutput.onKeyUp()
       }
+    }
+  }
+
+  public getStepValues(group: 'A' | 'B'): Float32Array {
+    switch(group) {
+      case 'A':
+        return this.stepsA
+      case 'B':
+        return this.stepsB
+      default:
+        return this.stepsA
     }
   }
 

@@ -79,7 +79,8 @@ export class TriggerButton implements SynthModuleControl {
   }
 
   onMouseMove(event: MouseEvent): void {
-
+  }
+  setValue(value: number): void {
   }
 
   unSet() {

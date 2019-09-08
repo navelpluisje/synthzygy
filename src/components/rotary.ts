@@ -45,9 +45,9 @@ export class Rotary implements SynthModuleControl {
     this.label && this.drawRotaryLabel()
   }
 
-  setValue(value: number) {
+  public setValue(value: number) {
     this.value = value
-    // this.drawRotaryValue(true)
+    // this.drawRotaryValue()
     this.callback(this.value)
   }
 
@@ -182,7 +182,7 @@ export class Rotary implements SynthModuleControl {
       logSize = 2
     }
     // TODO: Optimize the value calculation
-    const mouseOffset = this.mouseStart.y - event.layerY
+    const mouseOffset = this.mouseStart.y - event.offsetY
 
     // If no mouseoffset, there is no change, so skip it
     if (mouseOffset !== 0 && mouseOffset >= stepSize || mouseOffset <= stepSize) {
@@ -206,7 +206,7 @@ export class Rotary implements SynthModuleControl {
       // If the value did not change, do not do a thing
       if (this.value !== newValue) {
         this.value = newValue
-        this.mouseStart.y = event.layerY
+        this.mouseStart.y = event.offsetY
         this.callback(this.value)
         requestAnimationFrame(this.drawRotaryValue.bind(this, true))
       }
