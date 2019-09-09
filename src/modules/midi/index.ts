@@ -38,12 +38,12 @@ export class Midi extends ModuleBase implements ParentModule {
     })
   }
 
-  private getOutputConnection(type: string): AudioWorkletNode | KeyboardNode {
+  private getOutputConnection(type: string): AudioWorkletNode | MidiNode {
     switch (type) {
       case 'gateOut':
-        return this.node
+        return this.midiNode
       case 'Freqency':
-        return this.node.noteOutput()
+        return this.midiNode.noteOutput()
     }
   }
 
