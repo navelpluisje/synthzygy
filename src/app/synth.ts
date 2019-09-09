@@ -40,7 +40,6 @@ export class Synth {
 
  public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
-    console.log('Synth Mousedown')
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {
         const module = this.modules.getActiveModule()
@@ -83,11 +82,9 @@ export class Synth {
     const module = this.modules.getActiveModule()
 
     if (module && !this.mooved) {
-      // console.log('clicked')
       module.onMouseClick(event)
       this.modules.draw()
     } else if (module && this.mooved) {
-      // console.log('mooved')
       if (this.modules.moduleSelected(event) && this.connections.hasNewConnection()) {
         const endModule = this.modules.getActiveModule()
         const input = endModule.getSelectedInput(event)

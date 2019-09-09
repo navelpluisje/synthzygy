@@ -51,7 +51,6 @@ export class ModuleBase implements Module {
   }
 
   onMouseDown(event: MouseEvent): boolean {
-    console.log('base : mouse down')
     const {offsetX: xPos, offsetY: yPos} = event
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.offset = {
@@ -61,7 +60,6 @@ export class ModuleBase implements Module {
     this.outputs.some(output => {
       const position = output.component.isOutputClicked(xPos, yPos)
       if (position) {
-        console.log('base : output clicked')
         this.activeOutput = output
         return true
       }
@@ -71,7 +69,6 @@ export class ModuleBase implements Module {
       this.controls.some((control, index) => {
         const clicked = control.isControlPressed(xPos, yPos)
         if (clicked) {
-          console.log('base : control clicked')
           this.activeControl = index
         }
         return clicked
