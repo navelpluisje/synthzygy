@@ -1,0 +1,64 @@
+.overlay {
+  align-items: center;
+  background-color: hsla(0, 0%, 10%, .4);
+  bottom: 0;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+article {
+  background-color: var(--module-background);
+  border-radius: .25rem;
+  box-shadow:
+    .125rem .125rem 0 .125rem var(--trans-white) inset,
+    -.125rem -.125rem 0 .125rem rgba(0, 0, 0, 0.2) inset;
+  width: 25rem;
+}
+
+header {
+  color: var(--module-title);
+  font-size: 1.5rem;
+  font-family: Gruppo, sans-serif;
+  padding: .75rem 0;
+  text-align: center;
+}
+
+main {
+  padding: 0 1.25rem 1rem;
+}
+
+label {
+  color: var(--module-title);
+  display: block;
+  margin-bottom: .5rem;
+}
+
+select {
+  background-color: var(--trans-white);
+  border: 1px solid var(--accent-utility);
+  border-radius: .25rem;
+  color: var(--module-title);
+  display: block;
+  font-size: 1rem;
+  height: 2.25rem;
+  width: 100%;
+}
+
+button {
+  background-color: var(--accent-utility);
+  border: 1px solid var(--trans-white);
+  border-radius: .25rem;
+  color: var(--module-title);
+  font-size: 1rem;
+  padding: .25rem 1rem;
+}
+
+footer {
+  color: var(--module-title);
+  padding: 0 1.5rem 1rem;
+  text-align: right;
+}

@@ -8,7 +8,7 @@
     "target": "ESNext",
     "baseUrl": ".",
     "moduleResolution": "node",
-    "sourceMap": false,
+    "sourceMap": true,
     "paths": {
       "@components/*": ["./src/components/*"],
       "@modules/*": ["./src/modules/*"],

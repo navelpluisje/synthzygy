@@ -45,6 +45,7 @@ export type SynthConnectorType = {
   icon?: string,
   type: 'audio' | 'cv' | 'gate',
   showIcon?: boolean,
+  showLabel?: boolean,
   position: PositionType,
   connection?: PositionType[]
 }

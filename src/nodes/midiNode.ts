@@ -2,16 +2,20 @@ import { notes } from 'src/midinotes'
 
 const NOTE_OFF = '8'
 const NOTE_ON = '9'
-const MODULATION = 'b'
+const CONTROL_CHANGE = 'b'
 const AFTERTOUCH = 'd'
 const PITCHBEND = 'e'
-// const NOTE_OFF = '8';
-const PROGRAM_CHANGE = 'c';
+// const NOTE_OFF = '8'
+const MODULATION = 1
+const PROGRAM_CHANGE = 'c'
 
 export class MidiNode {
   context: AudioContext
   trigger: Record<number, Function> = {}
   cvNoteNode: AudioWorkletNode
+  cvPitchNode: AudioWorkletNode
+  cvModulationNode: AudioWorkletNode
+  cvAfterTouchNode: AudioWorkletNode
   connected: boolean = false
   activeNote: number
   port: string
@@ -27,18 +31,24 @@ export class MidiNode {
     this.getAccess()
   }
 
-  createCvNodes() {
+  private createCvNodes() {
     this.cvNoteNode = new AudioWorkletNode(this.context, 'cv-output-processor')
     this.cvNoteNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
+    this.cvPitchNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.cvPitchNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
+    this.cvModulationNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.cvModulationNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
+    this.cvAfterTouchNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.cvAfterTouchNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
   }
 
-  onConnectionChange = (connectionEvent: WebMidi.MIDIConnectionEvent) => {
+  private onConnectionChange = (connectionEvent: WebMidi.MIDIConnectionEvent) => {
     const midiAccess = <WebMidi.MIDIAccess>connectionEvent.target
     this.onMIDISuccess(midiAccess)
   }
 
   async getAccess() {
-    const midiAccess = await navigator.requestMIDIAccess();
+    const midiAccess = await navigator.requestMIDIAccess()
     if (midiAccess.inputs) {
       this.onMIDISuccess(midiAccess)
     } else {
@@ -47,44 +57,52 @@ export class MidiNode {
     midiAccess.onstatechange = this.onConnectionChange
   }
 
-  onMIDISuccess = (midiAccess: WebMidi.MIDIAccess) => {
+  private onMIDISuccess = (midiAccess: WebMidi.MIDIAccess) => {
     this.midiInputs = Array
       .from(midiAccess.inputs)
-      .map(input => input[1]);
+      .map(input => input[1])
     this.midiOutputs = Array
       .from(midiAccess.outputs)
-      .map(output => output[1]);
+      .map(output => output[1])
 
-    this.setMidiDevice('-1883882508')
-
+      this.setMidiDevice('-1883882508')
   }
 
-  setMidiDevice(id: string) {
-    const input = this.midiInputs.filter(inp => inp.id === id);
-    const output = this.midiOutputs.filter(outp => outp.id === id);
+  public setMidiDevice(id: string) {
+    const input = this.midiInputs.filter(inp => inp.id === id)
+    const output = this.midiOutputs.filter(outp => outp.id === id)
     if (input.length > 0) {
-      [this.midiInput] = input;
+      [this.midiInput] = input
     }
-    this.midiInput.onmidimessage = this.handleMidiMessage;
+    this.midiInput.onmidimessage = this.handleMidiMessage
     if (output.length > 0) {
-      [this.midiOutput] = output;
+      [this.midiOutput] = output
     }
   }
 
-  setMidiPort(port: number) {
+  public getMidiInputs() {
+    return this.midiInputs
+  }
+
+  public setMidiPort(port: number) {
     if (port === 0) {
-      this.port = null;
+      this.port = null
     } else {
-      this.port = (port - 1).toString(16);
+      this.port = (port - 1).toString(16)
     }
   }
 
   static substractCommand(command: number) {
-    const [cmd, port] = command.toString(16);
+    const [cmd, port] = command.toString(16)
     return {
       cmd,
       port,
-    };
+    }
+  }
+
+  private getValue(min: number, max: number, midiValue: number): number {
+    const range = max - min;
+    return ((range / 128) * midiValue) + min
   }
 
   private setNote(midiNote: number) {
@@ -93,12 +111,27 @@ export class MidiNode {
     this.cvNoteNode.parameters.get('value').setValueAtTime(note, this.context.currentTime)
   }
 
+  private setPitch(midiValue: number) {
+    const value = this.getValue(-2.5, 2.5, midiValue)
+    this.cvPitchNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+  }
+
+  private setModulation(midiValue: number) {
+    const value = this.getValue(0, 8, midiValue)
+    this.cvModulationNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+  }
+
+  private setAfterTouch(midiValue: number) {
+    const value = this.getValue(0, 8, midiValue)
+    this.cvAfterTouchNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+  }
+
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
-    const [cmd, key, value] = message.data;
-    const command = MidiNode.substractCommand(cmd);
+    const [cmd, key, value] = message.data
+    const command = MidiNode.substractCommand(cmd)
 
     if (this.port !== null && command.port !== this.port) {
-      return false;
+      return false
     }
 
     switch (command.cmd) {
@@ -106,7 +139,7 @@ export class MidiNode {
         this.trigger && key === this.activeNote && (
           Object.values(this.trigger).forEach(trigger => trigger(0))
         )
-      break;
+        break
 
       case NOTE_ON:
         this.activeNote = key
@@ -114,21 +147,21 @@ export class MidiNode {
         this.trigger && (
           Object.values(this.trigger).forEach(trigger => trigger(1))
         )
-        break;
+        break
 
-      case MODULATION:
-        break;
+      case CONTROL_CHANGE:
+        if (key === MODULATION) {
+          this.setModulation(value)
+        }
+        break
 
       case AFTERTOUCH:
-        break;
+        this.setAfterTouch(key)
+        break
 
       case PITCHBEND:
-        break;
-
-      case PROGRAM_CHANGE:
-        break;
-
-      default:
+        this.setPitch(value)
+        break
     }
   }
 
@@ -143,5 +176,14 @@ export class MidiNode {
 
   public noteOutput(): AudioWorkletNode {
     return this.cvNoteNode
+  }
+  public pitchOutput(): AudioWorkletNode {
+    return this.cvPitchNode
+  }
+  public modulationOutput(): AudioWorkletNode {
+    return this.cvModulationNode
+  }
+  public aftertouchOutput(): AudioWorkletNode {
+    return this.cvAfterTouchNode
   }
 }
