@@ -5,10 +5,10 @@ export const controlTypes: ControlType[] = [{
   type: CONTROL_ROTARY,
   label: 'Freq',
   size: MEDIUM_KNOB,
-  min: 0.01,
+  min: 0,
   max: 20,
-  step: .05,
-  log: false,
+  step: .01,
+  log: true,
   value: 5,
   position: {
     x: 45,

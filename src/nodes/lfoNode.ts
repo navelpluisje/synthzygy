@@ -88,7 +88,7 @@ export class LfoNode implements LfoNode {
   }
 
   public setFrequency = (frequency: number): void => {
-    this.frequency = frequency
+    this.frequency = Math.max(frequency, 0.01)
     this.handleFrequencyChange()
   }
 
