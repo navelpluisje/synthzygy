@@ -14,7 +14,7 @@ export interface Lfo extends Module{
 export class Lfo extends ModuleBase implements Lfo, ParentModule {
   static dimensions: DimensionType = {
     height: 160,
-    width: 130,
+    width: 140,
   }
 
   type =  'lfo'
