@@ -62,7 +62,6 @@ export class EnvelopeNode implements EnvelopeNode {
 
   getAdsArray(): Float32Array {
     const from = this.cvOutputNode.parameters.get('value').value || 0
-    const to = this.sustain
     const attackSteps = Math.floor(this.attack * 100)
     const decaySteps = Math.floor(this.decay * 100)
     const adsArray = new Float32Array(attackSteps + decaySteps)
