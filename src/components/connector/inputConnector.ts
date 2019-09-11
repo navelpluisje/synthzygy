@@ -2,6 +2,7 @@ import { SynthConnector } from './connectorBase'
 
 export class InputConnector extends SynthConnector {
   iconOffset: number = 25
+  labelAlign: string = 'right'
 
   isInputClicked(xPos: number, yPos: number): boolean {
     const { x, y } = this.getPosition()

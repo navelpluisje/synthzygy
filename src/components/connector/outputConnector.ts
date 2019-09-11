@@ -3,6 +3,7 @@ import { SynthConnector } from './connectorBase'
 
 export class OutputConnector extends SynthConnector {
   iconOffset: number = -25
+  labelAlign: string = 'left'
 
   isOutputClicked(xPos: number, yPos: number): PositionType | null {
     this.active = false

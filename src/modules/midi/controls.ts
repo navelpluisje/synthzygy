@@ -11,7 +11,7 @@ export const controlTypes: Array<ControlType> = [{
   log: false,
   value: 0,
   position: {
-    x: 40,
+    x: 45,
     y: 65,
   },
 }]

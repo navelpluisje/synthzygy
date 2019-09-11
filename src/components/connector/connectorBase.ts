@@ -1,25 +1,32 @@
 import { PositionType, SynthConnectorType } from 'src/types'
 import { ParentModule } from '@interfaces/index'
 import { drawIcon } from '../icons'
+import { Colors } from 'src/constants'
 
 export class SynthConnector {
   private parent: ParentModule
   private canvas: CanvasRenderingContext2D
+  private name: string
   private icon: string
   private position: PositionType
   protected active: boolean = false
   private connections?: PositionType[]
   private showIcon: boolean
+  private showLabel: boolean
   private color: string
   protected iconOffset: number = 0
+  protected labelAlign: string = 'left'
+
 
   constructor(canvas: CanvasRenderingContext2D, parent: ParentModule, connector: SynthConnectorType, color: string) {
     this.canvas = canvas
     this.parent = parent
+    this.name = connector.name
     this.icon = connector.icon
     this.position = connector.position
     this.connections = connector.connection || []
     this.showIcon = connector.showIcon || false
+    this.showLabel = connector.showLabel || false
     this.color = color
   }
 
@@ -43,6 +50,17 @@ export class SynthConnector {
 
     this.connections.length && this.drawConnection()
     this.showIcon && drawIcon(this.canvas, this.icon, this.getIconPosition(), this.color)
+    this.showLabel && this.drawLabel()
+  }
+
+  drawLabel() {
+    const {x: xPos, y: yPos} = this.getIconPosition()
+
+    this.canvas.font ='13px Raleway, sans-serif'
+    this.canvas.textAlign ='right'
+    this.canvas.textBaseline = 'middle'
+    this.canvas.fillStyle = this.color
+    this.canvas.fillText(this.name, xPos, yPos)
   }
 
   private drawConnection() {
