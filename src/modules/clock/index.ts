@@ -13,8 +13,8 @@ export interface Clock extends Module{
 
 export class Clock extends ModuleBase implements Clock, ParentModule {
   static dimensions: DimensionType = {
-    height: 130,
-    width: 100,
+    height: 210,
+    width: 140,
   }
 
   type = 'clock'
@@ -42,6 +42,7 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
 
   addControls() {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentUtility))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setPulseWidth, Colors.AccentUtility))
   }
 
   getNode() {

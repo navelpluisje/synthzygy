@@ -91,9 +91,14 @@ export class SynthConnector {
 
   private getIconPosition(): PositionType {
     const { x, y } = this.getPosition()
+    let offset = this.iconOffset;
+
+    if (this.showLabel) {
+      offset = Math.sign(offset) * (Math.abs(offset) - 5)
+    }
 
     return {
-      x: x + this.iconOffset,
+      x: x + offset,
       y: y,
     }
   }
