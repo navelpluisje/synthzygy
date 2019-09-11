@@ -36,18 +36,18 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
     this.nodes['/2'] = new ClockNode(this.context)
     this.nodes['/4'] = new ClockNode(this.context)
     this.nodes['/8'] = new ClockNode(this.context)
+
     this.setBPM(this.bpm)
     this.setPulseWidth(this.pulseWidth)
   }
 
   private addOutputs(): void {
-    console.log(this.nodes)
     outputTypes.forEach((output, index) => {
       const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
-      console.log(this.nodes)
+      const key = output.type === 'gate' ? 'gate' : 'node'
       this.outputs.push({
         type: output.type,
-        gate: this.nodes[output.name],
+        [key]: this.nodes[output.name],
         component,
       })
     })
@@ -69,13 +69,14 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
 
     Object.values(this.nodes).forEach((node, index) => {
       const value = this.frequency * (2 ** (index - 1))
-      node.setFrequency(value)
-    })
+        node.setFrequency(value)
+      }
+    )
 
     this.drawBPMDisplay(true)
   }
 
-  private setPulseWidth(pw: number) {
+  private setPulseWidth = (pw: number) => {
     this.pulseWidth = pw
     Object.values(this.nodes).forEach(node => node.setPulseWidth(this.pulseWidth))
   }

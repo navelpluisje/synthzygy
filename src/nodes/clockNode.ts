@@ -58,4 +58,8 @@ export class ClockNode {
       Object.values(this.trigger).forEach(trigger => trigger(0))
     )
   }
+
+  public getNode() {
+    return this.node
+  }
 }
