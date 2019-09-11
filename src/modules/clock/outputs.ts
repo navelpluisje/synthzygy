@@ -2,7 +2,7 @@ import { SynthConnectorType } from "src/types";
 
 // TODO: This needs to be a connection in stead of an icon
 export const outputTypes: SynthConnectorType[] = [{
-  name: '/1',
+  name: '2',
   icon: 'gate-out',
   type: 'gate',
   position: {
@@ -11,7 +11,7 @@ export const outputTypes: SynthConnectorType[] = [{
   },
   showLabel: true,
 }, {
-  name: '/2',
+  name: '/1',
   icon: 'gate-out',
   type: 'gate',
   position: {
@@ -20,7 +20,7 @@ export const outputTypes: SynthConnectorType[] = [{
   },
   showLabel: true,
 }, {
-  name: '/3',
+  name: '/2',
   icon: 'gate-out',
   type: 'gate',
   position: {

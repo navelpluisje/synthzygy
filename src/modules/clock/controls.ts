@@ -5,14 +5,14 @@ export const controlTypes: ControlType[] = [{
   type: CONTROL_ROTARY,
   label: 'BPM',
   size: MEDIUM_KNOB,
-  min: 0.01,
-  max: 20,
+  min: 20,
+  max: 200,
   step: 0.1,
-  log: false,
-  value: 10,
+  log: true,
+  value: 120,
   position: {
     x: 45,
-    y: 95,
+    y: 100,
   }
 }, {
   type: CONTROL_ROTARY,
@@ -25,6 +25,6 @@ export const controlTypes: ControlType[] = [{
   value: .5,
   position: {
     x: 45,
-    y: 160,
+    y: 165,
   }
 }]
