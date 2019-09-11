@@ -7,7 +7,7 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 1,
-  step: .01,
+  step: .005,
   value: .5,
   position: {
     x: 65,
@@ -19,7 +19,7 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 1,
-  step: .01,
+  step: .005,
   value: .5,
   position: {
     x: 125,
@@ -31,7 +31,7 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 1,
-  step: .01,
+  step: .005,
   value: .5,
   position: {
     x: 65,
@@ -43,7 +43,7 @@ export const controlTypes: ControlType[] = [{
   size: MEDIUM_KNOB,
   min: 0,
   max: 1,
-  step: .01,
+  step: .005,
   value: .5,
   position: {
     x: 125,
