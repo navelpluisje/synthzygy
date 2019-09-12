@@ -1,7 +1,13 @@
 import template from './template.html'
 import style from './style.css'
+import { CustomElement } from '../CustomElement'
 
-class ListModuleGroup extends HTMLElement {
+@CustomElement({
+  selector: 'np-modulegroup',
+  template,
+  style,
+})
+export class ListModuleGroup extends HTMLElement {
   title: string
   name: string
   height: string
@@ -9,25 +15,6 @@ class ListModuleGroup extends HTMLElement {
   listDOM: HTMLUListElement
   listContainerDOM: HTMLElement
   open: boolean = false
-
-  constructor() {
-    super()
-    const bodyTemplate = document.createElement('div')
-    bodyTemplate.innerHTML = template
-    const templateContent = <HTMLTemplateElement>bodyTemplate.firstChild
-    const styling = document.createElement('style')
-    styling.innerHTML = style
-
-    const shadowRoot = this.attachShadow({ mode: 'open' })
-    shadowRoot.appendChild(templateContent.content.cloneNode(true))
-    shadowRoot.appendChild(styling.cloneNode(true))
-
-    // Create Events
-    // this.clickEvent = new CustomEvent('click', {
-    //   bubbles: true,
-    //   cancelable: false,
-    // });
-  }
 
   connectedCallback() {
     this.title = this.getAttribute('group') || ''
@@ -59,6 +46,3 @@ class ListModuleGroup extends HTMLElement {
     this.titleDOM.addEventListener('click', this.toggleList)
   }
 }
-
-export default () => customElements.define('np-modulegroup', ListModuleGroup)
-

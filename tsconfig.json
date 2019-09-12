@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
     "declaration": true,
     "declarationDir": "./dist",
     "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist",
-    "target": "ESNext",
-    "baseUrl": ".",
-    "moduleResolution": "node",
-    "sourceMap": true,
     "paths": {
       "@components/*": ["./src/components/*"],
       "@modules/*": ["./src/modules/*"],
       "@nodes/*": ["./src/nodes/*"],
       "@interfaces/*": ["./src/interfaces/*"],
-      "@utilities/*": ["./src/utilities/*"],
-    }
+      "@utilities/*": ["./src/utilities/*"]
+    },
+    "sourceMap": true,
+    "target": "ESNext"
   },
   "include": [
-    "src/**/*",
+    "src/**/*"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

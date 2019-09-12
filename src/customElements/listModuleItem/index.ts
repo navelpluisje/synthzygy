@@ -1,7 +1,13 @@
 import template from './template.html'
 import style from './style.css'
+import { CustomElement } from '../CustomElement'
 
-class ListModuleItem extends HTMLElement {
+@CustomElement({
+  selector: 'np-moduleitem',
+  template,
+  style,
+})
+export class ListModuleItem extends HTMLElement {
   button: HTMLButtonElement
   clickEvent: Event
   name: string
@@ -9,17 +15,7 @@ class ListModuleItem extends HTMLElement {
 
   constructor() {
     super()
-    const bodyTemplate = document.createElement('div')
-    bodyTemplate.innerHTML = template
-    const templateContent = <HTMLTemplateElement>bodyTemplate.firstChild
-    const styling = document.createElement('style')
-    styling.innerHTML = style
 
-    const shadowRoot = this.attachShadow({ mode: 'open' })
-    shadowRoot.appendChild(templateContent.content.cloneNode(true))
-    shadowRoot.appendChild(styling.cloneNode(true))
-
-    // Create Events
     this.clickEvent = new CustomEvent('itemclick', {
       bubbles: true,
       cancelable: false,
@@ -41,6 +37,3 @@ class ListModuleItem extends HTMLElement {
     })
   }
 }
-
-export default () => customElements.define('np-moduleitem', ListModuleItem)
-
