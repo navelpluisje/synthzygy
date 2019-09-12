@@ -5,6 +5,7 @@ import { ParentModule } from '@interfaces/index';
 export interface ButtonGroup {
   draw(): void
   isButtonClicked(xPos: number, yPos: number): void
+  setActiveButton(active: string | null): void
 }
 
 type ModuleButtonType = {
@@ -133,6 +134,10 @@ export class ButtonGroup implements ButtonGroup {
         }
       }
     })
+  }
+
+  setActiveButton(active: string | null): void {
+    this.activeButton = active
   }
 
   unSet() {

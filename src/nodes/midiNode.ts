@@ -64,24 +64,29 @@ export class MidiNode {
     this.midiOutputs = Array
       .from(midiAccess.outputs)
       .map(output => output[1])
-
-      this.setMidiDevice('-1883882508')
   }
 
-  public setMidiDevice(id: string) {
+  public setMidiDevice = (id: string) => {
     const input = this.midiInputs.filter(inp => inp.id === id)
     const output = this.midiOutputs.filter(outp => outp.id === id)
     if (input.length > 0) {
       [this.midiInput] = input
+      this.midiInput.onmidimessage = this.handleMidiMessage
     }
-    this.midiInput.onmidimessage = this.handleMidiMessage
     if (output.length > 0) {
       [this.midiOutput] = output
     }
   }
 
   public getMidiInputs() {
-    return this.midiInputs
+    return this.midiInputs.map(input => ([
+      input.id,
+      input.name,
+    ]))
+  }
+
+  public getActiveInput(): string {
+    return this.midiInput && this.midiInput.id || '666'
   }
 
   public setMidiPort(port: number) {

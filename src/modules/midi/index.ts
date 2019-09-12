@@ -17,11 +17,13 @@ export class Midi extends ModuleBase implements ParentModule {
   type =  'midi'
   title = 'Midi'
   midiNode: MidiNode
+  settingsPanel: HTMLElement
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
     this.midiNode = new MidiNode(context)
     this.container = new SynthModule(canvas, Midi.dimensions, position, this.color)
+    this.settingsPanel = document.querySelector('np-midisettings')
     this.addOutputs()
     this.addControls()
     this.addButtonControls()
@@ -49,8 +51,24 @@ export class Midi extends ModuleBase implements ParentModule {
     })
   }
 
-  private showMidiSettings(x: string) {
-    console.log(x)
+  private showMidiSettings = () => {
+    if (this.settingsPanel.hasAttribute('show')) {
+      this.settingsPanel.removeAttribute('show')
+    } else {
+      // @ts-ignore
+      this.settingsPanel.setValues(
+        this.midiNode.getMidiInputs(),
+        this.midiNode.getActiveInput(),
+        this.setMidiDevice
+      )
+      this.settingsPanel.setAttribute('show', '')
+      this.buttons[0].setActiveButton(null)
+    }
+  }
+
+  private setMidiDevice = (id: string) => {
+    this.midiNode.setMidiDevice(id)
+    this.settingsPanel.removeAttribute('show')
   }
 
   private getOutputConnection(type: string): AudioWorkletNode | MidiNode {

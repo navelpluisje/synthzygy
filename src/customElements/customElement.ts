@@ -30,15 +30,11 @@ export const CustomElement = (config: CustomElementConfig) => (
       }
 
       connectedCallback() {
-        const bodyTemplate = document.createElement('div')
-        bodyTemplate.innerHTML = config.template
-        const templateContent = <HTMLTemplateElement>bodyTemplate.firstChild
+        const template = document.createElement('template')
+        const styleTag = `${config.style ? `<style>${config.style}</style>` : ''}`
+        template.innerHTML = `${styleTag}${config.template}`;
 
-        const styling = document.createElement('style')
-        styling.innerHTML = config.style;
-
-        (this.showShadowRoot ? this.shadowRoot : this).appendChild(templateContent.content.cloneNode(true));
-        (this.showShadowRoot ? this.shadowRoot : this).appendChild(styling.cloneNode(true));
+        (this.showShadowRoot ? this.shadowRoot : this).appendChild(document.importNode(template.content, true));
 
         super.connectedCallback && super.connectedCallback();
         customElement.connected = true
