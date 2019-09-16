@@ -13,11 +13,12 @@ export class VcaNode implements VcaNode {
   gain: number
   context: AudioContext
   gainNode: GainNode
+  cvGainNode: AudioWorkletNode
   cvNode: GainNode
 
   constructor(
     context: AudioContext,
-    gain: number = 0.5,
+    gain: number = 0,
   ) {
     this.context = context
     this.gain = gain
@@ -29,13 +30,13 @@ export class VcaNode implements VcaNode {
     this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
 
     this.cvNode = this.context.createGain()
-    this.cvNode.gain.setValueAtTime(1, this.context.currentTime)
+    this.cvNode.gain.setValueAtTime(0, this.context.currentTime)
     this.cvNode.connect(this.gainNode.gain)
   }
 
   setGain = (gain: number): void => {
     this.gain = gain
-    this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
+    this.cvNode.gain.setValueAtTime(this.gain, this.context.currentTime)
   }
 
   input(): GainNode {
