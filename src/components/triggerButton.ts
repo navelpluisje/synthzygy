@@ -31,10 +31,17 @@ export class TriggerButton implements SynthModuleControl {
     this.color = color
   }
 
-  draw() {
+  draw(redraw: boolean = false) {
     const { x, y } = this.getPosition()
 
     this.canvas.save()
+    if (redraw) {
+      this.canvas.strokeStyle = Colors.ModuleBackground
+      this.canvas.fillStyle = Colors.ModuleBackground
+      this.canvas.arc(x - 1, y - 1, this.size + 2, 0, 2* Math.PI)
+      this.canvas.fill()
+      this.canvas.stroke()
+      }
     this.canvas.beginPath()
     this.canvas.strokeStyle = Colors.ControlLabel
     this.canvas.fillStyle = this.active ? this.color : Colors.ControlBackground
@@ -61,6 +68,7 @@ export class TriggerButton implements SynthModuleControl {
     if (xPos > x - this.size  && xPos < x + this.size) {
       if (yPos > y - this.size  && yPos < y + this.size) {
         this.active = true
+        this.draw(true)
         this.onPress()
         return true
       }
@@ -72,6 +80,7 @@ export class TriggerButton implements SynthModuleControl {
     const { x, y } = this.getPosition()
     if (this.active) {
       this.active = false
+      this.draw(true)
       this.onRelease()
       return true
     }
