@@ -1,6 +1,7 @@
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants';
 import { ParentModule } from '@interfaces/index';
+import { fillRoundedRect, strokeRoundedRect } from '@utilities/roundedRect'
 
 export interface ButtonGroup {
   draw(): void
@@ -57,6 +58,24 @@ export class ButtonGroup implements ButtonGroup {
     this.isToggle = isToggle
   }
 
+  getRadius(index: number): number | {} {
+    const length = this.buttons.length - 1
+    if (length === 0) {
+      return 5
+    }
+    if (index === 0) {
+      return this.direction === 'vertical'
+        ? {tl: 5, tr: 5, br: 0, bl: 0}
+        : {tl: 5, tr: 0, br: 0, bl: 5}
+    }
+    if (index === length) {
+      return this.direction === 'vertical'
+        ? {tl: 0, tr: 0, br: 5, bl: 5}
+        : {tl: 0, tr: 5, br: 5, bl: 0}
+    }
+    return 0
+  }
+
   draw() {
     const { x, y } = this.getPosition()
     const {width, height} = this.buttonDimension
@@ -77,14 +96,15 @@ export class ButtonGroup implements ButtonGroup {
       } else {
         buttonX = x + index * width
       }
-      this.canvas.fillStyle = Colors.ControlBackground
+      const radius = this.getRadius(index)
       this.canvas.beginPath()
-      this.canvas.rect(buttonX, buttonY, width, height)
       if (this.activeButton === button.value) {
         this.canvas.fillStyle = this.color
+      } else {
+        this.canvas.fillStyle = Colors.ControlBackground
       }
-      this.canvas.fill()
-      this.canvas.stroke()
+      fillRoundedRect(this.canvas, buttonX, buttonY, width, height, radius)
+      strokeRoundedRect(this.canvas, buttonX, buttonY, width, height, radius)
 
       this.canvas.save()
       this.canvas.beginPath()
