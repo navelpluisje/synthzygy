@@ -57,7 +57,8 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
   addControls() {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setBitDepth, Colors.AccentEffect))
     this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFrequencyReduction, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setOutputLevel, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setOutputLevel, Colors.AccentEffect))
   }
 
   private getInputConnection(type: string): GainNode {

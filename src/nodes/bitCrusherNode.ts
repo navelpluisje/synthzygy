@@ -1,7 +1,7 @@
 export class BitCrusherNode {
   private bitDepth: number = 8
   private frequencyReduction: number = .5
-  private dryWet: number = 1
+  private dryWet: number = .5
   private level: number = .5
   private context: AudioContext
   private inputNode: GainNode

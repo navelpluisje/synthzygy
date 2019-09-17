@@ -7,7 +7,7 @@ export class BitCrusherProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors () {
     return [{
       name: 'bitDepth',
-      defaultValue: 12,
+      defaultValue: 8,
       minValue: 1,
       maxValue: 16
     }, {
@@ -26,35 +26,37 @@ export class BitCrusherProcessor extends AudioWorkletProcessor {
 
     if (bitDepth.length > 1) {
       // The bitDepth parameter array has 128 sample values.
-      output.forEach((channel, channelId) => {
-        channel.forEach((channelStep, stepId) => {
-          let step = Math.pow(0.5, bitDepth[stepId])
+      for (let channel = 0; channel < output.length; ++channel) {
+        for (let i = 0; i < output[channel].length; ++i) {
+          let step = Math.pow(0.5, bitDepth[i]);
           // Use modulo for indexing to handle the case where
           // the length of the frequencyReduction array is 1.
-          this._phase += frequencyReduction[stepId % frequencyReduction.length]
+          this._phase += frequencyReduction[i % frequencyReduction.length];
           if (this._phase >= 1.0) {
-            this._phase -= 1.0
-            this._lastSampleValue = step * Math.floor(input[channelId][stepId] / step + 0.5)
+            this._phase -= 1.0;
+            this._lastSampleValue = step * Math.floor(input[channel][i] / step + 0.5);
           }
-          channelStep = this._lastSampleValue
-        })
-      })
+          output[channel][i] = this._lastSampleValue;
+        }
+      }
     } else {
       // Because we know bitDepth is constant for this call,
       // we can lift the computation of step outside the loop,
       // saving many operations.
-      const step = Math.pow(0.5, bitDepth[0])
-      output.forEach((channel, channelId) => {
-        channel.forEach((channelStep, stepId) => {
-          this._phase += frequencyReduction[(stepId % frequencyReduction.length) || 0]
+      const step = Math.pow(0.5, bitDepth[0]);
+      for (let channel = 0; channel < output.length; ++channel) {
+          for (let i = 0; i < output[channel].length; ++i) {
+            this._phase += frequencyReduction[i % frequencyReduction.length];
           if (this._phase >= 1.0) {
-            this._phase -= 1.0
-            this._lastSampleValue = step * Math.floor(input[channelId][stepId] / step + 0.5)
+            this._phase -= 1.0;
+            this._lastSampleValue = step * Math.floor(input[channel][i] / step + 0.5);
           }
-          channelStep = this._lastSampleValue
-        })
-      })
+          output[channel][i] = this._lastSampleValue;
+        }
+      }
     }
+    // No need to return a value; this node’s lifetime is dependent only on its
+    // input connections.
     return true
   }
 }
