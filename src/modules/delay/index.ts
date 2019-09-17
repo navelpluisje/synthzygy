@@ -55,10 +55,10 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
   }
 
   addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFeedback, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDelayTime, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setFrequency, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setDryWet, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect))
   }
 
   private getInputConnection(type: string): GainNode | DelayNode {

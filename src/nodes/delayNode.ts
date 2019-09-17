@@ -1,6 +1,6 @@
 export class DelayerNode {
   private feedback: number = .6
-  private frequency: number = 1000
+  private frequency: number = 2000
   private delayTime: number = .5
   private dryWet: number = .5
   private context: AudioContext
@@ -26,7 +26,7 @@ export class DelayerNode {
     this.outputNode = this.context.createGain()
     this.outputNode.gain.setValueAtTime(1, this.context.currentTime)
 
-    this.delayNode = this.context.createDelay()
+    this.delayNode = this.context.createDelay(6.0)
     this.setDelayTime(this.delayTime)
 
     this.feedbackNode = this.context.createGain()
@@ -42,10 +42,10 @@ export class DelayerNode {
     // this.dryWetNode = new AudioWorkletNode(this.context, 'dry-wet-processor')
     // this.setDryWet(this.dryWet)
 
-    this.inputNode.connect(this.delayNode)
-    this.delayNode.connect(this.filterNode)
-    this.filterNode.connect(this.feedbackNode)
-    this.feedbackNode.connect(this.delayNode)
+    this.inputNode.connect(this.filterNode)
+    this.filterNode.connect(this.delayNode)
+    this.delayNode.connect(this.feedbackNode)
+    this.feedbackNode.connect(this.filterNode)
     this.delayNode.connect(this.wetNode)
     this.inputNode.connect(this.dryNode)
     this.dryNode.connect(this.outputNode)
