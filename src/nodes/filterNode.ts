@@ -27,6 +27,7 @@ export class FilterNode implements FilterNode {
   cvFreqNode: GainNode
   cvQNode: GainNode
   levelNode: GainNode
+  frequencyNode: AudioWorkletNode
 
   constructor(
     context: AudioContext,
@@ -39,7 +40,7 @@ export class FilterNode implements FilterNode {
 
   createFilterNode() {
     this.filterNode = this.context.createBiquadFilter()
-    this.filterNode.frequency.setValueAtTime(2000, this.context.currentTime)
+    this.filterNode.frequency.setValueAtTime(0, this.context.currentTime)
     this.filterNode.Q.setValueAtTime(20, this.context.currentTime)
     this.filterNode.gain.setValueAtTime(3, this.context.currentTime)
 
@@ -47,19 +48,23 @@ export class FilterNode implements FilterNode {
     this.levelNode.gain.setValueAtTime(1, this.context.currentTime)
 
     this.cvFreqNode = this.context.createGain()
-    this.cvFreqNode.gain.setValueAtTime(5, this.context.currentTime)
+    this.cvFreqNode.gain.setValueAtTime(0, this.context.currentTime)
 
     this.cvQNode = this.context.createGain()
     this.cvQNode.gain.setValueAtTime(5, this.context.currentTime)
 
+    this.frequencyNode = new AudioWorkletNode(this.context, 'frequency-processor')
+    this.setCvFrequency(4)
+
     this.levelNode.connect(this.filterNode)
-    this.cvFreqNode.connect(this.filterNode.frequency)
+    this.frequencyNode.connect(this.filterNode.frequency)
+    this.cvFreqNode.connect(this.frequencyNode.parameters.get('fm'))
     this.cvQNode.connect(this.filterNode.Q)
   }
 
   setFrequency = (frequency: number): void => {
     this.frequency = frequency
-    this.filterNode.frequency.setValueAtTime(this.frequency, this.context.currentTime)
+    this.frequencyNode.parameters.get('frequency').setValueAtTime(this.frequency, this.context.currentTime)
   }
 
   setQ = (q: number): void => {
@@ -79,7 +84,7 @@ export class FilterNode implements FilterNode {
 
   setCvFrequency = (amount: number): void => {
     this.cvFreq = amount
-      this.cvFreqNode.gain.setValueAtTime(this.cvFreq, this.context.currentTime)
+    this.cvFreqNode.gain.setValueAtTime(this.cvFreq, this.context.currentTime)
   }
 
   SetCvQ = (amount: number): void => {
