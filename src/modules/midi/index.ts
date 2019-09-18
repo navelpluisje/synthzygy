@@ -10,7 +10,7 @@ import { buttons } from './buttons';
 
 export class Midi extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 190,
+    height: 220,
     width: 180,
   }
 
@@ -43,6 +43,7 @@ export class Midi extends ModuleBase implements ParentModule {
 
   private addControls() {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.midiNode.setMidiPort, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.midiNode.setClockStepSize, Colors.AccentGenerator))
   }
 
   private addButtonControls() {
@@ -71,7 +72,7 @@ export class Midi extends ModuleBase implements ParentModule {
     this.settingsPanel.removeAttribute('show')
   }
 
-  private getOutputConnection(type: string): AudioWorkletNode | MidiNode {
+  private getOutputConnection(type: string): AudioWorkletNode | MidiNode | Object {
     switch (type) {
       case 'V/Oct':
         return this.midiNode.noteOutput()
@@ -83,6 +84,8 @@ export class Midi extends ModuleBase implements ParentModule {
         return this.midiNode.aftertouchOutput()
       case 'Gate':
         return this.midiNode
+      case 'Clock':
+        return this.midiNode.clockNode()
     }
   }
 

@@ -9,20 +9,31 @@ const PITCHBEND = 'e'
 const MODULATION = 1
 const PROGRAM_CHANGE = 'c'
 
+const TIMING_CLOCK = '248'
+const CONTROL_START = '250'
+const CONTROL_CONTINUE = '251'
+const CONTROL_STOP = '252'
+
 export class MidiNode {
-  context: AudioContext
-  trigger: Record<number, Function> = {}
-  cvNoteNode: AudioWorkletNode
-  cvPitchNode: AudioWorkletNode
-  cvModulationNode: AudioWorkletNode
-  cvAfterTouchNode: AudioWorkletNode
-  connected: boolean = false
-  activeNote: number
-  port: string
-  midiInputs: WebMidi.MIDIInput[]
-  midiOutputs: WebMidi.MIDIOutput[]
-  midiInput: WebMidi.MIDIInput
-  midiOutput: WebMidi.MIDIOutput
+  private context: AudioContext
+  private trigger: Record<number, Function> = {}
+  private startTrigger: Record<number, Function> = {}
+  private stopTrigger: Record<number, Function> = {}
+  private clockTrigger: Record<number, Function> = {}
+  private cvNoteNode: AudioWorkletNode
+  private cvPitchNode: AudioWorkletNode
+  private cvModulationNode: AudioWorkletNode
+  private cvAfterTouchNode: AudioWorkletNode
+  private connected: boolean = false
+  private activeNote: number
+  private port: string
+  private noteLength: number = 8
+  private noteStep: number = 0
+  private clockOn: boolean = false
+  private midiInputs: WebMidi.MIDIInput[]
+  private midiOutputs: WebMidi.MIDIOutput[]
+  private midiInput: WebMidi.MIDIInput
+  private midiOutput: WebMidi.MIDIOutput
 
   constructor(context: AudioContext) {
     this.context = context
@@ -97,6 +108,10 @@ export class MidiNode {
     }
   }
 
+  public setClockStepSize = (size: number): void => {
+    this.noteLength = 2 ** size
+  }
+
   static substractCommand(command: number) {
     const [cmd, port] = command.toString(16)
     return {
@@ -133,25 +148,27 @@ export class MidiNode {
 
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
     const [cmd, key, value] = message.data
-    const command = MidiNode.substractCommand(cmd)
+    let command = {
+      cmd: cmd.toString(),
+      port: '0',
+    }
 
+    if (key && value) {
+      command = MidiNode.substractCommand(cmd)
+    }
+
+    // console.l  og({cmd, key, value})
     if (this.port !== null && command.port !== this.port) {
       return false
     }
 
     switch (command.cmd) {
       case NOTE_OFF:
-        this.trigger && key === this.activeNote && (
-          Object.values(this.trigger).forEach(trigger => trigger(0))
-        )
+        this.handleNoteOff(key)
         break
 
       case NOTE_ON:
-        this.activeNote = key
-        this.setNote(key)
-        this.trigger && (
-          Object.values(this.trigger).forEach(trigger => trigger(1))
-        )
+        this.handleNoteOn(key)
         break
 
       case CONTROL_CHANGE:
@@ -167,7 +184,50 @@ export class MidiNode {
       case PITCHBEND:
         this.setPitch(value)
         break
+
+      case TIMING_CLOCK:
+        this.handleTimingClock()
+        break
     }
+  }
+
+  private handleTimingClock() {
+    if (this.noteStep === this.noteLength - 1) {
+      this.noteStep = -1
+      this.clockOn = true
+      this.clockTrigger && (
+        Object.values(this.clockTrigger).forEach(trigger => trigger(1))
+        )
+      }
+      this.noteStep += 1
+      if (this.clockOn && this.noteStep * 2 >= this.noteLength) {
+        this.clockOn = false
+        this.clockTrigger && (
+        Object.values(this.clockTrigger).forEach(trigger => trigger(1))
+      )
+    }
+  }
+
+  private handleNoteOn(key: number) {
+    this.activeNote = key
+    this.setNote(key)
+    this.trigger && (
+      Object.values(this.trigger).forEach(trigger => trigger(1))
+    )
+  }
+
+  private handleNoteOff(key: number) {
+    this.trigger && key === this.activeNote && (
+      Object.values(this.trigger).forEach(trigger => trigger(0))
+    )
+  }
+
+  public clockNode() {
+    return ({
+      connect: (trigger: Function, id: number) => {
+        this.clockTrigger[id] = trigger
+      },
+    })
   }
 
   public connect(trigger: Function, id: number): void {
