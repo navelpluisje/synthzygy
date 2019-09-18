@@ -3,13 +3,14 @@ import { Colors, knobSizes } from 'src/constants';
 import { ParentModule } from '@interfaces/index';
 
 export class ThreeStateButton {
-  parent: ParentModule
-  canvas: CanvasRenderingContext2D
-  color: string
-  active: boolean = false
-  position: PositionType
-  size: number = 8
-  onClick: Function
+  private parent: ParentModule
+  private canvas: CanvasRenderingContext2D
+  private color: string
+  private active: boolean = false
+  private activeStep: boolean = false
+  private position: PositionType
+  private size: number = 8
+  private onClick: Function
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -30,15 +31,17 @@ export class ThreeStateButton {
 
     if (overWrite) {
       this.canvas.save()
+      this.canvas.beginPath()
       this.canvas.fillStyle = Colors.ModuleBackground
-      this.canvas.fillRect(x - 1, y - 1, this.size + 2, this.size + 2)
+      this.canvas.arc(x, y, this.size + 2, 0, 2 * Math.PI)
+      this.canvas.fill()
       this.canvas.restore()
     }
     this.canvas.save()
     this.canvas.beginPath()
     this.canvas.lineWidth = 2
     this.canvas.strokeStyle = this.color
-    this.canvas.fillStyle = Colors.TransWhite
+    this.canvas.fillStyle = this.activeStep ? Colors.ControlRing : Colors.TransWhite
     this.canvas.arc(x, y, this.size, 0, 2 * Math.PI)
     this.canvas.fill()
     this.canvas.stroke()
@@ -65,6 +68,10 @@ export class ThreeStateButton {
 
   public getActive(): boolean {
     return this.active
+  }
+
+  public setActiveStep(active: boolean): void {
+    this.activeStep = active
   }
 
   isControlClicked(xPos: number, yPos: number): boolean {

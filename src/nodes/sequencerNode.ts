@@ -26,20 +26,23 @@ export class SequencerNode implements SequencerNode {
   private gates: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   private length: number = 16
   private running: boolean = false
-  private currentStep: number = 0
+  private currentStep: number = -1
   private glideEnabled: boolean = false
   private glideDuration: number = 0
   private context: AudioContext
   private cvOutputNodeA: AudioWorkletNode
   private cvOutputNodeB: AudioWorkletNode
   private gateOutput: GateNode
+  private stepChangeCallback: (step: number) => void
 
   constructor(
     context: AudioContext,
+    stepChangeCallback: (step: number) => void,
     ) {
     this.context = context
     this.gateOutput = new GateNode()
     this.createCvOutputNodes()
+    this.stepChangeCallback = stepChangeCallback
   }
 
   setLength(length: number):void {
@@ -52,11 +55,11 @@ export class SequencerNode implements SequencerNode {
 
   stop(): void {
     this.running = false
-    this.currentStep = 0
+    this.currentStep = -1
   }
 
   reset(): void {
-    this.currentStep = 0
+    this.currentStep = -1
   }
 
   isRunning(): boolean {
@@ -101,6 +104,7 @@ export class SequencerNode implements SequencerNode {
     } else {
       this.currentStep += 1
     }
+    this.stepChangeCallback(this.currentStep)
   }
 
   public handleTransportClick = (value: string) => {

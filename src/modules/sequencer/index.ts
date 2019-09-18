@@ -29,7 +29,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new SequencerNode(context)
+    this.node = new SequencerNode(context, this.onStepChange)
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color)
     this.draw.bind(this)
     this.addOutputs()
@@ -69,9 +69,9 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
 
   private getOutputConnection(type: string): GateNode | AudioWorkletNode {
     switch (type) {
-      case 'cvOutputA':
+      case 'cv A':
         return this.node.outputA()
-      case 'cvOutputB':
+      case 'cv B':
         return this.node.outputB()
       case 'gateOut':
         return this.node.outputGate()
@@ -80,7 +80,13 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
 
   private addButtonControls() {
     this.buttons.push(new ButtonGroup(this.canvas, this, buttons[0], this.node.handleTransportClick, Colors.AccentUtility))
-    this.buttons.push(new ButtonGroup(this.canvas, this, buttons[1], this.handleGroupClick, Colors.AccentUtility))
+    this.buttons.push(new ButtonGroup(this.canvas, this, buttons[1], this.onRestButtonClick, Colors.AccentUtility))
+    this.buttons.push(new ButtonGroup(this.canvas, this, buttons[2], this.handleGroupClick, Colors.AccentUtility))
+  }
+
+  private onRestButtonClick = () => {
+    this.buttons[1].setActiveButton('xx')
+    this.node.reset()
   }
 
   public handleGroupClick = (group: 'A' | 'B') => {
@@ -131,6 +137,13 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
         Colors.AccentUtility
       ))
     }
+  }
+
+  private onStepChange = (step: number) => {
+    this.stepButtons.forEach((button, index) => {
+      button.setActiveStep(step === index)
+      button.draw(true)
+    })
   }
 
   private setGateValue = (index: number) => (value: boolean) => {

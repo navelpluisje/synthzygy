@@ -17,14 +17,26 @@ export const buttons: ModuleButtonsList = [{
   }, {
     label: 'Stop',
     value: 'stop',
-  }, {
+  }]
+}, {
+  position: {
+    x: 20,
+    y: 100,
+  },
+  dimensions: {
+    height: 25,
+    width: 50,
+  },
+  direction: 'vertical',
+  active: '',
+  buttons: [{
     label: 'Reset',
     value: 'reset',
   }]
 }, {
   position: {
-    x: 445,
-    y: 45,
+    x: 450,
+    y: 60,
   },
   dimensions: {
     height: 25,
