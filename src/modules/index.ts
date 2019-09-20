@@ -6,6 +6,7 @@ import { Envelope } from './envelope';
 import { Filter } from './filter';
 import { GateTrigger } from './gateTrigger';
 import { Midi } from './midi';
+import { Noise } from './noise';
 import { Lfo } from './lfo';
 import { Mixer } from './mixer';
 import { Oscillator } from './oscillator';
@@ -23,6 +24,7 @@ export {
   Midi,
   Lfo,
   Mixer,
+  Noise,
   Oscillator,
   Sequencer,
   Vca,

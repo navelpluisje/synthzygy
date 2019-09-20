@@ -105,7 +105,7 @@ export class Synth {
   }
 
   private getWorklets = async () => {
-    await this.audioContext.audioWorklet.addModule('dist/processors.js')
+    await this.audioContext.audioWorklet.addModule('/app/processors.js')
   }
 
   public addModule = (category: string, name: string) => {

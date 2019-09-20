@@ -21,3 +21,9 @@ export enum Transport {
   Start = 1,
   Continue = 2,
 }
+
+export enum NoiseTypes {
+  White = 'white',
+  Pink = 'pink',
+  Blue = 'blue',
+}

@@ -9,6 +9,7 @@ import {
   Filter,
   GateTrigger,
   Midi,
+  Noise,
   Lfo,
   Mixer,
   Oscillator,
@@ -18,20 +19,21 @@ import {
 import { Rotary } from '../components/rotary';
 import { Synth } from 'src/app/synth';
 
-type Module = Lfo
-  | Oscillator
-  | Mixer
-  | Vca
-  | Envelope
-  | AudioOut
-  | Filter
-  | GateTrigger
-  | Midi
-  | Delay
+type Module = AudioOut
   | BitCrusher
   | Clock
-  | Sequencer
+  | Delay
+  | Envelope
+  | Filter
+  | GateTrigger
+  | Lfo
+  | Midi
+  | Mixer
+  | Noise
+  | Oscillator
   | Oscilloscope
+  | Sequencer
+  | Vca
 type Modules = {
   [key: string]: Module,
 }
@@ -78,12 +80,14 @@ export class ModuleList {
       case 'gate':
       case 'gateTrigger':
         return GateTrigger
-      case 'midi':
-        return Midi
       case 'lfo':
         return Lfo
+      case 'midi':
+        return Midi
       case 'mixer':
         return Mixer
+      case 'noise':
+        return Noise
       case 'oscillator':
         return Oscillator
       case 'oscilloscope':

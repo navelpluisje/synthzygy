@@ -4,6 +4,9 @@ export const AvailableModules = [{
   modules: [{
     name: 'oscillator',
     title: 'Oscillator',
+  }, {
+    name: 'noise',
+    title: 'Noise',
   }]
 }, {
   name: 'modulators',

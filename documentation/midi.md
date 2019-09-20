@@ -25,6 +25,7 @@ Links to midi data tables
 | **press** | Pressure / After touch | 0 | 8 |
 | **gate** | Callback to trigger | | |
 | **clock** | Trigger clock | | |
+| **Transport** | Trigger transport controls | | |
 
 ## Button
 * Settings: Open the settings window to select the midi device you want to use
