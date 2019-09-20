@@ -1,4 +1,5 @@
 import { GateNode } from "./gateNode";
+import { Transport } from "@constants/enums";
 
 export interface SequencerNode {
   // Controls
@@ -33,6 +34,7 @@ export class SequencerNode implements SequencerNode {
   private cvOutputNodeA: AudioWorkletNode
   private cvOutputNodeB: AudioWorkletNode
   private gateOutput: GateNode
+  private transportCallback: Function
   private stepChangeCallback: (step: number) => void
 
   constructor(
@@ -50,12 +52,12 @@ export class SequencerNode implements SequencerNode {
   }
 
   start(): void {
-    this.running = !this.running
+    // this.running = !this.running
+    this.running = true
   }
 
   stop(): void {
     this.running = false
-    this.currentStep = -1
   }
 
   reset(): void {
@@ -123,7 +125,7 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
-  trigger = (value: number) => {
+  public trigger = (value: number) => {
     if (!this.running) {
       return
     }
@@ -148,6 +150,22 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
+  public triggerTransport = (mode: Transport) => {
+    switch (mode) {
+      case Transport.Stop:
+        this.stop()
+        break
+      case Transport.Start:
+        this.reset()
+        this.start()
+        break
+      case Transport.Continue:
+        this.start()
+        break
+    }
+    this.transportCallback(mode)
+  }
+
   public getStepValues(group: 'A' | 'B'): Float32Array {
     switch(group) {
       case 'A':
@@ -157,6 +175,11 @@ export class SequencerNode implements SequencerNode {
       default:
         return this.stepsA
     }
+  }
+
+  cvStartStop(transportCallback: Function): Function {
+    this.transportCallback = transportCallback
+    return this.triggerTransport
   }
 
   inputGate(): Function {

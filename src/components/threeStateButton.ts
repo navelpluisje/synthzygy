@@ -1,5 +1,5 @@
 import { PositionType, ControlType } from 'src/types';
-import { Colors, knobSizes } from 'src/constants';
+import { Colors } from '@constants/enums';
 import { ParentModule } from '@interfaces/index';
 
 export class ThreeStateButton {

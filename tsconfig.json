@@ -13,7 +13,8 @@
       "@modules/*": ["./src/modules/*"],
       "@nodes/*": ["./src/nodes/*"],
       "@interfaces/*": ["./src/interfaces/*"],
-      "@utilities/*": ["./src/utilities/*"]
+      "@utilities/*": ["./src/utilities/*"],
+      "@constants/*": ["./src/constants/*"]
     },
     "sourceMap": true,
     "target": "ESNext"

@@ -1,7 +1,7 @@
 import { ModuleBase } from '../moduleBase';
 import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
 import { PositionType, SynthConnectorType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';

@@ -3,7 +3,7 @@ import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { OutputNode } from '@nodes/outputNode'
 import { PositionType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 

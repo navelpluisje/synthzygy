@@ -2,7 +2,8 @@ import { ModuleBase } from '../moduleBase';
 import { SequencerNode } from '@nodes/sequencerNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup, ThreeStateButton } from '@components/index';
 import { PositionType, ControlType } from 'src/types';
-import { Colors, SMALL_KNOB } from 'src/constants';
+import { Colors, Transport } from '@constants/enums';
+import { SMALL_KNOB } from '@constants/sizes';
 import { ParentModule, Module } from '@interfaces/index';
 import { buttons } from './buttons'
 import { inputTypes } from './inputs';
@@ -17,7 +18,7 @@ export interface Sequencer extends Module {
 export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   static dimensions = {
     height: 170,
-    width: 570,
+    width: 600,
   }
 
   type = 'sequencer'
@@ -49,10 +50,19 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
       const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility)
       this.inputs.push({
         type: input.type,
-        gate: this.node.inputGate(),
+        gate: this.getInputConnection(input.name),
         component,
       })
     })
+  }
+
+  private getInputConnection(type: string): Function {
+    switch (type) {
+      case 'gateIn':
+        return this.node.inputGate()
+      case 'Start/Stop':
+        return this.node.cvStartStop(this.setTransportButton)
+    }
   }
 
   private addOutputs() {
@@ -87,6 +97,19 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   private onRestButtonClick = () => {
     this.buttons[1].setActiveButton('xx')
     this.node.reset()
+  }
+
+  private setTransportButton = (mode: Transport) => {
+    switch (mode) {
+      case Transport.Stop:
+        this.buttons[0].setActiveButton('stop')
+        break
+      case Transport.Start:
+      case Transport.Continue:
+        this.buttons[0].setActiveButton('start')
+        break
+    }
+    requestAnimationFrame(() => this.buttons[0].draw(true))
   }
 
   public handleGroupClick = (group: 'A' | 'B') => {
@@ -125,7 +148,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
         type: 'stepButton',
         size: SMALL_KNOB,
         position: {
-          x: 90 + i * 22.5,
+          x: 120 + i * 22.5,
           y: 150,
         },
     }

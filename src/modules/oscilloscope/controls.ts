@@ -1,5 +1,5 @@
 import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, STEP_ROTARY } from "src/constants";
+import { MEDIUM_KNOB, STEP_ROTARY } from "@constants/sizes";
 
 export const controlTypes: Array<ControlType> = [{
   type: STEP_ROTARY,

@@ -1,5 +1,5 @@
-import { Colors } from '../constants';
-import { PositionType, DimensionType } from '../types';
+import { Colors } from '@constants/enums';
+import { PositionType, DimensionType } from 'src/types';
 import { fillRoundedRect } from '@utilities/roundedRect';
 
 export class SynthModule {

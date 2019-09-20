@@ -1,6 +1,6 @@
 import { setIconStyle, drawCircle, setPositionAndSize } from "./iconHelpers";
 import { PositionType } from "src/types";
-import { ICON_SIZE } from "src/constants";
+import { ICON_SIZE } from "@constants/sizes";
 
 export const drawAudioIcon = (ctx: CanvasRenderingContext2D, position: PositionType, color: string) => {
   const {x, y} = position

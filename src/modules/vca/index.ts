@@ -2,7 +2,7 @@ import { ModuleBase } from '../moduleBase';
 import { VcaNode } from '@nodes/vcaNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
 import { PositionType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { controlTypes } from './controls';
 import { outputTypes } from './outputs';

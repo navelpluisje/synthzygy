@@ -1,5 +1,5 @@
 import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, LARGE_KNOB, SMALL_KNOB } from "src/constants";
+import { CONTROL_ROTARY, MEDIUM_KNOB, LARGE_KNOB, SMALL_KNOB } from "@constants/sizes";
 
 export const controlTypes: ControlType[] = [{
   type: CONTROL_ROTARY,
@@ -10,7 +10,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 100,
+    x: 130,
     y: 61,
   }
 }, {
@@ -22,7 +22,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 145,
+    x: 175,
     y: 61,
   }
 }, {
@@ -34,7 +34,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 190,
+    x: 220,
     y: 61,
   }
 }, {
@@ -46,7 +46,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 235,
+    x: 265,
     y: 61,
   }
 }, {
@@ -58,7 +58,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 280,
+    x: 310,
     y: 61,
   }
 }, {
@@ -70,7 +70,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 325,
+    x: 355,
     y: 61,
   }
 }, {
@@ -82,7 +82,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 370,
+    x: 400,
     y: 61,
   }
 }, {
@@ -94,7 +94,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 415,
+    x: 445,
     y: 61,
   }
 }, {
@@ -106,7 +106,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 100,
+    x: 130,
     y: 110,
   }
 }, {
@@ -118,7 +118,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 145,
+    x: 175,
     y: 110,
   }
 }, {
@@ -130,7 +130,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 190,
+    x: 220,
     y: 110,
   }
 }, {
@@ -142,7 +142,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 235,
+    x: 265,
     y: 110,
   }
 }, {
@@ -154,7 +154,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 280,
+    x: 310,
     y: 110,
   }
 }, {
@@ -166,7 +166,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 325,
+    x: 355,
     y: 110,
   }
 }, {
@@ -178,7 +178,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 370,
+    x: 400,
     y: 110,
   }
 }, {
@@ -190,7 +190,7 @@ export const controlTypes: ControlType[] = [{
   log: false,
   value: 3,
   position: {
-    x: 415,
+    x: 445,
     y: 110,
   }
 }]

@@ -1,10 +1,10 @@
 import { PositionType, DimensionType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { ParentModule } from '@interfaces/index';
 import { fillRoundedRect, strokeRoundedRect } from '@utilities/roundedRect'
 
 export interface ButtonGroup {
-  draw(): void
+  draw(overwrite?: boolean): void
   isButtonClicked(xPos: number, yPos: number): void
   setActiveButton(active: string | null): void
 }
@@ -76,11 +76,18 @@ export class ButtonGroup implements ButtonGroup {
     return 0
   }
 
-  draw() {
+  draw(overwrite?: boolean) {
     const { x, y } = this.getPosition()
     const {width, height} = this.buttonDimension
     let buttonX = x;
     let buttonY = y;
+
+    if (overwrite) {
+      this.canvas.save()
+      this.canvas.fillStyle = Colors.ModuleBackground
+      this.canvas.fillRect(x -1 , y - 1, width + 2, height * this.buttons.length + 2)
+      this.canvas.restore()
+    }
 
     this.canvas.save()
     this.canvas.strokeStyle = Colors.ModuleBackground

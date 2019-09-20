@@ -1,5 +1,5 @@
 import { ControlType } from "src/types";
-import { TRIGGER_BUTTON, LARGE_KNOB } from "src/constants";
+import { TRIGGER_BUTTON, LARGE_KNOB } from "@constants/sizes";
 
 export const controlTypes: ControlType[] = [{
   type: TRIGGER_BUTTON,

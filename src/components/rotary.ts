@@ -1,8 +1,7 @@
-import { STEP_ROTARY } from '../constants';
-import { Colors } from '../constants';
+import { STEP_ROTARY, knobSizes } from '@constants/sizes';
+import { Colors } from '@constants/enums';
 import { PositionType, KnobSizeType, KnobSizes, ControlType } from '../types';
 import { ParentModule } from 'src/interfaces';
-import { knobSizes } from 'src/constants';
 import { roundByStepSize } from '@utilities/numeric';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 

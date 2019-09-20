@@ -2,7 +2,7 @@ import { ModuleButtonsList } from '@components/buttonGroup';
 
 export const buttons: ModuleButtonsList = [{
   position: {
-    x: 20,
+    x: 50,
     y: 45,
   },
   dimensions: {
@@ -20,7 +20,7 @@ export const buttons: ModuleButtonsList = [{
   }]
 }, {
   position: {
-    x: 20,
+    x: 50,
     y: 100,
   },
   dimensions: {
@@ -35,7 +35,7 @@ export const buttons: ModuleButtonsList = [{
   }]
 }, {
   position: {
-    x: 450,
+    x: 480,
     y: 60,
   },
   dimensions: {

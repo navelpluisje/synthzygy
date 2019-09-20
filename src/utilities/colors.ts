@@ -1,5 +1,5 @@
 import { toKebabCase } from './toKebabCase';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 
 export const setCssColors = () => {
   const cssRoot: HTMLElement = document.querySelector(':root')

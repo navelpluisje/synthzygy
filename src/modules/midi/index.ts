@@ -1,7 +1,7 @@
 import { MidiNode } from '@nodes/midiNode'
 import { SynthModule, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { outputTypes } from './outputs';
@@ -10,7 +10,7 @@ import { buttons } from './buttons';
 
 export class Midi extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 220,
+    height: 250,
     width: 180,
   }
 
@@ -86,6 +86,8 @@ export class Midi extends ModuleBase implements ParentModule {
         return this.midiNode
       case 'Clock':
         return this.midiNode.clockNode()
+      case 'Transport':
+        return this.midiNode.transportNode()
     }
   }
 

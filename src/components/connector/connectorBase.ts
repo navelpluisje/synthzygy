@@ -1,7 +1,6 @@
 import { PositionType, SynthConnectorType } from 'src/types'
 import { ParentModule } from '@interfaces/index'
 import { drawIcon } from '../icons'
-import { Colors } from 'src/constants'
 
 export class SynthConnector {
   private parent: ParentModule

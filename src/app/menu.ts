@@ -1,4 +1,4 @@
-import { AvailableModules } from "src/constants";
+import { AvailableModules } from "src/constants/modules";
 
 export class Menu {
   callback: Function

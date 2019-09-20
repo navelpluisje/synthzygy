@@ -1,7 +1,7 @@
 import { ClockNode } from '@nodes/clockNode'
 import { SynthModule, OutputConnector, Rotary } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { outputTypes } from './outputs';

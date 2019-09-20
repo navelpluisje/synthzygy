@@ -2,7 +2,7 @@ import { Module } from '@interfaces/index';
 import { Rotary, ButtonGroup, TriggerButton } from '@components/index';
 import { OutputType, PositionType, InputType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 
 export class ModuleBase implements Module {
   protected title = 'title'

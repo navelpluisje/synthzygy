@@ -1,6 +1,6 @@
 import { PositionType } from './../types';
 import { OutputType, InputType } from '../types';
-import { Colors } from 'src/constants';
+import { Colors } from 'src/constants/enums';
 
 type ConnectionColors = {
   [key: string]: string,

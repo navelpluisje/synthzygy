@@ -1,6 +1,7 @@
 import { drawIcon } from './icons';
 import { PositionType, ControlType } from 'src/types';
-import { Colors, knobSizes } from 'src/constants';
+import { Colors } from '@constants/enums';
+import { knobSizes } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 

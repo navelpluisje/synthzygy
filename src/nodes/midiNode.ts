@@ -1,3 +1,4 @@
+import { Transport } from 'src/constants/enums';
 import { notes } from 'src/midinotes'
 
 const NOTE_OFF = '8'
@@ -17,8 +18,7 @@ const CONTROL_STOP = '252'
 export class MidiNode {
   private context: AudioContext
   private trigger: Record<number, Function> = {}
-  private startTrigger: Record<number, Function> = {}
-  private stopTrigger: Record<number, Function> = {}
+  private transportTrigger: Record<number, Function> = {}
   private clockTrigger: Record<number, Function> = {}
   private cvNoteNode: AudioWorkletNode
   private cvPitchNode: AudioWorkletNode
@@ -188,6 +188,18 @@ export class MidiNode {
       case TIMING_CLOCK:
         this.handleTimingClock()
         break
+
+      case CONTROL_START:
+        this.handleTransport(Transport.Start)
+        break
+
+      case CONTROL_CONTINUE:
+        this.handleTransport(Transport.Continue)
+        break
+
+      case CONTROL_STOP:
+        this.handleTransport(Transport.Stop)
+        break
     }
   }
 
@@ -208,6 +220,12 @@ export class MidiNode {
     }
   }
 
+  private handleTransport(mode: Transport): void {
+    this.transportTrigger && (
+      Object.values(this.transportTrigger).forEach(trigger => trigger(mode))
+    )
+  }
+
   private handleNoteOn(key: number) {
     this.activeNote = key
     this.setNote(key)
@@ -226,6 +244,14 @@ export class MidiNode {
     return ({
       connect: (trigger: Function, id: number) => {
         this.clockTrigger[id] = trigger
+      },
+    })
+  }
+
+  public transportNode() {
+    return ({
+      connect: (trigger: Function, id: number) => {
+        this.transportTrigger[id] = trigger
       },
     })
   }

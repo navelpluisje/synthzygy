@@ -5,7 +5,7 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'envelope-out',
   type: 'audio',
   position: {
-    x: 550,
+    x: 580,
     y: 90,
   },
   showLabel: true,
@@ -14,7 +14,7 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'envelope-out',
   type: 'audio',
   position: {
-    x: 550,
+    x: 580,
     y: 120,
   },
   showLabel: true,
@@ -23,7 +23,7 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'gate-out',
   type: 'gate',
   position: {
-    x: 550,
+    x: 580,
     y: 150,
   },
   showIcon: true,
