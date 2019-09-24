@@ -10,6 +10,12 @@ export const AvailableModules = [{
   }, {
     name: 'snare',
     title: 'Snare',
+  }, {
+    name: 'kick',
+    title: 'Kick',
+  }, {
+    name: 'hihat',
+    title: 'HiHat',
   }]
 }, {
   name: 'modulators',

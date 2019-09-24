@@ -7,10 +7,12 @@ import {
   Envelope,
   Filter,
   GateTrigger,
-  Midi,
-  Noise,
+  HiHat,
+  Kick,
   Lfo,
+  Midi,
   Mixer,
+  Noise,
   Oscillator,
   Oscilloscope,
   Sequencer,
@@ -28,6 +30,8 @@ type Module = AudioOut
   | Envelope
   | Filter
   | GateTrigger
+  | HiHat
+  | Kick
   | Lfo
   | Midi
   | Mixer
@@ -84,6 +88,10 @@ export class ModuleList {
       case 'gate':
       case 'gateTrigger':
         return GateTrigger
+      case 'hihat':
+        return HiHat
+      case 'kick':
+        return Kick
       case 'lfo':
         return Lfo
       case 'midi':
