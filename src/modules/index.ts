@@ -10,7 +10,9 @@ import { Noise } from './noise';
 import { Lfo } from './lfo';
 import { Mixer } from './mixer';
 import { Oscillator } from './oscillator';
-import { Sequencer } from './sequencer';
+import { Oscilloscope } from './oscilloscope';
+import { RandomSequencer } from './sequencer/random';
+import { Sequencer } from './sequencer/step';
 import { Vca } from './vca';
 
 export {
@@ -26,6 +28,8 @@ export {
   Mixer,
   Noise,
   Oscillator,
+  Oscilloscope,
+  RandomSequencer,
   Sequencer,
   Vca,
 }

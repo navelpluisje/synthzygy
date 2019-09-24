@@ -1,4 +1,3 @@
-import { Oscilloscope } from './oscilloscope/index';
 import { PositionType, DimensionType } from 'src/types';
 import {
   AudioOut,
@@ -13,7 +12,9 @@ import {
   Lfo,
   Mixer,
   Oscillator,
+  Oscilloscope,
   Sequencer,
+  RandomSequencer,
   Vca,
  } from "./index";
 import { Rotary } from '../components/rotary';
@@ -32,6 +33,7 @@ type Module = AudioOut
   | Noise
   | Oscillator
   | Oscilloscope
+  | RandomSequencer
   | Sequencer
   | Vca
 type Modules = {
@@ -94,6 +96,8 @@ export class ModuleList {
         return Oscilloscope
       case 'sequencer':
         return Sequencer
+      case 'turinger':
+        return RandomSequencer
       case 'vca':
         return Vca
     }

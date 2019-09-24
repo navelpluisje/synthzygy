@@ -1,4 +1,4 @@
-import { ModuleBase } from '../moduleBase';
+import { ModuleBase } from '../../moduleBase';
 import { SequencerNode } from '@nodes/sequencerNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup, ThreeStateButton } from '@components/index';
 import { PositionType, ControlType } from 'src/types';
