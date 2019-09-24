@@ -13,6 +13,7 @@ import { Oscillator } from './oscillator';
 import { Oscilloscope } from './oscilloscope';
 import { RandomSequencer } from './sequencer/random';
 import { Sequencer } from './sequencer/step';
+import { Snare } from './drum/snare';
 import { Vca } from './vca';
 
 export {
@@ -31,5 +32,6 @@ export {
   Oscilloscope,
   RandomSequencer,
   Sequencer,
+  Snare,
   Vca,
 }

@@ -14,6 +14,7 @@ import {
   Oscillator,
   Oscilloscope,
   Sequencer,
+  Snare,
   RandomSequencer,
   Vca,
  } from "./index";
@@ -35,6 +36,7 @@ type Module = AudioOut
   | Oscilloscope
   | RandomSequencer
   | Sequencer
+  | Snare
   | Vca
 type Modules = {
   [key: string]: Module,
@@ -96,6 +98,8 @@ export class ModuleList {
         return Oscilloscope
       case 'sequencer':
         return Sequencer
+      case 'snare':
+        return Snare
       case 'turinger':
         return RandomSequencer
       case 'vca':

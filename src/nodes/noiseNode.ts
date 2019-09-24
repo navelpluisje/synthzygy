@@ -25,10 +25,11 @@ export class NoiseNode {
     this.context = context
   }
 
-  public async setup() {
+  public async setup(): Promise<boolean> {
     await this.createNoiseNodes()
     await this.createGainNodes()
     await this.connectNodes()
+    return true
   }
 
   private async getNoise(type: NoiseTypes): Promise<AudioBuffer> {
