@@ -10,12 +10,12 @@ import { controlTypes } from './controls';
 
 export class Kick extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 230,
-    width: 110,
+    height: 140,
+    width: 140,
   }
 
-  type =  'snare'
-  title = 'Snare'
+  type =  'kick'
+  title = 'Kick'
   node: KickNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {

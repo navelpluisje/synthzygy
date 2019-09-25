@@ -10,8 +10,8 @@ import { controlTypes } from './controls';
 
 export class Snare extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 230,
-    width: 110,
+    height: 140,
+    width: 140,
   }
 
   type =  'snare'
@@ -50,9 +50,7 @@ export class Snare extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator))
-  //   this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setWhiteNoisGain, Colors.AccentGenerator))
-  //   this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setBlueNoisGain, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDecay, Colors.AccentGenerator))
   }
 
   private getInputConnection(type: string): Function {
