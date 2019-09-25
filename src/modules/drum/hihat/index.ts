@@ -50,7 +50,8 @@ export class HiHat extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    // this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator))
   }
 
   private getInputConnection(type: string): Function {

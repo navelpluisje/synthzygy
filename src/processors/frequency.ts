@@ -6,7 +6,7 @@ export class FrequencyProcessor extends AudioWorkletProcessor {
       name: 'frequency',
       defaultValue: 3,
       minValue: 0,
-      maxValue: 10,
+      maxValue: 12,
     }, {
       name: 'octave',
       defaultValue: 3,

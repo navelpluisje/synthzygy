@@ -6,7 +6,7 @@ import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
-// import { controlTypes } from './controls';
+import { controlTypes } from './controls';
 
 export class Snare extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
@@ -24,6 +24,7 @@ export class Snare extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Snare.dimensions, position, this.color)
     this.addInputs()
     this.addOutputs()
+    this.addControls()
   }
 
   private addInputs() {
@@ -48,11 +49,11 @@ export class Snare extends ModuleBase implements ParentModule {
     })
   }
 
-  // private addControls() {
-  //   this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setPinkNoisGain, Colors.AccentGenerator))
+  private addControls() {
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator))
   //   this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setWhiteNoisGain, Colors.AccentGenerator))
   //   this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setBlueNoisGain, Colors.AccentGenerator))
-  // }
+  }
 
   private getInputConnection(type: string): Function {
     switch (type) {

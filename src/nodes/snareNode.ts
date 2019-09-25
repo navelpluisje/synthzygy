@@ -2,9 +2,7 @@ import { NoiseNode } from "./noiseNode"
 
 export class SnareNode {
   private volume: number = .5
-  private decay: number = .5
-  private delayTime: number = .5
-  private dryWet: number = .5
+  private decay: number = .3
   private context: AudioContext
   private oscillator1Node: OscillatorNode
   private oscillator2Node: OscillatorNode
@@ -28,14 +26,14 @@ export class SnareNode {
     this.oscillator1Node.start()
 
     this.oscillator1Gain = this.context.createGain()
-    this.oscillator1Gain.gain.setValueAtTime(.5, this.context.currentTime)
+    this.oscillator1Gain.gain.setValueAtTime(.25, this.context.currentTime)
 
     this.oscillator2Node = this.context.createOscillator()
     this.oscillator2Node.frequency.setValueAtTime(349.23, this.context.currentTime)
     this.oscillator2Node.start()
 
     this.oscillator2Gain = this.context.createGain()
-    this.oscillator2Gain.gain.setValueAtTime(.5, this.context.currentTime)
+    this.oscillator2Gain.gain.setValueAtTime(.2, this.context.currentTime)
 
 
     this.snareGain = this.context.createGain()
@@ -67,10 +65,9 @@ export class SnareNode {
 
   private trigger = (value: number): void => {
     if (value === 1) {
-      const currentValue = this.outputNode.gain.value
       this.snareGain.gain.cancelAndHoldAtTime(0)
-      this.snareGain.gain.setValueCurveAtTime([0, 1], this.context.currentTime, 0.001)
-      this.snareGain.gain.setValueCurveAtTime([1, 0], this.context.currentTime + 0.001, 0.3)
+      this.snareGain.gain.setValueCurveAtTime([0, 2], this.context.currentTime, 0.001)
+      this.snareGain.gain.setValueCurveAtTime([2, 0], this.context.currentTime + 0.001, this.decay)
     }
   }
 
