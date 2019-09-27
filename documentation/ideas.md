@@ -39,3 +39,13 @@ In real life modular systmes these go from -5V to 5V.
 In the Audio Api
 * minValue: -5
 * maxValue: 5
+
+## Names
+Sonder: the realization that each passerby has a life as vivid and complex as your own.
+Syzygy: an alignment of celestial bodies.
+Epiphany: A moment of sudden revelation.
+Bombinate: To make a humming or buzzing noise.
+Sonorous: An imposingly deep and full sound.
+Ineffable: Too great to be expressed in words.
+Mellifluous: A sound that is sweet and smooth, pleasing to hear.
+oxter: outdated word meaning “armpit”
