@@ -42,13 +42,13 @@ export class Midi extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.midiNode.setMidiPort, Colors.AccentGenerator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.midiNode.setClockStepSize, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.midiNode.setMidiPort, Colors.AccentUtility))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.midiNode.setClockStepSize, Colors.AccentUtility))
   }
 
   private addButtonControls() {
     buttons.forEach(buttonGroup => {
-      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.showMidiSettings, Colors.AccentGenerator, true))
+      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.showMidiSettings, Colors.AccentUtility, true))
     })
   }
 

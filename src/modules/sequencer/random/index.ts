@@ -35,7 +35,7 @@ export class RandomSequencer extends ModuleBase implements ParentModule {
 
   private addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility)
       const key = input.type === 'gate' ? 'gate' : 'node'
       this.inputs.push({
         type: input.type,
@@ -47,7 +47,7 @@ export class RandomSequencer extends ModuleBase implements ParentModule {
 
   private addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
       const key = output.type === 'gate' ? 'gate' : 'node'
       this.outputs.push({
         type: output.type,
@@ -58,11 +58,11 @@ export class RandomSequencer extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentGenerator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentUtility))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility))
   }
 
-  private getOutputConnection(type: string): AudioWorkletNode | GateNode {
+  private getOutputConnection(type: string): ConstantSourceNode | GateNode {
     switch (type) {
       case 'Out':
         return this.node.output()
