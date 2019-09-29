@@ -83,7 +83,7 @@ export class Synth {
 
     if (module && !this.mooved) {
       module.onMouseClick(event)
-      this.modules.draw()
+      requestAnimationFrame(this.connections.draw)
     } else if (module && this.mooved) {
       if (this.modules.moduleSelected(event) && this.connections.hasNewConnection()) {
         const endModule = this.modules.getActiveModule()
