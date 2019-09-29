@@ -1,124 +1,79 @@
-export interface EnvelopeNode {
-  // Controls
-  setAttack(attack: number): void
-  setDecay(decay: number): void
-  setSustain(sustain: number): void
-  setRelease(release: number): void
-  // Inputs
-  inputGate(): Function
-  outputCv(): AudioWorklet
-}
 
-export class EnvelopeNode implements EnvelopeNode {
-  attack: number
-  decay: number
-  sustain: number
-  release: number
-  level: number
-  context: AudioContext
-  cvOutputNode: AudioWorkletNode
+export class EnvelopeNode {
+  private attack: number
+  private decay: number
+  private sustain: number
+  private release: number
+  private level: number
+  private context: AudioContext
+  private cvOutputNode: ConstantSourceNode
 
   constructor(
     context: AudioContext,
-    attack: number = 1,
-    decay: number = 1,
-    sustain: number = .5,
-    release: number = 1,
-    level: number = .8,
     ) {
     this.context = context
-    this.attack = attack
-    this.decay = decay
-    this.sustain = sustain
-    this.release = release
+    this.setAttack(.3)
+    this.setDecay(.3)
+    this.setSustain(.5)
+    this.setRelease(.5)
     this.setLevel(.8)
     this.createCvOutputNode()
   }
 
-  createCvOutputNode() {
-    this.cvOutputNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvOutputNode.parameters.get('value').setValueAtTime(0, this.context.currentTime)
+  private createCvOutputNode() {
+    this.cvOutputNode = this.context.createConstantSource()
+    this.cvOutputNode.offset.setValueAtTime(0, this.context.currentTime)
+    this.cvOutputNode.start()
   }
 
-  setAttack = (attack: number): void => {
+  public setAttack = (attack: number): void => {
     this.attack = attack
   }
 
-  setDecay = (decay: number): void => {
+  public setDecay = (decay: number): void => {
     this.decay = decay
   }
 
-  setSustain = (sustain: number): void => {
+  public setSustain = (sustain: number): void => {
     this.sustain = sustain
   }
 
-  setRelease = (release: number): void => {
+  public setRelease = (release: number): void => {
     this.release = release / 10
   }
 
-  setLevel = (level: number): void => {
+  public setLevel = (level: number): void => {
     this.level = level * 8
   }
 
-  getAdsArray(): Float32Array {
-    const from = this.cvOutputNode.parameters.get('value').value || 0
-    const attackSteps = Math.floor(this.attack * 100)
-    const decaySteps = Math.floor(this.decay * 100)
-    const adsArray = new Float32Array(attackSteps + decaySteps)
+  private trigger = (value: number): void => {
+    this.cvOutputNode.offset.cancelAndHoldAtTime(0)
+    const time = this.context.currentTime
 
-    for (let i = 0; i < attackSteps; i += 1) {
-      adsArray[i] = (from + ((1 - from) / attackSteps) * i) * this.level
-    }
-
-    for (let i = 0; i < decaySteps; i += 1) {
-      adsArray[i + attackSteps] = (1 + ((this.sustain - 1) / decaySteps) * i) * this.level
-    }
-
-    return adsArray
-  }
-
-  getAdsTime(): number {
-    const adsTime = this.attack + this.decay
-    return adsTime > 0 ? adsTime : 0.0001
-  }
-
-  getReleaseArray(): Float32Array {
-    const from = this.cvOutputNode.parameters.get('value').value || this.sustain * this.level
-    const to = 0
-    const releaseArray = new Float32Array(2)
-    releaseArray[0] = from
-    releaseArray[1] = to
-    return releaseArray
-  }
-
-  getReleaseTime(): number {
-    return this.release > 0 ? this.release : 0.0001
-  }
-
-  trigger = (value: number) => {
-    this.cvOutputNode.parameters.get('value').cancelAndHoldAtTime(0)
     if (value === 1) {
-      this.cvOutputNode.parameters.get('value').setValueCurveAtTime(
-        this.getAdsArray(),
-        this.context.currentTime,
-        this.getAdsTime() || 0.0001,
+      this.cvOutputNode.offset.linearRampToValueAtTime(
+        this.level,
+        time + this.attack
+      )
+      this.cvOutputNode.offset.linearRampToValueAtTime(
+        this.sustain * this.level,
+        time + this.attack + this.decay
       )
     }
     if (value === 0) {
-      this.cvOutputNode.parameters.get('value').setValueCurveAtTime(
-        this.getReleaseArray(),
-        this.context.currentTime,
-        this.getReleaseTime() || 0.0001,
+      this.cvOutputNode.offset.setValueCurveAtTime (
+        [this.cvOutputNode.offset.value, 0],
+        time,
+        this.release
       )
     }
-
   }
 
-  inputGate(): Function {
+  public inputGate(): Function {
     return this.trigger
   }
 
-  output(): AudioWorkletNode {
+  public output(): ConstantSourceNode {
     return this.cvOutputNode
   }
 }
