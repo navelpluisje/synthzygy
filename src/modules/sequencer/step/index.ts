@@ -77,7 +77,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     })
   }
 
-  private getOutputConnection(type: string): GateNode | AudioWorkletNode {
+  private getOutputConnection(type: string): GateNode | ConstantSourceNode {
     switch (type) {
       case 'cv A':
         return this.node.outputA()
@@ -178,7 +178,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
   }
 
   private setStepValue = (index: number) => (value: number) => {
-    this.node.setStepAValue(index, this.activeControlGroup, value)
+    this.node.setStepValue(index, this.activeControlGroup, value)
   }
 
   private addControls() {

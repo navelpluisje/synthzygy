@@ -1,27 +1,7 @@
 import { GateNode } from "./gateNode";
 import { Transport } from "@constants/enums";
 
-export interface SequencerNode {
-  // Controls
-  setStepA(index: number, value: number): void
-  setStepB(index: number, value: number): void
-  setLength(length: number): void
-  setGlideLength(length: number): void
-  toggleGlide(): void
-  setGlideDuration(duration: number): void
-  start(): void
-  stop(): void
-  reset(): void
-  isRunning(): boolean
-  // Inputs
-  inputGate(): Function
-  //outputs
-  outputA(): AudioWorkletNode
-  outputB(): AudioWorkletNode
-  outputGate(): GateNode
-}
-
-export class SequencerNode implements SequencerNode {
+export class SequencerNode {
   private stepsA: Float32Array = new Float32Array([4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4])
   private stepsB: Float32Array = new Float32Array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
   private gates: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
@@ -31,8 +11,8 @@ export class SequencerNode implements SequencerNode {
   private glideEnabled: boolean = false
   private glideDuration: number = 0
   private context: AudioContext
-  private cvOutputNodeA: AudioWorkletNode
-  private cvOutputNodeB: AudioWorkletNode
+  private cvOutputNodeA: ConstantSourceNode
+  private cvOutputNodeB: ConstantSourceNode
   private gateOutput: GateNode
   private transportCallback: Function
   private stepChangeCallback: (step: number) => void
@@ -47,36 +27,23 @@ export class SequencerNode implements SequencerNode {
     this.stepChangeCallback = stepChangeCallback
   }
 
-  setLength(length: number):void {
+  public setLength(length: number):void {
     this.length = length
   }
 
-  start(): void {
-    // this.running = !this.running
+  public start(): void {
     this.running = true
   }
 
-  stop(): void {
+  public stop(): void {
     this.running = false
   }
 
-  reset(): void {
+  public reset(): void {
     this.currentStep = -1
   }
 
-  isRunning(): boolean {
-    return this.running
-  }
-
-  toggleGlide() {
-    this.glideEnabled = !this.glideEnabled
-  }
-
-  setGlideDuration(duration: number): void {
-    this.glideDuration = duration
-  }
-
-  setStepAValue(index: number, group: 'A' | 'B', value: number) {
+  public setStepValue(index: number, group: 'A' | 'B', value: number) {
     switch(group) {
       case 'A':
         this.stepsA[index] = value
@@ -89,15 +56,17 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
-  setGateStep(index: number, value: boolean) {
+  public setGateStep(index: number, value: boolean) {
     this.gates[index] = value
   }
 
   private createCvOutputNodes() {
-    this.cvOutputNodeA = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvOutputNodeA.parameters.get('value').setValueAtTime(0, this.context.currentTime)
-    this.cvOutputNodeB = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvOutputNodeB.parameters.get('value').setValueAtTime(0, this.context.currentTime)
+    this.cvOutputNodeA = this.context.createConstantSource()
+    this.cvOutputNodeA.offset.setValueAtTime(0, this.context.currentTime)
+    this.cvOutputNodeA.start()
+    this.cvOutputNodeB = this.context.createConstantSource()
+    this.cvOutputNodeB.offset.setValueAtTime(0, this.context.currentTime)
+    this.cvOutputNodeB.start()
   }
 
   private setNextStep() {
@@ -125,18 +94,20 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
-  public trigger = (value: number) => {
+  private trigger = (value: number) => {
     if (!this.running) {
       return
     }
 
     if (value === 1) {
       this.setNextStep()
-      this.cvOutputNodeA.parameters.get('value').setValueAtTime(
+      // this.cvOutputNodeA.parameters.get('value').setValueAtTime(
+      this.cvOutputNodeA.offset.setValueAtTime(
         this.stepsA[this.currentStep],
         this.context.currentTime
       )
-      this.cvOutputNodeB.parameters.get('value').setValueAtTime(
+      // this.cvOutputNodeB.parameters.get('value').setValueAtTime(
+      this.cvOutputNodeB.offset.setValueAtTime(
         this.stepsB[this.currentStep],
         this.context.currentTime
       )
@@ -177,24 +148,24 @@ export class SequencerNode implements SequencerNode {
     }
   }
 
-  cvStartStop(transportCallback: Function): Function {
+  public cvStartStop(transportCallback: Function): Function {
     this.transportCallback = transportCallback
     return this.triggerTransport
   }
 
-  inputGate(): Function {
+  public inputGate(): Function {
     return this.trigger
   }
 
-  outputA(): AudioWorkletNode {
+  public outputA(): ConstantSourceNode {
     return this.cvOutputNodeA
   }
 
-  outputB(): AudioWorkletNode {
+  public outputB(): ConstantSourceNode {
     return this.cvOutputNodeB
   }
 
-  outputGate(): GateNode {
+  public outputGate(): GateNode {
     return this.gateOutput
   }
 }

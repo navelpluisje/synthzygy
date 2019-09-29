@@ -20,10 +20,10 @@ export class MidiNode {
   private trigger: Record<number, Function> = {}
   private transportTrigger: Record<number, Function> = {}
   private clockTrigger: Record<number, Function> = {}
-  private cvNoteNode: AudioWorkletNode
-  private cvPitchNode: AudioWorkletNode
-  private cvModulationNode: AudioWorkletNode
-  private cvAfterTouchNode: AudioWorkletNode
+  private cvNoteNode: ConstantSourceNode
+  private cvPitchNode: ConstantSourceNode
+  private cvModulationNode: ConstantSourceNode
+  private cvAfterTouchNode: ConstantSourceNode
   private connected: boolean = false
   private activeNote: number
   private port: string
@@ -43,14 +43,18 @@ export class MidiNode {
   }
 
   private createCvNodes() {
-    this.cvNoteNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvNoteNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
-    this.cvPitchNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvPitchNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
-    this.cvModulationNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvModulationNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
-    this.cvAfterTouchNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvAfterTouchNode.parameters.get('value').setValueAtTime(2, this.context.currentTime)
+    this.cvNoteNode = this.context.createConstantSource()
+    this.cvNoteNode.offset.setValueAtTime(2, this.context.currentTime)
+    this.cvNoteNode.start()
+    this.cvPitchNode = this.context.createConstantSource()
+    this.cvPitchNode.offset.setValueAtTime(2, this.context.currentTime)
+    this.cvPitchNode.start()
+    this.cvModulationNode = this.context.createConstantSource()
+    this.cvModulationNode.offset.setValueAtTime(2, this.context.currentTime)
+    this.cvModulationNode.start()
+    this.cvAfterTouchNode = this.context.createConstantSource()
+    this.cvAfterTouchNode.offset.setValueAtTime(2, this.context.currentTime)
+    this.cvAfterTouchNode.start()
   }
 
   private onConnectionChange = (connectionEvent: WebMidi.MIDIConnectionEvent) => {
@@ -128,22 +132,22 @@ export class MidiNode {
   private setNote(midiNote: number) {
     // @ts-ignore
     const note = notes[midiNote].value
-    this.cvNoteNode.parameters.get('value').setValueAtTime(note, this.context.currentTime)
+    this.cvNoteNode.offset.setValueAtTime(note, this.context.currentTime)
   }
 
   private setPitch(midiValue: number) {
     const value = this.getValue(-2.5, 2.5, midiValue)
-    this.cvPitchNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+    this.cvPitchNode.offset.setValueAtTime(value, this.context.currentTime)
   }
 
   private setModulation(midiValue: number) {
     const value = this.getValue(0, 8, midiValue)
-    this.cvModulationNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+    this.cvModulationNode.offset.setValueAtTime(value, this.context.currentTime)
   }
 
   private setAfterTouch(midiValue: number) {
     const value = this.getValue(0, 8, midiValue)
-    this.cvAfterTouchNode.parameters.get('value').setValueAtTime(value, this.context.currentTime)
+    this.cvAfterTouchNode.offset.setValueAtTime(value, this.context.currentTime)
   }
 
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
@@ -265,16 +269,16 @@ export class MidiNode {
     delete this.trigger[id]
   }
 
-  public noteOutput(): AudioWorkletNode {
+  public noteOutput(): ConstantSourceNode {
     return this.cvNoteNode
   }
-  public pitchOutput(): AudioWorkletNode {
+  public pitchOutput(): ConstantSourceNode {
     return this.cvPitchNode
   }
-  public modulationOutput(): AudioWorkletNode {
+  public modulationOutput(): ConstantSourceNode {
     return this.cvModulationNode
   }
-  public aftertouchOutput(): AudioWorkletNode {
+  public aftertouchOutput(): ConstantSourceNode {
     return this.cvAfterTouchNode
   }
 }

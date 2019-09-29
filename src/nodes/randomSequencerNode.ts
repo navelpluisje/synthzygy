@@ -22,7 +22,7 @@ export class RandomSequencerNode {
   private context: AudioContext
   private gateOutput: GateNode
   private pulsesOutputs: Record<string, GateNode>
-  private cvOutputNode: AudioWorkletNode
+  private cvOutputNode: ConstantSourceNode
   private binData: number
   private value: number
   private overFlow: Record<Lengths, Bit>
@@ -40,14 +40,15 @@ export class RandomSequencerNode {
   }
 
   private createNodes() {
-    this.cvOutputNode = new AudioWorkletNode(this.context, 'cv-output-processor')
+    this.cvOutputNode = this.context.createConstantSource()
+    this.cvOutputNode.start
     this.setCvOutput(this.value)
     this.gateOutput = new GateNode()
   }
 
   private setCvOutput(value: number): void {
     const val = value / 255 * 8
-    this.cvOutputNode.parameters.get('value').setValueAtTime(val, this.context.currentTime)
+    this.cvOutputNode.offset.setValueAtTime(val, this.context.currentTime)
   }
 
   private setInitialOverflow(): void {
@@ -157,7 +158,7 @@ export class RandomSequencerNode {
     return this.gateOutput
   }
 
-  public output(): AudioWorkletNode {
+  public output(): ConstantSourceNode {
     return this.cvOutputNode
   }
 }

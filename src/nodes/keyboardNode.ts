@@ -1,17 +1,9 @@
 import { getNote } from "@utilities/keyBoardNotes";
 
-export interface KeyboardNode {
-  connect(trigger: Function): void
-  disconnect(): void
-  onKeyDown(event: KeyboardEvent): void
-  onKeyUp(event: KeyboardEvent): void
-  noteOutput(): AudioWorkletNode
-}
-
-export class KeyboardNode implements KeyboardNode {
+export class KeyboardNode {
   context: AudioContext
   trigger: Function
-  cvNode: AudioWorkletNode
+  cvNode: ConstantSourceNode
   connected: boolean = false
 
   constructor(context: AudioContext) {
@@ -19,12 +11,13 @@ export class KeyboardNode implements KeyboardNode {
     this.createCvNode()
   }
 
-  createCvNode() {
-    this.cvNode = new AudioWorkletNode(this.context, 'cv-output-processor')
-    this.cvNode.parameters.get('value').setValueAtTime(0, this.context.currentTime)
+  private createCvNode(): void {
+    this.cvNode = this.context.createConstantSource()
+    this.cvNode.offset.setValueAtTime(0, this.context.currentTime)
+    this.cvNode.start()
   }
 
-  connect(trigger: Function): void {
+ public connect(trigger: Function): void {
     this.trigger = trigger
     if (!this.connected) {
       this.addEventListeners()
@@ -32,7 +25,7 @@ export class KeyboardNode implements KeyboardNode {
     }
   }
 
-  disconnect() {
+  public disconnect(): void {
     this.trigger = null
     if (this.connected) {
       this.removeEventListeners()
@@ -40,29 +33,29 @@ export class KeyboardNode implements KeyboardNode {
     }
   }
 
-  addEventListeners = () => {
+  private addEventListeners = (): void => {
     document.addEventListener('keydown', this.onKeyDown)
     document.addEventListener('keyup', this.onKeyUp)
   }
 
-  removeEventListeners = () => {
+  private removeEventListeners = (): void => {
     document.removeEventListener('keydown', this.onKeyDown)
     document.removeEventListener('keyup', this.onKeyUp)
   }
 
-  onKeyDown = (event: KeyboardEvent) => {
+  private onKeyDown = (event: KeyboardEvent): void => {
     const note = getNote(event.code)
     if (note > 0) {
-      this.cvNode.parameters.get('value').setValueAtTime(note, this.context.currentTime)
+      this.cvNode.offset.setValueAtTime(note, this.context.currentTime)
       this.trigger && this.trigger(1)
     }
   }
 
-  onKeyUp = (event: KeyboardEvent) => {
+  private onKeyUp = (event: KeyboardEvent): void => {
     this.trigger && this.trigger(0)
   }
 
-  noteOutput(): AudioWorkletNode {
+  noteOutput(): ConstantSourceNode {
     return this.cvNode
   }
 }
