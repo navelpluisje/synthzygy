@@ -1,6 +1,6 @@
 {
   "name": "@navelpluisje/modular-js",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "A modular javascript synthesizer",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/Navelpluisje/modular-js.git"
+    "url": "git@github.com:navelpluisje/synthzygy.git"
   },
-  "author": "",
+  "author": "Erwin Goossen <erwin@navelpluisje.nl>",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/Navelpluisje/modular-js#readme",
+  "homepage": "https://github.com/navelpluisje/synthzygy/tree/develop/documentation",
   "devDependencies": {
     "@movable/rollup-plugin-html": "^0.3.0",
     "@navelpluisje/rollup-plugin-css": "^1.0.0",
