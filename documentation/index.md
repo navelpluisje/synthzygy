@@ -7,6 +7,7 @@ A modular synthesizer made with vanilla javascript
 ## Table of contents
 ### Overall
 * [Usage](./usage.md)
+* [Code of conduct](./code-of-conduct.md)
 
 ### Generator Modules
 [![Oscillator :: Generator module](./images/oscillator.png)](./kick.md)
