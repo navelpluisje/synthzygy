@@ -10,7 +10,7 @@ import { controlTypes } from './controls';
 
 export class Kick extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 140,
+    height: 210,
     width: 140,
   }
 
@@ -51,6 +51,9 @@ export class Kick extends ModuleBase implements ParentModule {
 
   private addControls() {
     this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSweep, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setBoost, Colors.AccentGenerator))
   }
 
   private getInputConnection(type: string): Function {

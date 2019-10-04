@@ -14,6 +14,8 @@ https://coolors.co/93827f-e2712e-c04d35-dbb04a-68a678
 
 #0f0a0a
 
+https://github.com/geocine/custom-elements-ts
+
 ## Chorus:
 https://github.com/GoogleChromeLabs/web-audio-samples/blob/master/archive/demos/lib/chorus.js
 
