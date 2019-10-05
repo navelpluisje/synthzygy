@@ -7,12 +7,11 @@ A modular synthesizer made with vanilla javascript
 ## Table of contents
 ### Overall
 * [Usage](./usage.md)
-* [Code of conduct](./code-of-conduct.md)
 
 ### Generator Modules
-[![Oscillator :: Generator module](./images/oscillator.png)](./kick.md)
-[![Noise :: Generator module](./images/noise.png)](./noise.md)
-[![Kick :: Drum module](./images/kick.png)](./kick.md)
+[![Oscillator :: Generator module](./images/oscillator.png)](./generators/kick.md)
+[![Noise :: Generator module](./images/noise.png)](./generators/noise.md)
+[![Kick :: Drum module](./images/kick.png)](./generators/kick.md)
 
 ### Modulator Modules
 [![LFO :: Modulator module](./images/lfo.png)](./lfo.md)
@@ -21,4 +20,9 @@ A modular synthesizer made with vanilla javascript
 ### Modulator Modules
 [![Midi :: Utility module](./images/midi.png)](./midi.md)
 [![Turing Machine :: Utility module](./images/turing.png)](./turing.md)
+
+### Others
+* [Credits](./credits.md)
+* [Code of conduct](./code-of-conduct.md)
+
 
