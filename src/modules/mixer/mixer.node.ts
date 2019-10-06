@@ -1,3 +1,5 @@
+import { createGainNode } from "@utilities/createGain"
+
 export interface MixerNode {
   // Controls
   setAudio(index: string): Function
@@ -36,17 +38,12 @@ export class MixerNode implements MixerNode {
   }
 
   createGainNodes() {
-    this.audioIn1 = this.context.createGain()
-    this.audioIn1.gain.setValueAtTime(0.5, this.context.currentTime)
-    this.audioIn2 = this.context.createGain()
-    this.audioIn2.gain.setValueAtTime(0.5, this.context.currentTime)
-    this.audioIn3 = this.context.createGain()
-    this.audioIn3.gain.setValueAtTime(0.5, this.context.currentTime)
-    this.audioIn4 = this.context.createGain()
-    this.audioIn4.gain.setValueAtTime(0.5, this.context.currentTime)
+    this.audioIn1 = createGainNode(this.context, 0.5)
+    this.audioIn2 = createGainNode(this.context, 0.5)
+    this.audioIn3 = createGainNode(this.context, 0.5)
+    this.audioIn4 = createGainNode(this.context, 0.5)
 
-    this.audioOut = this.context.createGain()
-    this.audioOut.gain.setValueAtTime(0.5, this.context.currentTime)
+    this.audioOut = createGainNode(this.context, 0.5)
   }
 
   connectNodes() {
