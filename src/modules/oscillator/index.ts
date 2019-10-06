@@ -1,9 +1,9 @@
 import { ModuleBase } from '../moduleBase';
-import { JsOscillatorNode } from '@nodes/oscillatorNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
+import { JsOscillatorNode } from './oscillator.node'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
