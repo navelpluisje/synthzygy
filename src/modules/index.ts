@@ -13,8 +13,8 @@ import { Lfo } from './lfo';
 import { Mixer } from './mixer';
 import { Oscillator } from './oscillator';
 import { Oscilloscope } from './oscilloscope';
-import { RandomSequencer } from './sequencer/random';
-import { Sequencer } from './sequencer/step';
+import { TuringMachine } from './sequencers/turing';
+import { Sequencer } from './sequencers/step';
 import { Snare } from './drum/snare';
 import { Vca } from './vca';
 
@@ -34,7 +34,7 @@ export {
   Noise,
   Oscillator,
   Oscilloscope,
-  RandomSequencer,
+  TuringMachine,
   Sequencer,
   Snare,
   Vca,

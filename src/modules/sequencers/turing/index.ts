@@ -1,15 +1,15 @@
 import { ModuleBase } from '../../moduleBase';
-import { RandomSequencerNode } from '@nodes/randomSequencerNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
+import { TuringMachineNode } from './turingMachine.node'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 import { GateNode } from '@nodes/gateNode';
 
-export class RandomSequencer extends ModuleBase implements ParentModule {
+export class TuringMachine extends ModuleBase implements ParentModule {
   static dimensions = {
     height: 230,
     width: 190,
@@ -22,12 +22,12 @@ export class RandomSequencer extends ModuleBase implements ParentModule {
   type =  'turinger'
   title =  'Turing Machine'
   active: boolean = false
-  node: RandomSequencerNode
+  node: TuringMachineNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new RandomSequencerNode(context)
-    this.container = new SynthModule(canvas, RandomSequencer.dimensions, position, this.color)
+    this.node = new TuringMachineNode(context)
+    this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color)
     this.addOutputs()
     this.addInputs()
     this.addControls()

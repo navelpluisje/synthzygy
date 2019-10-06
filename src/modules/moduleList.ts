@@ -17,7 +17,7 @@ import {
   Oscilloscope,
   Sequencer,
   Snare,
-  RandomSequencer,
+  TuringMachine,
   Vca,
  } from "./index";
 import { Rotary } from '../components/rotary';
@@ -109,7 +109,7 @@ export class ModuleList {
       case 'snare':
         return Snare
       case 'turinger':
-        return RandomSequencer
+        return TuringMachine
       case 'vca':
         return Vca
     }
