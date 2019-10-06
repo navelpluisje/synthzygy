@@ -1,6 +1,7 @@
 import { NoiseNode } from "./noiseNode"
 import { NoiseTypes } from "@constants/enums"
 import { createOscillatorNode } from '@utilities/createOscillator'
+import { createGainNode } from '@utilities/createGain'
 
 export class SnareNode {
   private volume: number = .5
@@ -25,7 +26,7 @@ export class SnareNode {
     this.createSnareNode()
   }
 
-  private async createSnareNode() {
+  private async createSnareNode(): Promise<void> {
     this.oscillator1Node = createOscillatorNode(this.context, 'sine')
     this.oscillator2Node = createOscillatorNode(this.context, 'sine')
     this.oscillator2Node.detune.setValueAtTime(1100, this.context.currentTime)

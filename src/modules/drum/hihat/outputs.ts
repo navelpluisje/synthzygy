@@ -6,7 +6,7 @@ export const outputTypes: SynthConnectorType[] = [{
   icon: 'audio-out',
   position: {
     x: 120,
-    y: 180,
+    y: 120,
   },
   showIcon: true,
 }]

@@ -12,14 +12,16 @@ A modular synthesizer made with vanilla javascript
 [![Oscillator :: Generator module](./images/oscillator.png)](./generators/kick.md)
 [![Noise :: Generator module](./images/noise.png)](./generators/noise.md)
 [![Kick :: Drum module](./images/kick.png)](./generators/kick.md)
+[![Snare :: Drum module](./images/snare.png)](./generators/snare.md)
+[![Hihat :: Drum module](./images/hihat.png)](./generators/hihat.md)
 
 ### Modulator Modules
-[![LFO :: Modulator module](./images/lfo.png)](./lfo.md)
-[![Envelope :: Modulator module](./images/envelope.png)](./lfo.md)
+[![LFO :: Modulator module](./images/lfo.png)](./modulators/lfo.md)
+[![Envelope :: Modulator module](./images/envelope.png)](./modulators/lfo.md)
 
-### Modulator Modules
-[![Midi :: Utility module](./images/midi.png)](./midi.md)
-[![Turing Machine :: Utility module](./images/turing.png)](./turing.md)
+### Utility Modules
+[![Midi :: Utility module](./images/midi.png)](./utilities/midi.md)
+[![Turing Machine :: Utility module](./images/turing.png)](./utilities/turing.md)
 
 ### Others
 * [Credits](./credits.md)

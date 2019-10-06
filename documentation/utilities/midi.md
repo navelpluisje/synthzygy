@@ -1,6 +1,6 @@
 # Midi
 
-![Midi](./images/midi.png)
+![Midi](../images/midi.png)
 
 Midi connector to connect the modular to any midi device you want. All about midi can be found at [Midi.org](https://www.midi.org)
 
@@ -30,9 +30,3 @@ Links to midi data tables
 ## Button
 * Settings: Open the settings window to select the midi device you want to use
 ![Midi](./images/midi-2.png)
-
-
-### future/whishlist:
-* start
-* stop
-* pause

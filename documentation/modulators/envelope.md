@@ -1,5 +1,5 @@
 # ADSR Envelope
-![Envelope](./images/envelope.png)
+![Envelope](../images/envelope.png)
 
 ADSR is an acronym that stands for Attack, Decay, Sustain, Release and is a means to replicate those respective elements of a sound.It is especially used in sound designing with electronic music instruments.
 

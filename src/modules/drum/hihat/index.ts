@@ -10,7 +10,7 @@ import { controlTypes } from './controls';
 
 export class HiHat extends ModuleBase implements ParentModule {
   static dimensions: DimensionType = {
-    height: 200,
+    height: 140,
     width: 140,
   }
 
