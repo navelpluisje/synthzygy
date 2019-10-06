@@ -38,7 +38,7 @@ type Module = AudioOut
   | Noise
   | Oscillator
   | Oscilloscope
-  | RandomSequencer
+  | TuringMachine
   | Sequencer
   | Snare
   | Vca
