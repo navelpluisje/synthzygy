@@ -1,4 +1,4 @@
-import { NoiseNode } from "./noiseNode"
+import { NoiseNode } from "@nodes/noiseNode"
 import { NoiseTypes } from "@constants/enums"
 import { createOscillatorNode } from '@utilities/createOscillator'
 import { createGainNode } from '@utilities/createGain'

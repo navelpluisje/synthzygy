@@ -1,9 +1,9 @@
-import { KickNode } from '@nodes/kickNode'
 import { SynthModule, OutputConnector, Rotary, InputConnector } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { KickNode } from './kick.node'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';

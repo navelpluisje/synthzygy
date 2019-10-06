@@ -1,9 +1,9 @@
-import { HiHatNode } from '@nodes/hihatNode'
 import { SynthModule, OutputConnector, Rotary, InputConnector } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { HiHatNode } from './hihat.node'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';

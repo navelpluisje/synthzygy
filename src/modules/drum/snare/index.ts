@@ -1,10 +1,10 @@
-import { SnareNode } from '@nodes/snareNode'
 import { SynthModule, OutputConnector, Rotary, InputConnector } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { inputTypes } from './inputs';
+import { SnareNode } from './snare.node'
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 

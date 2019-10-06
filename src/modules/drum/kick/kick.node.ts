@@ -1,7 +1,10 @@
+import { createOscillatorNode } from '@utilities/createOscillator';
+import { createGainNode } from '@utilities/createGain';
+
+
 export class KickNode {
   private decay: number = .3
   private frequency: number = 20
-  private dryWet: number = .5
   private context: AudioContext
   private triangle: OscillatorNode
   private triangleBoost: GainNode
@@ -12,6 +15,7 @@ export class KickNode {
   private frequencyConstant: ConstantSourceNode
   private sweep: number
   private kickGain: GainNode
+  private kickBoost: GainNode
 
   public constructor(
     context: AudioContext,
@@ -26,42 +30,28 @@ export class KickNode {
     this.frequencyConstant.offset.setValueAtTime(0, this.context.currentTime)
     this.frequencyConstant.start()
 
-    this.triangle = this.createOscillatorNode('triangle')
-    this.triangleBoost = this.createBoostNode(3)
+    this.triangle = createOscillatorNode(this.context, 'triangle')
+    this.frequencyConstant.connect(this.triangle.frequency)
+    this.triangleBoost = createGainNode(this.context, 3)
     this.triangle.connect(this.triangleBoost)
 
-    this.sine = this.createOscillatorNode('sine')
-    this.sineBoost = this.createBoostNode(0)
+    this.sine = createOscillatorNode(this.context, 'sine')
+    this.frequencyConstant.connect(this.sine.frequency)
+    this.sineBoost = createGainNode(this.context, 0)
     this.sine.connect(this.sineBoost)
 
-    this.square = this.createOscillatorNode('square')
-    this.squareBoost = this.createBoostNode(0)
+    this.square = createOscillatorNode(this.context, 'square')
+    this.frequencyConstant.connect(this.square.frequency)
+    this.squareBoost = createGainNode(this.context, 0)
     this.square.connect(this.squareBoost)
 
-    this.kickGain = this.context.createGain()
-    this.kickGain.gain.setValueAtTime(0, this.context.currentTime)
+    this.kickGain = createGainNode(this.context, 0)
+    this.kickBoost = createGainNode(this.context, 4)
 
     this.triangleBoost.connect(this.kickGain)
     this.sineBoost.connect(this.kickGain)
     this.squareBoost.connect(this.kickGain)
-  }
-
-  private createOscillatorNode(type: OscillatorType): OscillatorNode {
-    const osc = this.context.createOscillator()
-    osc.type = type
-    osc.frequency.setValueAtTime(0, this.context.currentTime)
-    osc.start()
-
-    this.frequencyConstant.connect(osc.frequency)
-
-    return osc
-  }
-
-  private createBoostNode(value: number): GainNode {
-    const boost = this.context.createGain()
-    boost.gain.setValueAtTime(value, this.context.currentTime)
-
-    return boost
+    this.kickGain.connect(this.kickBoost)
   }
 
   public setDecay = (decay: number): void => {
@@ -101,6 +91,6 @@ export class KickNode {
   }
 
   public output(): GainNode {
-    return this.kickGain
+    return this.kickBoost
   }
 }
