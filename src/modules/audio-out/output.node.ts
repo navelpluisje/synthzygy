@@ -1,14 +1,9 @@
-export interface OutputNode {
-  // Controls
-  setGain(gain: number): void
-  // Inputs
-  connectAudioIn(): AudioParam | GainNode  // Outputs
-}
+import { createGainNode } from "@utilities/createGain"
 
-export class OutputNode implements OutputNode {
-  gain: number
-  context: AudioContext
-  gainNode: GainNode
+export class OutputNode {
+  private gain: number
+  private context: AudioContext
+  private gainNode: GainNode
 
   constructor(
     context: AudioContext,
@@ -20,8 +15,7 @@ export class OutputNode implements OutputNode {
   }
 
   createGainNode() {
-    this.gainNode = this.context.createGain()
-    this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
+    this.gainNode = createGainNode(this.context, this.gain)
     this.gainNode.connect(this.context.destination)
   }
 
