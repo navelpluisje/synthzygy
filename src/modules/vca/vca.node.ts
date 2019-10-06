@@ -1,4 +1,5 @@
 import { outputTypes } from "@modules/oscillator/outputs";
+import { createGainNode } from "@utilities/createGain";
 
 export interface VcaNode {
   // Controls
@@ -26,11 +27,8 @@ export class VcaNode implements VcaNode {
   }
 
   createGainNode() {
-    this.gainNode = this.context.createGain()
-    this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime)
-
-    this.cvNode = this.context.createGain()
-    this.cvNode.gain.setValueAtTime(0, this.context.currentTime)
+    this.gainNode = createGainNode(this.context, this.gain)
+    this.cvNode = createGainNode(this.context, 0)
     this.cvNode.connect(this.gainNode.gain)
   }
 

@@ -1,4 +1,5 @@
 import { NoiseTypes } from '@constants/enums';
+import { createGainNode } from '@utilities/createGain';
 
 export class NoiseNode {
   context: AudioContext
@@ -50,8 +51,7 @@ export class NoiseNode {
   }
 
   private async createGainNode() {
-    this.noise = this.context.createGain()
-    this.noise.gain.setValueAtTime(2.5, this.context.currentTime)
+    this.noise = createGainNode(this.context, 2.5)
   }
 
   private async connectNodes() {

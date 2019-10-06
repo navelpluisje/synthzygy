@@ -1,3 +1,5 @@
+import { createGainNode } from "@utilities/createGain"
+
 export class ClockNode {
   private frequency: number = 10
   private pulseWidth: number = 0.5
@@ -9,8 +11,7 @@ export class ClockNode {
   constructor(context: AudioContext) {
     this.context = context
 
-    this.output = this.context.createGain()
-    this.output.gain.setValueAtTime(0, this.context.currentTime)
+    this.output = createGainNode(this.context, 0)
 
     this.node = new AudioWorkletNode(this.context, 'clock-processor')
     this.node.port.onmessage = this.handleMessage
