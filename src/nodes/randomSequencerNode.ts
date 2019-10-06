@@ -41,7 +41,7 @@ export class RandomSequencerNode {
 
   private createNodes() {
     this.cvOutputNode = this.context.createConstantSource()
-    this.cvOutputNode.start
+    this.cvOutputNode.start()
     this.setCvOutput(this.value)
     this.gateOutput = new GateNode()
   }
