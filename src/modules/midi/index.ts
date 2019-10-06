@@ -1,9 +1,9 @@
-import { MidiNode } from '@nodes/midiNode'
 import { SynthModule, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { MidiNode } from './midi.node'
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 import { buttons } from './buttons';
