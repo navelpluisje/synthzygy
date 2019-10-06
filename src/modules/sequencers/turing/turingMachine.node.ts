@@ -42,7 +42,6 @@ export class TuringMachineNode {
 
   private createNodes() {
     this.cvOutputNode = createConstantSourceNode(this.context)
-    this.cvOutputNode.start()
     this.setCvOutput(this.value)
     this.gateOutput = new GateNode()
   }
