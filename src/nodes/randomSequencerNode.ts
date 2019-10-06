@@ -1,4 +1,5 @@
 import { GateNode } from './gateNode';
+import { createConstantSourceNode } from '@utilities/createConstantSource';
 
 const BIT_1 = 1
 const BIT_2 = 2
@@ -40,7 +41,7 @@ export class RandomSequencerNode {
   }
 
   private createNodes() {
-    this.cvOutputNode = this.context.createConstantSource()
+    this.cvOutputNode = createConstantSourceNode(this.context)
     this.cvOutputNode.start()
     this.setCvOutput(this.value)
     this.gateOutput = new GateNode()

@@ -1,4 +1,5 @@
 import { getNote } from "@utilities/keyBoardNotes";
+import { createConstantSourceNode } from "@utilities/createConstantSource";
 
 export class KeyboardNode {
   context: AudioContext
@@ -12,9 +13,7 @@ export class KeyboardNode {
   }
 
   private createCvNode(): void {
-    this.cvNode = this.context.createConstantSource()
-    this.cvNode.offset.setValueAtTime(0, this.context.currentTime)
-    this.cvNode.start()
+    this.cvNode = createConstantSourceNode(this.context, 0)
   }
 
  public connect(trigger: Function): void {

@@ -1,3 +1,4 @@
+import { createConstantSourceNode } from "@utilities/createConstantSource"
 
 export class EnvelopeNode {
   private attack: number
@@ -21,9 +22,7 @@ export class EnvelopeNode {
   }
 
   private createCvOutputNode() {
-    this.cvOutputNode = this.context.createConstantSource()
-    this.cvOutputNode.offset.setValueAtTime(0, this.context.currentTime)
-    this.cvOutputNode.start()
+    this.cvOutputNode = createConstantSourceNode(this.context, 0)
   }
 
   public setAttack = (attack: number): void => {

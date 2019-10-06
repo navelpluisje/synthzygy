@@ -1,5 +1,6 @@
 import { createOscillatorNode } from '@utilities/createOscillator';
 import { createGainNode } from '@utilities/createGain';
+import { createConstantSourceNode } from '@utilities/createConstantSource';
 
 
 export class KickNode {
@@ -26,9 +27,7 @@ export class KickNode {
   }
 
   private async createKickNode() {
-    this.frequencyConstant = this.context.createConstantSource()
-    this.frequencyConstant.offset.setValueAtTime(0, this.context.currentTime)
-    this.frequencyConstant.start()
+    this.frequencyConstant = createConstantSourceNode(this.context, 0)
 
     this.triangle = createOscillatorNode(this.context, 'triangle')
     this.frequencyConstant.connect(this.triangle.frequency)

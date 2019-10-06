@@ -1,4 +1,4 @@
-import { GateNode } from "./gateNode";
+import { GateNode } from "@nodes/gateNode";
 import { Transport } from "@constants/enums";
 import { createConstantSourceNode } from "@utilities/createConstantSource";
 

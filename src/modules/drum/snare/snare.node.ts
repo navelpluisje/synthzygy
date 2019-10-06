@@ -2,6 +2,7 @@ import { NoiseNode } from "@nodes/noiseNode"
 import { NoiseTypes } from "@constants/enums"
 import { createOscillatorNode } from '@utilities/createOscillator'
 import { createGainNode } from '@utilities/createGain'
+import { createConstantSourceNode } from "@utilities/createConstantSource"
 
 export class SnareNode {
   private volume: number = .5
@@ -31,11 +32,9 @@ export class SnareNode {
     this.oscillator2Node = createOscillatorNode(this.context, 'sine')
     this.oscillator2Node.detune.setValueAtTime(1100, this.context.currentTime)
 
-    this.frequencyConstant = this.context.createConstantSource()
-    this.frequencyConstant.offset.setValueAtTime(0, this.context.currentTime)
+    this.frequencyConstant = createConstantSourceNode(this.context, 0)
     this.frequencyConstant.connect(this.oscillator1Node.frequency)
     this.frequencyConstant.connect(this.oscillator2Node.frequency)
-    this.frequencyConstant.start()
 
     this.oscillator1Gain = createGainNode(this.context, .25)
     this.oscillator2Gain = createGainNode(this.context, 2)

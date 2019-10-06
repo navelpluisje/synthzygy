@@ -1,5 +1,6 @@
 import { Transport } from 'src/constants/enums';
 import { notes } from 'src/midinotes'
+import { createConstantSourceNode } from '@utilities/createConstantSource';
 
 const NOTE_OFF = '8'
 const NOTE_ON = '9'
@@ -43,18 +44,10 @@ export class MidiNode {
   }
 
   private createCvNodes() {
-    this.cvNoteNode = this.context.createConstantSource()
-    this.cvNoteNode.offset.setValueAtTime(2, this.context.currentTime)
-    this.cvNoteNode.start()
-    this.cvPitchNode = this.context.createConstantSource()
-    this.cvPitchNode.offset.setValueAtTime(2, this.context.currentTime)
-    this.cvPitchNode.start()
-    this.cvModulationNode = this.context.createConstantSource()
-    this.cvModulationNode.offset.setValueAtTime(2, this.context.currentTime)
-    this.cvModulationNode.start()
-    this.cvAfterTouchNode = this.context.createConstantSource()
-    this.cvAfterTouchNode.offset.setValueAtTime(2, this.context.currentTime)
-    this.cvAfterTouchNode.start()
+    this.cvNoteNode = createConstantSourceNode(this.context, 2)
+    this.cvPitchNode = createConstantSourceNode(this.context, 2)
+    this.cvModulationNode = createConstantSourceNode(this.context, 2)
+    this.cvAfterTouchNode = createConstantSourceNode(this.context, 2)
   }
 
   private onConnectionChange = (connectionEvent: WebMidi.MIDIConnectionEvent) => {

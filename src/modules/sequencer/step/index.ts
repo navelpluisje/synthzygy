@@ -1,10 +1,10 @@
 import { ModuleBase } from '../../moduleBase';
-import { SequencerNode } from '@nodes/sequencerNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup, ThreeStateButton } from '@components/index';
 import { PositionType, ControlType } from 'src/types';
 import { Colors, Transport } from '@constants/enums';
 import { SMALL_KNOB } from '@constants/sizes';
 import { ParentModule, Module } from '@interfaces/index';
+import { SequencerNode } from './sequencer.node'
 import { buttons } from './buttons'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';

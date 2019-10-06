@@ -1,5 +1,6 @@
 import { createOscillatorNode } from "@utilities/createOscillator"
 import { createGainNode } from "@utilities/createGain"
+import { createConstantSourceNode } from "@utilities/createConstantSource"
 
 export class LfoNode {
   private frequency: number
@@ -37,8 +38,7 @@ export class LfoNode {
     this.sawBoost = createGainNode(this.context, 2.5)
     this.sineBoost = createGainNode(this.context, 2.5)
     this.triangleBoost = createGainNode(this.context, 2.5)
-    this.frequencyConstant = this.context.createConstantSource()
-    this.frequencyConstant.start()
+    this.frequencyConstant = createConstantSourceNode(this.context, 0)
     this.handleFrequencyChange()
   }
 
