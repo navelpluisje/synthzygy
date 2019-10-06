@@ -1,9 +1,9 @@
 import { ModuleBase } from '../moduleBase';
-import { DelayerNode } from '@nodes/delayNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
 import { PositionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
+import { DelayerNode } from './delay.node'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';

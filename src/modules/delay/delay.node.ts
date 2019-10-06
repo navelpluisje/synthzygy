@@ -1,3 +1,5 @@
+import { createGainNode } from "@utilities/createGain"
+
 export class DelayerNode {
   private feedback: number = .6
   private frequency: number = 2000
@@ -8,7 +10,6 @@ export class DelayerNode {
   private outputNode: GainNode
   private dryNode: GainNode
   private wetNode: GainNode
-  private dryWetNode: AudioWorkletNode
   private delayNode: DelayNode
   private feedbackNode: GainNode
   private filterNode: BiquadFilterNode
@@ -21,26 +22,21 @@ export class DelayerNode {
   }
 
   private createDelayNode() {
-    this.inputNode = this.context.createGain()
-    this.inputNode.gain.setValueAtTime(1, this.context.currentTime)
-    this.outputNode = this.context.createGain()
-    this.outputNode.gain.setValueAtTime(1, this.context.currentTime)
+    this.inputNode = createGainNode(this.context, 1)
+    this.outputNode = createGainNode(this.context, 1)
 
     this.delayNode = this.context.createDelay(6.0)
     this.setDelayTime(this.delayTime)
 
-    this.feedbackNode = this.context.createGain()
-    this.setFeedback(this.feedback)
+    this.feedbackNode = createGainNode(this.context, this.feedback)
 
     this.filterNode = this.context.createBiquadFilter()
     this.filterNode.Q.setValueAtTime(0, this.context.currentTime)
     this.setFrequency(this.frequency)
 
-    this.dryNode = this.context.createGain()
-    this.wetNode = this.context.createGain()
+    this.dryNode = createGainNode(this.context, 0)
+    this.wetNode = createGainNode(this.context, 0)
     this.setDryWet(this.dryWet)
-    // this.dryWetNode = new AudioWorkletNode(this.context, 'dry-wet-processor')
-    // this.setDryWet(this.dryWet)
 
     this.inputNode.connect(this.filterNode)
     this.filterNode.connect(this.delayNode)

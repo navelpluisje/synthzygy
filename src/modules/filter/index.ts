@@ -1,9 +1,9 @@
 import { ModuleBase } from '../moduleBase';
-import { FilterNode } from '@nodes/filterNode'
 import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
 import { PositionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
+import { FilterNode } from './filter.node'
 import { buttons } from './buttons'
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
