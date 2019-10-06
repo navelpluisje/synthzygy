@@ -1,9 +1,9 @@
-import { LfoNode } from '@nodes/lfoNode'
 import { SynthModule, OutputConnector, Rotary } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { LfoNode } from './lfo.node'
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 

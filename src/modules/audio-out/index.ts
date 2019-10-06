@@ -13,9 +13,9 @@ export class AudioOut extends ModuleBase implements ParentModule {
     width: 120,
   }
 
-  protected type = 'audioOut'
-  protected title = 'Output'
-  protected active: boolean = false
+  type = 'audioOut'
+  title = 'Output'
+  active: boolean = false
   private node: OutputNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
