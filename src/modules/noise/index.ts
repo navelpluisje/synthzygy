@@ -1,9 +1,9 @@
-import { NoiseNode } from '@nodes/noiseNode'
 import { SynthModule, OutputConnector, Rotary } from '@components/index';
 import { PositionType, DimensionType } from 'src/types';
 import { Colors } from 'src/constants/enums';
 import { ParentModule, Module } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { NoisesNode } from './noise.node'
 import { outputTypes } from './outputs';
 import { controlTypes } from './controls';
 
@@ -15,11 +15,11 @@ export class Noise extends ModuleBase implements ParentModule {
 
   type =  'noise'
   title = 'Noise'
-  node: NoiseNode
+  node: NoisesNode
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position)
-    this.node = new NoiseNode(context)
+    this.node = new NoisesNode(context)
     this.container = new SynthModule(canvas, Noise.dimensions, position, this.color)
     this.setup()
   }
