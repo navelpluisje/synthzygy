@@ -2,7 +2,7 @@
 
 ---
 
-A modular synthesizer in vanilla js.
+A modular synthesizer in vanilla js. Due to the fact audioworklets are used,  this will only work in Chrome.
 
 This is currently a work in progress application. The base functionality is working, but some work has to be done.
 
