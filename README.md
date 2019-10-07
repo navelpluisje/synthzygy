@@ -1,4 +1,4 @@
-![Logo](./documentation/images/logo.png)
+![Logo](./docs/images/logo.png)
 
 ---
 
@@ -14,6 +14,6 @@ What will I be working on:
 If you want to help, you're welcome. Just fork and create PR's.
 
 
-Read more [@Documentation](./documentation/index.md)
+Read more [@Documentation](./docs/index.md)
 
-There is a [Code of conduct](./documentation/code-of-conduct.md)
+There is a [Code of conduct](./docs/code-of-conduct.md)
