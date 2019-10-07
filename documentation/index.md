@@ -1,4 +1,6 @@
-# SYnthZYGY
+![Logo](./images/logo.png)
+
+---
 
 A modular synthesizer made with vanilla javascript
 
@@ -6,6 +8,7 @@ A modular synthesizer made with vanilla javascript
 
 ## Table of contents
 ### Overall
+* [Modules](./modules.md)
 * [Usage](./usage.md)
 
 ### Generator Modules
