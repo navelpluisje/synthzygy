@@ -2,7 +2,9 @@
 
 ---
 
-A modular synthesizer made with vanilla javascript
+A modular synthesizer made with vanilla javascript.
+
+> Documentation is not completed yet
 
 ![Overview](./images/overview.png)
 
@@ -12,19 +14,19 @@ A modular synthesizer made with vanilla javascript
 * [Usage](./usage.md)
 
 ### Generator Modules
-[![Oscillator :: Generator module](./images/oscillator.png)](./generators/kick.md)
-[![Noise :: Generator module](./images/noise.png)](./generators/noise.md)
-[![Kick :: Drum module](./images/kick.png)](./generators/kick.md)
-[![Snare :: Drum module](./images/snare.png)](./generators/snare.md)
-[![Hihat :: Drum module](./images/hihat.png)](./generators/hihat.md)
+[Oscillator :: Generator module](./generators/kick.md)
+[Noise :: Generator module](./generators/noise.md)
+[Kick :: Drum module](./generators/kick.md)
+[Snare :: Drum module](./generators/snare.md)
+[Hihat :: Drum module](./generators/hihat.md)
 
 ### Modulator Modules
-[![LFO :: Modulator module](./images/lfo.png)](./modulators/lfo.md)
-[![Envelope :: Modulator module](./images/envelope.png)](./modulators/lfo.md)
+[LFO :: Modulator module](./modulators/lfo.md)
+[Envelope :: Modulator module](./modulators/lfo.md)
 
 ### Utility Modules
-[![Midi :: Utility module](./images/midi.png)](./utilities/midi.md)
-[![Turing Machine :: Utility module](./images/turing.png)](./utilities/turing.md)
+[Midi :: Utility module](./utilities/midi.md)
+[Turing Machine :: Utility module](./utilities/turing.md)
 
 ### Others
 * [Credits](./credits.md)
