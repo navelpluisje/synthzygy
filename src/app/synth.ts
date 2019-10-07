@@ -51,6 +51,13 @@ export class Synth {
     // right button clicked
     if (event.button === 2 || (event.button === 0 && event.ctrlKey)) {
       this.connections.removeConnection(event)
+
+      if (this.modules.moduleSelected(event)) {
+        const module = this.modules.getActiveModule()
+        if (!module.isDeleteAreaClicked()) { return }
+        this.connections.removeConnectionsByModule(module.getPosition(), module.getDimensions())
+        this.modules.removeModule(module.getId())
+      }
     }
 
     this.connectionCanvas.addEventListener('mousemove', this.onMouseMove)

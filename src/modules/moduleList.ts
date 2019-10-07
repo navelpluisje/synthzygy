@@ -167,6 +167,7 @@ export class ModuleList {
 
   public removeModule(key: string) {
     delete this.modules[key]
+    requestAnimationFrame(this.draw)
   }
 
   public getActiveModule() {

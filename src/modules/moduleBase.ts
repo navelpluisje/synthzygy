@@ -1,6 +1,6 @@
 import { Module } from '@interfaces/index';
 import { Rotary, ButtonGroup, TriggerButton } from '@components/index';
-import { OutputType, PositionType, InputType } from 'src/types';
+import { OutputType, PositionType, InputType, DimensionType } from 'src/types';
 import { SynthModule } from '@components/synthModule';
 import { Colors } from 'src/constants/enums';
 
@@ -14,6 +14,7 @@ export class ModuleBase implements Module {
   protected activeInput: InputType = null
   protected activeControl: number | null = null
   protected active: boolean = false
+  protected deleteAreaClicked: boolean = false
   protected position: PositionType
   protected offset: PositionType
   protected canvas: CanvasRenderingContext2D
@@ -52,11 +53,17 @@ export class ModuleBase implements Module {
 
   onMouseDown(event: MouseEvent): boolean {
     const {offsetX: xPos, offsetY: yPos} = event
+    this.deleteAreaClicked = false
     this.active = this.container.isModuleClicked(xPos, yPos)
     this.offset = {
       x: xPos - this.position.x,
       y: yPos - this.position.y,
     }
+
+    if (this.offset.y < 40) {
+      this.deleteAreaClicked = true
+    }
+
     this.outputs.some(output => {
       const position = output.component.isOutputClicked(xPos, yPos)
       if (position) {
@@ -107,8 +114,18 @@ export class ModuleBase implements Module {
     this.unset()
   }
 
+  isDeleteAreaClicked(): boolean {
+    return this.deleteAreaClicked
+  }
+
   getPosition(): PositionType {
     return this.position
+  }
+
+  getDimensions(): DimensionType {
+    // this way we can read static properties from the child class
+    // @ts-ignore
+    return this.constructor.dimensions
   }
 
   getOffset(): PositionType {
