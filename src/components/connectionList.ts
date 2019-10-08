@@ -102,11 +102,13 @@ export class ConnectionList {
   public draw = () => {
     const {width, height} = Synth.canvasDimension
     const canvas = ConnectionList.canvas
-    canvas.clearRect(0, 0, width, height)
+    if (canvas) {
+      canvas.clearRect(0, 0, width, height)
 
-    this.connections.forEach(connection => connection.draw(canvas))
-    if (this.newConnection) {
-      this.newConnection.draw(canvas, this.newPosition)
+      this.connections.forEach(connection => connection.draw(canvas))
+      if (this.newConnection) {
+        this.newConnection.draw(canvas, this.newPosition)
+      }
     }
   }
 }

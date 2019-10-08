@@ -130,8 +130,8 @@ export class Synth {
     this.connectionCanvas.setAttribute('width', width.toString())
     this.connectionCanvas.setAttribute('height', height.toString())
 
-    // this.modules && this.modules.draw()
-    // this.connections && this.connections.draw()
+    this.modules && this.modules.draw()
+    this.connections && this.connections.draw()
   }
 
   public async start() {
