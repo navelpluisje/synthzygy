@@ -12,7 +12,7 @@ The kick has a parameter 'punch'. This is the initial drop in gain after the Att
 
 ## Control
 | Label | Description | min | max |
-| --- | --- | ---: |---:|
+| --- | --- | ---: | ---: |
 | **Pitch** | Frequency of the kick | 10Hz | 100Hz |
 | **Decay** | Tail after the drop | 0.2s | 0.4s |
 | **Punch** | Initial gain drop (sustain'ish) | 10% | 90% |
