@@ -14,7 +14,7 @@ A modular synthesizer made with vanilla javascript.
 * [Usage](./usage.md)
 
 ### Generator Modules
-* [Oscillator :: Generator module](./generators/kick.md)
+* [Oscillator :: Generator module](./generators/oscillator.md)
 * [Noise :: Generator module](./generators/noise.md)
 * [Kick :: Drum module](./generators/kick.md)
 * [Snare :: Drum module](./generators/snare.md)

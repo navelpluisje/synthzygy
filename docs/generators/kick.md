@@ -11,6 +11,7 @@ Inspiration for this module was gathered from this [video by Tobi Nuemann](https
 The kick has a parameter 'punch'. This is the initial drop in gain after the Attack has finished (in the image about the first 2 waves). The hihger the value the harder the drop. The length of the tail after the drop is the decay.
 
 ## Control
+
 | Label | Description | min | max |
 | --- | --- | ---: | ---: |
 | **Pitch** | Frequency of the kick | 10Hz | 100Hz |

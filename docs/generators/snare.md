@@ -10,6 +10,7 @@ Inspiration for this module was gathered from this [article by MusicTech.net](ht
 Other then in the article, this snare also uses an envelope for a small pitch sweep.
 
 ## Control
+
 | Label | Description | min | max |
 | ----- | ----------- | --: | --: |
 | **Decay** | Tail after the snare | 0.05s | 0.5s |
