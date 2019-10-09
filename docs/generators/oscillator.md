@@ -8,6 +8,7 @@ A voltage-controlled oscillator (VCO) is an electronic oscillator whose oscillat
 [Read more](https://en.wikipedia.org/wiki/Voltage-controlled_oscillator)
 
 ## Controls
+
 * Octave: Set the base octave
 * Frequency: Set the frequency to play. Disabled when the input is connected
 * Detune: frequency finetunung
@@ -17,11 +18,13 @@ A voltage-controlled oscillator (VCO) is an electronic oscillator whose oscillat
   * Off: The frequency control controls only 1 octave. The octave control is used to set the octave
 
 ## Inputs
+
 * CV frequency: Set the frequency to play (8 octaves)
   * min value: 0
   * max value: 9 (everything more will be truncated)
 
 ## Outputs
+
 * Saw
 * Square
 * Sine

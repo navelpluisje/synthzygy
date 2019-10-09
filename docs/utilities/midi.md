@@ -10,6 +10,7 @@ Links to midi data tables
 * [All others](https://www.midi.org/specifications-old/category/reference-tables  )
 
 ## Control
+
 * Midi channel: Select the prefered midi channel
   * 0: All channels
   * 1-16: Channel number
@@ -17,6 +18,7 @@ Links to midi data tables
   * 2 ** n > n = { 1, 5 }
 
 ## Outputs
+
 | Label | Description | min | max |
 | ----- | ----------- | --: | --: |
 | **v/oct** | Note triggered | 0 | 8 |
@@ -28,5 +30,6 @@ Links to midi data tables
 | **Transport** | Trigger transport controls | | |
 
 ## Button
+
 * Settings: Open the settings window to select the midi device you want to use
 ![Midi](./images/midi-2.png)

@@ -20,7 +20,9 @@ The kick has a parameter 'punch'. This is the initial drop in gain after the Att
 | **Boost** | Boosts the sound by adding 2 extra oscillators | 0 | 1 |
 
 ## Inputs
+
 * **Gate in**: trigger the kick
 
 ## Outputs
+
 * **Audio out**

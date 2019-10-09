@@ -18,7 +18,9 @@ Other then in the article, this snare also uses an envelope for a small pitch sw
 | **Snare** | Set the frequency of the hp-filter | 2000Hz | 6000Hz |
 
 ## Inputs
+
 * **Gate in**: trigger the kick
 
 ## Outputs
+
 * **Audio out**

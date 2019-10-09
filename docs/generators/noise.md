@@ -10,11 +10,13 @@ The noise module consists of 3 seperate types of noise with all their own output
 
 
 ## Controls
+
 * Pink: Set the output volume of the pink noise
 * White: Set the output volume of the white noise
 * Blue: Set the output volume of the blue noise
 
 ## Outputs
+
 * Pink noise
 * White noise
 * Blue noise
