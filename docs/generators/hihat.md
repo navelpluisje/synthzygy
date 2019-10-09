@@ -9,7 +9,7 @@ Inspiration for this module was gathered from this [video by Roland](https://www
 ## Control
 
 | Label | Description | min | max |
-| ----- | ----------- | --: | --: |
+| :----- | :----------- | --: | --: |
 | **Freq** | The amount of oscillator sound | 2000Hz | 8000Hz |
 | **Decay** | Tail after the hihat | 0.05s | 0.5s |
 

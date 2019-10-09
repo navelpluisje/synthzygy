@@ -8,16 +8,16 @@ Low-frequency oscillation (LFO) is an electronic frequency which is usually belo
 
 ## Control
 
-* Frequency: Set the frequency of the LFO
-  * min value: 0.01Hz
-  * max value: 20Hz
+* **Frequency**: Set the frequency of the LFO
+  * **min value**: 0.01Hz
+  * **max value**: 20Hz
 
 ## Outputs
 
-* Square wave
-* Sine wave
-* saw wave
-* triangle wave
+* **Square wave**
+* **Sine wave**
+* **Saw wave**
+* **Triangle wave**
 
 > All with:
 >   * min value: -2.5

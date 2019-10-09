@@ -8,18 +8,18 @@ ADSR is an acronym that stands for Attack, Decay, Sustain, Release and is a mean
 
 ## Controls
 
-* Attack: Set the attack
-* Decay: Set the decay
-* Sustain: Set the sustain level
-* Release: Set the release time
-* Level: Set the output level
+* **Attack**: Set the attack
+* **Decay**: Set the decay
+* **Sustain**: Set the sustain level
+* **Release**: Set the release time
+* **Level**: Set the output level
 
 ## Inputs
 
-* Gate signal: when the signal is high the ads is triggered, when low release is triggered.
+* **Gate signal**: when the signal is high the ads is triggered, when low release is triggered.
 
 ## Outputs
 
-CV output: ADSR value.
-* min value: 0
-* max value: 8
+* **CV output**: ADSR value.
+  * **min value**: 0
+  * **max value**: 8

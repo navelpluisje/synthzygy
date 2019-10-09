@@ -11,16 +11,16 @@ Links to midi data tables
 
 ## Control
 
-* Midi channel: Select the prefered midi channel
-  * 0: All channels
-  * 1-16: Channel number
-* Clock: Select the amount of clock ticks per trigger
+* **Midi channel**: Select the prefered midi channel
+  * **0**: All channels
+  * **1-16**: Channel number
+* **Clock**: Select the amount of clock ticks per trigger
   * 2 ** n > n = { 1, 5 }
 
 ## Outputs
 
 | Label | Description | min | max |
-| ----- | ----------- | --: | --: |
+| :----- | :----------- | --: | --: |
 | **v/oct** | Note triggered | 0 | 8 |
 | **pitch** | Pitch Bend | -2.5 | 2.5 |
 | **mod** | Modulation wheel | 0 | 8 |
@@ -31,5 +31,6 @@ Links to midi data tables
 
 ## Button
 
-* Settings: Open the settings window to select the midi device you want to use
+* **Settings**: Open the settings window to select the midi device you want to use
+
 ![Midi](./images/midi-2.png)
