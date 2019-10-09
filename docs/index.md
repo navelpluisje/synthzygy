@@ -26,7 +26,13 @@ A modular synthesizer made with vanilla javascript.
 ### Modulator Modules
 
 * [LFO :: Modulator module](./modulators/lfo.md)
-* [Envelope :: Modulator module](./modulators/lfo.md)
+* [Envelope :: Modulator module](./modulators/envelope.md)
+
+### Effect Modules
+
+* [Crushy :: Effect module](./modulators/bitcrush.md)
+* [Delay :: Effect module](./modulators/delay.md)
+* [Filter :: Effect module](./modulators/filter.md)
 
 ### Utility Modules
 
