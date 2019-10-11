@@ -16,6 +16,7 @@ export class Menu {
       catElement.setAttribute('group', category.title)
       catElement.setAttribute('name', category.name)
       this.menuDom.appendChild(catElement)
+      catElement.addEventListener('click', this.toggleModuleGroup)
       category.modules.forEach(module => {
         const modElement = document.createElement('np-moduleitem')
         modElement.setAttribute('group', category.name)
@@ -26,5 +27,14 @@ export class Menu {
         catElement.appendChild(modElement)
       })
     })
+  }
+
+  toggleModuleGroup = (evt: MouseEvent) => {
+    const target = (<HTMLElement>evt.currentTarget)
+    const isOpen = target.hasAttribute('open')
+    const groups = document.querySelectorAll('np-modulegroup')
+
+    groups.forEach(group => group.removeAttribute('open'));
+    !isOpen && target.setAttribute('open', '')
   }
 }

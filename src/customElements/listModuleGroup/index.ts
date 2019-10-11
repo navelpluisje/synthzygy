@@ -16,6 +16,8 @@ export class ListModuleGroup extends HTMLElement {
   listContainerDOM: HTMLElement
   open: boolean = false
 
+  static get observedAttributes() { return ['open']; }
+
   connectedCallback() {
     this.title = this.getAttribute('group') || ''
     this.name = this.getAttribute('name') || ''
@@ -28,21 +30,22 @@ export class ListModuleGroup extends HTMLElement {
     this.listDOM.className = this.name
 
     this.shadowRoot.querySelector('dd').className = this.name
-
-    this.setEventBindings()
   }
 
-  toggleList = () => {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    switch (name) {
+      case 'open':
+        this.toggleList(newValue !== null)
+    }
+  }
+
+  toggleList(open: boolean) {
+    this.open = open
     if (this.open) {
-      this.listContainerDOM.style.height = '0px'
-    } else {
       const height = this.listDOM.getBoundingClientRect().height
       this.listContainerDOM.style.height = `${height}px`
+    } else {
+      this.listContainerDOM.style.height = '0px'
     }
-    this.open = !this.open
-  }
-
-  setEventBindings() {
-    this.titleDOM.addEventListener('click', this.toggleList)
   }
 }
