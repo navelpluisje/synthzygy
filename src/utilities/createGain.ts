@@ -1,9 +1,10 @@
 export const createGainNode = (
   context: AudioContext,
-  value: number = 1,
+  gain: number = 1,
 ): GainNode => {
-  const gain = context.createGain()
-  gain.gain.setValueAtTime(value, context.currentTime)
+  const gainNode = new GainNode(context, {
+    gain,
+  })
 
-  return gain
+  return gainNode
 }

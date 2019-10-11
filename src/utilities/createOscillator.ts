@@ -3,10 +3,11 @@ export const createOscillatorNode = (
   type: OscillatorType,
   frequency: number = 0,
 ): OscillatorNode => {
-  const oscillator = context.createOscillator()
-  oscillator.type = type
-  oscillator.frequency.setValueAtTime(frequency, context.currentTime)
-  oscillator.start()
+  const oscillatorNode = new OscillatorNode(context, {
+    type,
+    frequency,
+  })
+  oscillatorNode.start()
 
-  return oscillator
+  return oscillatorNode
 }

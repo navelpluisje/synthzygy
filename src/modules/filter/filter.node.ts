@@ -25,10 +25,10 @@ export class FilterNode {
   }
 
   private createFilterNode() {
-    this.filterNode = this.context.createBiquadFilter()
-    this.filterNode.frequency.setValueAtTime(0, this.context.currentTime)
-    this.filterNode.Q.setValueAtTime(20, this.context.currentTime)
-    this.filterNode.gain.setValueAtTime(3, this.context.currentTime)
+    this.filterNode = new BiquadFilterNode(this.context, {
+      frequency: 0,
+      Q: 20,
+    })
 
     this.levelNode = createGainNode(this.context, 1)
     this.cvFreqNode = createGainNode(this.context, 0)

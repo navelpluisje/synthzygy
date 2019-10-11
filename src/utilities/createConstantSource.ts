@@ -1,10 +1,11 @@
 export const createConstantSourceNode = (
   context: AudioContext,
-  value: number = 0,
+  offset: number = 0,
 ): ConstantSourceNode => {
-  const constantSource = context.createConstantSource()
-  constantSource.offset.setValueAtTime(value, context.currentTime)
-  constantSource.start()
+  const constantSourceNode = new ConstantSourceNode(context, {
+    offset,
+  })
+  constantSourceNode.start()
 
-  return constantSource
+  return constantSourceNode
 }

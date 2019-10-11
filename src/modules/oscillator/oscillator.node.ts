@@ -52,10 +52,10 @@ export class JsOscillatorNode {
   }
 
   private createGainNodes() {
-    this.squareBoost = createGainNode(this.context, 5)
-    this.sawBoost = createGainNode(this.context, 5)
-    this.sineBoost = createGainNode(this.context, 5)
-    this.triangleBoost = createGainNode(this.context, 5)
+    this.squareBoost = createGainNode(this.context, 1)
+    this.sawBoost = createGainNode(this.context, 1)
+    this.sineBoost = createGainNode(this.context, 1)
+    this.triangleBoost = createGainNode(this.context, 1)
     this.cvFmNode = createGainNode(this.context, 1)
 
     this.cvFrequencyNode = new AudioWorkletNode(this.context, 'frequency-processor')
