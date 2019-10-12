@@ -1,21 +1,33 @@
 article {
-  background-color: #232323;
+  background-color: hsl(0, 0%, 14%);
   background-image:
-    linear-gradient(0deg, #232323 .25rem, #303030 .25rem, #303030 .5rem, #232323 .5rem),
-    linear-gradient(0deg, #232323 .25rem, #303030 .25rem, #303030 .5rem, #232323 .5rem);
-  background-repeat: no-repeat;
-  background-size: 11rem .75rem;
+    linear-gradient(
+      0deg,
+      hsl(0, 0%, 14%) .25rem,
+      hsl(0, 0%, 19%) .25rem,
+      hsl(0, 0%, 19%) .5rem,
+      hsl(0, 0%, 14%) .5rem
+    ),
+    linear-gradient(
+      0deg,
+      hsl(0, 0%, 14%) .25rem,
+      hsl(0, 0%, 19%) .25rem,
+      hsl(0, 0%, 19%) .5rem,
+      hsl(0, 0%, 14%) .5rem
+    );
   background-position:
     center bottom,
     center top;
-  box-sizing: border-box;
-  box-shadow: .15rem .25rem 0 0 black;
+  background-repeat: no-repeat;
+  background-size: 11rem .75rem;
   border-radius: 4px;
+  box-shadow: .15rem .25rem 0 0 black;
+  box-sizing: border-box;
   color: var(--text-color);
   height: 5.5rem;
+  padding: .75rem 1.25rem;
   position: relative;
   width: 13.5rem;
-  padding: .75rem 1.25rem;
 }
 
 article::before,
@@ -36,6 +48,7 @@ article::after {
   transform: skewY(60deg);
   width: calc(.15rem + 2px);
 }
+
 article::before {
   height: calc(.25rem + 2px);
   left: 0;
@@ -46,10 +59,10 @@ article::before {
 
 canvas {
   background-color: hsl(210, 96%, 17%);
+  border-color: hsl(0, 0%, 0%) transparent transparent hsl(0, 0%, 0%);
   border-radius: .25rem;
-  border-width: 1px;
   border-style: solid;
-  border-color: black transparent transparent black;
+  border-width: 1px;
   height: 4rem;
   width: 11rem;
 }

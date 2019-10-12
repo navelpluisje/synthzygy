@@ -19,18 +19,22 @@ button.generators {
   border-color: var(--accent-generator);
   color: var(--accent-generator);
 }
+
 button.modulators {
   border-color: var(--accent-modulator);
   color: var(--accent-modulator);
 }
+
 button.effects {
   border-color: var(--accent-effect);
   color: var(--accent-effect);
 }
+
 button.utilities {
   border-color: var(--accent-utility);
   color: var(--accent-utility);
 }
+
 button.audio {
   border-color: var(--accent-audio-path);
   color: var(--accent-audio-path);

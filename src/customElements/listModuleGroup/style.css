@@ -1,9 +1,9 @@
 dd {
-  background-color: #303030;
-  border-radius: .25rem;
-  border-width: 0 0 0 .125rem;
+  background-color: hsl(0, 0%, 19%);
   border-color: var(--accent-generator);
+  border-radius: .25rem;
   border-style: solid;
+  border-width: 0 0 0 .125rem;
   margin: 0 0 .5rem;
   padding: .5rem 0 .5rem 1rem;
 }
@@ -23,7 +23,7 @@ dd > h4 {
 }
 
 dd > section {
-  height: 0px;
+  height: 0;
   overflow: hidden;
   position: relative;
   transition: height .4s ease;

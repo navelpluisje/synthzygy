@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-color-format",
+    "stylelint-order"
+  ],
+  "rules": {
+    "color-format/format": {
+      "format": "hsl"
+    },
+    "order/properties-alphabetical-order": true,
+    "number-leading-zero": "never"
+  }
+}
