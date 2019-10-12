@@ -50,9 +50,10 @@ export class NoiseNode {
   private async createNoiseNode(): Promise<boolean> {
     this.noiseBuffer = await this.getNoise(this.noiseType);
 
-    this.noiseNode = this.context.createBufferSource();
-    this.noiseNode.buffer = this.noiseBuffer;
-    this.noiseNode.loop = true;
+    this.noiseNode = new AudioBufferSourceNode(this.context, {
+      buffer: this.noiseBuffer,
+      loop: true,
+    });
     this.noiseNode.start(0);
 
     return true;

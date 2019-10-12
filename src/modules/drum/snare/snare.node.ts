@@ -69,20 +69,25 @@ export class SnareNode {
     this.outputNode = createGainNode(this.context, 1);
     this.setVolume(this.volume);
 
-    this.filter = this.context.createBiquadFilter();
-    this.filter.type = 'highpass';
-    this.filter.gain.setValueAtTime(.4, this.context.currentTime);
-    this.filter.frequency.setValueAtTime(6000, this.context.currentTime);
+    this.filter = new BiquadFilterNode(this.context, {
+      frequency: 6000,
+      gain: .4,
+      type: 'highpass',
+    });
 
     this.noiseNode = new NoiseNode(this.context, NoiseTypes.Blue);
     await this.noiseNode.setup();
     this.noise = this.noiseNode.outputNoise();
 
-    this.oscillator1Node.connect(this.oscillator1Gain);
-    this.oscillator2Node.connect(this.oscillator2Gain);
-    this.oscillator1Gain.connect(this.snareGain);
-    this.oscillator2Gain.connect(this.snareGain);
-    this.noise.connect(this.filter).connect(this.snareGain);
+    this.oscillator1Node
+      .connect(this.oscillator1Gain)
+      .connect(this.snareGain);
+    this.oscillator2Node
+      .connect(this.oscillator2Gain)
+      .connect(this.snareGain);
+    this.noise
+      .connect(this.filter)
+      .connect(this.snareGain);
     this.snareGain.connect(this.outputNode);
   }
 

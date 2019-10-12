@@ -42,9 +42,10 @@ export class HiHatNode {
   }
 
   private async createHiHatNode(): Promise<void> {
-    this.filter = new BiquadFilterNode(this.context);
-    this.filter.type = 'highpass';
-    this.setFrequency(4000);
+    this.filter = new BiquadFilterNode(this.context, {
+      frequency: 4000,
+      type: 'highpass',
+    });
 
     this.hihatGain = createGainNode(this.context, 0);
     this.outputNode = createGainNode(this.context, this.volume);
@@ -53,9 +54,10 @@ export class HiHatNode {
     await this.noiseNode.setup();
     this.noise = this.noiseNode.outputNoise();
 
-    this.noise.connect(this.filter);
-    this.filter.connect(this.hihatGain);
-    this.hihatGain.connect(this.outputNode);
+    this.noise
+      .connect(this.filter)
+      .connect(this.hihatGain)
+      .connect(this.outputNode);
   }
 
   private trigger = (value: number): void => {

@@ -63,10 +63,12 @@ export class BitCrusherNode {
     this.wetNode = createGainNode(this.context, 0);
     this.setDryWet(this.dryWet);
 
-    this.inputNode.connect(this.bitCrusherNode);
-    this.bitCrusherNode.connect(this.wetNode);
-    this.inputNode.connect(this.dryNode);
-    this.dryNode.connect(this.outputNode);
-    this.wetNode.connect(this.outputNode);
+    this.inputNode
+      .connect(this.bitCrusherNode)
+      .connect(this.wetNode)
+      .connect(this.outputNode);
+    this.inputNode
+      .connect(this.dryNode)
+      .connect(this.outputNode);
   }
 }

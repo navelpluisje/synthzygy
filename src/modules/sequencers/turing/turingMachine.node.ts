@@ -136,18 +136,18 @@ export class TuringMachineNode {
   }
 
   private triggerPulses() {
-    let two = 0;
+    let two = false;
     if (this.overFlow['2'] === 1) {
-      two = 1;
+      two = true;
       this.pulsesOutputs['2'].onKeyDown();
     }
     if (this.overFlow['4'] === 1) {
       this.pulsesOutputs['4'].onKeyDown();
-      two === 1 && this.pulsesOutputs['2+4'].onKeyDown();
+      two && this.pulsesOutputs['2+4'].onKeyDown();
     }
     if (this.overFlow['6'] === 1) {
       this.pulsesOutputs['6'].onKeyDown();
-      two === 1 && this.pulsesOutputs['2+6'].onKeyDown();
+      two && this.pulsesOutputs['2+6'].onKeyDown();
     }
     if (this.overFlow['8'] === 1) {
       this.pulsesOutputs['8'].onKeyDown();

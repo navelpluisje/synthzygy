@@ -58,26 +58,32 @@ export class DelayerNode {
     this.inputNode = createGainNode(this.context, 1);
     this.outputNode = createGainNode(this.context, 1);
 
-    this.delayNode = this.context.createDelay(6.0);
-    this.setDelayTime(this.delayTime);
+    this.delayNode = new DelayNode(this.context, {
+      delayTime: this.delayTime,
+      maxDelayTime: 6.0,
+    });
 
     this.feedbackNode = createGainNode(this.context, this.feedback);
 
-    this.filterNode = this.context.createBiquadFilter();
-    this.filterNode.Q.setValueAtTime(0, this.context.currentTime);
-    this.setFrequency(this.frequency);
+    this.filterNode = new BiquadFilterNode(this.context, {
+      Q: 0,
+      frequency: this.frequency,
+    });
 
     this.dryNode = createGainNode(this.context, 0);
     this.wetNode = createGainNode(this.context, 0);
     this.setDryWet(this.dryWet);
 
-    this.inputNode.connect(this.filterNode);
-    this.filterNode.connect(this.delayNode);
-    this.delayNode.connect(this.feedbackNode);
-    this.feedbackNode.connect(this.filterNode);
-    this.delayNode.connect(this.wetNode);
-    this.inputNode.connect(this.dryNode);
-    this.dryNode.connect(this.outputNode);
-    this.wetNode.connect(this.outputNode);
+    this.inputNode
+      .connect(this.filterNode)
+      .connect(this.delayNode)
+      .connect(this.feedbackNode)
+      .connect(this.filterNode);
+    this.delayNode
+      .connect(this.wetNode)
+      .connect(this.outputNode);
+    this.inputNode
+      .connect(this.dryNode)
+      .connect(this.outputNode);
   }
 }

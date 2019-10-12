@@ -19,7 +19,9 @@ export class OutputNode {
     this.gainNode = createGainNode(this.context, this.gain);
     this.dynamicsNode = new DynamicsCompressorNode(this.context);
 
-    this.gainNode.connect(this.dynamicsNode).connect(this.context.destination);
+    this.gainNode
+      .connect(this.dynamicsNode)
+      .connect(this.context.destination);
   }
 
   public setGain = (gain: number): void => {

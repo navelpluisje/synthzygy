@@ -53,28 +53,30 @@ export class KickNode {
 
   private async createKickNode() {
     this.frequencyConstant = createConstantSourceNode(this.context, 0);
+    this.kickGain = createGainNode(this.context, 0);
+    this.kickBoost = createGainNode(this.context, 4);
 
     this.triangle = createOscillatorNode(this.context, 'triangle');
     this.frequencyConstant.connect(this.triangle.frequency);
     this.triangleBoost = createGainNode(this.context, 3);
-    this.triangle.connect(this.triangleBoost);
+    this.triangle
+      .connect(this.triangleBoost)
+      .connect(this.kickGain);
 
     this.sine = createOscillatorNode(this.context, 'sine');
     this.frequencyConstant.connect(this.sine.frequency);
     this.sineBoost = createGainNode(this.context, 0);
-    this.sine.connect(this.sineBoost);
+    this.sine
+      .connect(this.sineBoost)
+      .connect(this.kickGain);
 
     this.square = createOscillatorNode(this.context, 'square');
     this.frequencyConstant.connect(this.square.frequency);
     this.squareBoost = createGainNode(this.context, 0);
-    this.square.connect(this.squareBoost);
+    this.square
+      .connect(this.squareBoost)
+      .connect(this.kickGain);
 
-    this.kickGain = createGainNode(this.context, 0);
-    this.kickBoost = createGainNode(this.context, 4);
-
-    this.triangleBoost.connect(this.kickGain);
-    this.sineBoost.connect(this.kickGain);
-    this.squareBoost.connect(this.kickGain);
     this.kickGain.connect(this.kickBoost);
   }
 
