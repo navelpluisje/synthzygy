@@ -1,3 +1,9 @@
+<!-- markdownlint-disable -->
+
+## sequencer:
+  * http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf
+  * https://dbkaplun.github.io/euclidean-rhythm/
+
 
 ## Colors
 https://coolors.co/9fd8cb-d9f4c7-d1ccdc-a0c1d1-ffc4ee (old)
@@ -45,3 +51,5 @@ In the Audio Api
 ## Names
 SYnthZYGY: an alignment of synthesizer modules
 Font: Cute Font (Google fonts)
+
+<!-- markdownlint-enable -->

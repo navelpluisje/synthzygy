@@ -2,7 +2,9 @@
 
 ![Filter](../images/filter.png)
 
-In signal processing, a digital biquad filter is a second order recursive linear filter, containing two poles and two zeros. "Biquad" is an abbreviation of "biquadratic", which refers to the fact that in the Z domain, its transfer function is the ratio of two quadratic functions:
+In signal processing, a digital biquad filter is a second order recursive linear filter, containing two poles and two
+zeros. "Biquad" is an abbreviation of "biquadratic", which refers to the fact that in the Z domain, its transfer
+function is the ratio of two quadratic functions:
 
 [Read more](https://en.wikipedia.org/wiki/Digital_biquad_filter)
 

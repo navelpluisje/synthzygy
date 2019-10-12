@@ -2,7 +2,9 @@
 
 ![Delay](../images/delay.png)
 
-Delay is an audio effect and an effects unit which records an input signal to an audio storage medium, and then plays it back after a period of time.[2] The delayed signal may either be played back multiple times, or played back into the recording again, to create the sound of a repeating, decaying echo.
+Delay is an audio effect and an effects unit which records an input signal to an audio storage medium, and then plays
+it back after a period of time.[2] The delayed signal may either be played back multiple times, or played back into the
+recording again, to create the sound of a repeating, decaying echo.
 
 [Read more](https://en.wikipedia.org/wiki/Delay_(audio_effect))
 

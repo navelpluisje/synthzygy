@@ -2,12 +2,12 @@
 
 ![Noise](../images/noise.png)
 
-The noise module consists of 3 seperate types of noise with all their own output. All noises are samples from [Audiocheck.net](https://www.audiocheck.net/).
+The noise module consists of 3 seperate types of noise with all their own output. All noises are samples from
+[Audiocheck.net](https://www.audiocheck.net/).
 
 * [Pink noise](https://www.audiocheck.net/testtones_pinknoise.php)
 * [White noise](https://www.audiocheck.net/testtones_whitenoise.php)
 * [Blue noise](https://www.audiocheck.net/testtones_bluenoise.php)
-
 
 ## Controls
 

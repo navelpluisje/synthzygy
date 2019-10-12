@@ -1,4 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ![Logo](./images/logo.png)
+<!-- markdownlint-enable MD041 -->
 
 ---
 
@@ -43,5 +45,3 @@ A modular synthesizer made with vanilla javascript.
 
 * [Credits](./credits.md)
 * [Code of conduct](./code-of-conduct.md)
-
-

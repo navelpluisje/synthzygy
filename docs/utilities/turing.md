@@ -2,7 +2,9 @@
 
 ![Turing Machine](../images/turing.png)
 
-This is a binary sequencer, based around a 16 bit memory circuit called a shift register. It’s designed as a sequencer that you can steer in one direction or another, not one that you can program precisely. It is a kind of reproduction of the Turing Machine by [Music Thing Modular](https://musicthing.co.uk/)
+This is a binary sequencer, based around a 16 bit memory circuit called a shift register. It’s designed as a sequencer
+that you can steer in one direction or another, not one that you can program precisely. It is a kind of reproduction
+of the Turing Machine by [Music Thing Modular](https://musicthing.co.uk/)
 
 [Read more](https://musicthing.co.uk/pages/turing.html)
 

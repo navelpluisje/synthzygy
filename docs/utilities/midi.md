@@ -5,6 +5,7 @@
 Midi connector to connect the modular to any midi device you want. All about midi can be found at [Midi.org](https://www.midi.org)
 
 Links to midi data tables
+
 * [Summary of midi messages](https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message)
 * [Expanded messages](https://www.midi.org/specifications-old/item/table-2-expanded-messages-list-status-bytes)
 * [All others](https://www.midi.org/specifications-old/category/reference-tables  )

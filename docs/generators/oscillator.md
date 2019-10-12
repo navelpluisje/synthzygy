@@ -3,7 +3,8 @@
 ![Oscillator](../images/oscillator.png)
 
 This Oscillator is build with the real-life modular VCO in mind.
-A voltage-controlled oscillator (VCO) is an electronic oscillator whose oscillation frequency is controlled by a voltage input. The applied input voltage determines the instantaneous oscillation frequency.
+A voltage-controlled oscillator (VCO) is an electronic oscillator whose oscillation frequency is controlled by a
+voltage input. The applied input voltage determines the instantaneous oscillation frequency.
 
 [Read more](https://en.wikipedia.org/wiki/Voltage-controlled_oscillator)
 
@@ -34,5 +35,6 @@ A voltage-controlled oscillator (VCO) is an electronic oscillator whose oscillat
 * **Triangle wave**
 
 > All outputs have the next values:
->   * min value: -5
->   * max value: 5
+>
+> * min value: -5
+> * max value: 5
