@@ -1,30 +1,30 @@
-import { ControlType } from "src/types";
-import { MEDIUM_KNOB, STEP_ROTARY } from "@constants/sizes";
+import { MEDIUM_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
-export const controlTypes: Array<ControlType> = [{
-  type: STEP_ROTARY,
+export const controlTypes: ControlType[] = [{
   label: 'X',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 10,
-  step: 1,
   log: false,
-  value: 4,
+  max: 10,
+  min: 0,
   position: {
     x: 400,
     y: 65,
-  }
-}, {
-  type: STEP_ROTARY,
-  label: 'Y',
+  },
   size: MEDIUM_KNOB,
-  min: 0.1,
-  max: 1,
-  step: 0.1,
+  step: 1,
+  type: STEP_ROTARY,
+  value: 4,
+}, {
+  label: 'Y',
   log: false,
-  value: 0.5,
+  max: 1,
+  min: 0.1,
   position: {
     x: 400,
     y: 135,
-  }
-}]
+  },
+  size: MEDIUM_KNOB,
+  step: 0.1,
+  type: STEP_ROTARY,
+  value: 0.5,
+}];

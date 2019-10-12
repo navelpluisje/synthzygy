@@ -1,56 +1,56 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'Delay',
-  size: MEDIUM_KNOB,
-  min: 0,
+  log: true,
   max: 2,
-  step: 0.005,
-  log: true,
-  value: .5,
+  min: 0,
   position: {
     x: 40,
     y: 65,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'F.back',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 0.99,
-  step: 0.01,
+  step: 0.005,
+  type: CONTROL_ROTARY,
+  value: .5,
+}, {
+  label: 'F.back',
   log: false,
-  value: .6,
+  max: 0.99,
+  min: 0,
   position: {
     x: 100,
     y: 65,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: 0.01,
   type: CONTROL_ROTARY,
+  value: .6,
+}, {
   label: 'Dry/Wet',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.001,
-  value: .5,
   log: false,
+  max: 1,
+  min: 0,
   position: {
     x: 40,
     y: 135,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Cutoff',
+  },
   size: SMALL_KNOB,
-  min: 1000,
-  max: 4000,
-  step: 1,
+  step: 0.001,
+  type: CONTROL_ROTARY,
+  value: .5,
+}, {
+  label: 'Cutoff',
   log: true,
-  value: 3000,
+  max: 4000,
+  min: 1000,
   position: {
     x: 100,
     y: 135,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: 1,
+  type: CONTROL_ROTARY,
+  value: 3000,
+}];

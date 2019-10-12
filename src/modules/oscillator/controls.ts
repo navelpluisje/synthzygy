@@ -1,56 +1,56 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, STEP_ROTARY, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
-export const controlTypes: Array<ControlType> = [{
-  type: CONTROL_ROTARY,
+export const controlTypes: ControlType[] = [{
   label: 'Freq',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 10,
-  step: .005,
   log: true,
-  value: 3,
+  max: 10,
+  min: 0,
   position: {
     x: 95,
     y: 95,
-  }
-}, {
-  type: STEP_ROTARY,
-  label: 'Octave',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 8,
-  step: 1,
-  log: false,
+  },
+  size: MEDIUM_KNOB,
+  step: .005,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  label: 'Octave',
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 40,
     y: 65,
   },
+  size: SMALL_KNOB,
+  step: 1,
+  type: STEP_ROTARY,
+  value: 3,
 }, {
-  type: CONTROL_ROTARY,
   label: 'FM',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
-  step: .005,
-  value: 0,
   log: false,
+  max: 1,
+  min: 0,
   position: {
     x: 95,
     y: 170,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: .005,
   type: CONTROL_ROTARY,
-  label: 'Detune',
-  size: SMALL_KNOB,
-  min: -1200,
-  max: 1200,
-  step: 10,
   value: 0,
+}, {
+  label: 'Detune',
   log: false,
+  max: 1200,
+  min: -1200,
   position: {
     x: 150,
     y: 65,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: 10,
+  type: CONTROL_ROTARY,
+  value: 0,
+}];

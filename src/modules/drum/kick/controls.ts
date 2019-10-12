@@ -1,56 +1,56 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'Pitch',
-  size: MEDIUM_KNOB,
-  min: 10,
+  log: true,
   max: 100,
+  min: 10,
+  position: {
+    x: 40,
+    y: 65,
+  },
+  size: MEDIUM_KNOB,
   step: 0.01,
-  log: true,
+  type: CONTROL_ROTARY,
   value: 40,
-  position: {
-    x: 40,
-    y: 65,
-  }
 }, {
-  type: CONTROL_ROTARY,
   label: 'Decay',
-  size: MEDIUM_KNOB,
-  min: 0.2,
-  max: 0.4,
-  step: 0.001,
   log: true,
-  value: 0.3,
+  max: 0.4,
+  min: 0.2,
   position: {
     x: 100,
     y: 65,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Punch',
+  },
   size: MEDIUM_KNOB,
-  min: 0.1,
-  max: 0.9,
   step: 0.001,
+  type: CONTROL_ROTARY,
+  value: 0.3,
+}, {
+  label: 'Punch',
   log: true,
-  value: 0.5,
+  max: 0.9,
+  min: 0.1,
   position: {
     x: 40,
     y: 135,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Boost',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 3,
-  step: 0.01,
+  step: 0.001,
+  type: CONTROL_ROTARY,
+  value: 0.5,
+}, {
+  label: 'Boost',
   log: true,
-  value: 0,
+  max: 3,
+  min: 0,
   position: {
     x: 100,
     y: 135,
-  }
-}]
+  },
+  size: MEDIUM_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: 0,
+}];

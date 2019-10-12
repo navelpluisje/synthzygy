@@ -1,30 +1,30 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, LARGE_KNOB, STEP_ROTARY, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, LARGE_KNOB, SMALL_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
-export const controlTypes: Array<ControlType> = [{
-  type: STEP_ROTARY,
+export const controlTypes: ControlType[] = [{
   label: 'Prob\'ty',
-  size: LARGE_KNOB,
-  min: 1,
-  max: 11,
-  step: 1,
   log: true,
-  value: 6,
+  max: 11,
+  min: 1,
   position: {
     x: 45,
     y: 75,
-  }
-}, {
-  type: STEP_ROTARY,
-  label: 'Length',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 6,
+  },
+  size: LARGE_KNOB,
   step: 1,
-  log: false,
+  type: STEP_ROTARY,
   value: 6,
+}, {
+  label: 'Length',
+  log: false,
+  max: 6,
+  min: 0,
   position: {
     x: 45,
     y: 150,
   },
-}]
+  size: SMALL_KNOB,
+  step: 1,
+  type: STEP_ROTARY,
+  value: 6,
+}];

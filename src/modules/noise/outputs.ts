@@ -1,24 +1,24 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const outputTypes: SynthConnectorType[] = [{
   name: 'Pink',
-  type: 'audio',
   position: {
     x: 90,
     y: 65,
   },
+  type: 'audio',
 }, {
   name: 'White',
-  type: 'audio',
   position: {
     x: 90,
     y: 125,
   },
+  type: 'audio',
 }, {
   name: 'Blue',
-  type: 'audio',
   position: {
     x: 90,
     y: 185,
   },
-}]
+  type: 'audio',
+}];

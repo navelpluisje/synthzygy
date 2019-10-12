@@ -1,15 +1,15 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const inputTypes: SynthConnectorType[] = [{
-  name: 'Spread',
+  connection: [{
+    x: 65,
+    y: 105,
+  }],
   icon: 'audio-in',
-  type: 'audio',
+  name: 'Spread',
   position: {
     x: 20,
     y: 105,
   },
-  connection: [{
-    x: 65,
-    y: 105,
-  }]
-}]
+  type: 'audio',
+}];

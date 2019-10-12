@@ -1,32 +1,32 @@
 import { Colors } from '@constants/enums';
-import { PositionType, DimensionType } from 'src/types';
 import { fillRoundedRect } from '@utilities/roundedRect';
+import { DimensionType, PositionType } from 'src/types';
 
 export class SynthModule {
-  position: PositionType
-  dimensions: DimensionType
-  color: string
-  title: string
-  canvas: CanvasRenderingContext2D
-  offset: PositionType
+  public position: PositionType;
+  public dimensions: DimensionType;
+  public color: string;
+  public title: string;
+  public canvas: CanvasRenderingContext2D;
+  public offset: PositionType;
 
   constructor(canvas: CanvasRenderingContext2D, dimensions: DimensionType, position: PositionType, color: string) {
-    this.canvas = canvas
-    this.dimensions = dimensions
-    this.position = position
-    this.color = color
+    this.canvas = canvas;
+    this.dimensions = dimensions;
+    this.position = position;
+    this.color = color;
   }
 
-  draw() {
-    const {x, y} = this.position
-    const {width, height} = this.dimensions
+  public draw() {
+    const {x, y} = this.position;
+    const {width, height} = this.dimensions;
     const radius = 5;
 
     this.canvas.fillStyle = this.color;
     // Draw the block itself
-    fillRoundedRect(this.canvas, x, y, width, height, radius)
+    fillRoundedRect(this.canvas, x, y, width, height, radius);
     // Draw the light shadow
-    this.canvas.fillStyle = Colors.TransWhite
+    this.canvas.fillStyle = Colors.TransWhite;
     this.canvas.beginPath();
     this.canvas.moveTo(x + radius, y);
     this.canvas.lineTo(x + width - radius, y);
@@ -39,7 +39,7 @@ export class SynthModule {
     this.canvas.closePath();
     this.canvas.fill();
     // Draw the dark color
-    this.canvas.fillStyle = 'rgba(0, 0, 0, 0.2)'
+    this.canvas.fillStyle = 'rgba(0, 0, 0, 0.2)';
     this.canvas.beginPath();
     this.canvas.moveTo(x + width - radius, y);
     this.canvas.quadraticCurveTo(x + width, y, x + width, y + radius);
@@ -52,12 +52,12 @@ export class SynthModule {
     this.canvas.fill();
   }
 
-  drawTitle(title: string) {
-    const {x, y} = this.position
-    const {width, height} = this.dimensions
+  public drawTitle(title: string) {
+    const {x, y} = this.position;
+    const {width, height} = this.dimensions;
 
-    this.canvas.font='20px Gruppo, sans-serif';
-    this.canvas.textAlign='center';
+    this.canvas.font = '20px Gruppo, sans-serif';
+    this.canvas.textAlign = 'center';
     this.canvas.textBaseline = 'middle';
     this.canvas.fillStyle = Colors.ModuleTitle;
     const rectHeight = 40;
@@ -67,25 +67,22 @@ export class SynthModule {
     this.canvas.fillText(title, rectX + (rectWidth / 2), rectY + (rectHeight / 2));
   }
 
-
-
-  isModuleClicked(xPos: number, yPos: number) {
-    let activeModule
-    const {x, y} = this.position
-    const {width, height} = this.dimensions
+  public isModuleClicked(xPos: number, yPos: number) {
+    const {x, y} = this.position;
+    const {width, height} = this.dimensions;
     if (x < xPos && xPos < (x + width)) {
       if (y < yPos && yPos < (y + height)) {
         this.offset = {
           x: xPos - x,
           y: yPos - y,
-        }
-        return true
+        };
+        return true;
       }
     }
-    return false
+    return false;
   }
 
-  unSet() {
-    this.offset = null
+  public unSet() {
+    this.offset = null;
   }
 }

@@ -4,7 +4,7 @@ export const createGainNode = (
 ): GainNode => {
   const gainNode = new GainNode(context, {
     gain,
-  })
+  });
 
-  return gainNode
-}
+  return gainNode;
+};

@@ -1,65 +1,65 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'In 1',
-  size: MEDIUM_KNOB,
-  min: 0,
   max: 1,
-  step: .005,
-  value: .5,
+  min: 0,
   position: {
     x: 65,
     y: 65,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: .005,
   type: CONTROL_ROTARY,
+  value: .5,
+}, {
   label: 'In 2',
-  size: MEDIUM_KNOB,
-  min: 0,
   max: 1,
-  step: .005,
-  value: .5,
+  min: 0,
   position: {
     x: 125,
     y: 65,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'In 3',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
   step: .005,
+  type: CONTROL_ROTARY,
   value: .5,
+}, {
+  label: 'In 3',
+  max: 1,
+  min: 0,
   position: {
     x: 65,
     y: 135,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'In 4',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
   step: .005,
+  type: CONTROL_ROTARY,
   value: .5,
+}, {
+  label: 'In 4',
+  max: 1,
+  min: 0,
   position: {
     x: 125,
     y: 135,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: .005,
   type: CONTROL_ROTARY,
+  value: .5,
+}, {
   label: 'Out',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 2,
-  step: .01,
   log: false,
-  value: 1,
+  max: 2,
+  min: 0,
   position: {
     x: 65,
     y: 205,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: .01,
+  type: CONTROL_ROTARY,
+  value: 1,
+}];

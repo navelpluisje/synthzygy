@@ -1,10 +1,10 @@
-import { BitCrusherProcessor } from './bitCrusher'
-import { ClockProcessor } from './clock'
-import { FrequencyProcessor } from './frequency'
+import { BitCrusherProcessor } from './bitCrusher';
+import { ClockProcessor } from './clock';
+import { FrequencyProcessor } from './frequency';
 
 // @ts-ignore
-registerProcessor('bitcrusher-processor', BitCrusherProcessor)
+registerProcessor('bitcrusher-processor', BitCrusherProcessor);
 // @ts-ignore
-registerProcessor('clock-processor', ClockProcessor)
+registerProcessor('clock-processor', ClockProcessor);
 // @ts-ignore
-registerProcessor('frequency-processor', FrequencyProcessor)
+registerProcessor('frequency-processor', FrequencyProcessor);

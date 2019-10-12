@@ -4,8 +4,8 @@ export const createConstantSourceNode = (
 ): ConstantSourceNode => {
   const constantSourceNode = new ConstantSourceNode(context, {
     offset,
-  })
-  constantSourceNode.start()
+  });
+  constantSourceNode.start();
 
-  return constantSourceNode
-}
+  return constantSourceNode;
+};

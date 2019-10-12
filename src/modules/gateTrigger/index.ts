@@ -1,46 +1,46 @@
-import { TriggerButton, SynthModule, OutputConnector } from '@components/index';
-import { GateNode } from '@nodes/gateNode'
-import { PositionType, DimensionType } from 'src/types';
-import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
+import { OutputConnector, SynthModule, TriggerButton } from '@components/index';
+import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
-import { outputTypes } from './outputs';
+import { GateNode } from '@nodes/gateNode';
+import { Colors } from 'src/constants/enums';
+import { DimensionType, PositionType } from 'src/types';
 import { controlTypes } from './controls';
+import { outputTypes } from './outputs';
 
-export interface GateTrigger extends Module{
-  getNode(): GateNode
+export interface GateTrigger extends Module {
+  getNode(): GateNode;
 }
 
 export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule {
-  static dimensions: DimensionType = {
+  public static dimensions: DimensionType = {
     height: 130,
     width: 100,
-  }
+  };
 
-  type =  'gateTrigger'
-  title = 'Gate'
-  node: GateNode
+  public type =  'gateTrigger';
+  public title = 'Gate';
+  public node: GateNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new GateNode()
-    this.container = new SynthModule(canvas, GateTrigger.dimensions, position, this.color)
-    this.addOutputs()
-    this.addControls()
+    super(canvas, position);
+    this.node = new GateNode();
+    this.container = new SynthModule(canvas, GateTrigger.dimensions, position, this.color);
+    this.addOutputs();
+    this.addControls();
   }
 
-  addOutputs() {
+  public addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
       this.outputs.push({
-        type: output.type,
-        gate: this.node,
         component,
-      })
-    })
+        gate: this.node,
+        type: output.type,
+      });
+    });
   }
 
-  addControls() {
+  public addControls() {
     this.controls.push(new TriggerButton(
       this.canvas,
       this,
@@ -48,10 +48,10 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
       this.node.onKeyDown,
       this.node.onKeyUp,
       Colors.AccentUtility,
-    ))
+    ));
   }
 
-  getNode() {
-    return this.node
+  public getNode() {
+    return this.node;
   }
 }

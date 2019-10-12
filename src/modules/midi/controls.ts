@@ -1,30 +1,30 @@
-import { ControlType } from "src/types";
-import { STEP_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { MEDIUM_KNOB, SMALL_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
-export const controlTypes: Array<ControlType> = [{
-  type: STEP_ROTARY,
+export const controlTypes: ControlType[] = [{
   label: 'Midi Port',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 16,
-  step: 1,
   log: false,
-  value: 0,
+  max: 16,
+  min: 0,
   position: {
     x: 45,
     y: 65,
   },
-}, {
-  type: STEP_ROTARY,
-  label: 'Clock',
-  size: SMALL_KNOB,
-  min: 1,
-  max: 5,
+  size: MEDIUM_KNOB,
   step: 1,
+  type: STEP_ROTARY,
+  value: 0,
+}, {
+  label: 'Clock',
   log: false,
-  value: 3,
+  max: 5,
+  min: 1,
   position: {
     x: 45,
     y: 130,
   },
-}]
+  size: SMALL_KNOB,
+  step: 1,
+  type: STEP_ROTARY,
+  value: 3,
+}];

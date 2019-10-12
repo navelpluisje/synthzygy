@@ -1,9 +1,9 @@
-import { ParentModule } from './parentInterface'
-import { Module } from './moduleInterface'
-import { CustomElementConfig } from './customElement'
+import { CustomElementConfig } from './customElement';
+import { Module } from './moduleInterface';
+import { ParentModule } from './parentInterface';
 
 export {
   ParentModule,
   Module,
   CustomElementConfig,
-}
+};

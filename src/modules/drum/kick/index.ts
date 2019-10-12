@@ -1,69 +1,69 @@
-import { SynthModule, OutputConnector, Rotary, InputConnector } from '@components/index';
-import { PositionType, DimensionType } from 'src/types';
-import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
+import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
-import { KickNode } from './kick.node'
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { Colors } from 'src/constants/enums';
+import { DimensionType, GateTrigger, PositionType } from 'src/types';
 import { controlTypes } from './controls';
+import { inputTypes } from './inputs';
+import { KickNode } from './kick.node';
+import { outputTypes } from './outputs';
 
 export class Kick extends ModuleBase implements ParentModule {
-  static dimensions: DimensionType = {
+  public static dimensions: DimensionType = {
     height: 210,
     width: 140,
-  }
+  };
 
-  type =  'kick'
-  title = 'Kick'
-  node: KickNode
+  public type =  'kick';
+  public title = 'Kick';
+  public node: KickNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new KickNode(context)
-    this.container = new SynthModule(canvas, Kick.dimensions, position, this.color)
-    this.addInputs()
-    this.addOutputs()
-    this.addControls()
+    super(canvas, position);
+    this.node = new KickNode(context);
+    this.container = new SynthModule(canvas, Kick.dimensions, position, this.color);
+    this.addInputs();
+    this.addOutputs();
+    this.addControls();
+  }
+
+  public getNode() {
+    return this.node;
   }
 
   private addInputs() {
     inputTypes.forEach((input) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator);
       this.inputs.push({
-        type: input.type,
-        gate: this.getInputConnection(input.name),
         component,
-      })
-    })
+        gate: this.getInputConnection(input.name),
+        type: input.type,
+      });
+    });
   }
 
   private addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
       this.outputs.push({
-        type: output.type,
-        node: this.node.output(),
         component,
-      })
-    })
+        node: this.node.output(),
+        type: output.type,
+      });
+    });
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSweep, Colors.AccentGenerator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setBoost, Colors.AccentGenerator))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSweep, Colors.AccentGenerator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setBoost, Colors.AccentGenerator));
   }
 
-  private getInputConnection(type: string): Function {
+  private getInputConnection(type: string): GateTrigger {
     switch (type) {
       case 'Gate':
-        return this.node.inputGate()
+        return this.node.inputGate();
     }
-  }
-
-  getNode() {
-    return this.node
   }
 }

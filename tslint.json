@@ -1,0 +1,20 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "max-line-length": {
+        "options": [120]
+    },
+    "new-parens": true,
+    "no-arg": true,
+    "no-bitwise": false,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": true,
+    "no-console": {
+      "severity": "warning",
+      "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    },
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "quotemark": [true, "single"]
+  }
+}

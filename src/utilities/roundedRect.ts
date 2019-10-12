@@ -15,7 +15,7 @@ export const fillRoundedRect = (
     radius = {
       ...defaultRadius,
       ...rad,
-    }
+    };
   }
   ctx.beginPath();
   ctx.moveTo(x + radius.tl, y);
@@ -29,7 +29,7 @@ export const fillRoundedRect = (
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
   ctx.closePath();
   ctx.fill();
-}
+};
 
 export const strokeRoundedRect = (
   ctx: CanvasRenderingContext2D,
@@ -37,7 +37,7 @@ export const strokeRoundedRect = (
   y: number,
   width: number,
   height: number,
-  rad: number | object = 5
+  rad: number | object = 5,
 ) => {
   let radius;
   if (typeof rad === 'number') {
@@ -47,7 +47,7 @@ export const strokeRoundedRect = (
     radius = {
       ...defaultRadius,
       ...rad,
-    }
+    };
   }
   ctx.beginPath();
   ctx.moveTo(x + radius.tl, y);
@@ -61,4 +61,4 @@ export const strokeRoundedRect = (
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
   ctx.closePath();
   ctx.stroke();
-}
+};

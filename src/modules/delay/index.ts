@@ -1,75 +1,75 @@
-import { ModuleBase } from '../moduleBase';
-import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
-import { PositionType } from 'src/types';
+import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
-import { DelayerNode } from './delay.node'
+import { PositionType } from 'src/types';
+import { ModuleBase } from '../moduleBase';
+import { controlTypes } from './controls';
+import { DelayerNode } from './delay.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
-import { controlTypes } from './controls';
 
 export interface Delay extends Module {
-  getNode(): DelayerNode
+  getNode(): DelayerNode;
 }
 
 export class Delay extends ModuleBase implements Delay, ParentModule {
-  static dimensions = {
+  public static dimensions = {
     height: 210,
     width: 140,
-  }
+  };
 
-  type = 'delay'
-  title = 'Delay'
-  active: boolean = false
-  node: DelayerNode
+  public type = 'delay';
+  public title = 'Delay';
+  public active: boolean = false;
+  public node: DelayerNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new DelayerNode(context)
-    this.container = new SynthModule(canvas, Delay.dimensions, position, this.color)
-    this.addOutputs()
-    this.addInputs()
-    this.addControls()
+    super(canvas, position);
+    this.node = new DelayerNode(context);
+    this.container = new SynthModule(canvas, Delay.dimensions, position, this.color);
+    this.addOutputs();
+    this.addInputs();
+    this.addControls();
   }
 
-  addInputs() {
+  public addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect);
       this.inputs.push({
-        type: input.type,
+        component,
         node: this.getInputConnection(input.name),
-        component,
-      })
-    })
+        type: input.type,
+      });
+    });
   }
 
-  addOutputs() {
-    outputTypes.forEach(output => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect)
+  public addOutputs() {
+    outputTypes.forEach((output) => {
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect);
       this.outputs.push({
-        type: output.type,
-        node: this.node.output(),
         component,
-      })
-    })
+        node: this.node.output(),
+        type: output.type,
+      });
+    });
   }
 
-  addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect))
+  public addControls() {
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect));
+  }
+
+  public getNode(): DelayerNode {
+    return this.node;
   }
 
   private getInputConnection(type: string): GainNode | DelayNode {
     switch (type) {
       case 'audioIn':
-        return this.node.input()
+        return this.node.input();
     }
 
-  }
-
-  getNode(): DelayerNode {
-    return this.node
   }
 }

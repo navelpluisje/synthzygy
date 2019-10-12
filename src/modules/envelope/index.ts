@@ -1,68 +1,68 @@
-import { ModuleBase } from '../moduleBase';
-import { SynthModule, InputConnector, OutputConnector, Rotary } from '@components/index';
-import { PositionType } from 'src/types';
+import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
-import { EnvelopeNode } from './envelope.node'
+import { PositionType } from 'src/types';
+import { ModuleBase } from '../moduleBase';
+import { controlTypes } from './controls';
+import { EnvelopeNode } from './envelope.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
-import { controlTypes } from './controls';
 
 export interface Envelope extends Module {
-  getNode(): EnvelopeNode
+  getNode(): EnvelopeNode;
 }
 
 export class Envelope extends ModuleBase implements Envelope, ParentModule {
-  static dimensions = {
+  public static dimensions = {
     height: 210,
     width: 200,
-  }
+  };
 
-  type = 'envelope'
-  title = 'Envelope'
-  active: boolean = false
-  node: EnvelopeNode
+  public type = 'envelope';
+  public title = 'Envelope';
+  public active: boolean = false;
+  public node: EnvelopeNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new EnvelopeNode(context)
-    this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color)
-    this.addOutputs()
-    this.addInputs()
-    this.addControls()
+    super(canvas, position);
+    this.node = new EnvelopeNode(context);
+    this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color);
+    this.addOutputs();
+    this.addInputs();
+    this.addControls();
   }
 
-  addInputs() {
+  public addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentModulator)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentModulator);
       this.inputs.push({
-        type: input.type,
+        component,
         gate: this.node.inputGate(),
-        component,
-      })
-    })
+        type: input.type,
+      });
+    });
   }
 
-  addOutputs() {
+  public addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator)
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator);
       this.outputs.push({
-        type: output.type,
-        node: this.node.output(),
         component,
-      })
-    })
+        node: this.node.output(),
+        type: output.type,
+      });
+    });
   }
 
-  addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator))
+  public addControls() {
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator));
   }
 
-  getNode() {
-    return this.node
+  public getNode() {
+    return this.node;
   }
 }

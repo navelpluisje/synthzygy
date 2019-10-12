@@ -1,15 +1,6 @@
 import { ModuleButtonsList } from '@components/buttonGroup';
 
 export const buttons: ModuleButtonsList = [{
-  position: {
-    x: 20,
-    y: 45,
-  },
-  dimensions: {
-    height: 20,
-    width: 40,
-  },
-  direction: 'vertical',
   active: 'lowpass',
   buttons: [{
     label: 'hp',
@@ -20,5 +11,14 @@ export const buttons: ModuleButtonsList = [{
   }, {
     label: 'lp',
     value: 'lowpass',
-  }]
-}]
+  }],
+  dimensions: {
+    height: 20,
+    width: 40,
+  },
+  direction: 'vertical',
+  position: {
+    x: 20,
+    y: 45,
+  },
+}];

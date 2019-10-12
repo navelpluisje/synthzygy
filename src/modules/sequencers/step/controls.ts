@@ -1,196 +1,196 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, LARGE_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
-  size: SMALL_KNOB,
-  min: 0,
-  max: 8,
-  step: 0.01,
   log: false,
-  value: 3,
+  max: 8,
+  min: 0,
   position: {
     x: 130,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 175,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 220,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 265,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 310,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 355,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 400,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 445,
     y: 61,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 130,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 175,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 220,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 265,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 310,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 355,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 400,
     y: 110,
-  }
-}, {
-  type: CONTROL_ROTARY,
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 8,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: 3,
+}, {
+  log: false,
+  max: 8,
+  min: 0,
   position: {
     x: 445,
     y: 110,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: 3,
+}];

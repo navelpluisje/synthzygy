@@ -1,69 +1,69 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'Attack',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 3,
-  step: 0.05,
   log: true,
-  value: .3,
+  max: 3,
+  min: 0,
   position: {
     x: 70,
     y: 65,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Decay',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 3,
   step: 0.05,
-  log: true,
+  type: CONTROL_ROTARY,
   value: .3,
+}, {
+  label: 'Decay',
+  log: true,
+  max: 3,
+  min: 0,
   position: {
     x: 130,
     y: 65,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Sustain',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.01,
+  step: 0.05,
+  type: CONTROL_ROTARY,
+  value: .3,
+}, {
+  label: 'Sustain',
   log: false,
-  value: .5,
+  max: 1,
+  min: 0,
   position: {
     x: 40,
     y: 135,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Release',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 3,
-  step: 0.05,
-  log: true,
+  step: 0.01,
+  type: CONTROL_ROTARY,
   value: .5,
+}, {
+  label: 'Release',
+  log: true,
+  max: 3,
+  min: 0,
   position: {
     x: 100,
     y: 135,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: 0.05,
   type: CONTROL_ROTARY,
-  label: 'level',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.01,
-  log: true,
   value: .5,
+}, {
+  label: 'level',
+  log: true,
+  max: 1,
+  min: 0,
   position: {
     x: 160,
     y: 135,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: .5,
+}];

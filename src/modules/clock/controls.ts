@@ -1,30 +1,30 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'BPM',
-  size: MEDIUM_KNOB,
-  min: 20,
-  max: 200,
-  step: 0.1,
   log: true,
-  value: 120,
+  max: 200,
+  min: 20,
   position: {
     x: 45,
     y: 100,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'PW',
+  },
   size: MEDIUM_KNOB,
-  min: 0.1,
-  max: .9,
-  step: 0.01,
+  step: 0.1,
+  type: CONTROL_ROTARY,
+  value: 120,
+}, {
+  label: 'PW',
   log: false,
-  value: .5,
+  max: .9,
+  min: 0.1,
   position: {
     x: 45,
     y: 165,
-  }
-}]
+  },
+  size: MEDIUM_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: .5,
+}];

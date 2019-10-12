@@ -1,51 +1,51 @@
-import template from './template.html'
-import style from './style.css'
-import { CustomElement } from '../CustomElement'
+import { CustomElement } from '../CustomElement';
+import style from './style.css';
+import template from './template.html';
 
 @CustomElement({
   selector: 'np-modulegroup',
-  template,
   style,
+  template,
 })
 export class ListModuleGroup extends HTMLElement {
-  title: string
-  name: string
-  height: string
-  titleDOM: HTMLHeadingElement
-  listDOM: HTMLUListElement
-  listContainerDOM: HTMLElement
-  open: boolean = false
+  public title: string;
+  public name: string;
+  public height: string;
+  public titleDOM: HTMLHeadingElement;
+  public listDOM: HTMLUListElement;
+  public listContainerDOM: HTMLElement;
+  public open: boolean = false;
 
   static get observedAttributes() { return ['open']; }
 
-  connectedCallback() {
-    this.title = this.getAttribute('group') || ''
-    this.name = this.getAttribute('name') || ''
+  public connectedCallback() {
+    this.title = this.getAttribute('group') || '';
+    this.name = this.getAttribute('name') || '';
 
-    this.titleDOM = this.shadowRoot.querySelector('h4')
-    this.titleDOM.textContent = this.title
+    this.titleDOM = this.shadowRoot.querySelector('h4');
+    this.titleDOM.textContent = this.title;
 
-    this.listContainerDOM = this.shadowRoot.querySelector('#list')
-    this.listDOM = this.shadowRoot.querySelector('ul')
-    this.listDOM.className = this.name
+    this.listContainerDOM = this.shadowRoot.querySelector('#list');
+    this.listDOM = this.shadowRoot.querySelector('ul');
+    this.listDOM.className = this.name;
 
-    this.shadowRoot.querySelector('dd').className = this.name
+    this.shadowRoot.querySelector('dd').className = this.name;
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  public attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
       case 'open':
-        this.toggleList(newValue !== null)
+        this.toggleList(newValue !== null);
     }
   }
 
-  toggleList(open: boolean) {
-    this.open = open
+  public toggleList(open: boolean) {
+    this.open = open;
     if (this.open) {
-      const height = this.listDOM.getBoundingClientRect().height
-      this.listContainerDOM.style.height = `${height}px`
+      const height = this.listDOM.getBoundingClientRect().height;
+      this.listContainerDOM.style.height = `${height}px`;
     } else {
-      this.listContainerDOM.style.height = '0px'
+      this.listContainerDOM.style.height = '0px';
     }
   }
 }

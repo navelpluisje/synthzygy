@@ -1,61 +1,61 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 // TODO: This needs to be a connection in stead of an icon
 export const outputTypes: SynthConnectorType[] = [{
   name: 'V/Oct',
-  type: 'audio',
   position: {
     x: 160,
     y: 50,
   },
   showLabel: true,
+  type: 'audio',
 }, {
   name: 'Pitch',
-  type: 'audio',
   position: {
     x: 160,
     y: 80,
   },
   showLabel: true,
+  type: 'audio',
 }, {
   name: 'Mod',
-  type: 'audio',
   position: {
     x: 160,
     y: 110,
   },
   showLabel: true,
+  type: 'audio',
 }, {
   name: 'Press',
-  type: 'audio',
   position: {
     x: 160,
     y: 140,
   },
   showLabel: true,
+  type: 'audio',
 }, {
-  name: 'Gate',
-  type: 'gate',
   icon: 'gate-out',
-  showIcon: true,
+  name: 'Gate',
   position: {
     x: 160,
     y: 170,
   },
+  showIcon: true,
+  type: 'gate',
 }, {
   name: 'Clock',
-  type: 'gate',
-  showLabel: true,
   position: {
     x: 160,
     y: 200,
   },
+  showLabel: true,
+  type: 'gate',
 }, {
   name: 'Transport',
-  type: 'gate',
-  showLabel: true,
   position: {
     x: 160,
     y: 230,
   },
-}]
+  showLabel: true,
+  type: 'gate',
+}];

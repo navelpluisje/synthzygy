@@ -1,12 +1,12 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const inputTypes: SynthConnectorType[] = [{
-  name: 'gateIn',
   icon: 'gate-in',
-  type: 'gate',
+  name: 'gateIn',
   position: {
     x: 20,
     y: 190,
   },
   showIcon: true,
-}]
+  type: 'gate',
+}];

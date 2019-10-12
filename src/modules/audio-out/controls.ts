@@ -1,17 +1,17 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, LARGE_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, LARGE_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
-export const controlTypes: Array<ControlType> = [{
-  type: CONTROL_ROTARY,
+export const controlTypes: ControlType[] = [{
   label: 'Gain',
-  size: LARGE_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.01,
   log: false,
-  value: 0.5,
+  max: 1,
+  min: 0,
   position: {
     x: 60,
     y: 71,
-  }
-}]
+  },
+  size: LARGE_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: 0.5,
+}];

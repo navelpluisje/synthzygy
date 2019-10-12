@@ -1,91 +1,91 @@
-import { ModuleBase } from '../../moduleBase';
-import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
-import { PositionType } from 'src/types';
+import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { Module, ParentModule } from '@interfaces/index';
+import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
-import { TuringMachineNode } from './turingMachine.node'
+import { GateTrigger, PositionType } from 'src/types';
+import { ModuleBase } from '../../moduleBase';
+import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
-import { controlTypes } from './controls';
-import { GateNode } from '@nodes/gateNode';
+import { TuringMachineNode } from './turingMachine.node';
 
 export class TuringMachine extends ModuleBase implements ParentModule {
-  static dimensions = {
+  public static dimensions = {
     height: 230,
     width: 190,
-  }
-  static pulsDimensions = {
+  };
+  public static pulsDimensions = {
     height: 200,
     width: 90,
-  }
+  };
 
-  type =  'turinger'
-  title =  'Turing Machine'
-  active: boolean = false
-  node: TuringMachineNode
+  public type =  'turinger';
+  public title =  'Turing Machine';
+  public active: boolean = false;
+  public node: TuringMachineNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new TuringMachineNode(context)
-    this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color)
-    this.addOutputs()
-    this.addInputs()
-    this.addControls()
+    super(canvas, position);
+    this.node = new TuringMachineNode(context);
+    this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color);
+    this.addOutputs();
+    this.addInputs();
+    this.addControls();
+  }
+
+  public getNode() {
+    return this.node;
   }
 
   private addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility)
-      const key = input.type === 'gate' ? 'gate' : 'node'
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility);
+      const key = input.type === 'gate' ? 'gate' : 'node';
       this.inputs.push({
+        component,
         type: input.type,
         [key]: this.getInputConnection(input.name),
-        component,
-      })
-    })
+      });
+    });
   }
 
   private addOutputs() {
     outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility)
-      const key = output.type === 'gate' ? 'gate' : 'node'
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
+      const key = output.type === 'gate' ? 'gate' : 'node';
       this.outputs.push({
+        component,
         type: output.type,
         [key]: this.getOutputConnection(output.name),
-        component,
-      })
-    })
+      });
+    });
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentUtility))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility))
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentUtility));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility));
   }
 
   private getOutputConnection(type: string): ConstantSourceNode | GateNode {
     switch (type) {
       case 'Out':
-        return this.node.output()
+        return this.node.output();
       case 'Trigger':
-        return this.node.outputGate()
+        return this.node.outputGate();
       case '2':
       case '4':
       case '6':
       case '8':
       case '2+4':
       case '2+6':
-        return this.node.outputPulse(type)
+        return this.node.outputPulse(type);
       }
   }
 
-  private getInputConnection(type: string): Function {
+  private getInputConnection(type: string): GateTrigger {
     switch (type) {
       case 'Clock':
-        return this.node.inputClock()
+        return this.node.inputClock();
     }
-  }
-
-  public getNode() {
-    return this.node
   }
 }

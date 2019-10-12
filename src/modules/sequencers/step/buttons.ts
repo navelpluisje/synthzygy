@@ -1,15 +1,6 @@
 import { ModuleButtonsList } from '@components/buttonGroup';
 
 export const buttons: ModuleButtonsList = [{
-  position: {
-    x: 50,
-    y: 45,
-  },
-  dimensions: {
-    height: 25,
-    width: 50,
-  },
-  direction: 'vertical',
   active: 'stop',
   buttons: [{
     label: 'Start',
@@ -17,32 +8,32 @@ export const buttons: ModuleButtonsList = [{
   }, {
     label: 'Stop',
     value: 'stop',
-  }]
-}, {
-  position: {
-    x: 50,
-    y: 100,
-  },
+  }],
   dimensions: {
     height: 25,
     width: 50,
   },
   direction: 'vertical',
+  position: {
+    x: 50,
+    y: 45,
+  },
+}, {
   active: '',
   buttons: [{
     label: 'Reset',
     value: 'reset',
-  }]
-}, {
-  position: {
-    x: 480,
-    y: 60,
-  },
+  }],
   dimensions: {
     height: 25,
-    width: 35,
+    width: 50,
   },
   direction: 'vertical',
+  position: {
+    x: 50,
+    y: 100,
+  },
+}, {
   active: 'A',
   buttons: [{
     label: 'A',
@@ -50,5 +41,14 @@ export const buttons: ModuleButtonsList = [{
   }, {
     label: 'B',
     value: 'B',
-  }]
-}]
+  }],
+  dimensions: {
+    height: 25,
+    width: 35,
+  },
+  direction: 'vertical',
+  position: {
+    x: 480,
+    y: 60,
+  },
+}];

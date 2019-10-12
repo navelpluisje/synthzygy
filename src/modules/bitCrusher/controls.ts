@@ -1,56 +1,56 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, STEP_ROTARY, MEDIUM_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, MEDIUM_KNOB, SMALL_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: STEP_ROTARY,
   label: 'Depth',
-  size: MEDIUM_KNOB,
-  min: 1,
+  log: false,
   max: 16,
+  min: 1,
+  position: {
+    x: 40,
+    y: 65,
+  },
+  size: MEDIUM_KNOB,
   step: 1,
-  log: false,
+  type: STEP_ROTARY,
   value: 8,
-  position: {
-    x: 40,
-    y: 65,
-  }
 }, {
-  type: CONTROL_ROTARY,
   label: 'Degrade',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.01,
   log: false,
-  value: .5,
+  max: 1,
+  min: 0,
   position: {
     x: 100,
     y: 65,
   },
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Wet/Dry',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 1,
+  size: MEDIUM_KNOB,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: .5,
+}, {
+  label: 'Wet/Dry',
+  log: false,
+  max: 1,
+  min: 0,
   position: {
     x: 40,
     y: 135,
   },
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Level',
-  size: MEDIUM_KNOB,
-  min: 0,
-  max: 1,
+  size: SMALL_KNOB,
   step: 0.01,
-  log: false,
+  type: CONTROL_ROTARY,
   value: .5,
+}, {
+  label: 'Level',
+  log: false,
+  max: 1,
+  min: 0,
   position: {
     x: 100,
     y: 135,
   },
-}]
+  size: MEDIUM_KNOB,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: .5,
+}];

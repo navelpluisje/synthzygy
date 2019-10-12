@@ -1,6 +1,5 @@
-import { PositionType, DimensionType } from '../types';
+import { DimensionType, PositionType } from '../types';
 
 export interface ParentModule {
-  getPosition(): PositionType
+  getPosition(): PositionType;
 }
-

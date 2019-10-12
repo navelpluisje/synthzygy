@@ -1,87 +1,87 @@
-import { ModuleBase } from '../moduleBase';
-import { SynthModule, InputConnector, OutputConnector, Rotary, ButtonGroup } from '@components/index';
-import { PositionType } from 'src/types';
+import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { ParentModule, Module } from '@interfaces/index';
-import { FilterNode } from './filter.node'
-import { buttons } from './buttons'
+import { PositionType } from 'src/types';
+import { ModuleBase } from '../moduleBase';
+import { buttons } from './buttons';
+import { controlTypes } from './controls';
+import { FilterNode } from './filter.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
-import { controlTypes } from './controls';
 
 export interface Filter extends Module {
-  getNode(): FilterNode
+  getNode(): FilterNode;
 }
 
 export class Filter extends ModuleBase implements Filter, ParentModule {
-  static dimensions = {
+  public static dimensions = {
     height: 290,
     width: 170,
-  }
+  };
 
-  type = 'filter'
-  title = 'Filter'
-  active: boolean = false
-  node: FilterNode
+  public type = 'filter';
+  public title = 'Filter';
+  public active: boolean = false;
+  public node: FilterNode;
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position)
-    this.node = new FilterNode(context)
-    this.container = new SynthModule(canvas, Filter.dimensions, position, this.color)
-    this.addOutputs()
-    this.addInputs()
-    this.addControls()
-    this.addButtonControls()
+    super(canvas, position);
+    this.node = new FilterNode(context);
+    this.container = new SynthModule(canvas, Filter.dimensions, position, this.color);
+    this.addOutputs();
+    this.addInputs();
+    this.addControls();
+    this.addButtonControls();
   }
 
-  addInputs() {
+  public addInputs() {
     inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect)
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect);
       this.inputs.push({
-        type: input.type,
+        component,
         node: this.getInputConnection(input.name),
-        component,
-      })
-    })
+        type: input.type,
+      });
+    });
   }
 
-  addOutputs() {
-    outputTypes.forEach(output => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect)
+  public addOutputs() {
+    outputTypes.forEach((output) => {
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect);
       this.outputs.push({
-        type: output.type,
-        node: this.node.output(),
         component,
-      })
-    })
+        node: this.node.output(),
+        type: output.type,
+      });
+    });
   }
 
-  addButtonControls() {
-    buttons.forEach(buttonGroup => {
-      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentEffect))
-    })
+  public addButtonControls() {
+    buttons.forEach((buttonGroup) => {
+      this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentEffect));
+    });
   }
 
-  addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect))
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect))
+  public addControls() {
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect));
+    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect));
+  }
+
+  public getNode(): FilterNode {
+    return this.node;
   }
 
   private getInputConnection(type: string): GainNode | BiquadFilterNode {
     switch (type) {
       case 'cvFreq':
-        return this.node.inputCvFrequency()
+        return this.node.inputCvFrequency();
       case 'cvQ':
-        return this.node.inputCvQ()
+        return this.node.inputCvQ();
       case 'audioIn':
-        return this.node.input()
+        return this.node.input();
     }
-  }
-
-  getNode(): FilterNode {
-    return this.node
   }
 }

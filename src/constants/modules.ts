@@ -1,6 +1,4 @@
 export const AvailableModules = [{
-  name: 'generators',
-  title: 'Generators',
   modules: [{
     name: 'oscillator',
     title: 'Oscillator',
@@ -16,20 +14,20 @@ export const AvailableModules = [{
   }, {
     name: 'hihat',
     title: 'HiHat',
-  }]
+  }],
+  name: 'generators',
+  title: 'Generators',
 }, {
-  name: 'modulators',
-  title: 'Modulators',
   modules: [{
     name: 'envelope',
     title: 'Envelope',
   }, {
     name: 'lfo',
     title: 'Lfo',
-  }]
+  }],
+  name: 'modulators',
+  title: 'Modulators',
 }, {
-  name: 'effects',
-  title: 'Effects',
   modules: [{
     name: 'filter',
     title: 'Filter',
@@ -39,10 +37,10 @@ export const AvailableModules = [{
   }, {
     name: 'bitCrusher',
     title: 'Bit Crusher',
-  }]
+  }],
+  name: 'effects',
+  title: 'Effects',
 }, {
-  name: 'utilities',
-  title: 'Utilities',
   modules: [{
     name: 'gate',
     title: 'Gate trigger',
@@ -61,10 +59,10 @@ export const AvailableModules = [{
   }, {
     name: 'oscilloscope',
     title: 'Oscilloscope',
-  }]
+  }],
+  name: 'utilities',
+  title: 'Utilities',
 }, {
-  name: 'audio',
-  title: 'Audio',
   modules: [{
     name: 'audioOut',
     title: 'Audio Output',
@@ -74,5 +72,7 @@ export const AvailableModules = [{
   }, {
     name: 'vca',
     title: 'Vca',
-  }]
-}]
+  }],
+  name: 'audio',
+  title: 'Audio',
+}];

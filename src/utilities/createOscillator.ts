@@ -4,10 +4,10 @@ export const createOscillatorNode = (
   frequency: number = 0,
 ): OscillatorNode => {
   const oscillatorNode = new OscillatorNode(context, {
-    type,
     frequency,
-  })
-  oscillatorNode.start()
+    type,
+  });
+  oscillatorNode.start();
 
-  return oscillatorNode
-}
+  return oscillatorNode;
+};

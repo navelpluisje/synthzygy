@@ -1,39 +1,39 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const outputTypes: SynthConnectorType[] = [{
-  name: 'sawWave',
   icon: 'saw',
-  type: 'audio',
+  name: 'sawWave',
   position: {
     x: 170,
     y: 120,
   },
   showIcon: true,
-}, {
-  name: 'squareWave',
-  icon: 'square',
   type: 'audio',
+}, {
+  icon: 'square',
+  name: 'squareWave',
   position: {
     x: 170,
     y: 150,
   },
   showIcon: true,
-}, {
-  name: 'sineWave',
-  icon: 'sine',
   type: 'audio',
+}, {
+  icon: 'sine',
+  name: 'sineWave',
   position: {
     x: 170,
     y: 180,
   },
   showIcon: true,
-}, {
-  name: 'triangleWave',
-  icon: 'triangle',
   type: 'audio',
+}, {
+  icon: 'triangle',
+  name: 'triangleWave',
   position: {
     x: 170,
     y: 210,
   },
   showIcon: true,
-}]
+  type: 'audio',
+}];

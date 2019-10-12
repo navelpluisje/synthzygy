@@ -1,33 +1,33 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const inputTypes: SynthConnectorType[] = [{
-  name: 'fm',
-  icon: 'cv-in',
-  type: 'audio',
-  position: {
-    x: 20,
-    y: 195,
-  },
   connection: [{
     x: 60,
     y: 195,
   }, {
     x: 75,
     y: 180,
-  }]
-}, {
-  name: 'frequency',
-  icon: 'freq',
-  type: 'audio',
+  }],
+  icon: 'cv-in',
+  name: 'fm',
   position: {
     x: 20,
-    y: 165,
+    y: 195,
   },
+  type: 'audio',
+}, {
   connection: [{
     x: 45,
     y: 165,
   }, {
     x: 85,
     y: 125,
-  }]
-}]
+  }],
+  icon: 'freq',
+  name: 'frequency',
+  position: {
+    x: 20,
+    y: 165,
+  },
+  type: 'audio',
+}];

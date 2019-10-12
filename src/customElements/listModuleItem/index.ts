@@ -1,20 +1,20 @@
-import template from './template.html'
-import style from './style.css'
-import { CustomElement } from '../CustomElement'
+import { CustomElement } from '../CustomElement';
+import style from './style.css';
+import template from './template.html';
 
 @CustomElement({
   selector: 'np-moduleitem',
-  template,
   style,
+  template,
 })
 export class ListModuleItem extends HTMLElement {
-  button: HTMLButtonElement
-  clickEvent: Event
-  name: string
-  group: string
+  public button: HTMLButtonElement;
+  public clickEvent: Event;
+  public name: string;
+  public group: string;
 
   constructor() {
-    super()
+    super();
 
     this.clickEvent = new CustomEvent('itemclick', {
       bubbles: true,
@@ -22,18 +22,18 @@ export class ListModuleItem extends HTMLElement {
     });
   }
 
-  connectedCallback() {
-    this.name = this.getAttribute('name') || ''
-    this.group = this.getAttribute('group') || ''
-    this.button = this.shadowRoot.querySelector('button')
+  public connectedCallback() {
+    this.name = this.getAttribute('name') || '';
+    this.group = this.getAttribute('group') || '';
+    this.button = this.shadowRoot.querySelector('button');
 
-    this.button.className = this.group
-    this.setEventBindings()
+    this.button.className = this.group;
+    this.setEventBindings();
   }
 
-  setEventBindings() {
+  public setEventBindings() {
     this.button.addEventListener('click', () => {
-      this.dispatchEvent(this.clickEvent)
-    })
+      this.dispatchEvent(this.clickEvent);
+    });
   }
 }

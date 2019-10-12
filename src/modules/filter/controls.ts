@@ -1,69 +1,69 @@
-import { ControlType } from "src/types";
-import { CONTROL_ROTARY, MEDIUM_KNOB, LARGE_KNOB, SMALL_KNOB } from "@constants/sizes";
+import { CONTROL_ROTARY, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: CONTROL_ROTARY,
   label: 'Cutoff',
-  size: LARGE_KNOB,
-  min: 0,
-  max: 10,
-  step: .005,
   log: true,
-  value: 4,
+  max: 10,
+  min: 0,
   position: {
     x: 110,
     y: 71,
-  }
-}, {
+  },
+  size: LARGE_KNOB,
+  step: .005,
   type: CONTROL_ROTARY,
+  value: 4,
+}, {
   label: 'Level in',
-  size: MEDIUM_KNOB,
-  min: 0,
+  log: false,
   max: 2,
-  step: 0.01,
-  log: false,
-  value: 1,
+  min: 0,
   position: {
     x: 120,
     y: 213,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'Resonance',
+  },
   size: MEDIUM_KNOB,
-  min: 0,
-  max: 150,
-  step: .1,
+  step: 0.01,
+  type: CONTROL_ROTARY,
+  value: 1,
+}, {
+  label: 'Resonance',
   log: true,
-  value: 0,
+  max: 150,
+  min: 0,
   position: {
     x: 120,
     y: 148,
-  }
-}, {
+  },
+  size: MEDIUM_KNOB,
+  step: .1,
   type: CONTROL_ROTARY,
-  label: 'cv C/o',
-  size: SMALL_KNOB,
-  min: 0,
-  max: 1,
-  step: 0.001,
   value: 0,
+}, {
+  label: 'cv C/o',
   log: true,
+  max: 1,
+  min: 0,
   position: {
     x: 60,
     y: 148,
-  }
-}, {
-  type: CONTROL_ROTARY,
-  label: 'cv Res',
+  },
   size: SMALL_KNOB,
-  min: 0,
-  max: 200,
-  step: .5,
+  step: 0.001,
+  type: CONTROL_ROTARY,
   value: 0,
+}, {
+  label: 'cv Res',
   log: false,
+  max: 200,
+  min: 0,
   position: {
     x: 60,
     y: 213,
-  }
-}]
+  },
+  size: SMALL_KNOB,
+  step: .5,
+  type: CONTROL_ROTARY,
+  value: 0,
+}];

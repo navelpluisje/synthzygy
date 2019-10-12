@@ -1,31 +1,32 @@
-export interface GateNode {
-  connect(trigger: Function, id: number): void
-  disconnect(id: number): void
-  onKeyDown(): void
-  onKeyUp(): void
-}
+import { GateTrigger } from 'src/types';
 
-export class GateNode implements GateNode{
-  trigger: Record<number, Function> = {}
+export class GateNode implements GateNode {
+  private triggers: Record<number, GateTrigger> = {};
 
-  connect(trigger: Function, id: number): void {
-    this.trigger[id] = trigger
+  public connect(trigger: GateTrigger, id: number): void {
+    this.triggers[id] = trigger;
   }
 
-  disconnect(id: number) {
-    this.trigger[id] = null
-    delete this.trigger[id]
+  public disconnect(id: number) {
+    this.triggers[id] = null;
+    delete this.triggers[id];
   }
 
-  onKeyDown = () => {
-    this.trigger && (
-      Object.values(this.trigger).forEach(trigger => trigger(1))
-    )
+  public onKeyDown = () => {
+    this.triggers && (
+      Object.values(this.triggers).forEach((trigger) => trigger(1))
+    );
   }
 
-  onKeyUp = () => {
-    this.trigger && (
-      Object.values(this.trigger).forEach(trigger => trigger(0))
-    )
+  public onKeyUp = () => {
+    this.triggers && (
+      Object.values(this.triggers).forEach((trigger) => trigger(0))
+    );
+  }
+
+  public trigger = (value: number) => {
+    this.triggers && (
+      Object.values(this.triggers).forEach((trigger) => trigger(value))
+    );
   }
 }

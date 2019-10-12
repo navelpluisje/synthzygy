@@ -1,13 +1,13 @@
-import { ButtonGroup } from './buttonGroup'
-import { InputConnector } from './connector/inputConnector'
-import { OutputConnector } from './connector/outputConnector'
-import { Connection } from './connection'
-import { ConnectionList } from './ConnectionList'
-import { Rotary } from './rotary'
-import { SynthModule } from './synthModule'
-import { drawIcon } from './icons'
-import { ThreeStateButton } from './threeStateButton'
-import { TriggerButton } from './triggerButton'
+import { ButtonGroup } from './buttonGroup';
+import { Connection } from './connection';
+import { ConnectionList } from './ConnectionList';
+import { InputConnector } from './connector/inputConnector';
+import { OutputConnector } from './connector/outputConnector';
+import { drawIcon } from './icons';
+import { Rotary } from './rotary';
+import { SynthModule } from './synthModule';
+import { ThreeStateButton } from './threeStateButton';
+import { TriggerButton } from './triggerButton';
 
 export {
   ButtonGroup,
@@ -20,4 +20,4 @@ export {
   SynthModule,
   ThreeStateButton,
   TriggerButton,
-}
+};

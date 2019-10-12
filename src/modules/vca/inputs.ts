@@ -1,24 +1,24 @@
-import { SynthConnectorType } from "src/types";
+import { SynthConnectorType } from 'src/types';
 
 export const inputTypes: SynthConnectorType[] = [{
-  name: 'cvGain',
+  connection: [{
+    x: 40,
+    y: 65,
+  }],
   icon: 'cv-in',
-  type: 'audio',
+  name: 'cvGain',
   position: {
     x: 20,
     y: 65,
   },
-  connection: [{
-    x: 40,
-    y: 65,
-  }]
-}, {
-  name: 'audioIn',
-  icon: 'audio-in',
   type: 'audio',
-  showIcon: true,
+}, {
+  icon: 'audio-in',
+  name: 'audioIn',
   position: {
     x: 20,
     y: 120,
   },
-}]
+  showIcon: true,
+  type: 'audio',
+}];

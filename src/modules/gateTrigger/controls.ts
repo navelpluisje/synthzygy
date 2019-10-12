@@ -1,12 +1,12 @@
-import { ControlType } from "src/types";
-import { TRIGGER_BUTTON, LARGE_KNOB } from "@constants/sizes";
+import { LARGE_KNOB, TRIGGER_BUTTON } from '@constants/sizes';
+import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
-  type: TRIGGER_BUTTON,
   label: 'Gate',
-  size: LARGE_KNOB,
   position: {
     x: 50,
     y: 65,
-  }
-}]
+  },
+  size: LARGE_KNOB,
+  type: TRIGGER_BUTTON,
+}];

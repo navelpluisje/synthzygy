@@ -539,4 +539,4 @@ export const notes = {
     note: 'B8',
     value: 8.88775,
   },
-}
+};
