@@ -18,7 +18,6 @@ export class JsOscillatorNode {
   private triangleBoost: GainNode;
   private cvFmNode: GainNode;
   private cvFrequencyNode: AudioWorkletNode;
-  private detuneConstant: ConstantSourceNode;
 
   constructor(
     context: AudioContext,

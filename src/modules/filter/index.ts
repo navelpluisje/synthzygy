@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
+import { ButtonGroup, InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';

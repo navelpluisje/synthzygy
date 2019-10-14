@@ -54,7 +54,7 @@ export class SynthModule {
 
   public drawTitle(title: string) {
     const {x, y} = this.position;
-    const {width, height} = this.dimensions;
+    const {width} = this.dimensions;
 
     this.canvas.font = '20px Gruppo, sans-serif';
     this.canvas.textAlign = 'center';

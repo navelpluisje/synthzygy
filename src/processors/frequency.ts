@@ -1,4 +1,3 @@
-import { drawFmIcon } from './../components/icons/fmIcon';
 export class FrequencyProcessor extends AudioWorkletProcessor {
   // Custom AudioParams can be defined with this static getter.
   static get parameterDescriptors(): AudioParamDescriptor[] {

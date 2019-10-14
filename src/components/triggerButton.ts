@@ -79,7 +79,6 @@ export class TriggerButton implements SynthModuleControl {
   }
 
   public isControlReleased(xPos: number, yPos: number): boolean {
-    const { x, y } = this.getPosition();
     if (this.active) {
       this.active = false;
       this.draw(true);

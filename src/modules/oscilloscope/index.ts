@@ -1,7 +1,7 @@
-import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { InputConnector, Knob, SynthModule } from '@components/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType, SynthConnectorType } from 'src/types';
+import { PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';

@@ -113,7 +113,7 @@ export class Knob implements SynthModuleControl {
 
   public drawKnobValue() {
     const {x: xPos, y: yPos} = this.getKnobPosition();
-    const { min, max, log } = this.valueData;
+    const { min, max } = this.valueData;
     const range = max - min;
     const rangeOffset = 0 - min;
     const pos = Math.min(

@@ -1,4 +1,3 @@
-import { outputTypes } from '@modules/oscillator/outputs';
 import { createGainNode } from '@utilities/createGain';
 
 export interface VcaNode {

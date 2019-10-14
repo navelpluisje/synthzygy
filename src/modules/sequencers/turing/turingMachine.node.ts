@@ -2,13 +2,10 @@ import { GateNode } from '@nodes/gateNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
 import { GateTrigger } from 'src/types';
 
-const BIT_1 = 1;
 const BIT_2 = 2;
 const BIT_3 = 4;
 const BIT_4 = 8;
-const BIT_5 = 16;
 const BIT_6 = 32;
-const BIT_7 = 64;
 const BIT_8 = 128;
 const BIT_12 = 2048;
 const BIT_16 = 32768;

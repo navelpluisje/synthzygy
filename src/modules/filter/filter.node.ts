@@ -1,4 +1,3 @@
-import { inputTypes } from '@modules/oscillator/inputs';
 import { createGainNode } from '@utilities/createGain';
 
 export class FilterNode {

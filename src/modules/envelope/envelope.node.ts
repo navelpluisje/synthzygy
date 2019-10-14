@@ -23,11 +23,11 @@ export class EnvelopeNode {
   }
 
   public setAttack = (attack: number): void => {
-    this.attack = attack;
+    this.attack = attack || 0.001;
   }
 
   public setDecay = (decay: number): void => {
-    this.decay = decay;
+    this.decay = decay || 0.001;
   }
 
   public setSustain = (sustain: number): void => {
@@ -35,7 +35,7 @@ export class EnvelopeNode {
   }
 
   public setRelease = (release: number): void => {
-    this.release = release / 10;
+    this.release = release / 10 || 0.001;
   }
 
   public setLevel = (level: number): void => {
@@ -55,17 +55,19 @@ export class EnvelopeNode {
   }
 
   private trigger = (value: number): void => {
-    this.cvOutputNode.offset.cancelAndHoldAtTime(0);
     const time = this.context.currentTime;
 
+    this.cvOutputNode.offset.cancelAndHoldAtTime(0);
     if (value === 1) {
-      this.cvOutputNode.offset.linearRampToValueAtTime(
+      this.cvOutputNode.offset.setTargetAtTime(
         this.level,
-        time + this.attack,
+        time,
+        this.attack,
       );
-      this.cvOutputNode.offset.linearRampToValueAtTime(
+      this.cvOutputNode.offset.setTargetAtTime(
         this.sustain * this.level,
-        time + this.attack + this.decay,
+        time + this.attack,
+        this.decay,
       );
     }
     if (value === 0) {

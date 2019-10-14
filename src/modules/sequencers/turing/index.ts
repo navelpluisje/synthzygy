@@ -1,5 +1,5 @@
-import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
 import { GateTrigger, PositionType } from 'src/types';

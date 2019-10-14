@@ -5,11 +5,12 @@ import { ListModuleGroup } from './customElements/listModuleGroup';
 import { ListModuleItem } from './customElements/listModuleItem';
 import { MidiSettings } from './customElements/midiSettings';
 
-const lmg = new ListModuleGroup();
-const lmi = new ListModuleItem();
-const ms = new MidiSettings();
+/* tslint:disable */
+new ListModuleGroup();
+new ListModuleItem();
+new MidiSettings();
 setCssColors();
 
 const synth = new Synth();
-const menu = new Menu(synth.addModule);
+new Menu(synth.addModule);
 synth.start();

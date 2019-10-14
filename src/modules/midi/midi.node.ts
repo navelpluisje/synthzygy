@@ -11,7 +11,6 @@ const AFTERTOUCH = 'd';
 const PITCHBEND = 'e';
 // const NOTE_OFF = '8'
 const MODULATION = 1;
-const PROGRAM_CHANGE = 'c';
 
 const TIMING_CLOCK = '248';
 const CONTROL_START = '250';
@@ -35,16 +34,13 @@ export class MidiNode {
   private cvPitchNode: ConstantSourceNode;
   private cvModulationNode: ConstantSourceNode;
   private cvAfterTouchNode: ConstantSourceNode;
-  private connected: boolean = false;
   private activeNote: number;
   private port: string;
   private noteLength: number = 8;
   private noteStep: number = 0;
   private clockOn: boolean = false;
   private midiInputs: WebMidi.MIDIInput[];
-  private midiOutputs: WebMidi.MIDIOutput[];
   private midiInput: WebMidi.MIDIInput;
-  private midiOutput: WebMidi.MIDIOutput;
 
   constructor(context: AudioContext) {
     this.context = context;
@@ -67,13 +63,9 @@ export class MidiNode {
 
   public setMidiDevice = (id: string) => {
     const input = this.midiInputs.filter((inp) => inp.id === id);
-    const output = this.midiOutputs.filter((outp) => outp.id === id);
     if (input.length > 0) {
       [this.midiInput] = input;
       this.midiInput.onmidimessage = this.handleMidiMessage;
-    }
-    if (output.length > 0) {
-      [this.midiOutput] = output;
     }
   }
 
@@ -146,9 +138,6 @@ export class MidiNode {
     this.midiInputs = Array
       .from(midiAccess.inputs)
       .map((input) => input[1]);
-    this.midiOutputs = Array
-      .from(midiAccess.outputs)
-      .map((output) => output[1]);
   }
 
   private getValue(min: number, max: number, midiValue: number): number {
