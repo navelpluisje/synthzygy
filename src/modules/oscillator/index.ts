@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -69,10 +69,10 @@ export class Oscillator extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setOctave, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setDetune, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setOctave, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setDetune, Colors.AccentGenerator));
   }
 
   private getOutputConnection(type: string): GainNode {

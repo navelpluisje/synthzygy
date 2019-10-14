@@ -1,4 +1,4 @@
-import { CONTROL_ROTARY, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { CONTROL_KNOB, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
 import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
@@ -11,7 +11,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -23,7 +23,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -35,7 +35,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -47,7 +47,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -59,7 +59,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -71,7 +71,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -83,7 +83,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -95,7 +95,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -107,7 +107,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -119,7 +119,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -131,7 +131,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -143,7 +143,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -155,7 +155,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -167,7 +167,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -179,7 +179,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }, {
   log: false,
@@ -191,6 +191,6 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 3,
 }];

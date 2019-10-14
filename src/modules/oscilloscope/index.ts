@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType, SynthConnectorType } from 'src/types';
@@ -53,8 +53,8 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.setFftSize, Colors.AccentUtility));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.setVerticalSpread, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.setFftSize, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.setVerticalSpread, Colors.AccentUtility));
   }
 
   public setFftSize = (value: number) => {

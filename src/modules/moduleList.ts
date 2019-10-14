@@ -1,6 +1,6 @@
 import { Synth } from 'src/app/synth';
 import { DimensionType, PositionType } from 'src/types';
-import { Rotary } from '../components/rotary';
+import { Knob } from '../components/knob';
 import {
   AudioOut,
   BitCrusher,
@@ -103,7 +103,7 @@ export class ModuleList {
   public draw = () => {
     const {width, height} = Synth.canvasDimension;
     this.canvas.clearRect(0, 0, width, height);
-    Rotary.rotaryCanvas.clearRect(0, 0, width, height);
+    Knob.knobCanvas.clearRect(0, 0, width, height);
 
     Object.values(this.modules).forEach((module) => module.draw());
   }

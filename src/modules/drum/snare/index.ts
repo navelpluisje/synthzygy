@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -54,9 +54,9 @@ export class Snare extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDecay, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setHead, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSnare, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setDecay, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setHead, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setSnare, Colors.AccentGenerator));
   }
 
   private getInputConnection(type: string): GateTrigger {

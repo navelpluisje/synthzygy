@@ -1,4 +1,4 @@
-import { ConnectionList, Rotary } from '@components/index';
+import { ConnectionList, Knob } from '@components/index';
 import { ModuleList } from '@modules/moduleList';
 import { DimensionType } from 'src/types';
 
@@ -8,10 +8,10 @@ export class Synth {
     width: 1000,
   };
   private moduleCanvas: HTMLCanvasElement;
-  private rotaryCanvas: HTMLCanvasElement;
+  private knobCanvas: HTMLCanvasElement;
   private connectionCanvas: HTMLCanvasElement;
   private modulesCtx: CanvasRenderingContext2D;
-  private rotaryCtx: CanvasRenderingContext2D;
+  private knobCtx: CanvasRenderingContext2D;
   private connectionCtx: CanvasRenderingContext2D;
 
   private synthArea: HTMLElement;
@@ -24,7 +24,7 @@ export class Synth {
 
   constructor() {
     this.moduleCanvas = (document.getElementById('canvas') as HTMLCanvasElement);
-    this.rotaryCanvas = (document.getElementById('canvas-rotary') as HTMLCanvasElement);
+    this.knobCanvas = (document.getElementById('canvas-knob') as HTMLCanvasElement);
     this.connectionCanvas = (document.getElementById('canvas-connection') as HTMLCanvasElement);
 
     this.synthArea = document.querySelector('main');
@@ -121,10 +121,10 @@ export class Synth {
       this.audioContext = new AudioContext();
       await this.getWorklets();
       this.modulesCtx = this.moduleCanvas.getContext('2d');
-      this.rotaryCtx = this.rotaryCanvas.getContext('2d');
+      this.knobCtx = this.knobCanvas.getContext('2d');
       this.connectionCtx = this.connectionCanvas.getContext('2d');
 
-      Rotary.rotaryCanvas = this.rotaryCtx;
+      Knob.knobCanvas = this.knobCtx;
       ConnectionList.canvas = this.connectionCtx;
       this.modules = new ModuleList(this.modulesCtx, this.audioContext);
 
@@ -143,8 +143,8 @@ export class Synth {
     Synth.canvasDimension = { width, height };
     this.moduleCanvas.setAttribute('width', width.toString());
     this.moduleCanvas.setAttribute('height', height.toString());
-    this.rotaryCanvas.setAttribute('width', width.toString());
-    this.rotaryCanvas.setAttribute('height', height.toString());
+    this.knobCanvas.setAttribute('width', width.toString());
+    this.knobCanvas.setAttribute('height', height.toString());
     this.connectionCanvas.setAttribute('width', width.toString());
     this.connectionCanvas.setAttribute('height', height.toString());
 

@@ -1,4 +1,4 @@
-import { CONTROL_ROTARY, LARGE_KNOB } from '@constants/sizes';
+import { CONTROL_KNOB, LARGE_KNOB } from '@constants/sizes';
 import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
@@ -12,6 +12,6 @@ export const controlTypes: ControlType[] = [{
   },
   size: LARGE_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0.5,
 }];

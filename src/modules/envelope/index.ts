@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -55,11 +55,11 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator));
   }
 
   public getNode() {

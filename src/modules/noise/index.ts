@@ -1,4 +1,4 @@
-import { OutputConnector, Rotary, SynthModule } from '@components/index';
+import { OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -52,21 +52,21 @@ export class Noise extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this,
       controlTypes[0],
       this.node.setPinkNoisGain,
       Colors.AccentGenerator,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this,
       controlTypes[1],
       this.node.setWhiteNoisGain,
       Colors.AccentGenerator,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this,
       controlTypes[2],

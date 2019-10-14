@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -55,31 +55,31 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[0],
       this.node.setAudio('1'),
       Colors.AccentAudioPath,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[1],
       this.node.setAudio('2'),
       Colors.AccentAudioPath,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[2],
       this.node.setAudio('3'),
       Colors.AccentAudioPath,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[3],
       this.node.setAudio('4'),
       Colors.AccentAudioPath,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[4],
       this.node.setAudio('out'),

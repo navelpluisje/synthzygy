@@ -1,12 +1,12 @@
 import { Colors } from '@constants/enums';
-import { knobSizes, STEP_ROTARY } from '@constants/sizes';
+import { knobSizes, STEP_KNOB } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 import { roundByStepSize } from '@utilities/numeric';
 import { ParentModule } from 'src/interfaces';
 import { ControlType, KnobSizes, KnobSizeType, PositionType } from '../types';
 
-export class Rotary implements SynthModuleControl {
-  public static rotaryCanvas: CanvasRenderingContext2D;
+export class Knob implements SynthModuleControl {
+  public static knobCanvas: CanvasRenderingContext2D;
   public position: PositionType;
   public knobSize: KnobSizeType;
   public size: KnobSizes;
@@ -40,19 +40,19 @@ export class Rotary implements SynthModuleControl {
     this.type = control.type;
     this.callback = callback;
     this.color = color;
-    this.cap = this.type === STEP_ROTARY ? 'butt' : 'round';
+    this.cap = this.type === STEP_KNOB ? 'butt' : 'round';
   }
 
   public draw() {
-    this.drawRotaryRing();
-    this.drawRotaryBase();
-    this.drawRotaryValue();
-    this.label && this.drawRotaryLabel();
+    this.drawKnobRing();
+    this.drawKnobBase();
+    this.drawKnobValue();
+    this.label && this.drawKnobLabel();
   }
 
   public setValue(value: number) {
     this.value = value;
-    // this.drawRotaryValue()
+    // this.drawKnobValue()
     this.callback(this.value);
   }
 
@@ -60,8 +60,8 @@ export class Rotary implements SynthModuleControl {
     return this.value;
   }
 
-  public drawRotaryRing() {
-    const {x: xPos, y: yPos} = this.getRotaryPosition();
+  public drawKnobRing() {
+    const {x: xPos, y: yPos} = this.getKnobPosition();
 
     this.canvas.save();
     this.canvas.beginPath();
@@ -76,9 +76,9 @@ export class Rotary implements SynthModuleControl {
 
   public drawStepMarkers() {
     const {min, max, step} = this.valueData;
-    const {x: xPos, y: yPos} = this.getRotaryPosition();
+    const {x: xPos, y: yPos} = this.getKnobPosition();
     const steps = (max - min) / step; // Get the number of steps
-    const canvas = Rotary.rotaryCanvas;
+    const canvas = Knob.knobCanvas;
 
     canvas.save();
     canvas.lineWidth = 3;
@@ -97,8 +97,8 @@ export class Rotary implements SynthModuleControl {
     canvas.restore();
   }
 
-  public drawRotaryBase() {
-    const {x: xPos, y: yPos} = this.getRotaryPosition();
+  public drawKnobBase() {
+    const {x: xPos, y: yPos} = this.getKnobPosition();
 
     this.canvas.save();
     this.canvas.fillStyle = Colors.ControlBackground;
@@ -111,8 +111,8 @@ export class Rotary implements SynthModuleControl {
     this.canvas.restore();
   }
 
-  public drawRotaryValue() {
-    const {x: xPos, y: yPos} = this.getRotaryPosition();
+  public drawKnobValue() {
+    const {x: xPos, y: yPos} = this.getKnobPosition();
     const { min, max, log } = this.valueData;
     const range = max - min;
     const rangeOffset = 0 - min;
@@ -120,7 +120,7 @@ export class Rotary implements SynthModuleControl {
       ((this.value + rangeOffset) / range) * 1.5 * Math.PI,
       1.5 + Math.PI,
     ) || 0;
-    const canvas = Rotary.rotaryCanvas;
+    const canvas = Knob.knobCanvas;
 
     canvas.clearRect(
       xPos - (this.knobSize.radius + 10),
@@ -138,14 +138,14 @@ export class Rotary implements SynthModuleControl {
     canvas.lineCap = this.cap;
     canvas.stroke();
     canvas.restore();
-    if (this.type === STEP_ROTARY) {
+    if (this.type === STEP_KNOB) {
       this.drawStepMarkers();
     }
 
   }
 
-  public drawRotaryLabel() {
-    const {x: xPos, y: yPos} = this.getRotaryPosition();
+  public drawKnobLabel() {
+    const {x: xPos, y: yPos} = this.getKnobPosition();
     const yLabel = yPos + this.knobSize.radius + 6;
 
     this.canvas.font = '13px Raleway, sans-serif';
@@ -157,7 +157,7 @@ export class Rotary implements SynthModuleControl {
   }
 
   public isControlPressed(xPos: number, yPos: number): boolean {
-    const {x: xRotPos, y: yRotPos} = this.getRotaryPosition();
+    const {x: xRotPos, y: yRotPos} = this.getKnobPosition();
     const x = xRotPos - this.knobSize.radius;
     const y = yRotPos - this.knobSize.radius;
 
@@ -213,13 +213,13 @@ export class Rotary implements SynthModuleControl {
         this.value = newValue;
         this.mouseStart.y = event.offsetY;
         this.callback(this.value);
-        requestAnimationFrame(this.drawRotaryValue.bind(this, true));
+        requestAnimationFrame(this.drawKnobValue.bind(this, true));
       }
     }
   }
 
   public isControlReleased(x: number, y: number): boolean {
-    const {x: xRotPos, y: yRotPos} = this.getRotaryPosition();
+    const {x: xRotPos, y: yRotPos} = this.getKnobPosition();
     const xPos = xRotPos - this.knobSize.radius;
     const yPos = yRotPos - this.knobSize.radius;
 
@@ -236,7 +236,7 @@ export class Rotary implements SynthModuleControl {
     this.active = false;
   }
 
-  private getRotaryPosition(): PositionType {
+  private getKnobPosition(): PositionType {
     const {x: parentX, y: parentY} = this.parent.getPosition();
     return {
       x: this.position.x + parentX,

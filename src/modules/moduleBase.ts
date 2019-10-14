@@ -1,4 +1,4 @@
-import { ButtonGroup, Rotary, TriggerButton } from '@components/index';
+import { ButtonGroup, Knob, TriggerButton } from '@components/index';
 import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
@@ -8,7 +8,7 @@ export class ModuleBase implements Module {
   protected title = 'title';
   protected inputs: InputType[] = [];
   protected outputs: OutputType[] = [];
-  protected controls: Array<Rotary | TriggerButton> = [];
+  protected controls: Array<Knob | TriggerButton> = [];
   protected buttons: ButtonGroup[] = [];
   protected activeOutput: OutputType = null;
   protected activeInput: InputType = null;

@@ -1,4 +1,4 @@
-import { ButtonGroup, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { ButtonGroup, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -46,13 +46,13 @@ export class Midi extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[0],
       this.midiNode.setMidiPort,
       Colors.AccentUtility,
     ));
-    this.controls.push(new Rotary(
+    this.controls.push(new Knob(
       this.canvas,
       this, controlTypes[1],
       this.midiNode.setClockStepSize,

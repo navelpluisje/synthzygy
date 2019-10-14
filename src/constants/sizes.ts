@@ -3,8 +3,8 @@ import { KnobSizesType } from 'src/types';
 export const SMALL_KNOB = 'small';
 export const MEDIUM_KNOB = 'medium';
 export const LARGE_KNOB = 'large';
-export const STEP_ROTARY = 'step';
-export const CONTROL_ROTARY = 'rotary';
+export const STEP_KNOB = 'step';
+export const CONTROL_KNOB = 'knob';
 export const CONTROL_SWITCH = 'switch';
 export const TRIGGER_BUTTON = 'trigger';
 

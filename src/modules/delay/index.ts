@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -55,10 +55,10 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect));
   }
 
   public getNode(): DelayerNode {

@@ -4,7 +4,7 @@ import { ConnectionList } from './ConnectionList';
 import { InputConnector } from './connector/inputConnector';
 import { OutputConnector } from './connector/outputConnector';
 import { drawIcon } from './icons';
-import { Rotary } from './rotary';
+import { Knob } from './knob';
 import { SynthModule } from './synthModule';
 import { ThreeStateButton } from './threeStateButton';
 import { TriggerButton } from './triggerButton';
@@ -16,7 +16,7 @@ export {
   drawIcon,
   InputConnector,
   OutputConnector,
-  Rotary,
+  Knob,
   SynthModule,
   ThreeStateButton,
   TriggerButton,

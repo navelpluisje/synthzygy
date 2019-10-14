@@ -1,4 +1,4 @@
-import { OutputConnector, Rotary, SynthModule } from '@components/index';
+import { OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { ClockNode } from '@nodes/clockNode';
@@ -63,8 +63,8 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
   }
 
   private addControls(): void {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.setBPM, Colors.AccentUtility));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.setPulseWidth, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.setBPM, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.setPulseWidth, Colors.AccentUtility));
   }
 
   private setBPM = (bpm: number): void => {

@@ -101,7 +101,7 @@ export interface CollisionType {
   height: number;
 }
 
-export interface RotaryType extends ControlType {
+export interface KnobType extends ControlType {
   xPos: number;
   yPos: number;
 }

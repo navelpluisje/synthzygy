@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -63,11 +63,11 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect));
   }
 
   public getNode(): FilterNode {

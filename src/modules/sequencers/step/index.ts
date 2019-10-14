@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule, ThreeStateButton } from '@components/index';
+import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule, ThreeStateButton } from '@components/index';
 import { Colors, Transport } from '@constants/enums';
 import { SMALL_KNOB } from '@constants/sizes';
 import { Module, ParentModule } from '@interfaces/index';
@@ -205,7 +205,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
 
   private addControls() {
     for (let i = 0; i < 16; i += 1) {
-      this.controls.push(new Rotary(this.canvas, this, controlTypes[i], this.setStepValue(i), Colors.AccentUtility));
+      this.controls.push(new Knob(this.canvas, this, controlTypes[i], this.setStepValue(i), Colors.AccentUtility));
     }
   }
 }

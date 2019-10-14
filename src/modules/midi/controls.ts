@@ -1,4 +1,4 @@
-import { MEDIUM_KNOB, SMALL_KNOB, STEP_ROTARY } from '@constants/sizes';
+import { MEDIUM_KNOB, SMALL_KNOB, STEP_KNOB } from '@constants/sizes';
 import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
@@ -12,7 +12,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: 1,
-  type: STEP_ROTARY,
+  type: STEP_KNOB,
   value: 0,
 }, {
   label: 'Clock',
@@ -25,6 +25,6 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 1,
-  type: STEP_ROTARY,
+  type: STEP_KNOB,
   value: 3,
 }];

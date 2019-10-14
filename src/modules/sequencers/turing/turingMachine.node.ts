@@ -139,27 +139,27 @@ export class TuringMachineNode {
     let two = false;
     if (this.overFlow['2'] === 1) {
       two = true;
-      this.pulsesOutputs['2'].onKeyDown();
+      this.pulsesOutputs['2'].trigger(1);
     }
     if (this.overFlow['4'] === 1) {
-      this.pulsesOutputs['4'].onKeyDown();
-      two && this.pulsesOutputs['2+4'].onKeyDown();
+      this.pulsesOutputs['4'].trigger(1);
+      two && this.pulsesOutputs['2+4'].trigger(1);
     }
     if (this.overFlow['6'] === 1) {
-      this.pulsesOutputs['6'].onKeyDown();
-      two && this.pulsesOutputs['2+6'].onKeyDown();
+      this.pulsesOutputs['6'].trigger(1);
+      two && this.pulsesOutputs['2+6'].trigger(1);
     }
     if (this.overFlow['8'] === 1) {
-      this.pulsesOutputs['8'].onKeyDown();
+      this.pulsesOutputs['8'].trigger(1);
     }
   }
 
   private unTriggerPulses() {
-    this.pulsesOutputs['2'].onKeyUp();
-    this.pulsesOutputs['4'].onKeyUp();
-    this.pulsesOutputs['6'].onKeyUp();
-    this.pulsesOutputs['8'].onKeyUp();
-    this.pulsesOutputs['2+4'].onKeyUp();
-    this.pulsesOutputs['2+6'].onKeyUp();
+    this.pulsesOutputs['2'].trigger(0);
+    this.pulsesOutputs['4'].trigger(0);
+    this.pulsesOutputs['6'].trigger(0);
+    this.pulsesOutputs['8'].trigger(0);
+    this.pulsesOutputs['2+4'].trigger(0);
+    this.pulsesOutputs['2+6'].trigger(0);
   }
 }

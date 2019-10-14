@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -54,10 +54,10 @@ export class Kick extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[2], this.node.setSweep, Colors.AccentGenerator));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[3], this.node.setBoost, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFequency, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setSweep, Colors.AccentGenerator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setBoost, Colors.AccentGenerator));
   }
 
   private getInputConnection(type: string): GateTrigger {

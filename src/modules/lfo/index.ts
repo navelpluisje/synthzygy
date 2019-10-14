@@ -1,4 +1,4 @@
-import { OutputConnector, Rotary, SynthModule } from '@components/index';
+import { OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -41,7 +41,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator));
   }
 
   public getNode() {

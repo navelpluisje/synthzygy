@@ -1,4 +1,4 @@
-import { InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -64,7 +64,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
   }
 
   public addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath));
   }
 
   public getNode() {

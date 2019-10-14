@@ -1,4 +1,4 @@
-import { InputConnector, Rotary, SynthModule } from '@components/index';
+import { InputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -42,6 +42,6 @@ export class AudioOut extends ModuleBase implements ParentModule {
   }
 
   private addControls(): void {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setGain, Colors.AccentAudioPath));
   }
 }

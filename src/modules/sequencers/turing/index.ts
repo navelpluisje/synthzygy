@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, Rotary, SynthModule } from '@components/index';
+import { ButtonGroup, InputConnector, OutputConnector, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
@@ -62,8 +62,8 @@ export class TuringMachine extends ModuleBase implements ParentModule {
   }
 
   private addControls() {
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentUtility));
-    this.controls.push(new Rotary(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setProbability, Colors.AccentUtility));
+    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility));
   }
 
   private getOutputConnection(type: string): ConstantSourceNode | GateNode {

@@ -1,4 +1,4 @@
-import { CONTROL_ROTARY, MEDIUM_KNOB } from '@constants/sizes';
+import { CONTROL_KNOB, MEDIUM_KNOB } from '@constants/sizes';
 import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
@@ -12,7 +12,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: 0.005,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0.1,
 }, {
   label: 'Head',
@@ -25,7 +25,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0.2,
 }, {
   label: 'Snare',
@@ -38,6 +38,6 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: 1,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 2000,
 }];

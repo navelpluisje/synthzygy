@@ -1,4 +1,4 @@
-import { CONTROL_ROTARY, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
+import { CONTROL_KNOB, LARGE_KNOB, MEDIUM_KNOB, SMALL_KNOB } from '@constants/sizes';
 import { ControlType } from 'src/types';
 
 export const controlTypes: ControlType[] = [{
@@ -12,7 +12,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: LARGE_KNOB,
   step: .005,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 4,
 }, {
   label: 'Level in',
@@ -25,7 +25,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: 0.01,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 1,
 }, {
   label: 'Resonance',
@@ -38,7 +38,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: MEDIUM_KNOB,
   step: .1,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0,
 }, {
   label: 'cv C/o',
@@ -51,7 +51,7 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: 0.001,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0,
 }, {
   label: 'cv Res',
@@ -64,6 +64,6 @@ export const controlTypes: ControlType[] = [{
   },
   size: SMALL_KNOB,
   step: .5,
-  type: CONTROL_ROTARY,
+  type: CONTROL_KNOB,
   value: 0,
 }];
