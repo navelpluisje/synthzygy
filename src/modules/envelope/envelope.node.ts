@@ -71,8 +71,8 @@ export class EnvelopeNode {
       );
     }
     if (value === 0) {
-      this.cvOutputNode.offset.setValueCurveAtTime (
-        [this.cvOutputNode.offset.value, 0],
+      this.cvOutputNode.offset.setTargetAtTime (
+        0,
         time,
         this.release,
       );

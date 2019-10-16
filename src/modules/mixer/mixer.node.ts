@@ -63,7 +63,7 @@ export class MixerNode {
   public setAudio = (index: string): (value: number) => void => {
     return (value: number) => {
       this.values[index.toString()] = value;
-      this.getAudioNode(index).gain.setValueAtTime(value, this.context.currentTime);
+      this.getAudioNode(index).gain.setTargetAtTime(value, this.context.currentTime, 0.001);
     };
   }
 

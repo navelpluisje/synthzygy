@@ -30,16 +30,16 @@ export class SnareNode {
 
   public setVolume = (volume: number): void => {
     this.volume = volume;
-    this.outputNode.gain.setValueAtTime(this.volume, this.context.currentTime);
+    this.outputNode.gain.setTargetAtTime(this.volume, this.context.currentTime, 0.001);
   }
 
   public setHead = (value: number) => {
-    this.oscillator1Gain.gain.setValueAtTime(value + (value * .25), this.context.currentTime);
-    this.oscillator2Gain.gain.setValueAtTime(value, this.context.currentTime);
+    this.oscillator1Gain.gain.setTargetAtTime(value + (value * .25), this.context.currentTime, 0.001);
+    this.oscillator2Gain.gain.setTargetAtTime(value, this.context.currentTime, 0.001);
   }
 
   public setSnare = (value: number) => {
-    this.filter.frequency.setValueAtTime(value, this.context.currentTime);
+    this.filter.frequency.setTargetAtTime(value, this.context.currentTime, 0.001);
   }
 
   public setDecay = (decay: number): void => {

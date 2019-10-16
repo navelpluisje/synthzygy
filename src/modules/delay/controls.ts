@@ -31,7 +31,7 @@ export const controlTypes: ControlType[] = [{
   label: 'Dry/Wet',
   log: false,
   max: 1,
-  min: 0,
+  min: -1,
   position: {
     x: 40,
     y: 135,
@@ -39,7 +39,7 @@ export const controlTypes: ControlType[] = [{
   size: SMALL_KNOB,
   step: 0.001,
   type: CONTROL_KNOB,
-  value: .5,
+  value: 0,
 }, {
   label: 'Cutoff',
   log: true,

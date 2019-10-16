@@ -33,7 +33,7 @@ export class VcaNode implements VcaNode {
 
   public setGain = (gain: number): void => {
     this.gain = gain;
-    this.cvNode.gain.setValueAtTime(this.gain, this.context.currentTime);
+    this.cvNode.gain.setTargetAtTime(this.gain, this.context.currentTime, 0.001);
   }
 
   public input(): GainNode {

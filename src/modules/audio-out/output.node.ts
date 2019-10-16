@@ -26,7 +26,7 @@ export class OutputNode {
 
   public setGain = (gain: number): void => {
     this.gain = gain;
-    this.gainNode.gain.setValueAtTime(this.gain, this.context.currentTime);
+    this.gainNode.gain.setTargetAtTime(this.gain, this.context.currentTime, 0.001);
   }
 
   public connectAudioIn(): GainNode {

@@ -22,7 +22,7 @@ export class HiHatNode {
 
   public setVolume = (volume: number): void => {
     this.volume = volume;
-    this.outputNode.gain.setValueAtTime(this.volume, this.context.currentTime);
+    this.outputNode.gain.setTargetAtTime(this.volume, this.context.currentTime, 0.001);
   }
 
   public setDecay = (decay: number): void => {
@@ -30,7 +30,7 @@ export class HiHatNode {
   }
 
   public setFrequency = (frequency: number): void => {
-    this.filter.frequency.setValueAtTime(frequency, this.context.currentTime);
+    this.filter.frequency.setTargetAtTime(frequency, this.context.currentTime, 0.001);
   }
 
   public inputGate(): GateTrigger {

@@ -39,7 +39,7 @@ export class JsOscillatorNode {
 
   public setFrequency = (frequency: number): void => {
     this.frequency = frequency;
-    this.cvFrequencyNode.parameters.get('frequency').setValueAtTime(this.frequency, this.context.currentTime);
+    this.cvFrequencyNode.parameters.get('frequency').setTargetAtTime(this.frequency, this.context.currentTime, 0.001);
   }
 
   public setDetune = (detune: number): void => {
@@ -49,19 +49,20 @@ export class JsOscillatorNode {
 
   public setFm = (fm: number): void => {
     this.fm = fm;
-    this.cvFmNode.gain.setValueAtTime(this.fm, this.context.currentTime);
+    this.cvFmNode.gain.setTargetAtTime(this.fm, this.context.currentTime, 0.001);
   }
 
   public setOctave = (octave: number): void => {
     this.octave = octave;
-    this.cvFrequencyNode.parameters.get('octave').setValueAtTime(this.octave, this.context.currentTime);
+    this.cvFrequencyNode.parameters.get('octave').setTargetAtTime(this.octave, this.context.currentTime, 0.001);
   }
 
   public setRange = (type: string | null) => {
     this.range = type ? 'full' : 'octave';
-    this.cvFrequencyNode.parameters.get('range').setValueAtTime(
+    this.cvFrequencyNode.parameters.get('range').setTargetAtTime(
       this.range === 'full' ? 1 : 0,
       this.context.currentTime,
+      0.001,
     );
   }
 
@@ -127,9 +128,9 @@ export class JsOscillatorNode {
   }
 
   private handleDetuneChange(): void {
-    this.sawWave.detune.setValueAtTime(this.detune, this.context.currentTime);
-    this.sineWave.detune.setValueAtTime(this.detune, this.context.currentTime);
-    this.squareWave.detune.setValueAtTime(this.detune, this.context.currentTime);
-    this.triangleWave.detune.setValueAtTime(this.detune, this.context.currentTime);
+    this.sawWave.detune.setTargetAtTime(this.detune, this.context.currentTime, 0.001);
+    this.sineWave.detune.setTargetAtTime(this.detune, this.context.currentTime, 0.001);
+    this.squareWave.detune.setTargetAtTime(this.detune, this.context.currentTime, 0.001);
+    this.triangleWave.detune.setTargetAtTime(this.detune, this.context.currentTime, 0.001);
   }
 }

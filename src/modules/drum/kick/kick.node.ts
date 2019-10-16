@@ -39,8 +39,8 @@ export class KickNode {
   }
 
   public setBoost = (boost: number) => {
-    this.sineBoost.gain.setValueAtTime(boost, this.context.currentTime);
-    this.squareBoost.gain.setValueAtTime(boost / 2, this.context.currentTime);
+    this.sineBoost.gain.setTargetAtTime(boost, this.context.currentTime, 0.001);
+    this.squareBoost.gain.setTargetAtTime(boost / 2, this.context.currentTime, 0.001);
   }
 
   public inputGate(): GateTrigger {
