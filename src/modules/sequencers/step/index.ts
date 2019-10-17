@@ -197,7 +197,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
         size: MEDIUM_SLIDER,
         step: 0.01,
         type: 'slider',
-        value: 3,
+        value: 4,
     };
       this.controls.push(new Slider(
         this.canvas,

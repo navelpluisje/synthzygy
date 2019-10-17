@@ -147,13 +147,15 @@ export class SequencerNode {
 
     if (value === 1) {
       this.setNextStep();
-      this.cvOutputNodeA.offset.setValueAtTime(
+      this.cvOutputNodeA.offset.setTargetAtTime(
         this.stepsA[this.currentStep],
         this.context.currentTime,
+        0.001,
       );
-      this.cvOutputNodeB.offset.setValueAtTime(
+      this.cvOutputNodeB.offset.setTargetAtTime(
         this.stepsB[this.currentStep],
         this.context.currentTime,
+        0.001,
       );
     }
     if (this.gates[this.currentStep]) {
