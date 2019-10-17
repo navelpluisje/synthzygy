@@ -76,6 +76,6 @@ export class LfoNode {
   }
 
   private handleFrequencyChange(): void {
-    this.frequencyConstant.offset.setValueAtTime(this.frequency, this.context.currentTime);
+    this.frequencyConstant.offset.setTargetAtTime(this.frequency, this.context.currentTime, 0.001);
   }
 }

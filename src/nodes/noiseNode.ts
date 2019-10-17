@@ -24,7 +24,7 @@ export class NoiseNode {
   }
 
   public setNoiseGain = (gain: number): void => {
-    this.noise.gain.setValueAtTime(gain, this.context.currentTime);
+    this.noise.gain.setTargetAtTime(gain, this.context.currentTime, 0.001);
   }
 
   public outputNoise(): GainNode {

@@ -26,12 +26,12 @@ export class ClockNode {
 
   public setFrequency = (frequency: number) => {
     this.frequency = frequency;
-    this.node.parameters.get('frequency').setValueAtTime(frequency, this.context.currentTime);
+    this.node.parameters.get('frequency').setTargetAtTime(frequency, this.context.currentTime, 0.001);
   }
 
   public setPulseWidth = (pulseWidth: number) => {
     this.pulseWidth = pulseWidth;
-    this.node.parameters.get('pulseWidth').setValueAtTime(pulseWidth, this.context.currentTime);
+    this.node.parameters.get('pulseWidth').setTargetAtTime(pulseWidth, this.context.currentTime, 0.001);
   }
 
   public connect(trigger: GateTrigger, id: number): void {

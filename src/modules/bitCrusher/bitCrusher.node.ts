@@ -21,26 +21,27 @@ export class BitCrusherNode {
 
   public setBitDepth = (bitDepth: number): void => {
     this.bitDepth = bitDepth;
-    this.bitCrusherNode.parameters.get('bitDepth').setValueAtTime(this.bitDepth, this.context.currentTime);
+    this.bitCrusherNode.parameters.get('bitDepth').setTargetAtTime(this.bitDepth, this.context.currentTime, 0.001);
   }
 
   public setFrequencyReduction = (frequencyReduction: number): void => {
     this.frequencyReduction = frequencyReduction;
-    this.bitCrusherNode.parameters.get('frequencyReduction').setValueAtTime(
+    this.bitCrusherNode.parameters.get('frequencyReduction').setTargetAtTime(
       this.frequencyReduction,
       this.context.currentTime,
+      0.001,
     );
   }
 
   public setDryWet = (dryWet: number): void => {
     this.dryWet = dryWet;
-    this.dryNode.gain.setValueAtTime(1 - this.dryWet, this.context.currentTime);
-    this.wetNode.gain.setValueAtTime(this.dryWet, this.context.currentTime);
+    this.dryNode.gain.setTargetAtTime(1 - this.dryWet, this.context.currentTime, 0.001);
+    this.wetNode.gain.setTargetAtTime(this.dryWet, this.context.currentTime, 0.001);
   }
 
   public setOutputLevel = (level: number): void => {
     this.level = level;
-    this.outputNode.gain.setValueAtTime(this.level, this.context.currentTime);
+    this.outputNode.gain.setTargetAtTime(this.level, this.context.currentTime, 0.001);
   }
 
   public input(): GainNode {

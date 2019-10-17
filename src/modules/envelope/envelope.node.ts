@@ -59,23 +59,11 @@ export class EnvelopeNode {
 
     this.cvOutputNode.offset.cancelAndHoldAtTime(0);
     if (value === 1) {
-      this.cvOutputNode.offset.setTargetAtTime(
-        this.level,
-        time,
-        this.attack,
-      );
-      this.cvOutputNode.offset.setTargetAtTime(
-        this.sustain * this.level,
-        time + this.attack,
-        this.decay,
-      );
+      this.cvOutputNode.offset.setTargetAtTime(this.level, time, this.attack);
+      this.cvOutputNode.offset.setTargetAtTime(this.sustain * this.level, time + this.attack, this.decay);
     }
     if (value === 0) {
-      this.cvOutputNode.offset.setTargetAtTime (
-        0,
-        time,
-        this.release,
-      );
+      this.cvOutputNode.offset.setTargetAtTime (0, time, this.release);
     }
   }
 }
