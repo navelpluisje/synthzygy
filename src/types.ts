@@ -14,6 +14,10 @@ export type KnobSizesType = {
   [size in KnobSizes]: KnobSizeType
 };
 
+export type SliderSizesType = {
+  [size in KnobSizes]: number
+};
+
 export interface ColorsType {
   [color: string]: string;
 }

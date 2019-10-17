@@ -1,4 +1,5 @@
 import { ButtonGroup, Knob, TriggerButton } from '@components/index';
+import { Slider } from '@components/slider';
 import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
@@ -8,7 +9,7 @@ export class ModuleBase implements Module {
   protected title = 'title';
   protected inputs: InputType[] = [];
   protected outputs: OutputType[] = [];
-  protected controls: Array<Knob | TriggerButton> = [];
+  protected controls: Array<Knob | TriggerButton | Slider> = [];
   protected buttons: ButtonGroup[] = [];
   protected activeOutput: OutputType = null;
   protected activeInput: InputType = null;

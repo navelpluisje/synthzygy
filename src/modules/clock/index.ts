@@ -30,7 +30,7 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
     this.addControls();
   }
 
-  public draw = (): void => {
+  public draw(): void {
     super.draw();
     this.drawBPMDisplay();
   }

@@ -1,4 +1,4 @@
-import { KnobSizesType } from 'src/types';
+import { KnobSizesType, SliderSizesType } from 'src/types';
 
 export const SMALL_KNOB = 'small';
 export const MEDIUM_KNOB = 'medium';
@@ -7,6 +7,7 @@ export const STEP_KNOB = 'step';
 export const CONTROL_KNOB = 'knob';
 export const CONTROL_SWITCH = 'switch';
 export const TRIGGER_BUTTON = 'trigger';
+export const MEDIUM_SLIDER = 'medium';
 
 export const ICON_SIZE = 0.7;
 
@@ -23,4 +24,10 @@ export const knobSizes: KnobSizesType = {
     baseOffset: 2,
     radius: 11,
   },
+};
+
+export const sliderSizes: SliderSizesType = {
+  large: 100,
+  medium: 80,
+  small: 60,
 };

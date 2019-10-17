@@ -1,4 +1,5 @@
 import { ConnectionList, Knob } from '@components/index';
+import { Slider } from '@components/slider';
 import { ModuleList } from '@modules/moduleList';
 import { DimensionType } from 'src/types';
 
@@ -125,6 +126,7 @@ export class Synth {
       this.connectionCtx = this.connectionCanvas.getContext('2d');
 
       Knob.knobCanvas = this.knobCtx;
+      Slider.knobCanvas = this.knobCtx;
       ConnectionList.canvas = this.connectionCtx;
       this.modules = new ModuleList(this.modulesCtx, this.audioContext);
     }

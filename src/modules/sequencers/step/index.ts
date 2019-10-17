@@ -1,12 +1,12 @@
-import { ButtonGroup, InputConnector, Knob, OutputConnector, SynthModule, ThreeStateButton } from '@components/index';
+import { ButtonGroup, InputConnector, OutputConnector, SynthModule, ThreeStateButton } from '@components/index';
+import { Slider } from '@components/slider';
 import { Colors, Transport } from '@constants/enums';
-import { SMALL_KNOB } from '@constants/sizes';
+import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
 import { Module, ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
 import { ControlType, GateTrigger, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
 import { buttons } from './buttons';
-import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { SequencerNode } from './sequencer.node';
@@ -32,15 +32,15 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     super(canvas, position);
     this.node = new SequencerNode(context, this.onStepChange);
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color);
-    this.draw.bind(this);
+    this.draw();
     this.addOutputs();
     this.addInputs();
-    this.addControls();
     this.addButtonControls();
     this.addStepButtons();
+    this.addStepSliders();
   }
 
-  public draw = (): void => {
+  public draw(): void {
     super.draw();
     this.drawStepButtons();
   }
@@ -168,7 +168,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     for (let i = 0; i < 16; i += 1) {
       const button: ControlType = {
         position: {
-          x: 120 + i * 22.5,
+          x: 110 + i * 24,
           y: 150,
         },
         size: SMALL_KNOB,
@@ -179,6 +179,31 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
         this,
         button,
         this.setGateValue(i),
+        Colors.AccentUtility,
+      ));
+    }
+  }
+
+  private addStepSliders() {
+    for (let i = 0; i < 16; i += 1) {
+      const slider: ControlType = {
+        log: true,
+        max: 8,
+        min: 0,
+        position: {
+          x: 110 + i * 24,
+          y: 45,
+        },
+        size: MEDIUM_SLIDER,
+        step: 0.01,
+        type: 'slider',
+        value: 3,
+    };
+      this.controls.push(new Slider(
+        this.canvas,
+        this,
+        slider,
+        this.setStepValue(i),
         Colors.AccentUtility,
       ));
     }
@@ -201,11 +226,5 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
 
   private setStepValue = (index: number) => (value: number) => {
     this.node.setStepValue(index, this.activeControlGroup, value);
-  }
-
-  private addControls() {
-    for (let i = 0; i < 16; i += 1) {
-      this.controls.push(new Knob(this.canvas, this, controlTypes[i], this.setStepValue(i), Colors.AccentUtility));
-    }
   }
 }

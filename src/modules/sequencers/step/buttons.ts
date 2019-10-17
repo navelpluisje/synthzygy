@@ -15,7 +15,7 @@ export const buttons: ModuleButtonsList = [{
   },
   direction: 'vertical',
   position: {
-    x: 50,
+    x: 40,
     y: 45,
   },
 }, {
@@ -30,7 +30,7 @@ export const buttons: ModuleButtonsList = [{
   },
   direction: 'vertical',
   position: {
-    x: 50,
+    x: 40,
     y: 100,
   },
 }, {
@@ -48,7 +48,7 @@ export const buttons: ModuleButtonsList = [{
   },
   direction: 'vertical',
   position: {
-    x: 480,
+    x: 490,
     y: 60,
   },
 }];

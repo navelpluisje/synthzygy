@@ -7,7 +7,7 @@ export enum Colors {
   ControlRing = '#93827f',
   ControlBorder = '#d9e5d6',
   ControlMarker = '#d9e5d6',
-  ControlBackground = '#d9e5d633',
+  ControlBackground = '#454845',
   AccentGenerator = '#c04d35',
   AccentAudioPath = '#e2712e',
   AccentEffect = '#dbb04a',
