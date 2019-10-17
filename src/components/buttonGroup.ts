@@ -156,6 +156,7 @@ export class ButtonGroup implements ButtonGroup {
           } else {
             this.activeButton = button.value;
           }
+          requestAnimationFrame(this.draw.bind(this, true));
           this.callback(this.activeButton);
           return true;
         }
