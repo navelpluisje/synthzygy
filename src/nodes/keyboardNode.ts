@@ -50,7 +50,7 @@ export class KeyboardNode {
   private onKeyDown = (event: KeyboardEvent): void => {
     const note = getNote(event.code);
     if (note > 0) {
-      this.cvNode.offset.setValueAtTime(note, this.context.currentTime);
+      this.cvNode.offset.setTargetAtTime(note, this.context.currentTime, 0.001);
       this.trigger && this.trigger(1);
     }
   }

@@ -70,7 +70,7 @@ export class TuringMachineNode {
 
   private setCvOutput(value: number): void {
     const val = value / 255 * 8;
-    this.cvOutputNode.offset.setValueAtTime(val, this.context.currentTime);
+    this.cvOutputNode.offset.setTargetAtTime(val, this.context.currentTime, 0.001);
   }
 
   private setInitialOverflow(): void {

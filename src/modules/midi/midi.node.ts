@@ -148,22 +148,22 @@ export class MidiNode {
   private setNote(midiNote: number) {
     // @ts-ignore
     const note = notes[midiNote].value;
-    this.cvNoteNode.offset.setValueAtTime(note, this.context.currentTime);
+    this.cvNoteNode.offset.setTargetAtTime(note, this.context.currentTime, 0.001);
   }
 
   private setPitch(midiValue: number) {
     const value = this.getValue(-2.5, 2.5, midiValue);
-    this.cvPitchNode.offset.setValueAtTime(value, this.context.currentTime);
+    this.cvPitchNode.offset.setTargetAtTime(value, this.context.currentTime, 0.001);
   }
 
   private setModulation(midiValue: number) {
     const value = this.getValue(0, 8, midiValue);
-    this.cvModulationNode.offset.setValueAtTime(value, this.context.currentTime);
+    this.cvModulationNode.offset.setTargetAtTime(value, this.context.currentTime, 0.001);
   }
 
   private setAfterTouch(midiValue: number) {
     const value = this.getValue(0, 8, midiValue);
-    this.cvAfterTouchNode.offset.setValueAtTime(value, this.context.currentTime);
+    this.cvAfterTouchNode.offset.setTargetAtTime(value, this.context.currentTime, 0.001);
   }
 
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
