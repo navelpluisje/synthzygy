@@ -165,8 +165,8 @@ export class Knob implements SynthModuleControl {
       if (y < yPos && yPos < (y + this.knobSize.radius * 3)) {
         this.active = true;
         this.mouseStart = {
-          x,
-          y,
+          x: xPos,
+          y: yPos,
         };
         return true;
       }
