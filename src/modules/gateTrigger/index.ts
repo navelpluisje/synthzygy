@@ -1,4 +1,4 @@
-import { OutputConnector, SynthModule, TriggerButton } from '@components/index';
+import { SynthModule, TriggerButton } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { GateNode } from '@nodes/gateNode';
@@ -25,19 +25,8 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
     super(canvas, position);
     this.node = new GateNode();
     this.container = new SynthModule(canvas, GateTrigger.dimensions, position, this.color);
-    this.addOutputs();
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
-      this.outputs.push({
-        component,
-        gate: this.node,
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {
@@ -54,4 +43,12 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
   public getNode() {
     return this.node;
   }
+
+  private getOutputConnection(type: string): GateNode {
+    switch (type) {
+      case 'gateOut':
+        return this.node;
+    }
+  }
+
 }

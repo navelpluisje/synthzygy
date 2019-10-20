@@ -1,4 +1,4 @@
-import { Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -25,19 +25,8 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
     super(canvas, position);
     this.node = new LfoNode(context);
     this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color);
-    this.addOutputs();
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator);
-      this.outputs.push({
-        component,
-        node: this.getOutputConnection(output.icon),
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {

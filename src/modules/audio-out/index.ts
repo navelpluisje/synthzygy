@@ -1,4 +1,4 @@
-import { InputConnector, Knob, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -22,7 +22,7 @@ export class AudioOut extends ModuleBase implements ParentModule {
     super(canvas, position);
     this.node = new OutputNode(context);
     this.container = new SynthModule(canvas, AudioOut.dimensions, position, this.color);
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
     this.addControls();
   }
 
@@ -30,15 +30,11 @@ export class AudioOut extends ModuleBase implements ParentModule {
     return this.node;
   }
 
-  private addInputs(): void {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentAudioPath);
-      this.inputs.push({
-        component,
-        node: this.node.connectAudioIn(),
-        type: input.type,
-      });
-    });
+  private getInputConnection(type: string): GainNode {
+    switch (type) {
+      case 'audioIn':
+        return this.node.connectAudioIn();
+    }
   }
 
   private addControls(): void {

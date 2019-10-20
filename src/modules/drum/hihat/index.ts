@@ -1,4 +1,4 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -22,35 +22,13 @@ export class HiHat extends ModuleBase implements ParentModule {
     super(canvas, position);
     this.node = new HiHatNode(context);
     this.container = new SynthModule(canvas, HiHat.dimensions, position, this.color);
-    this.addInputs();
-    this.addOutputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
   }
 
   public getNode() {
     return this.node;
-  }
-
-  private addInputs() {
-    inputTypes.forEach((input) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator);
-      this.inputs.push({
-        component,
-        gate: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
-      this.outputs.push({
-        component,
-        node: this.node.output(),
-        type: output.type,
-      });
-    });
   }
 
   private addControls() {
@@ -62,6 +40,13 @@ export class HiHat extends ModuleBase implements ParentModule {
     switch (type) {
       case 'Gate':
         return this.node.inputGate();
+    }
+  }
+
+  private getOutputConnection(type: string): GainNode {
+    switch (type) {
+      case 'Audio':
+        return this.node.output();
     }
   }
 }

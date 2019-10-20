@@ -1,4 +1,4 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
@@ -28,37 +28,13 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     super(canvas, position);
     this.node = new TuringMachineNode(context);
     this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
   }
 
   public getNode() {
     return this.node;
-  }
-
-  private addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility);
-      const key = input.type === 'gate' ? 'gate' : 'node';
-      this.inputs.push({
-        component,
-        type: input.type,
-        [key]: this.getInputConnection(input.name),
-      });
-    });
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
-      const key = output.type === 'gate' ? 'gate' : 'node';
-      this.outputs.push({
-        component,
-        type: output.type,
-        [key]: this.getOutputConnection(output.name),
-      });
-    });
   }
 
   private addControls() {

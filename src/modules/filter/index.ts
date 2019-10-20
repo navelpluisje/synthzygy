@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { ButtonGroup, Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -28,32 +28,10 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     super(canvas, position);
     this.node = new FilterNode(context);
     this.container = new SynthModule(canvas, Filter.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
     this.addButtonControls();
-  }
-
-  public addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect);
-      this.inputs.push({
-        component,
-        node: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect);
-      this.outputs.push({
-        component,
-        node: this.node.output(),
-        type: output.type,
-      });
-    });
   }
 
   public addButtonControls() {
@@ -82,6 +60,13 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
         return this.node.inputCvQ();
       case 'audioIn':
         return this.node.input();
+    }
+  }
+
+  private getOutputConnection(type: string): GainNode {
+    switch (type) {
+      case 'Output':
+        return this.node.output();
     }
   }
 }

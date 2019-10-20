@@ -1,9 +1,11 @@
-import { ButtonGroup, Knob, TriggerButton } from '@components/index';
+import { ButtonGroup, InputConnector, Knob, OutputConnector, TriggerButton } from '@components/index';
 import { Slider } from '@components/slider';
 import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
+import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, InputType, OutputType, PositionType } from 'src/types';
+import { DimensionType, GateTrigger, InputType, OutputType, PositionType, SynthConnectorType } from 'src/types';
+import { MidiNode } from './midi/midi.node';
 
 export class ModuleBase implements Module {
   protected title = 'title';
@@ -161,14 +163,48 @@ export class ModuleBase implements Module {
     this.id = id;
   }
 
-  public getType() {
+  public getType(): string {
     return this.type;
   }
 
-  public unset() {
+  public unset(): void {
     this.active = false;
     this.activeOutput = null;
     this.activeControl = null;
     this.container.unSet();
+  }
+
+  protected addInputs(
+    inputTypes: SynthConnectorType[],
+    getInputConnection: (type: string) => GateTrigger | AudioNode,
+  ): void {
+    inputTypes.forEach((input) => {
+      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator);
+      const key = input.type === 'gate' ? 'gate' : 'node';
+
+      this.inputs.push({
+        component,
+        [key]: getInputConnection(input.name),
+        name: input.name,
+        type: input.type,
+      });
+    });
+  }
+
+  protected addOutputs(
+    outputTypes: SynthConnectorType[],
+    getOutputConnection?: (type: string) => AudioNode | MidiNode | {} | ClockNode,
+  ): void {
+    outputTypes.forEach((output) => {
+      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
+      const key = output.type === 'gate' ? 'gate' : 'node';
+
+      this.outputs.push({
+        component,
+        [key]: getOutputConnection(output.name),
+        name: output.name,
+        type: output.type,
+      });
+    });
   }
 }

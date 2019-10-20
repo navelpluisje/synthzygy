@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, OutputConnector, SynthModule, ThreeStateButton } from '@components/index';
+import { ButtonGroup, SynthModule, ThreeStateButton } from '@components/index';
 import { Slider } from '@components/slider';
 import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
@@ -33,8 +33,8 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     this.node = new SequencerNode(context, this.onStepChange);
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color);
     this.draw();
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
     this.addStepButtons();
     this.addStepSliders();
@@ -79,17 +79,6 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     return this.node;
   }
 
-  private addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility);
-      this.inputs.push({
-        component,
-        gate: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
   private getInputConnection(type: string): GateTrigger {
     switch (type) {
       case 'gateIn':
@@ -97,18 +86,6 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
       case 'Start/Stop':
         return this.node.cvStartStop(this.setTransportButton);
     }
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
-      const key = output.type === 'gate' ? 'gate' : 'node';
-      this.outputs.push({
-        component,
-        type: output.type,
-        [key]: this.getOutputConnection(output.name),
-      });
-    });
   }
 
   private getOutputConnection(type: string): GateNode | ConstantSourceNode {

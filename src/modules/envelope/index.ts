@@ -1,7 +1,7 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { GateTrigger, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { EnvelopeNode } from './envelope.node';
@@ -27,31 +27,9 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     super(canvas, position);
     this.node = new EnvelopeNode(context);
     this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
-  }
-
-  public addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentModulator);
-      this.inputs.push({
-        component,
-        gate: this.node.inputGate(),
-        type: input.type,
-      });
-    });
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentModulator);
-      this.outputs.push({
-        component,
-        node: this.node.output(),
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {
@@ -64,5 +42,19 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   public getNode() {
     return this.node;
+  }
+
+  private getInputConnection(type: string): GateTrigger {
+    switch (type) {
+      case 'gateIn':
+        return this.node.inputGate();
+    }
+  }
+
+  private getOutputConnection(type: string): ConstantSourceNode {
+    switch (type) {
+      case 'envelopeOut':
+        return this.node.output();
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { ClockNode } from '@nodes/clockNode';
@@ -26,7 +26,7 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
     this.context = context;
     this.container = new SynthModule(canvas, Clock.dimensions, position, this.color);
     this.createNodes();
-    this.addOutputs();
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
   }
 
@@ -50,16 +50,8 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
     this.setPulseWidth(this.pulseWidth);
   }
 
-  private addOutputs(): void {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
-      const key = output.type === 'gate' ? 'gate' : 'node';
-      this.outputs.push({
-        component,
-        type: output.type,
-        [key]: this.nodes[output.name],
-      });
-    });
+  private getOutputConnection(type: string): ClockNode {
+    return this.nodes[type];
   }
 
   private addControls(): void {

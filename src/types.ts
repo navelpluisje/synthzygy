@@ -132,6 +132,7 @@ export interface ActiveControlType {
 
 export interface OutputType {
   type: string;
+  name: string;
   node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode;
   gate?: GateNode | ClockNode;
   component: OutputConnector;
@@ -139,6 +140,7 @@ export interface OutputType {
 
 export interface InputType {
   type: string;
+  name: string;
   node?: AudioNode | AudioParam | AudioWorkletNode;
   gate?: GateTrigger;
   cv?: AudioParam;

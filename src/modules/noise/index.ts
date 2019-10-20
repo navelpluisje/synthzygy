@@ -1,4 +1,4 @@
-import { Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -30,21 +30,10 @@ export class Noise extends ModuleBase implements ParentModule {
 
   private async setup() {
     await this.node.setup();
-    this.addOutputs();
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
     this.drawOutputs();
     this.drawControls();
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
-      this.outputs.push({
-        component,
-        node: this.getOutputConnection(output.name),
-        type: output.type,
-      });
-    });
   }
 
   private drawOutputs() {

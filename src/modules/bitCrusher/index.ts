@@ -1,4 +1,4 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -27,31 +27,9 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
     super(canvas, position);
     this.node = new BitCrusherNode(context);
     this.container = new SynthModule(canvas, BitCrusher.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
-  }
-
-  public addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentEffect);
-      this.inputs.push({
-        component,
-        node: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentEffect);
-      this.outputs.push({
-        component,
-        node: this.node.output(),
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {
@@ -94,6 +72,12 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
       case 'audioIn':
         return this.node.input();
     }
+  }
 
+  private getOutputConnection(type: string): GainNode {
+    switch (type) {
+      case 'audioOut':
+        return this.node.output();
+    }
   }
 }

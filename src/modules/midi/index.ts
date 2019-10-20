@@ -1,4 +1,4 @@
-import { ButtonGroup, Knob, OutputConnector, SynthModule } from '@components/index';
+import { ButtonGroup, Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
@@ -24,25 +24,13 @@ export class Midi extends ModuleBase implements ParentModule {
     this.midiNode = new MidiNode(context);
     this.container = new SynthModule(canvas, Midi.dimensions, position, this.color);
     this.settingsPanel = document.querySelector('np-midisettings');
-    this.addOutputs();
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
     this.addButtonControls();
   }
 
   public getNode() {
     return this.midiNode;
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentUtility);
-      const key = output.type === 'gate' ? 'gate' : 'node';
-      this.outputs.push({
-        component,
-        type: output.type,
-        [key]: this.getOutputConnection(output.name),
-      });
-    });
   }
 
   private addControls() {

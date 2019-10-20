@@ -1,4 +1,4 @@
-import { InputConnector, Knob, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -28,7 +28,7 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.node = context.createAnalyser();
     this.setFftSize(this.fftSizePower);
     this.container = new SynthModule(canvas, Oscilloscope.dimensions, position, this.color);
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
     this.addControls();
     this.drawWave();
   }
@@ -40,16 +40,6 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
       case 'cv':
         return 'cv';
     }
-  }
-
-  public addInputs() {
-    const input = inputTypes[0];
-    const component = new InputConnector(this.canvas, this, input, Colors.AccentUtility);
-    this.inputs.push({
-      component,
-      node: this.node,
-      type: input.type,
-    });
   }
 
   public addControls() {
@@ -132,5 +122,12 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
 
   public getNode() {
     return this.node;
+  }
+
+  private getInputConnection(type: string): AnalyserNode {
+    switch (type) {
+      case 'Spread':
+        return this.node;
+    }
   }
 }

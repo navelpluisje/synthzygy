@@ -1,4 +1,4 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -27,8 +27,8 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     super(canvas, position);
     this.node = new VcaNode(context);
     this.container = new SynthModule(canvas, Vca.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
   }
 
@@ -39,28 +39,6 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
       case 'cv':
         return 'cv';
     }
-  }
-
-  public addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentAudioPath);
-      this.inputs.push({
-        component,
-        node: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentAudioPath);
-      this.outputs.push({
-        component,
-        node: this.node.output(),
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {
@@ -77,6 +55,13 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
         return this.node.inputCvGain();
       case 'audioIn':
         return this.node.input();
+    }
+  }
+
+  private getOutputConnection(type: string): GainNode {
+    switch (type) {
+      case 'audioOut':
+        return this.node.output();
     }
   }
 }

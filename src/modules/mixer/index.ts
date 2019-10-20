@@ -1,4 +1,4 @@
-import { InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { Knob, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -27,31 +27,9 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
     super(canvas, position);
     this.node = new MixerNode(context);
     this.container = new SynthModule(canvas, Mixer.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addControls();
-  }
-
-  public addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentAudioPath);
-      this.inputs.push({
-        component,
-        node: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  public addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentAudioPath);
-      this.outputs.push({
-        component,
-        node: this.getOutputConnection(output.name),
-        type: output.type,
-      });
-    });
   }
 
   public addControls() {
@@ -91,7 +69,7 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
     return this.node;
   }
 
-  private getOutputConnection(type: string) {
+  private getOutputConnection(type: string): GainNode {
     switch (type) {
       case 'audioOut':
         return this.node.output();

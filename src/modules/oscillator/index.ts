@@ -1,4 +1,4 @@
-import { ButtonGroup, InputConnector, Knob, OutputConnector, SynthModule } from '@components/index';
+import { ButtonGroup, Knob, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { PositionType } from 'src/types';
@@ -24,8 +24,8 @@ export class Oscillator extends ModuleBase implements ParentModule {
     super(canvas, position);
     this.node = new JsOscillatorNode(context);
     this.container = new SynthModule(canvas, Oscillator.dimensions, position, this.color);
-    this.addOutputs();
-    this.addInputs();
+    this.addInputs(inputTypes, this.getInputConnection);
+    this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
     this.addControls();
   }
@@ -44,28 +44,6 @@ export class Oscillator extends ModuleBase implements ParentModule {
 
   public getNode() {
     return this.node;
-  }
-
-  private addInputs() {
-    inputTypes.forEach((input, index) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator);
-      this.inputs.push({
-        component,
-        node: this.getInputConnection(input.name),
-        type: input.type,
-      });
-    });
-  }
-
-  private addOutputs() {
-    outputTypes.forEach((output, index) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
-      this.outputs.push({
-        component,
-        node: this.getOutputConnection(output.name),
-        type: output.type,
-      });
-    });
   }
 
   private addControls() {
@@ -88,7 +66,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     }
   }
 
-  private getInputConnection(type: string): AudioParam | GainNode | AudioWorkletNode {
+  private getInputConnection(type: string): GainNode | AudioWorkletNode {
     switch (type) {
       case 'fm':
         return this.node.inputCvFM();
