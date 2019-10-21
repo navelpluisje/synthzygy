@@ -1,7 +1,7 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { DelayerNode } from './delay.node';
@@ -21,22 +21,27 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
   public type = 'delay';
   public title = 'Delay';
   public active: boolean = false;
-  public node: DelayerNode;
+  protected defaults: ModuleDefaultValues = {
+    'cutoff': 3000,
+    'delay': 0.5,
+    'dry/wet': 0,
+    'f.back': 0.6,
+  };
+  private node: DelayerNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentEffect;
     this.node = new DelayerNode(context);
     this.container = new SynthModule(canvas, Delay.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setDelayTime, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setFeedback, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setDryWet, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setFrequency, Colors.AccentEffect));
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public getNode(): DelayerNode {
@@ -54,6 +59,32 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
     switch (type) {
       case 'audioOut':
         return this.node.output();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'delay':
+        return {
+          callback: this.node.setDelayTime,
+          default: this.defaults[key],
+        };
+      case 'f.back':
+        return {
+          callback: this.node.setFeedback,
+          default: this.defaults[key],
+        };
+      case 'dry/wet':
+        return {
+          callback: this.node.setDryWet,
+          default: this.defaults[key],
+        };
+      case 'cutoff':
+        return {
+          callback: this.node.setFrequency,
+          default: this.defaults[key],
+        };
     }
   }
 }

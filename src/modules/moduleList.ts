@@ -63,7 +63,7 @@ export class ModuleList {
     const position: PositionType = this.calculatePosition(tmpModule.dimensions);
 
     if (position.x > 0) {
-      this.modules[key] = new tmpModule(this.canvas, this.audio, position);
+      this.modules[key] = new tmpModule(this.canvas, this.audio, position, {});
       this.modules[key].setId(key);
       requestAnimationFrame(this.draw);
     } else {
