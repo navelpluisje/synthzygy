@@ -37,7 +37,7 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
     return this.node;
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'saw':
         return this.node.outputSaw();

@@ -79,7 +79,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): GateTrigger {
+  private getInputConnection = (type: string): GateTrigger => {
     switch (type) {
       case 'gateIn':
         return this.node.inputGate();
@@ -88,7 +88,7 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
     }
   }
 
-  private getOutputConnection(type: string): GateNode | ConstantSourceNode {
+  private getOutputConnection = (type: string): GateNode | ConstantSourceNode => {
     switch (type) {
       case 'cv A':
         return this.node.outputA();

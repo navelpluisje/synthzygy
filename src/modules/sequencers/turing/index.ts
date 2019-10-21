@@ -42,7 +42,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setLength, Colors.AccentUtility));
   }
 
-  private getOutputConnection(type: string): ConstantSourceNode | GateNode {
+  private getOutputConnection = (type: string): ConstantSourceNode | GateNode => {
     switch (type) {
       case 'Out':
         return this.node.output();
@@ -58,7 +58,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
       }
   }
 
-  private getInputConnection(type: string): GateTrigger {
+  private getInputConnection = (type: string): GateTrigger => {
     switch (type) {
       case 'Clock':
         return this.node.inputClock();

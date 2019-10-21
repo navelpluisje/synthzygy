@@ -36,14 +36,14 @@ export class HiHat extends ModuleBase implements ParentModule {
     this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentGenerator));
   }
 
-  private getInputConnection(type: string): GateTrigger {
+  private getInputConnection = (type: string): GateTrigger => {
     switch (type) {
       case 'Gate':
         return this.node.inputGate();
     }
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Audio':
         return this.node.output();

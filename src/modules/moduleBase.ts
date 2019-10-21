@@ -4,7 +4,16 @@ import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
 import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, GateTrigger, InputType, OutputType, PositionType, SynthConnectorType } from 'src/types';
+import {
+  ControlType,
+  DimensionType,
+  GateTrigger,
+  InputType,
+  ModuleDefaultValues,
+  OutputType,
+  PositionType,
+  SynthConnectorType,
+} from 'src/types';
 import { MidiNode } from './midi/midi.node';
 
 export class ModuleBase implements Module {
@@ -23,10 +32,16 @@ export class ModuleBase implements Module {
   protected canvas: CanvasRenderingContext2D;
   protected container: SynthModule;
   protected color = Colors.ModuleBackground;
+  protected accentColor = 'white';
   protected type: string = '';
+  protected defaults: ModuleDefaultValues;
   protected id: string = '';
 
-  constructor(canvas: CanvasRenderingContext2D, position: PositionType) {
+  constructor(canvas: CanvasRenderingContext2D, position: PositionType, defaults?: ModuleDefaultValues) {
+    this.defaults = {
+      ...this.defaults,
+      ...defaults,
+    };
     this.position = position;
     this.canvas = canvas;
     this.draw.bind(this);
@@ -179,7 +194,7 @@ export class ModuleBase implements Module {
     getInputConnection: (type: string) => GateTrigger | AudioNode,
   ): void {
     inputTypes.forEach((input) => {
-      const component = new InputConnector(this.canvas, this, input, Colors.AccentGenerator);
+      const component = new InputConnector(this.canvas, this, input, this.accentColor);
       const key = input.type === 'gate' ? 'gate' : 'node';
 
       this.inputs.push({
@@ -196,7 +211,7 @@ export class ModuleBase implements Module {
     getOutputConnection?: (type: string) => AudioNode | MidiNode | {} | ClockNode,
   ): void {
     outputTypes.forEach((output) => {
-      const component = new OutputConnector(this.canvas, this, output, Colors.AccentGenerator);
+      const component = new OutputConnector(this.canvas, this, output, this.accentColor);
       const key = output.type === 'gate' ? 'gate' : 'node';
 
       this.outputs.push({
@@ -205,6 +220,18 @@ export class ModuleBase implements Module {
         name: output.name,
         type: output.type,
       });
+    });
+  }
+
+  protected addKnobs(
+    knobs: ControlType[],
+    getKnobCallbackAndDefault: any,
+  ): void {
+    knobs.forEach((knobData) => {
+      const callback = getKnobCallbackAndDefault(knobData.label);
+      const knob = new Knob(this.canvas, this, knobData, callback.callback, this.accentColor);
+      knob.setValue(callback.default);
+      this.controls.push(knob);
     });
   }
 }

@@ -52,8 +52,8 @@ export class Knob implements SynthModuleControl {
 
   public setValue(value: number) {
     this.value = value;
-    // this.drawKnobValue()
-    this.callback(this.value);
+    this.callback(value);
+    this.drawKnobValue();
   }
 
   public getValue(): number {

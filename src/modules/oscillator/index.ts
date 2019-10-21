@@ -1,7 +1,7 @@
-import { ButtonGroup, Knob, SynthModule } from '@components/index';
+import { ButtonGroup, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { buttons } from './buttons';
 import { controlTypes } from './controls';
@@ -15,19 +15,31 @@ export class Oscillator extends ModuleBase implements ParentModule {
     width: 190,
   };
 
-  public type =  'oscillator';
-  public title =  'Oscillator';
+  public type = 'oscillator';
+  public title = 'Oscillator';
   public active: boolean = false;
-  public node: JsOscillatorNode;
+  protected defaults: ModuleDefaultValues = {
+    detune: 0,
+    fm: 0,
+    freq: 3.0,
+    octave: 3.0,
+  };
+  private node: JsOscillatorNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentGenerator;
     this.node = new JsOscillatorNode(context);
     this.container = new SynthModule(canvas, Oscillator.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public addButtonControls() {
@@ -36,7 +48,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
         this.canvas,
         this, buttonGroup,
         this.node.setRange,
-        Colors.AccentGenerator,
+        this.accentColor,
         true,
       ));
     });
@@ -46,14 +58,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     return this.node;
   }
 
-  private addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentGenerator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setOctave, Colors.AccentGenerator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setFm, Colors.AccentGenerator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setDetune, Colors.AccentGenerator));
-  }
-
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'sawWave':
         return this.node.outputSaw();
@@ -66,7 +71,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     }
   }
 
-  private getInputConnection(type: string): GainNode | AudioWorkletNode {
+  private getInputConnection = (type: string): GainNode | AudioWorkletNode => {
     switch (type) {
       case 'fm':
         return this.node.inputCvFM();
@@ -74,4 +79,31 @@ export class Oscillator extends ModuleBase implements ParentModule {
         return this.node.inputCvFrequency();
     }
   }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'freq':
+        return {
+          callback: this.node.setFrequency,
+          default: this.defaults[key],
+        };
+      case 'octave':
+        return {
+          callback: this.node.setOctave,
+          default: this.defaults[key],
+        };
+      case 'fm':
+        return {
+          callback: this.node.setFm,
+          default: this.defaults[key],
+        };
+      case 'detune':
+        return {
+          callback: this.node.setDetune,
+          default: this.defaults[key],
+        };
+    }
+  }
+
 }

@@ -70,6 +70,9 @@ export interface ModuleCollectionType {
   [key: string]: ModuleType;
 }
 
+export interface ModuleDefaultValues {
+  [parameter: string]: number;
+}
 export interface ConnectionType {
   from: {
     module: string,

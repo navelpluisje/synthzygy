@@ -68,7 +68,7 @@ export class Noise extends ModuleBase implements ParentModule {
     this.controls.forEach((control) => control.draw());
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Pink':
         return this.node.outputPinkNoise();

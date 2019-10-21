@@ -81,7 +81,7 @@ export class Midi extends ModuleBase implements ParentModule {
     this.settingsPanel.removeAttribute('show');
   }
 
-  private getOutputConnection(type: string): ConstantSourceNode | MidiNode | {} {
+  private getOutputConnection = (type: string): ConstantSourceNode | MidiNode | {} => {
     switch (type) {
       case 'V/Oct':
         return this.midiNode.noteOutput();

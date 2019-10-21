@@ -49,7 +49,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): GainNode {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'cvGain':
         return this.node.inputCvGain();
@@ -58,7 +58,7 @@ export class Vca extends ModuleBase implements Vca, ParentModule {
     }
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioOut':
         return this.node.output();

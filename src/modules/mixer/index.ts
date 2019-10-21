@@ -69,14 +69,14 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
     return this.node;
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioOut':
         return this.node.output();
     }
   }
 
-  private getInputConnection(type: string): GainNode {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioIn1':
         return this.node.input('1');

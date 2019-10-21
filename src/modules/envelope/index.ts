@@ -25,6 +25,7 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position);
+    this.accentColor = Colors.AccentModulator;
     this.node = new EnvelopeNode(context);
     this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
@@ -44,14 +45,14 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): GateTrigger {
+  private getInputConnection = (type: string): GateTrigger => {
     switch (type) {
       case 'gateIn':
         return this.node.inputGate();
     }
   }
 
-  private getOutputConnection(type: string): ConstantSourceNode {
+  private getOutputConnection = (type: string): ConstantSourceNode => {
     switch (type) {
       case 'envelopeOut':
         return this.node.output();

@@ -1,9 +1,9 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { outputTypes } from './outputs';
 
@@ -19,15 +19,25 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
   public type = 'clock';
   public title = 'Clock';
   public context: AudioContext;
-  public nodes: Record<string, ClockNode> = {};
+  protected defaults: ModuleDefaultValues = {
+    bpm: 120,
+    pw: 0.5,
+  };
+  private nodes: Record<string, ClockNode> = {};
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentUtility;
     this.context = context;
     this.container = new SynthModule(canvas, Clock.dimensions, position, this.color);
     this.createNodes();
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public draw(): void {
@@ -50,13 +60,24 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
     this.setPulseWidth(this.pulseWidth);
   }
 
-  private getOutputConnection(type: string): ClockNode {
+  private getOutputConnection = (type: string): ClockNode => {
     return this.nodes[type];
   }
 
-  private addControls(): void {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.setBPM, Colors.AccentUtility));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.setPulseWidth, Colors.AccentUtility));
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'bpm':
+        return {
+          callback: this.setBPM,
+          default: this.defaults[key],
+        };
+      case 'pw':
+        return {
+          callback: this.setPulseWidth,
+          default: this.defaults[key],
+        };
+    }
   }
 
   private setBPM = (bpm: number): void => {

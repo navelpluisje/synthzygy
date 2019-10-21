@@ -43,14 +43,14 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): GainNode {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioIn':
         return this.node.input();
     }
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioOut':
         return this.node.output();

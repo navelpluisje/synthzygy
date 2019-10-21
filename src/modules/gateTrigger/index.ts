@@ -44,7 +44,7 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
     return this.node;
   }
 
-  private getOutputConnection(type: string): GateNode {
+  private getOutputConnection = (type: string): GateNode => {
     switch (type) {
       case 'gateOut':
         return this.node;

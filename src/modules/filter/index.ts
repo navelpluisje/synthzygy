@@ -52,7 +52,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): GainNode | BiquadFilterNode {
+  private getInputConnection = (type: string): GainNode | BiquadFilterNode => {
     switch (type) {
       case 'cvFreq':
         return this.node.inputCvFrequency();
@@ -63,7 +63,7 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     }
   }
 
-  private getOutputConnection(type: string): GainNode {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Output':
         return this.node.output();

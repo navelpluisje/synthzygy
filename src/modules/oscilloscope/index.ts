@@ -124,7 +124,7 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     return this.node;
   }
 
-  private getInputConnection(type: string): AnalyserNode {
+  private getInputConnection = (type: string): AnalyserNode => {
     switch (type) {
       case 'Spread':
         return this.node;
