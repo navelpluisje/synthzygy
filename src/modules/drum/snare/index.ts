@@ -1,8 +1,8 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, GateTrigger, PositionType } from 'src/types';
+import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -16,25 +16,30 @@ export class Snare extends ModuleBase implements ParentModule {
 
   public type =  'snare';
   public title = 'Snare';
-  public node: SnareNode;
+  protected defaults: ModuleDefaultValues = {
+    decay: 0.1,
+    head: 0.2,
+    snare: 2000,
+  };
+  private node: SnareNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentGenerator;
     this.node = new SnareNode(context);
     this.container = new SynthModule(canvas, Snare.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public getNode() {
     return this.node;
-  }
-
-  private addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setDecay, Colors.AccentGenerator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setHead, Colors.AccentGenerator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setSnare, Colors.AccentGenerator));
   }
 
   private getInputConnection = (type: string): GateTrigger => {
@@ -48,6 +53,27 @@ export class Snare extends ModuleBase implements ParentModule {
     switch (type) {
       case 'Output':
         return this.node.output();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'decay':
+        return {
+          callback: this.node.setDecay,
+          default: this.defaults[key],
+        };
+      case 'head':
+        return {
+          callback: this.node.setHead,
+          default: this.defaults[key],
+        };
+      case 'snare':
+        return {
+          callback: this.node.setSnare,
+          default: this.defaults[key],
+        };
     }
   }
 }
