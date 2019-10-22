@@ -1,17 +1,13 @@
-import { Knob, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { SynthModule } from '@components/index';
+import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { LfoNode } from './lfo.node';
 import { outputTypes } from './outputs';
 
-export interface Lfo extends Module {
-  getNode(): LfoNode;
-}
-
-export class Lfo extends ModuleBase implements Lfo, ParentModule {
+export class Lfo extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
     height: 160,
     width: 140,
@@ -19,22 +15,23 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
 
   public type =  'lfo';
   public title = 'Lfo';
-  public node: LfoNode;
+  protected defaults: ModuleDefaultValues = {
+    freq: 5,
+  };
+  private node: LfoNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentModulator;
     this.node = new LfoNode(context);
     this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentModulator));
-  }
-
-  public getNode() {
-    return this.node;
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   private getOutputConnection = (type: string): GainNode => {
@@ -47,6 +44,17 @@ export class Lfo extends ModuleBase implements Lfo, ParentModule {
         return this.node.outputSquare();
       case 'triangle':
         return this.node.outputTriangle();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'freq':
+        return {
+          callback: this.node.setFrequency,
+          default: this.defaults[key],
+        };
     }
   }
 }
