@@ -1,8 +1,8 @@
-import { ButtonGroup, Knob, SynthModule } from '@components/index';
+import { ButtonGroup, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { buttons } from './buttons';
 import { controlTypes } from './controls';
 import { MidiNode } from './midi.node';
@@ -16,36 +16,31 @@ export class Midi extends ModuleBase implements ParentModule {
 
   public type =  'midi';
   public title = 'Midi';
-  public midiNode: MidiNode;
-  public settingsPanel: HTMLElement;
+  protected defaults: ModuleDefaultValues = {
+    'clock': 3,
+    'midi port': 0,
+  };
+  private midiNode: MidiNode;
+  private settingsPanel: HTMLElement;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentUtility;
     this.midiNode = new MidiNode(context);
     this.container = new SynthModule(canvas, Midi.dimensions, position, this.color);
     this.settingsPanel = document.querySelector('np-midisettings');
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
   }
 
   public getNode() {
     return this.midiNode;
-  }
-
-  private addControls() {
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[0],
-      this.midiNode.setMidiPort,
-      Colors.AccentUtility,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[1],
-      this.midiNode.setClockStepSize,
-      Colors.AccentUtility,
-    ));
   }
 
   private addButtonControls() {
@@ -97,6 +92,22 @@ export class Midi extends ModuleBase implements ParentModule {
         return this.midiNode.clockNode();
       case 'Transport':
         return this.midiNode.transportNode();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'midi port':
+        return {
+          callback: this.midiNode.setMidiPort,
+          default: this.defaults[key],
+        };
+      case 'clock':
+        return {
+          callback: this.midiNode.setClockStepSize,
+          default: this.defaults[key],
+        };
     }
   }
 }
