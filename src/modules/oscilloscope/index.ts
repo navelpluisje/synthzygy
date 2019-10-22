@@ -3,8 +3,8 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
+import { inputTypes } from './oscilloscope.inputs';
+import { knobTypes } from './oscilloscope.knobs';
 
 export class Oscilloscope extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -39,6 +39,13 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.drawWave();
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      x: this.fftSizePower,
+      y: this.verticalSpread,
+    };
   }
 
   public setFftSize = (value: number) => {
