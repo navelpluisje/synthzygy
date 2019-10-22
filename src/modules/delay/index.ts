@@ -1,5 +1,5 @@
 import { SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
@@ -8,11 +8,7 @@ import { DelayerNode } from './delay.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 
-export interface Delay extends Module {
-  getNode(): DelayerNode;
-}
-
-export class Delay extends ModuleBase implements Delay, ParentModule {
+export class Delay extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 210,
     width: 140,
@@ -42,10 +38,6 @@ export class Delay extends ModuleBase implements Delay, ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
-  }
-
-  public getNode(): DelayerNode {
-    return this.node;
   }
 
   private getInputConnection = (type: string): GainNode => {

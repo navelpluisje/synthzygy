@@ -55,10 +55,6 @@ export class ClockNode {
     );
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private handleMessage = (event: MessageEvent) => {
     this.trigger && (
       Object.values(this.trigger).forEach((trigger) => trigger(event.data.value))

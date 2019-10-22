@@ -1,5 +1,5 @@
 import { ButtonGroup, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
@@ -9,11 +9,7 @@ import { FilterNode } from './filter.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 
-export interface Filter extends Module {
-  getNode(): FilterNode;
-}
-
-export class Filter extends ModuleBase implements Filter, ParentModule {
+export class Filter extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 290,
     width: 170,
@@ -51,10 +47,6 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     buttons.forEach((buttonGroup) => {
       this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentEffect));
     });
-  }
-
-  public getNode(): FilterNode {
-    return this.node;
   }
 
   private getInputConnection = (type: string): GainNode | BiquadFilterNode => {

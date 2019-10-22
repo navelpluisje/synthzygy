@@ -35,10 +35,6 @@ export class AudioOut extends ModuleBase implements ParentModule {
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getNode(): OutputNode {
-    return this.node;
-  }
-
   private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioIn':

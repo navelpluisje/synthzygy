@@ -1,5 +1,5 @@
 import { SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
@@ -8,11 +8,7 @@ import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 
-export interface BitCrusher extends Module {
-  getNode(): BitCrusherNode;
-}
-
-export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
+export class BitCrusher extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 205,
     width: 140,
@@ -42,10 +38,6 @@ export class BitCrusher extends ModuleBase implements BitCrusher, ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
-  }
-
-  public getNode(): BitCrusherNode {
-    return this.node;
   }
 
   private getInputConnection = (type: string): GainNode => {

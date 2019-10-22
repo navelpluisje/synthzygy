@@ -56,10 +56,6 @@ export class Oscillator extends ModuleBase implements ParentModule {
     });
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'sawWave':

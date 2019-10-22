@@ -2,7 +2,7 @@ import { ButtonGroup, SynthModule, ThreeStateButton } from '@components/index';
 import { Slider } from '@components/slider';
 import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
 import { ControlType, GateTrigger, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
@@ -11,11 +11,7 @@ import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { SequencerNode } from './sequencer.node';
 
-export interface Sequencer extends Module {
-  getNode(): SequencerNode;
-}
-
-export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
+export class Sequencer extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 170,
     width: 600,
@@ -73,10 +69,6 @@ export class Sequencer extends ModuleBase implements Sequencer, ParentModule {
       }
     });
     return true;
-  }
-
-  public getNode(): SequencerNode {
-    return this.node;
   }
 
   private getInputConnection = (type: string): GateTrigger => {

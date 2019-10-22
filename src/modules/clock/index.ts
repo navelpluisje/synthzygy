@@ -7,7 +7,7 @@ import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { outputTypes } from './outputs';
 
-export class Clock extends ModuleBase implements Clock, ParentModule {
+export class Clock extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
     height: 210,
     width: 140,
@@ -43,10 +43,6 @@ export class Clock extends ModuleBase implements Clock, ParentModule {
   public draw(): void {
     super.draw();
     this.drawBPMDisplay();
-  }
-
-  public getNode() {
-    return this.nodes['/1'];
   }
 
   private createNodes() {

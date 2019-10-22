@@ -1,5 +1,5 @@
 import { Knob, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';

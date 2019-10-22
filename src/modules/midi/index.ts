@@ -39,10 +39,6 @@ export class Midi extends ModuleBase implements ParentModule {
     this.addButtonControls();
   }
 
-  public getNode() {
-    return this.midiNode;
-  }
-
   private addButtonControls() {
     buttons.forEach((buttonGroup) => {
       this.buttons.push(new ButtonGroup(

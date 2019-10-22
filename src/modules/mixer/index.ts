@@ -41,10 +41,6 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioOut':

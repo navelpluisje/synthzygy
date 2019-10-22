@@ -1,5 +1,5 @@
 import { SynthModule, TriggerButton } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
@@ -7,11 +7,7 @@ import { DimensionType, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { outputTypes } from './outputs';
 
-export interface GateTrigger extends Module {
-  getNode(): GateNode;
-}
-
-export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule {
+export class GateTrigger extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
     height: 130,
     width: 100,
@@ -39,10 +35,6 @@ export class GateTrigger extends ModuleBase implements GateTrigger, ParentModule
       this.node.onKeyUp,
       Colors.AccentUtility,
     ));
-  }
-
-  public getNode() {
-    return this.node;
   }
 
   private getOutputConnection(type: string): GateNode {

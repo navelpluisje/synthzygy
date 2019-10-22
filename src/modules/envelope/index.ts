@@ -1,5 +1,5 @@
 import { SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
@@ -8,11 +8,7 @@ import { EnvelopeNode } from './envelope.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 
-export interface Envelope extends Module {
-  getNode(): EnvelopeNode;
-}
-
-export class Envelope extends ModuleBase implements Envelope, ParentModule {
+export class Envelope extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 210,
     width: 200,
@@ -43,10 +39,6 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
-  }
-
-  public getNode() {
-    return this.node;
   }
 
   private getInputConnection = (type: string): GateTrigger => {

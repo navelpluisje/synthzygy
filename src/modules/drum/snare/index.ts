@@ -38,10 +38,6 @@ export class Snare extends ModuleBase implements ParentModule {
     this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private getInputConnection = (type: string): GateTrigger => {
     switch (type) {
       case 'Gate':
