@@ -34,7 +34,7 @@ export class AudioOut extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues() {
+  public getValues(): ModuleDefaultValues {
     return {
       gain: this.node.getGain(),
     };

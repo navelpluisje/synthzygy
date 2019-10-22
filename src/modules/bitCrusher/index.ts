@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
+import { inputTypes } from './bitCrusher.inputs';
+import { knobTypes } from './bitCrusher.knobs';
 import { BitCrusherNode } from './bitCrusher.node';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { outputTypes } from './bitCrusher.outputs';
 
 export class BitCrusher extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -37,6 +37,15 @@ export class BitCrusher extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      'degrade': this.node.getFrequencyReduction(),
+      'depth': this.node.getBitDepth(),
+      'level': this.node.getOutputLevel(),
+      'wet/dry': this.node.getDryWet(),
+    };
   }
 
   private getInputConnection = (type: string): GainNode => {
