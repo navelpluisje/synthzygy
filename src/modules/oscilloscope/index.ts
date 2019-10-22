@@ -42,15 +42,6 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.drawWave();
   }
 
-  public getKey(type: string): string {
-    switch (type) {
-      case 'audio':
-        return 'node';
-      case 'cv':
-        return 'cv';
-    }
-  }
-
   public setFftSize = (value: number) => {
     this.fftSizePower = value;
     this.node.fftSize = this.fftSizeBase * (2 ** this.fftSizePower);
