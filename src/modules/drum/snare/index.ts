@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { inputTypes } from './snare.inputs';
+import { knobTypes } from './snare.knobs';
 import { SnareNode } from './snare.node';
+import { outputTypes } from './snare.outputs';
 
 export class Snare extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
@@ -36,6 +36,14 @@ export class Snare extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      decay: this.node.getDecay(),
+      head: this.node.getHead(),
+      snare: this.node.getSnare(),
+    };
   }
 
   private getInputConnection = (type: string): GateTrigger => {

@@ -9,6 +9,8 @@ export class SnareNode {
   private volume: number = .5;
   private decay: number = .3;
   private sweep: number = .5;
+  private head: number;
+  private snare: number;
   private context: AudioContext;
   private oscillator1Node: OscillatorNode;
   private oscillator2Node: OscillatorNode;
@@ -33,17 +35,31 @@ export class SnareNode {
     this.outputNode.gain.setTargetAtTime(this.volume, this.context.currentTime, 0.001);
   }
 
-  public setHead = (value: number) => {
-    this.oscillator1Gain.gain.setTargetAtTime(value + (value * .25), this.context.currentTime, 0.001);
-    this.oscillator2Gain.gain.setTargetAtTime(value, this.context.currentTime, 0.001);
+  public setHead = (head: number) => {
+    this.head = head;
+    this.oscillator1Gain.gain.setTargetAtTime(head + (head * .25), this.context.currentTime, 0.001);
+    this.oscillator2Gain.gain.setTargetAtTime(head, this.context.currentTime, 0.001);
   }
 
-  public setSnare = (value: number) => {
-    this.filter.frequency.setTargetAtTime(value, this.context.currentTime, 0.001);
+  public getHead(): number {
+    return this.head;
+  }
+
+  public setSnare = (snare: number) => {
+    this.snare = snare;
+    this.filter.frequency.setTargetAtTime(snare, this.context.currentTime, 0.001);
+  }
+
+  public getSnare(): number {
+    return this.snare;
   }
 
   public setDecay = (decay: number): void => {
     this.decay = decay;
+  }
+
+  public getDecay(): number {
+    return this.decay;
   }
 
   public inputGate(): GateTrigger {
