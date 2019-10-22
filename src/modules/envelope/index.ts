@@ -1,7 +1,7 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { GateTrigger, PositionType } from 'src/types';
+import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { EnvelopeNode } from './envelope.node';
@@ -21,24 +21,28 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
   public type = 'envelope';
   public title = 'Envelope';
   public active: boolean = false;
-  public node: EnvelopeNode;
+  protected defaults: ModuleDefaultValues = {
+    attack: 0.3,
+    decay: 0.3,
+    level: 0.5,
+    release: 0.5,
+    sustain: 0.5,
+  };
+  private node: EnvelopeNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
     this.accentColor = Colors.AccentModulator;
     this.node = new EnvelopeNode(context);
     this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setAttack, Colors.AccentModulator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setDecay, Colors.AccentModulator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setSustain, Colors.AccentModulator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setRelease, Colors.AccentModulator));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[4], this.node.setLevel, Colors.AccentModulator));
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public getNode() {
@@ -56,6 +60,37 @@ export class Envelope extends ModuleBase implements Envelope, ParentModule {
     switch (type) {
       case 'envelopeOut':
         return this.node.output();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'attack':
+        return {
+          callback: this.node.setAttack,
+          default: this.defaults[key],
+        };
+      case 'decay':
+        return {
+          callback: this.node.setDecay,
+          default: this.defaults[key],
+        };
+      case 'sustain':
+        return {
+          callback: this.node.setSustain,
+          default: this.defaults[key],
+        };
+      case 'release':
+        return {
+          callback: this.node.setRelease,
+          default: this.defaults[key],
+        };
+      case 'level':
+        return {
+          callback: this.node.setLevel,
+          default: this.defaults[key],
+        };
     }
   }
 }
