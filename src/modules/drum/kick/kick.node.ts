@@ -6,6 +6,8 @@ import { GateTrigger } from 'src/types';
 export class KickNode {
   private decay: number = .3;
   private frequency: number = 20;
+  private boost: number;
+  private sweep: number;
   private context: AudioContext;
   private triangle: OscillatorNode;
   private triangleBoost: GainNode;
@@ -14,7 +16,6 @@ export class KickNode {
   private square: OscillatorNode;
   private squareBoost: GainNode;
   private frequencyConstant: ConstantSourceNode;
-  private sweep: number;
   private kickGain: GainNode;
   private kickBoost: GainNode;
 
@@ -30,17 +31,34 @@ export class KickNode {
     this.decay = decay;
   }
 
+  public getDecay(): number {
+    return this.decay;
+  }
+
   public setFequency = (frequency: number) => {
     this.frequency = frequency;
+  }
+
+  public getFrequency(): number {
+    return this.frequency;
   }
 
   public setSweep = (sweep: number) => {
     this.sweep = sweep;
   }
 
+  public getSweep(): number {
+    return this.sweep;
+  }
+
   public setBoost = (boost: number) => {
+    this.boost = boost;
     this.sineBoost.gain.setTargetAtTime(boost, this.context.currentTime, 0.001);
     this.squareBoost.gain.setTargetAtTime(boost / 2, this.context.currentTime, 0.001);
+  }
+
+  public getBoost(): number {
+    return this.boost;
   }
 
   public inputGate(): GateTrigger {
