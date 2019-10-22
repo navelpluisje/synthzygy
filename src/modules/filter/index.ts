@@ -3,11 +3,11 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { buttons } from './buttons';
-import { knobTypes } from './controls';
+import { buttons } from './filter.buttons';
+import { inputTypes } from './filter.inputs';
+import { knobTypes } from './filter.knobs';
 import { FilterNode } from './filter.node';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { outputTypes } from './filter.outputs';
 
 export class Filter extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -40,6 +40,16 @@ export class Filter extends ModuleBase implements ParentModule {
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      'cutoff': this.node.getFrequency(),
+      'cv c/o': this.node.getCvFrequency(),
+      'cv res': this.node.getCvQ(),
+      'level in': this.node.getInputLevel(),
+      'resonance': this.node.getQ(),
+    };
   }
 
   public addButtonControls() {

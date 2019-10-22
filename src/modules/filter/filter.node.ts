@@ -28,9 +28,17 @@ export class FilterNode {
     this.frequencyNode.parameters.get('frequency').setTargetAtTime(this.frequency, this.context.currentTime, 0.001);
   }
 
+  public getFrequency(): number {
+    return this.frequency;
+  }
+
   public setQ = (q: number): void => {
     this.q = q;
     this.filterNode.Q.setTargetAtTime(this.q, this.context.currentTime, 0.001);
+  }
+
+  public getQ(): number {
+    return this.q;
   }
 
   public setFilterType = (type: BiquadFilterType): void => {
@@ -43,14 +51,26 @@ export class FilterNode {
     this.levelNode.gain.setTargetAtTime(this.level, this.context.currentTime, 0.001);
   }
 
+  public getInputLevel(): number {
+    return this.level;
+  }
+
   public setCvFrequency = (amount: number): void => {
     this.cvFreq = amount;
     this.cvFreqNode.gain.setTargetAtTime(this.cvFreq, this.context.currentTime, 0.001);
   }
 
+  public getCvFrequency(): number {
+    return this.cvFreq;
+  }
+
   public SetCvQ = (amount: number): void => {
     this.cvQ = amount;
     this.cvQNode.gain.setTargetAtTime(this.cvQ, this.context.currentTime, 0.001);
+  }
+
+  public getCvQ(): number {
+    return this.cvQ;
   }
 
   public inputCvFrequency(): GainNode {
