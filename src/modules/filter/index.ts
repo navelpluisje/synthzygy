@@ -1,7 +1,7 @@
-import { ButtonGroup, Knob, SynthModule } from '@components/index';
+import { ButtonGroup, SynthModule } from '@components/index';
 import { Module, ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { buttons } from './buttons';
 import { controlTypes } from './controls';
@@ -22,15 +22,28 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
   public type = 'filter';
   public title = 'Filter';
   public active: boolean = false;
-  public node: FilterNode;
+  protected defaults: ModuleDefaultValues = {
+    'cutoff': 4,
+    'cv c/o': 0,
+    'cv res': 0,
+    'level in': 1,
+    'resonance': 0,
+  };
+  private node: FilterNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentEffect;
     this.node = new FilterNode(context);
     this.container = new SynthModule(canvas, Filter.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
   }
 
@@ -38,14 +51,6 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     buttons.forEach((buttonGroup) => {
       this.buttons.push(new ButtonGroup(this.canvas, this, buttonGroup, this.node.setFilterType, Colors.AccentEffect));
     });
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.node.setFrequency, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[2], this.node.setQ, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.node.setInputLevel, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[3], this.node.setCvFrequency, Colors.AccentEffect));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[4], this.node.SetCvQ, Colors.AccentEffect));
   }
 
   public getNode(): FilterNode {
@@ -67,6 +72,37 @@ export class Filter extends ModuleBase implements Filter, ParentModule {
     switch (type) {
       case 'Output':
         return this.node.output();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'cutoff':
+        return {
+          callback: this.node.setFrequency,
+          default: this.defaults[key],
+        };
+      case 'level in':
+        return {
+          callback: this.node.setInputLevel,
+          default: this.defaults[key],
+        };
+      case 'resonance':
+        return {
+          callback: this.node.setQ,
+          default: this.defaults[key],
+        };
+      case 'cv c/o':
+        return {
+          callback: this.node.setCvFrequency,
+          default: this.defaults[key],
+        };
+      case 'cv res':
+        return {
+          callback: this.node.SetCvQ,
+          default: this.defaults[key],
+        };
     }
   }
 }
