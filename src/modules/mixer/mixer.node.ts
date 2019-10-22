@@ -67,6 +67,10 @@ export class MixerNode {
     };
   }
 
+  public getAudio(index: string): number {
+    return this.values[index];
+  }
+
   public input(index: string): GainNode {
     switch (index) {
       case '1':

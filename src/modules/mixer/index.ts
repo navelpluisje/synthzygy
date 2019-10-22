@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
+import { inputTypes } from './mixer.inputs';
+import { knobTypes } from './mixer.knobs';
 import { MixerNode } from './mixer.node';
-import { outputTypes } from './outputs';
+import { outputTypes } from './mixer.outputs';
 
 export class Mixer extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -38,6 +38,16 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      'in 1': this.node.getAudio('1'),
+      'in 2': this.node.getAudio('2'),
+      'in 3': this.node.getAudio('3'),
+      'in 4': this.node.getAudio('4'),
+      'out': this.node.getAudio('out'),
+    };
   }
 
   private getOutputConnection = (type: string): GainNode => {
