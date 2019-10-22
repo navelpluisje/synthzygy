@@ -3,24 +3,22 @@ import { knobSizes, STEP_KNOB } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 import { roundByStepSize } from '@utilities/numeric';
 import { ParentModule } from 'src/interfaces';
-import { ControlType, KnobSizes, KnobSizeType, PositionType } from '../types';
+import { ControlType, KnobSizeType, PositionType } from 'src/types';
 
 export class Knob implements SynthModuleControl {
-  public static knobCanvas: CanvasRenderingContext2D;
-  public position: PositionType;
-  public knobSize: KnobSizeType;
-  public size: KnobSizes;
-  public canvas: CanvasRenderingContext2D;
-  public type: string;
-  public active: boolean = false;
-  public mouseStart: PositionType;
-  public parent: ParentModule;
-  public valueData: any;
-  public value: number;
-  public label: string;
-  public color: string;
-  public callback: (value: number) => void;
-  public cap: CanvasLineCap;
+  private static knobCanvas: CanvasRenderingContext2D;
+  private position: PositionType;
+  private knobSize: KnobSizeType;
+  private canvas: CanvasRenderingContext2D;
+  private type: string;
+  private mouseStart: PositionType;
+  private parent: ParentModule;
+  private valueData: any;
+  private value: number;
+  private label: string;
+  private color: string;
+  private callback: (value: number) => void;
+  private cap: CanvasLineCap;
 
   constructor(
     canvas: CanvasRenderingContext2D,

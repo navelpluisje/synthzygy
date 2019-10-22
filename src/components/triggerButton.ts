@@ -6,14 +6,14 @@ import { ControlType, PositionType } from 'src/types';
 import { drawIcon } from './icons';
 
 export class TriggerButton implements SynthModuleControl {
-  public parent: ParentModule;
-  public canvas: CanvasRenderingContext2D;
-  public color: string;
-  public active: boolean = false;
-  public position: PositionType;
-  public size: number;
   public onPress: () => void;
   public onRelease: () => void;
+  private parent: ParentModule;
+  private canvas: CanvasRenderingContext2D;
+  private color: string;
+  private active: boolean = false;
+  private position: PositionType;
+  private size: number;
 
   constructor(
     canvas: CanvasRenderingContext2D,

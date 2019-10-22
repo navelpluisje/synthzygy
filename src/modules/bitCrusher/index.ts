@@ -16,7 +16,6 @@ export class BitCrusher extends ModuleBase implements ParentModule {
 
   public type = 'bitCrusher';
   public title = 'Crushy';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     'degrade': 0.5,
     'depth': 8,

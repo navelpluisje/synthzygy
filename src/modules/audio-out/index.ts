@@ -15,7 +15,6 @@ export class AudioOut extends ModuleBase implements ParentModule {
 
   public type = 'audioOut';
   public title = 'Output';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     gain: 0.5,
   };

@@ -16,7 +16,6 @@ export class Mixer extends ModuleBase implements ParentModule {
 
   public type = 'mixer';
   public title = 'Mixer';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     'in 1': 0.5,
     'in 2': 0.5,

@@ -16,7 +16,6 @@ export class Envelope extends ModuleBase implements ParentModule {
 
   public type = 'envelope';
   public title = 'Envelope';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     attack: 0.3,
     decay: 0.3,

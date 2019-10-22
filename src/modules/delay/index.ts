@@ -16,7 +16,6 @@ export class Delay extends ModuleBase implements ParentModule {
 
   public type = 'delay';
   public title = 'Delay';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     'cutoff': 3000,
     'delay': 0.5,

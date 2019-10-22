@@ -17,7 +17,6 @@ export class Oscillator extends ModuleBase implements ParentModule {
 
   public type = 'oscillator';
   public title = 'Oscillator';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     detune: 0,
     fm: 0,

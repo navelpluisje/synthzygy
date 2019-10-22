@@ -17,7 +17,6 @@ export class Filter extends ModuleBase implements ParentModule {
 
   public type = 'filter';
   public title = 'Filter';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     'cutoff': 4,
     'cv c/o': 0,
