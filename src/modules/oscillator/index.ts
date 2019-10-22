@@ -3,11 +3,11 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { buttons } from './buttons';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
+import { buttons } from './oscillator.buttons';
+import { inputTypes } from './oscillator.inputs';
+import { knobTypes } from './oscillator.knobs';
 import { JsOscillatorNode } from './oscillator.node';
-import { outputTypes } from './outputs';
+import { outputTypes } from './oscillator.outputs';
 
 export class Oscillator extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -40,6 +40,15 @@ export class Oscillator extends ModuleBase implements ParentModule {
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      detune: this.node.getDetune(),
+      fm: this.node.getFm(),
+      freq: this.node.getFrequency(),
+      octave: this.node.getOctave(),
+    };
   }
 
   public addButtonControls() {

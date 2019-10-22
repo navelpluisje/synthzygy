@@ -42,9 +42,17 @@ export class JsOscillatorNode {
     this.cvFrequencyNode.parameters.get('frequency').setTargetAtTime(this.frequency, this.context.currentTime, 0.001);
   }
 
+  public getFrequency(): number {
+    return this.frequency;
+  }
+
   public setDetune = (detune: number): void => {
     this.detune = detune;
     this.handleDetuneChange();
+  }
+
+  public getDetune(): number {
+    return this.detune;
   }
 
   public setFm = (fm: number): void => {
@@ -52,9 +60,17 @@ export class JsOscillatorNode {
     this.cvFmNode.gain.setTargetAtTime(this.fm, this.context.currentTime, 0.001);
   }
 
+  public getFm(): number {
+    return this.fm;
+  }
+
   public setOctave = (octave: number): void => {
     this.octave = octave;
     this.cvFrequencyNode.parameters.get('octave').setTargetAtTime(this.octave, this.context.currentTime, 0.001);
+  }
+
+  public getOctave(): number {
+    return this.octave;
   }
 
   public setRange = (type: string | null) => {
