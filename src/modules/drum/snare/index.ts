@@ -51,7 +51,7 @@ export class Snare extends ModuleBase implements ParentModule {
 
   private getOutputConnection = (type: string): GainNode => {
     switch (type) {
-      case 'Output':
+      case 'Audio':
         return this.node.output();
     }
   }

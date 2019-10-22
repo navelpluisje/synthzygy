@@ -36,6 +36,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     this.accentColor = Colors.AccentGenerator;
     this.node = new JsOscillatorNode(context);
     this.container = new SynthModule(canvas, Oscillator.dimensions, position, this.color);
+
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
@@ -46,7 +47,8 @@ export class Oscillator extends ModuleBase implements ParentModule {
     buttons.forEach((buttonGroup) => {
       this.buttons.push(new ButtonGroup(
         this.canvas,
-        this, buttonGroup,
+        this,
+        buttonGroup,
         this.node.setRange,
         this.accentColor,
         true,
