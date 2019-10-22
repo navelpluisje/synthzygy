@@ -4,8 +4,8 @@ import { ModuleBase } from '@modules/moduleBase';
 import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { knobTypes } from './controls';
-import { outputTypes } from './outputs';
+import { knobTypes } from './clock.knobs';
+import { outputTypes } from './clock.outputs';
 
 export class Clock extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
@@ -38,6 +38,13 @@ export class Clock extends ModuleBase implements ParentModule {
     this.createNodes();
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      bpm: this.bpm,
+      pw: this.pulseWidth,
+    };
   }
 
   public draw(): void {
