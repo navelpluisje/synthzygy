@@ -6,7 +6,8 @@ import { ParentModule } from 'src/interfaces';
 import { ControlType, KnobSizeType, PositionType } from 'src/types';
 
 export class Knob implements SynthModuleControl {
-  private static knobCanvas: CanvasRenderingContext2D;
+  public static knobCanvas: CanvasRenderingContext2D;
+  protected active: boolean = false;
   private position: PositionType;
   private knobSize: KnobSizeType;
   private canvas: CanvasRenderingContext2D;
