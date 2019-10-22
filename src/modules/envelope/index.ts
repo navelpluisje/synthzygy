@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { knobTypes } from './controls';
+import { inputTypes } from './envelope.inputs';
+import { knobTypes } from './envelope.knobs';
 import { EnvelopeNode } from './envelope.node';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { outputTypes } from './envelope.outputs';
 
 export class Envelope extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -38,6 +38,16 @@ export class Envelope extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      attack: this.node.getAttack(),
+      decay: this.node.getDecay(),
+      level: this.node.getLevel(),
+      release: this.node.getRelease(),
+      sustain: this.node.getSustain(),
+    };
   }
 
   private getInputConnection = (type: string): GateTrigger => {

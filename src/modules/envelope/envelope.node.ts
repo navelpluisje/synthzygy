@@ -26,20 +26,40 @@ export class EnvelopeNode {
     this.attack = attack || 0.001;
   }
 
+  public getAttack(): number {
+    return this.attack;
+  }
+
   public setDecay = (decay: number): void => {
     this.decay = decay || 0.001;
+  }
+
+  public getDecay(): number {
+    return this.decay;
   }
 
   public setSustain = (sustain: number): void => {
     this.sustain = sustain;
   }
 
+  public getSustain(): number {
+    return this.sustain;
+  }
+
   public setRelease = (release: number): void => {
     this.release = release / 10 || 0.001;
   }
 
+  public getRelease(): number {
+    return this.release;
+  }
+
   public setLevel = (level: number): void => {
     this.level = level * 8;
+  }
+
+  public getLevel(): number {
+    return this.level;
   }
 
   public inputGate(): GateTrigger {
