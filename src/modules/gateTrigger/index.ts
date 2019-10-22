@@ -4,8 +4,8 @@ import { ModuleBase } from '@modules/moduleBase';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, PositionType } from 'src/types';
-import { knobTypes } from './controls';
-import { outputTypes } from './outputs';
+import { knobTypes } from './gateTrigger.knobs';
+import { outputTypes } from './gateTrigger.outputs';
 
 export class GateTrigger extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
