@@ -1,8 +1,8 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { controlTypes } from './controls';
 import { NoisesNode } from './noise.node';
 import { outputTypes } from './outputs';
@@ -15,53 +15,36 @@ export class Noise extends ModuleBase implements ParentModule {
 
   public type =  'noise';
   public title = 'Noise';
-  public node: NoisesNode;
+  protected defaults: ModuleDefaultValues = {
+    blue: 1,
+    pink: 1,
+    white: 2,
+  };
+  private node: NoisesNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
     super(canvas, position);
+    this.accentColor = Colors.AccentGenerator;
     this.node = new NoisesNode(context);
     this.container = new SynthModule(canvas, Noise.dimensions, position, this.color);
     this.setup();
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private async setup() {
     await this.node.setup();
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
     this.drawOutputs();
     this.drawControls();
   }
 
   private drawOutputs() {
     this.outputs.forEach((output) => output.component.draw());
-  }
-
-  private addControls() {
-    this.controls.push(new Knob(
-      this.canvas,
-      this,
-      controlTypes[0],
-      this.node.setPinkNoisGain,
-      Colors.AccentGenerator,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this,
-      controlTypes[1],
-      this.node.setWhiteNoisGain,
-      Colors.AccentGenerator,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this,
-      controlTypes[2],
-      this.node.setBlueNoisGain,
-      Colors.AccentGenerator,
-    ));
   }
 
   private drawControls() {
@@ -76,6 +59,27 @@ export class Noise extends ModuleBase implements ParentModule {
         return this.node.outputWhiteNoise();
       case 'Blue':
         return this.node.outputBlueNoise();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'pink':
+        return {
+          callback: this.node.setPinkNoisGain,
+          default: this.defaults[key],
+        };
+      case 'white':
+        return {
+          callback: this.node.setWhiteNoisGain,
+          default: this.defaults[key],
+        };
+      case 'blue':
+        return {
+          callback: this.node.setBlueNoisGain,
+          default: this.defaults[key],
+        };
     }
   }
 }
