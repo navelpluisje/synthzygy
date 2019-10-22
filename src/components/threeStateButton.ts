@@ -1,6 +1,6 @@
 import { Colors } from '@constants/enums';
 import { ParentModule } from '@interfaces/index';
-import { ControlType, PositionType } from 'src/types';
+import { KnobType, PositionType } from 'src/types';
 
 export class ThreeStateButton {
   private parent: ParentModule;
@@ -15,7 +15,7 @@ export class ThreeStateButton {
   constructor(
     canvas: CanvasRenderingContext2D,
     parent: ParentModule,
-    button: ControlType,
+    button: KnobType,
     onClick: (val: boolean) => void,
     color: string,
   ) {

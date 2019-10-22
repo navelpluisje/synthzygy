@@ -3,8 +3,8 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
-import { controlTypes } from './controls';
-import { inputTypes } from './inputs';
+import { inputTypes } from './output.inputs';
+import { knobTypes } from './output.knobs';
 import { OutputNode } from './output.node';
 
 export class AudioOut extends ModuleBase implements ParentModule {
@@ -31,7 +31,13 @@ export class AudioOut extends ModuleBase implements ParentModule {
     this.node = new OutputNode(context);
     this.container = new SynthModule(canvas, AudioOut.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues() {
+    return {
+      gain: this.node.getGain(),
+    };
   }
 
   private getInputConnection = (type: string): GainNode => {

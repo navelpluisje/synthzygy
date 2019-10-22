@@ -3,7 +3,7 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { HiHatNode } from './hihat.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -34,7 +34,7 @@ export class HiHat extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, HiHat.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
   private getInputConnection = (type: string): GateTrigger => {

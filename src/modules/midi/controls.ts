@@ -1,7 +1,7 @@
 import { MEDIUM_KNOB, SMALL_KNOB, STEP_KNOB } from '@constants/sizes';
-import { ControlType } from 'src/types';
+import { KnobType } from 'src/types';
 
-export const controlTypes: ControlType[] = [{
+export const knobTypes: KnobType[] = [{
   label: 'Midi Port',
   log: false,
   max: 16,

@@ -3,7 +3,7 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { inputTypes } from './inputs';
 
 export class Oscilloscope extends ModuleBase implements ParentModule {
@@ -37,7 +37,7 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.setFftSize(this.fftSizePower);
     this.container = new SynthModule(canvas, Oscilloscope.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.drawWave();
   }
 

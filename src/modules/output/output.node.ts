@@ -29,6 +29,10 @@ export class OutputNode {
     this.gainNode.gain.setTargetAtTime(this.gain, this.context.currentTime, 0.001);
   }
 
+  public getGain = (): number => {
+    return this.gain;
+  }
+
   public connectAudioIn(): GainNode {
     return this.gainNode;
   }

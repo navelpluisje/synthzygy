@@ -3,7 +3,7 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { DelayerNode } from './delay.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -36,7 +36,7 @@ export class Delay extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Delay.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
   private getInputConnection = (type: string): GainNode => {

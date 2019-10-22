@@ -4,7 +4,7 @@ import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
 import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
 import { TuringMachineNode } from './turingMachine.node';
@@ -37,7 +37,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
   private getOutputConnection = (type: string): ConstantSourceNode | GateNode => {

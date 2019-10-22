@@ -32,7 +32,7 @@ export interface DimensionType {
   height: number;
 }
 
-export interface ControlType {
+export interface KnobType {
   type: string;
   label?: string;
   size: KnobSizes;
@@ -61,7 +61,7 @@ export interface ModuleType {
   color: string;
   inputs?: string[];
   outputs: string[];
-  controls: ControlType[];
+  controls: KnobType[];
   position: PositionType;
   dimensions: DimensionType;
 }
@@ -108,11 +108,6 @@ export interface CollisionType {
   height: number;
 }
 
-export interface KnobType extends ControlType {
-  xPos: number;
-  yPos: number;
-}
-
 export type ActiveOutputType = {
   position: PositionType
   type: string;
@@ -127,7 +122,7 @@ export type ActiveInputType = {
   component: InputConnector
 } | null;
 
-export interface ActiveControlType {
+export interface ActiveKnobType {
   index: number;
   x: number;
   y: number;

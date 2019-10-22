@@ -1,7 +1,7 @@
 import { LARGE_KNOB, SMALL_KNOB, STEP_KNOB } from '@constants/sizes';
-import { ControlType } from 'src/types';
+import { KnobType } from 'src/types';
 
-export const controlTypes: ControlType[] = [{
+export const knobTypes: KnobType[] = [{
   label: 'Prob\'ty',
   log: true,
   max: 11,

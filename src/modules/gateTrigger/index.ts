@@ -4,7 +4,7 @@ import { ModuleBase } from '@modules/moduleBase';
 import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, PositionType } from 'src/types';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { outputTypes } from './outputs';
 
 export class GateTrigger extends ModuleBase implements ParentModule {
@@ -30,7 +30,7 @@ export class GateTrigger extends ModuleBase implements ParentModule {
     this.controls.push(new TriggerButton(
       this.canvas,
       this,
-      controlTypes[0],
+      knobTypes[0],
       this.node.onKeyDown,
       this.node.onKeyUp,
       Colors.AccentUtility,

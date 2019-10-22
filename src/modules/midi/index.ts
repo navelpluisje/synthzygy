@@ -4,7 +4,7 @@ import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { buttons } from './buttons';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { MidiNode } from './midi.node';
 import { outputTypes } from './outputs';
 
@@ -35,7 +35,7 @@ export class Midi extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Midi.dimensions, position, this.color);
     this.settingsPanel = document.querySelector('np-midisettings');
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
   }
 

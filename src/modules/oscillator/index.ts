@@ -4,7 +4,7 @@ import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { buttons } from './buttons';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { inputTypes } from './inputs';
 import { JsOscillatorNode } from './oscillator.node';
 import { outputTypes } from './outputs';
@@ -39,7 +39,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addButtonControls();
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
   public addButtonControls() {

@@ -2,7 +2,7 @@ import { Colors } from '@constants/enums';
 import { knobSizes } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { SynthModuleControl } from '@interfaces/moduleControl';
-import { ControlType, PositionType } from 'src/types';
+import { KnobType, PositionType } from 'src/types';
 import { drawIcon } from './icons';
 
 export class TriggerButton implements SynthModuleControl {
@@ -18,7 +18,7 @@ export class TriggerButton implements SynthModuleControl {
   constructor(
     canvas: CanvasRenderingContext2D,
     parent: ParentModule,
-    button: ControlType,
+    button: KnobType,
     onPress: () => void,
     onRelease: () => void,
     color: string,

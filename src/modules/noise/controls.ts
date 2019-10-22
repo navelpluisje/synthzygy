@@ -1,7 +1,7 @@
 import { CONTROL_KNOB, SMALL_KNOB } from '@constants/sizes';
-import { ControlType } from 'src/types';
+import { KnobType } from 'src/types';
 
-export const controlTypes: ControlType[] = [{
+export const knobTypes: KnobType[] = [{
   label: 'Pink',
   log: true,
   max: 2,

@@ -3,7 +3,7 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { LfoNode } from './lfo.node';
 import { outputTypes } from './outputs';
 
@@ -31,7 +31,7 @@ export class Lfo extends ModuleBase implements ParentModule {
     this.node = new LfoNode(context);
     this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
   private getOutputConnection = (type: string): GainNode => {

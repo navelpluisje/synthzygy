@@ -1,4 +1,3 @@
-import { AudioOut } from './audio-out';
 import { BitCrusher } from './bitCrusher';
 import { Clock } from './clock';
 import { Delay } from './delay';
@@ -14,6 +13,7 @@ import { Mixer } from './mixer';
 import { Noise } from './noise';
 import { Oscillator } from './oscillator';
 import { Oscilloscope } from './oscilloscope';
+import { AudioOut } from './output';
 import { Sequencer } from './sequencers/step';
 import { TuringMachine } from './sequencers/turing';
 import { Vca } from './vca';

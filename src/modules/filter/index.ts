@@ -4,7 +4,7 @@ import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { buttons } from './buttons';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { FilterNode } from './filter.node';
 import { inputTypes } from './inputs';
 import { outputTypes } from './outputs';
@@ -38,7 +38,7 @@ export class Filter extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Filter.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
   }
 

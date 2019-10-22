@@ -5,10 +5,10 @@ import { Module } from '@interfaces/index';
 import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
 import {
-  ControlType,
   DimensionType,
   GateTrigger,
   InputType,
+  KnobType,
   ModuleDefaultValues,
   OutputType,
   PositionType,
@@ -224,7 +224,7 @@ export class ModuleBase implements Module {
   }
 
   protected addKnobs(
-    knobs: ControlType[],
+    knobs: KnobType[],
     getKnobCallbackAndDefault: any,
   ): void {
     knobs.forEach((knobData) => {

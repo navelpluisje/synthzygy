@@ -3,7 +3,7 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { controlTypes } from './controls';
+import { knobTypes } from './controls';
 import { NoisesNode } from './noise.node';
 import { outputTypes } from './outputs';
 
@@ -38,7 +38,7 @@ export class Noise extends ModuleBase implements ParentModule {
   private async setup() {
     await this.node.setup();
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.drawOutputs();
     this.drawControls();
   }

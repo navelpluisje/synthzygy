@@ -3,7 +3,7 @@ import { sliderSizes } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 import { roundByStepSize } from '@utilities/numeric';
 import { ParentModule } from 'src/interfaces';
-import { ControlType, PositionType } from '../types';
+import { KnobType, PositionType } from '../types';
 
 export class Slider implements SynthModuleControl {
   public static knobCanvas: CanvasRenderingContext2D;
@@ -22,7 +22,7 @@ export class Slider implements SynthModuleControl {
   constructor(
     canvas: CanvasRenderingContext2D,
     parent: ParentModule,
-    control: ControlType,
+    control: KnobType,
     callback: (value: number) => void,
     color: string = 'red',
   ) {

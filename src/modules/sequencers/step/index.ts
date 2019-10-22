@@ -4,7 +4,7 @@ import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
-import { ControlType, GateTrigger, PositionType } from 'src/types';
+import { GateTrigger, KnobType, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
 import { buttons } from './buttons';
 import { inputTypes } from './inputs';
@@ -135,7 +135,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
 
   private addStepButtons() {
     for (let i = 0; i < 16; i += 1) {
-      const button: ControlType = {
+      const button: KnobType = {
         position: {
           x: 110 + i * 24,
           y: 150,
@@ -155,7 +155,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
 
   private addStepSliders() {
     for (let i = 0; i < 16; i += 1) {
-      const slider: ControlType = {
+      const slider: KnobType = {
         log: true,
         max: 8,
         min: 0,
