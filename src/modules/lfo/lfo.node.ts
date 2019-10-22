@@ -31,6 +31,10 @@ export class LfoNode {
     this.handleFrequencyChange();
   }
 
+  public getFrequency(): number {
+    return this.frequency;
+  }
+
   public outputSaw(): GainNode {
     return this.sawBoost;
   }

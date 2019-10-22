@@ -3,9 +3,9 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { knobTypes } from './controls';
+import { knobTypes } from './lfo.knobs';
 import { LfoNode } from './lfo.node';
-import { outputTypes } from './outputs';
+import { outputTypes } from './lfo.outputs';
 
 export class Lfo extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
@@ -32,6 +32,12 @@ export class Lfo extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      freq: this.node.getFrequency(),
+    };
   }
 
   private getOutputConnection = (type: string): GainNode => {
