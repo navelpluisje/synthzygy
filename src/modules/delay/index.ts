@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { knobTypes } from './controls';
+import { inputTypes } from './delay.inputs';
+import { knobTypes } from './delay.knobs';
 import { DelayerNode } from './delay.node';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { outputTypes } from './delay.outputs';
 
 export class Delay extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -37,6 +37,15 @@ export class Delay extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      'cutoff': this.node.getFrequency(),
+      'delay': this.node.getDelayTime(),
+      'dry/wet': this.node.getDryWet(),
+      'f.back': this.node.getFeedback(),
+    };
   }
 
   private getInputConnection = (type: string): GainNode => {

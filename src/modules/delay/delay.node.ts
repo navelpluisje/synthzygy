@@ -5,6 +5,7 @@ export class DelayerNode {
   private feedback: number = .6;
   private frequency: number = 2000;
   private delayTime: number = .5;
+  private dryWet: number = 0;
   private context: AudioContext;
   private inputNode: GainNode;
   private outputNode: GainNode;
@@ -25,18 +26,35 @@ export class DelayerNode {
     this.filterNode.frequency.setTargetAtTime(this.frequency, this.context.currentTime, 0.001);
   }
 
+  public getFrequency(): number {
+    return this.frequency;
+  }
+
   public setFeedback = (feedback: number): void => {
     this.feedback = feedback;
     this.feedbackNode.gain.setTargetAtTime(this.feedback, this.context.currentTime, 0.001);
   }
 
+  public getFeedback(): number {
+    return this.feedback;
+  }
+
   public setDryWet = (dryWet: number): void => {
+    this.dryWet = dryWet;
     this.dryWetNode.setRatio(dryWet);
+  }
+
+  public getDryWet(): number {
+    return this.dryWet;
   }
 
   public setDelayTime = (delayTime: number): void => {
     this.delayTime = delayTime;
     this.delayNode.delayTime.setTargetAtTime(this.delayTime, this.context.currentTime, 0.001);
+  }
+
+  public getDelayTime(): number {
+    return this.delayTime;
   }
 
   public inputCvFeedback(): AudioParam {
