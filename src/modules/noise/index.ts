@@ -3,9 +3,9 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { knobTypes } from './controls';
+import { knobTypes } from './noise.knobs';
 import { NoisesNode } from './noise.node';
-import { outputTypes } from './outputs';
+import { outputTypes } from './noise.outputs';
 
 export class Noise extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
@@ -33,6 +33,14 @@ export class Noise extends ModuleBase implements ParentModule {
     this.node = new NoisesNode(context);
     this.container = new SynthModule(canvas, Noise.dimensions, position, this.color);
     this.setup();
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      blue: this.node.getBlueNoiseGain(),
+      pink: this.node.getPinkNoiseGain(),
+      white: this.node.getWhiteNoiseGain(),
+    };
   }
 
   private async setup() {
@@ -67,17 +75,17 @@ export class Noise extends ModuleBase implements ParentModule {
     switch (key) {
       case 'pink':
         return {
-          callback: this.node.setPinkNoisGain,
+          callback: this.node.setPinkNoiseGain,
           default: this.defaults[key],
         };
       case 'white':
         return {
-          callback: this.node.setWhiteNoisGain,
+          callback: this.node.setWhiteNoiseGain,
           default: this.defaults[key],
         };
       case 'blue':
         return {
-          callback: this.node.setBlueNoisGain,
+          callback: this.node.setBlueNoiseGain,
           default: this.defaults[key],
         };
     }

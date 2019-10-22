@@ -2,11 +2,12 @@ import { NoiseTypes } from '@constants/enums';
 import { createGainNode } from '@utilities/createGain';
 
 export class NoiseNode {
-  public context: AudioContext;
-  public noiseType: NoiseTypes;
-  public noiseBuffer: AudioBuffer;
-  public noiseNode: AudioBufferSourceNode;
-  public noise: GainNode;
+  private gain: number;
+  private context: AudioContext;
+  private noiseType: NoiseTypes;
+  private noiseBuffer: AudioBuffer;
+  private noiseNode: AudioBufferSourceNode;
+  private noise: GainNode;
 
   constructor(
     context: AudioContext,
@@ -24,7 +25,12 @@ export class NoiseNode {
   }
 
   public setNoiseGain = (gain: number): void => {
+    this.gain = gain;
     this.noise.gain.setTargetAtTime(gain, this.context.currentTime, 0.001);
+  }
+
+  public getNoiseGain = (): number => {
+    return this.gain;
   }
 
   public outputNoise(): GainNode {

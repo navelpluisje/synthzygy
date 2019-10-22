@@ -2,11 +2,11 @@ import { NoiseTypes } from '@constants/enums';
 import { NoiseNode } from '@nodes/noiseNode';
 
 export class NoisesNode {
-  public context: AudioContext;
+  private context: AudioContext;
 
-  public pink: NoiseNode;
-  public white: NoiseNode;
-  public blue: NoiseNode;
+  private pink: NoiseNode;
+  private white: NoiseNode;
+  private blue: NoiseNode;
 
   constructor(
     context: AudioContext,
@@ -24,16 +24,28 @@ export class NoisesNode {
     return true;
   }
 
-  public setPinkNoisGain = (gain: number): void => {
+  public setPinkNoiseGain = (gain: number): void => {
     this.pink.setNoiseGain(gain);
   }
 
-  public setWhiteNoisGain = (gain: number): void => {
-    this.pink.setNoiseGain(gain);
+  public getPinkNoiseGain = (): number => {
+    return this.pink.getNoiseGain();
   }
 
-  public setBlueNoisGain = (gain: number): void => {
-    this.pink.setNoiseGain(gain);
+  public setWhiteNoiseGain = (gain: number): void => {
+    this.white.setNoiseGain(gain);
+  }
+
+  public getWhiteNoiseGain = (): number => {
+    return this.white.getNoiseGain();
+  }
+
+  public setBlueNoiseGain = (gain: number): void => {
+    this.blue.setNoiseGain(gain);
+  }
+
+  public getBlueNoiseGain = (): number => {
+    return this.blue.getNoiseGain();
   }
 
   public outputPinkNoise(): GainNode {
@@ -41,10 +53,10 @@ export class NoisesNode {
   }
 
   public outputWhiteNoise(): GainNode {
-    return this.pink.outputNoise();
+    return this.white.outputNoise();
   }
 
   public outputBlueNoise(): GainNode {
-    return this.pink.outputNoise();
+    return this.blue.outputNoise();
   }
 }
