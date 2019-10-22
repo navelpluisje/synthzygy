@@ -6,6 +6,7 @@ import { GateTrigger } from 'src/types';
 export class HiHatNode {
   private volume: number = .5;
   private decay: number = .1;
+  private frequency: number = .1;
   private context: AudioContext;
   private hihatGain: GainNode;
   private outputNode: GainNode;
@@ -29,8 +30,17 @@ export class HiHatNode {
     this.decay = decay;
   }
 
+  public getDecay(): number {
+    return this.decay;
+  }
+
   public setFrequency = (frequency: number): void => {
+    this.frequency = frequency;
     this.filter.frequency.setTargetAtTime(frequency, this.context.currentTime, 0.001);
+  }
+
+  public getFrequency(): number {
+    return this.frequency;
   }
 
   public inputGate(): GateTrigger {
