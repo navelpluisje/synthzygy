@@ -1,7 +1,7 @@
-import { Knob, SynthModule } from '@components/index';
+import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
@@ -15,21 +15,30 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
   public type = 'oscilloscope';
   public title = 'Oscilloscope';
   public active: boolean = false;
-  public node: AnalyserNode;
   public bufferLength: number;
   public dataArray: Float32Array;
   public verticalSpread: number = .5;
   public fftSizeBase: number = 32;
   public fftSizePower: number = 8;
+  protected defaults: ModuleDefaultValues = {
+    x: 4,
+    y: 0.5,
+  };
+  private node: AnalyserNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
     super(canvas, position);
-
+    this.accentColor = Colors.AccentUtility;
     this.node = context.createAnalyser();
     this.setFftSize(this.fftSizePower);
     this.container = new SynthModule(canvas, Oscilloscope.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
-    this.addControls();
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
     this.drawWave();
   }
 
@@ -40,11 +49,6 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
       case 'cv':
         return 'cv';
     }
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(this.canvas, this, controlTypes[0], this.setFftSize, Colors.AccentUtility));
-    this.controls.push(new Knob(this.canvas, this, controlTypes[1], this.setVerticalSpread, Colors.AccentUtility));
   }
 
   public setFftSize = (value: number) => {
@@ -120,14 +124,26 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.canvas.stroke();
   }
 
-  public getNode() {
-    return this.node;
-  }
-
   private getInputConnection = (type: string): AnalyserNode => {
     switch (type) {
       case 'Spread':
         return this.node;
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'x':
+        return {
+          callback: this.setFftSize,
+          default: this.defaults[key],
+        };
+      case 'y':
+        return {
+          callback: this.setVerticalSpread,
+          default: this.defaults[key],
+        };
     }
   }
 }
