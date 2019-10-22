@@ -66,6 +66,11 @@ export class ThreeStateButton {
     };
   }
 
+  public setActive(active: boolean): void {
+    this.active = active;
+    this.draw(true);
+  }
+
   public getActive(): boolean {
     return this.active;
   }

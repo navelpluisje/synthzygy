@@ -1,14 +1,12 @@
 import { Transport } from '@constants/enums';
 import { GateNode } from '@nodes/gateNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
-import { GateTrigger } from 'src/types';
+import { GateTrigger, ModuleDefaultValues } from 'src/types';
 
 export class SequencerNode {
-  private stepsA: Float32Array = new Float32Array([4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]);
-  private stepsB: Float32Array = new Float32Array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
-  private gates: boolean[] = [
-    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-  ];
+  private stepsA: Float32Array;
+  private stepsB: Float32Array;
+  private gates: boolean[];
   private length: number = 16;
   private running: boolean = false;
   private currentStep: number = -1;
@@ -22,8 +20,12 @@ export class SequencerNode {
   constructor(
     context: AudioContext,
     stepChangeCallback: (step: number) => void,
+    initialData: ModuleDefaultValues,
     ) {
     this.context = context;
+    this.setStepsA(initialData.stepsA as number[]);
+    this.setStepsB(initialData.stepsB as number[]);
+    this.setGates(initialData.gates as boolean[]);
     this.gateOutput = new GateNode();
     this.createCvOutputNodes();
     this.stepChangeCallback = stepChangeCallback;
@@ -31,6 +33,37 @@ export class SequencerNode {
 
   public setLength(length: number): void {
     this.length = length;
+  }
+
+  public setStepsA(value: number[]) {
+    this.stepsA = new Float32Array(value);
+  }
+
+  public getStepsA(): number[] {
+    return Object.values(this.stepsA);
+  }
+
+  public setStepsB(value: number[]) {
+    this.stepsB = new Float32Array(value);
+  }
+
+  public getStepsB(): number[] {
+    return Object.values(this.stepsB);
+  }
+
+  public getStepDataByGroupId(group: 'A' | 'B') {
+    if (group === 'B') {
+      return this.getStepsB();
+    }
+    return this.getStepsA();
+  }
+
+  public setGates(value: boolean[]) {
+    this.gates = value;
+  }
+
+  public getGates(): boolean[] {
+    return this.gates;
   }
 
   public start(): void {

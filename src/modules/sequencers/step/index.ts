@@ -4,12 +4,12 @@ import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { GateNode } from '@nodes/gateNode';
-import { GateTrigger, KnobType, PositionType } from 'src/types';
+import { GateTrigger, KnobType, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
-import { buttons } from './buttons';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { buttons } from './sequencer.buttons';
+import { inputTypes } from './sequencer.inputs';
 import { SequencerNode } from './sequencer.node';
+import { outputTypes } from './sequencer.outputs';
 
 export class Sequencer extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -20,13 +20,23 @@ export class Sequencer extends ModuleBase implements ParentModule {
   public type = 'sequencer';
   public title = 'Sequencer';
   public activeControlGroup: 'A' | 'B' = 'A';
-  public node: SequencerNode;
-  public stepButtons: ThreeStateButton[] = [];
+  protected defaults: ModuleDefaultValues = {
+    gates: new Array(16).fill(true, 0, 16),
+    stepsA: new Array(16).fill(2, 0, 16),
+    stepsB: new Array(16).fill(5, 0, 16),
+  };
+  private node: SequencerNode;
+  private stepButtons: ThreeStateButton[] = [];
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues = {},
+  ) {
     super(canvas, position);
     this.accentColor = Colors.AccentUtility;
-    this.node = new SequencerNode(context, this.onStepChange);
+    this.initNode(context, defaults);
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color);
     this.draw();
     this.addInputs(inputTypes, this.getInputConnection);
@@ -34,6 +44,14 @@ export class Sequencer extends ModuleBase implements ParentModule {
     this.addButtonControls();
     this.addStepButtons();
     this.addStepSliders();
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      gates: this.node.getGates(),
+      stepsA: this.node.getStepsA(),
+      stepsB: this.node.getStepsB(),
+    };
   }
 
   public draw(): void {
@@ -69,6 +87,14 @@ export class Sequencer extends ModuleBase implements ParentModule {
       }
     });
     return true;
+  }
+
+  private initNode(context: AudioContext, defaults: ModuleDefaultValues) {
+    const initialData = {
+      ...this.defaults,
+      ...defaults,
+    };
+    this.node = new SequencerNode(context, this.onStepChange, initialData);
   }
 
   private getInputConnection = (type: string): GateTrigger => {
@@ -134,6 +160,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
   }
 
   private addStepButtons() {
+    const gateData = this.node.getGates();
     for (let i = 0; i < 16; i += 1) {
       const button: KnobType = {
         position: {
@@ -142,7 +169,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
         },
         size: SMALL_KNOB,
         type: 'stepButton',
-    };
+      };
       this.stepButtons.push(new ThreeStateButton(
         this.canvas,
         this,
@@ -150,10 +177,12 @@ export class Sequencer extends ModuleBase implements ParentModule {
         this.setGateValue(i),
         Colors.AccentUtility,
       ));
+      this.stepButtons[i].setActive(gateData[i]);
     }
   }
 
   private addStepSliders() {
+    const stepData = this.node.getStepDataByGroupId(this.activeControlGroup);
     for (let i = 0; i < 16; i += 1) {
       const slider: KnobType = {
         log: true,
@@ -166,7 +195,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
         size: MEDIUM_SLIDER,
         step: 0.01,
         type: 'slider',
-        value: 4,
+        value: stepData[i],
     };
       this.controls.push(new Slider(
         this.canvas,
