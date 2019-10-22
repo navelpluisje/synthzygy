@@ -88,8 +88,16 @@ export class MidiNode {
     }
   }
 
+  public getMidiPort(): number {
+    return parseInt(this.port, 16);
+  }
+
   public setClockStepSize = (size: number): void => {
     this.noteLength = 2 ** size;
+  }
+
+  public getClockStepSize(): number {
+    return Math.log(this.noteLength) / Math.log(2);
   }
 
   public clockNode(): GateNode {

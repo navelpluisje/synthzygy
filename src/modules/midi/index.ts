@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
-import { buttons } from './buttons';
-import { knobTypes } from './controls';
+import { buttons } from './midi.buttons';
+import { knobTypes } from './midi.knobs';
 import { MidiNode } from './midi.node';
-import { outputTypes } from './outputs';
+import { outputTypes } from './midi.outputs';
 
 export class Midi extends ModuleBase implements ParentModule {
   public static dimensions: DimensionType = {
@@ -37,6 +37,13 @@ export class Midi extends ModuleBase implements ParentModule {
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
+  }
+
+  public getValues(): ModuleDefaultValues {
+    return {
+      'clock': this.midiNode.getClockStepSize(),
+      'midi port': this.midiNode.getMidiPort(),
+    };
   }
 
   private addButtonControls() {
