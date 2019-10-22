@@ -26,6 +26,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
 
   constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
     super(canvas, position);
+    this.accentColor = Colors.AccentUtility;
     this.node = new SequencerNode(context, this.onStepChange);
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color);
     this.draw();

@@ -36,13 +36,13 @@ export class Lfo extends ModuleBase implements ParentModule {
 
   private getOutputConnection = (type: string): GainNode => {
     switch (type) {
-      case 'saw':
+      case 'sawWave':
         return this.node.outputSaw();
-      case 'sine':
+      case 'sineWave':
         return this.node.outputSine();
-      case 'square':
+      case 'squareWave':
         return this.node.outputSquare();
-      case 'triangle':
+      case 'triangleWave':
         return this.node.outputTriangle();
     }
   }
