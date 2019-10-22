@@ -14,7 +14,6 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
 
   public type = 'oscilloscope';
   public title = 'Oscilloscope';
-  public active: boolean = false;
   public bufferLength: number;
   public dataArray: Float32Array;
   public verticalSpread: number = .5;

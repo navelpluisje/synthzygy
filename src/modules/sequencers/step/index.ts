@@ -19,7 +19,6 @@ export class Sequencer extends ModuleBase implements ParentModule {
 
   public type = 'sequencer';
   public title = 'Sequencer';
-  public active: boolean = false;
   public activeControlGroup: 'A' | 'B' = 'A';
   public node: SequencerNode;
   public stepButtons: ThreeStateButton[] = [];

@@ -16,7 +16,6 @@ export class Vca extends ModuleBase implements ParentModule {
 
   public type = 'vca';
   public title = 'Vca';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     Level: 0,
   };

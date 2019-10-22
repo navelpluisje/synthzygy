@@ -19,7 +19,6 @@ export class TuringMachine extends ModuleBase implements ParentModule {
 
   public type =  'turinger';
   public title =  'Turing Machine';
-  public active: boolean = false;
   protected defaults: ModuleDefaultValues = {
     [this.probKey]: 6,
     length: 6,
