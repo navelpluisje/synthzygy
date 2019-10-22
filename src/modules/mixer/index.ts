@@ -1,18 +1,14 @@
-import { Knob, SynthModule } from '@components/index';
-import { Module, ParentModule } from '@interfaces/index';
+import { SynthModule } from '@components/index';
+import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { controlTypes } from './controls';
 import { inputTypes } from './inputs';
 import { MixerNode } from './mixer.node';
 import { outputTypes } from './outputs';
 
-export interface Mixer extends Module {
-  getNode(): MixerNode;
-}
-
-export class Mixer extends ModuleBase implements Mixer, ParentModule {
+export class Mixer extends ModuleBase implements ParentModule {
   public static dimensions = {
     height: 245,
     width: 165,
@@ -21,48 +17,28 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
   public type = 'mixer';
   public title = 'Mixer';
   public active: boolean = false;
-  public node: MixerNode;
+  protected defaults: ModuleDefaultValues = {
+    'in 1': 0.5,
+    'in 2': 0.5,
+    'in 3': 0.5,
+    'in 4': 0.5,
+    'out': 1,
+  };
+  private node: MixerNode;
 
-  constructor(canvas: CanvasRenderingContext2D, context: AudioContext, position: PositionType) {
-    super(canvas, position);
+  constructor(
+    canvas: CanvasRenderingContext2D,
+    context: AudioContext,
+    position: PositionType,
+    defaults: ModuleDefaultValues,
+  ) {
+    super(canvas, position, defaults);
+    this.accentColor = Colors.AccentAudioPath;
     this.node = new MixerNode(context);
     this.container = new SynthModule(canvas, Mixer.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
-    this.addControls();
-  }
-
-  public addControls() {
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[0],
-      this.node.setAudio('1'),
-      Colors.AccentAudioPath,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[1],
-      this.node.setAudio('2'),
-      Colors.AccentAudioPath,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[2],
-      this.node.setAudio('3'),
-      Colors.AccentAudioPath,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[3],
-      this.node.setAudio('4'),
-      Colors.AccentAudioPath,
-    ));
-    this.controls.push(new Knob(
-      this.canvas,
-      this, controlTypes[4],
-      this.node.setAudio('out'),
-      Colors.AccentAudioPath,
-    ));
+    this.addKnobs(controlTypes, this.getKnobCallbackAndDefault);
   }
 
   public getNode() {
@@ -86,6 +62,37 @@ export class Mixer extends ModuleBase implements Mixer, ParentModule {
         return this.node.input('3');
       case 'audioIn4':
         return this.node.input('4');
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'in 1':
+        return {
+          callback: this.node.setAudio('1'),
+          default: this.defaults[key],
+        };
+      case 'in 2':
+        return {
+          callback: this.node.setAudio('2'),
+          default: this.defaults[key],
+        };
+      case 'in 3':
+        return {
+          callback: this.node.setAudio('3'),
+          default: this.defaults[key],
+        };
+      case 'in 4':
+        return {
+          callback: this.node.setAudio('4'),
+          default: this.defaults[key],
+        };
+      case 'out':
+        return {
+          callback: this.node.setAudio('out'),
+          default: this.defaults[key],
+        };
     }
   }
 }
