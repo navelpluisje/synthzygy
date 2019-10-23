@@ -3,10 +3,10 @@ import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
+import { inputTypes } from './vca.inputs';
+import { knobTypes } from './vca.knobs';
 import { VcaNode } from './vca.node';
+import { outputTypes } from './vca.outputs';
 
 export class Vca extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -17,7 +17,7 @@ export class Vca extends ModuleBase implements ParentModule {
   public type = 'vca';
   public title = 'Vca';
   protected defaults: ModuleDefaultValues = {
-    Level: 0,
+    level: 0,
   };
   private node: VcaNode;
 
@@ -34,6 +34,12 @@ export class Vca extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues() {
+    return {
+      level: this.node.getLevel(),
+    };
   }
 
   public addControls() {
@@ -61,7 +67,7 @@ export class Vca extends ModuleBase implements ParentModule {
     switch (key) {
       case 'level':
         return {
-          callback: this.node.setGain,
+          callback: this.node.setLevel,
           default: this.defaults[key],
         };
     }

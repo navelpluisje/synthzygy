@@ -10,7 +10,7 @@ export interface VcaNode {
 }
 
 export class VcaNode implements VcaNode {
-  public gain: number;
+  public level: number;
   public context: AudioContext;
   public gainNode: GainNode;
   public cvGainNode: AudioWorkletNode;
@@ -18,22 +18,24 @@ export class VcaNode implements VcaNode {
 
   constructor(
     context: AudioContext,
-    gain: number = 0,
   ) {
     this.context = context;
-    this.gain = gain;
     this.createGainNode();
   }
 
   public createGainNode() {
-    this.gainNode = createGainNode(this.context, this.gain);
+    this.gainNode = createGainNode(this.context, 0);
     this.cvNode = createGainNode(this.context, 0);
     this.cvNode.connect(this.gainNode.gain);
   }
 
-  public setGain = (gain: number): void => {
-    this.gain = gain;
-    this.cvNode.gain.setTargetAtTime(this.gain, this.context.currentTime, 0.001);
+  public setLevel = (level: number): void => {
+    this.level = level;
+    this.cvNode.gain.setTargetAtTime(this.level, this.context.currentTime, 0.001);
+  }
+
+  public getLevel(): number {
+    return this.level;
   }
 
   public input(): GainNode {

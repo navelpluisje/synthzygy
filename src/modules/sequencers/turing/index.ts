@@ -31,7 +31,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position);
+    super(canvas, position, defaults);
     this.accentColor = Colors.AccentUtility;
     this.node = new TuringMachineNode(context);
     this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color);
