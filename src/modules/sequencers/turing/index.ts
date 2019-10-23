@@ -4,10 +4,10 @@ import { GateNode } from '@nodes/gateNode';
 import { Colors } from 'src/constants/enums';
 import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
-import { knobTypes } from './controls';
-import { inputTypes } from './inputs';
-import { outputTypes } from './outputs';
-import { TuringMachineNode } from './turingMachine.node';
+import { inputTypes } from './turing.inputs';
+import { knobTypes } from './turing.knobs';
+import { TuringMachineNode } from './turing.node';
+import { outputTypes } from './turing.outputs';
 
 export class TuringMachine extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -38,6 +38,13 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+  }
+
+  public getValues() {
+    return {
+      [this.probKey]: this.node.getProbability(),
+      length: this.node.getLength(),
+    };
   }
 
   private getOutputConnection = (type: string): ConstantSourceNode | GateNode => {

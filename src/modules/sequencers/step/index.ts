@@ -22,7 +22,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
   public activeControlGroup: 'A' | 'B' = 'A';
   protected defaults: ModuleDefaultValues = {
     gates: new Array(16).fill(true, 0, 16),
-    stepsA: new Array(16).fill(2, 0, 16),
+    stepsA: new Array(16).fill(3, 0, 16),
     stepsB: new Array(16).fill(5, 0, 16),
   };
   private node: SequencerNode;

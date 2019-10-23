@@ -42,8 +42,16 @@ export class TuringMachineNode {
     this.length = this.lengths[length];
   }
 
+  public getLength() {
+    return this.lengths.indexOf(this.length);
+  }
+
   public setProbability = (probability: number): void => {
     this.probability = probability;
+  }
+
+  public getProbability() {
+    return this.probability;
   }
 
   public outputPulse(pulse: string): GateNode {
