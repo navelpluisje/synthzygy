@@ -46,6 +46,15 @@ interface Modules {
   [key: string]: Module;
 }
 
+interface ModuleValues {
+  [id: string]: {
+    id: string,
+    position: PositionType,
+    values: Record<string, number | number[] | boolean[]>,
+    type: string,
+  };
+}
+
 export class ModuleList {
   public canvas: CanvasRenderingContext2D;
   public audio: AudioContext;
@@ -123,7 +132,24 @@ export class ModuleList {
       module.onMouseUp(event);
       module.unset();
     });
+  }
 
+  public getValues = (): ModuleValues => {
+    let values = {};
+    Object.values(this.modules).forEach((module) => {
+      const id = module.getId();
+      values = {
+        ...values,
+        [id]: {
+          id,
+          position: module.getPosition(),
+          type: module.getType(),
+          values: module.getValues(),
+        },
+      };
+    });
+
+    return values;
   }
 
   private getModule(name: string) {

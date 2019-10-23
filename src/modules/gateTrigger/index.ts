@@ -26,6 +26,10 @@ export class GateTrigger extends ModuleBase implements ParentModule {
     this.addControls();
   }
 
+  public getValues() {
+    return {};
+  }
+
   public addControls() {
     this.controls.push(new TriggerButton(
       this.canvas,
