@@ -49,7 +49,7 @@ export class Synth {
   public loadPatch(patch: PatchData) {
     Object.values(patch.modules).forEach((module) => {
       this.modules.addModule(module.type, module);
-    })
+    });
   }
 
   public onMouseDown = (event: MouseEvent) => {

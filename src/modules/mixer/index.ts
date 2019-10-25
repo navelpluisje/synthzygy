@@ -13,16 +13,16 @@ export class Mixer extends ModuleBase implements ParentModule {
     height: 245,
     width: 165,
   };
-
-  public type = 'mixer';
-  public title = 'Mixer';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     'in 1': 0.5,
     'in 2': 0.5,
     'in 3': 0.5,
     'in 4': 0.5,
     'out': 1,
   };
+
+  public type = 'mixer';
+  public title = 'Mixer';
   private node: MixerNode;
 
   constructor(
@@ -31,7 +31,10 @@ export class Mixer extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Mixer.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentAudioPath;
     this.node = new MixerNode(context);
     this.container = new SynthModule(canvas, Mixer.dimensions, position, this.color);

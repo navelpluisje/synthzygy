@@ -12,12 +12,12 @@ export class Lfo extends ModuleBase implements ParentModule {
     height: 160,
     width: 140,
   };
+  private static initialValues: ModuleDefaultValues = {
+    freq: 5,
+  };
 
   public type =  'lfo';
   public title = 'Lfo';
-  protected defaults: ModuleDefaultValues = {
-    freq: 5,
-  };
   private node: LfoNode;
 
   constructor(
@@ -26,7 +26,10 @@ export class Lfo extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Lfo.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentModulator;
     this.node = new LfoNode(context);
     this.container = new SynthModule(canvas, Lfo.dimensions, position, this.color);

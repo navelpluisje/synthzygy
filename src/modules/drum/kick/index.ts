@@ -13,15 +13,15 @@ export class Kick extends ModuleBase implements ParentModule {
     height: 210,
     width: 140,
   };
-
-  public type =  'kick';
-  public title = 'Kick';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     boost: 0,
     decay: 0.3,
     pitch: 40,
     punch: 0.5,
   };
+
+  public type =  'kick';
+  public title = 'Kick';
   private node: KickNode;
 
   constructor(
@@ -30,7 +30,10 @@ export class Kick extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Kick.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentGenerator;
     this.node = new KickNode(context);
     this.container = new SynthModule(canvas, Kick.dimensions, position, this.color);

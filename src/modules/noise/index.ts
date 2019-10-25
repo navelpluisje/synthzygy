@@ -12,14 +12,14 @@ export class Noise extends ModuleBase implements ParentModule {
     height: 230,
     width: 110,
   };
-
-  public type =  'noise';
-  public title = 'Noise';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     blue: 1,
     pink: 1,
     white: 2,
   };
+
+  public type =  'noise';
+  public title = 'Noise';
   private node: NoisesNode;
 
   constructor(
@@ -28,7 +28,10 @@ export class Noise extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position);
+    super(canvas, position, {
+      ...Noise.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentGenerator;
     this.node = new NoisesNode(context);
     this.container = new SynthModule(canvas, Noise.dimensions, position, this.color);

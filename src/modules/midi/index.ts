@@ -13,13 +13,13 @@ export class Midi extends ModuleBase implements ParentModule {
     height: 250,
     width: 180,
   };
-
-  public type =  'midi';
-  public title = 'Midi';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     'clock': 3,
     'midi port': 0,
   };
+
+  public type =  'midi';
+  public title = 'Midi';
   private midiNode: MidiNode;
   private settingsPanel: HTMLElement;
 
@@ -29,7 +29,10 @@ export class Midi extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Midi.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentUtility;
     this.midiNode = new MidiNode(context);
     this.container = new SynthModule(canvas, Midi.dimensions, position, this.color);

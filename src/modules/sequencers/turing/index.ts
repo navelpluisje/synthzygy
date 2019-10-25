@@ -15,14 +15,14 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     width: 190,
   };
   // tslint:disable-next-line
-  public probKey = "prob'ty";
-
-  public type =  'turinger';
-  public title =  'Turing Machine';
-  protected defaults: ModuleDefaultValues = {
-    [this.probKey]: 6,
+  private static probKey = "prob'ty";
+  private static initialValues: ModuleDefaultValues = {
+    [TuringMachine.probKey]: 6,
     length: 6,
   };
+
+  public type = 'turinger';
+  public title = 'Turing Machine';
   private node: TuringMachineNode;
 
   constructor(
@@ -31,7 +31,10 @@ export class TuringMachine extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...TuringMachine.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentUtility;
     this.node = new TuringMachineNode(context);
     this.container = new SynthModule(canvas, TuringMachine.dimensions, position, this.color);
@@ -42,7 +45,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
 
   public getValues() {
     return {
-      [this.probKey]: this.node.getProbability(),
+      [TuringMachine.probKey]: this.node.getProbability(),
       length: this.node.getLength(),
     };
   }
@@ -73,7 +76,7 @@ export class TuringMachine extends ModuleBase implements ParentModule {
   private getKnobCallbackAndDefault = (label: string): any => {
     const key = label.toLowerCase();
     switch (key) {
-      case this.probKey:
+      case TuringMachine.probKey:
         return {
           callback: this.node.setProbability,
           default: this.defaults[key],

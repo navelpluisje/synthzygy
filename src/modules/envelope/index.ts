@@ -13,16 +13,16 @@ export class Envelope extends ModuleBase implements ParentModule {
     height: 210,
     width: 200,
   };
-
-  public type = 'envelope';
-  public title = 'Envelope';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     attack: 0.3,
     decay: 0.3,
     level: 0.5,
     release: 0.5,
     sustain: 0.5,
   };
+
+  public type = 'envelope';
+  public title = 'Envelope';
   private node: EnvelopeNode;
 
   constructor(
@@ -31,7 +31,10 @@ export class Envelope extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Envelope.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentModulator;
     this.node = new EnvelopeNode(context);
     this.container = new SynthModule(canvas, Envelope.dimensions, position, this.color);

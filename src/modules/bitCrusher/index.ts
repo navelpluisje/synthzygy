@@ -13,15 +13,15 @@ export class BitCrusher extends ModuleBase implements ParentModule {
     height: 205,
     width: 140,
   };
-
-  public type = 'bitCrusher';
-  public title = 'Crushy';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     'degrade': 0.5,
     'depth': 8,
     'level': 0.5,
     'wet/dry': 0.5,
   };
+
+  public type = 'bitCrusher';
+  public title = 'Crushy';
   private node: BitCrusherNode;
 
   constructor(
@@ -30,7 +30,10 @@ export class BitCrusher extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...BitCrusher.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentEffect;
     this.node = new BitCrusherNode(context);
     this.container = new SynthModule(canvas, BitCrusher.dimensions, position, this.color);

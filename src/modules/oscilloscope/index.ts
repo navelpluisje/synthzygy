@@ -11,6 +11,10 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     height: 190,
     width: 445,
   };
+  private static initialValues: ModuleDefaultValues = {
+    x: 4,
+    y: 0.5,
+  };
 
   public type = 'oscilloscope';
   public title = 'Oscilloscope';
@@ -19,10 +23,6 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
   public verticalSpread: number = .5;
   public fftSizeBase: number = 32;
   public fftSizePower: number = 8;
-  protected defaults: ModuleDefaultValues = {
-    x: 4,
-    y: 0.5,
-  };
   private node: AnalyserNode;
 
   constructor(
@@ -31,7 +31,10 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position);
+    super(canvas, position, {
+      ...Oscilloscope.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentUtility;
     this.node = context.createAnalyser();
     this.setFftSize(this.fftSizePower);

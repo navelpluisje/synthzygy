@@ -13,14 +13,14 @@ export class Snare extends ModuleBase implements ParentModule {
     height: 210,
     width: 140,
   };
-
-  public type =  'snare';
-  public title = 'Snare';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     decay: 0.1,
     head: 0.2,
     snare: 2000,
   };
+
+  public type =  'snare';
+  public title = 'Snare';
   private node: SnareNode;
 
   constructor(
@@ -29,7 +29,10 @@ export class Snare extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Snare.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentGenerator;
     this.node = new SnareNode(context);
     this.container = new SynthModule(canvas, Snare.dimensions, position, this.color);

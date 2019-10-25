@@ -13,15 +13,15 @@ export class Delay extends ModuleBase implements ParentModule {
     height: 210,
     width: 140,
   };
-
-  public type = 'delay';
-  public title = 'Delay';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     'cutoff': 3000,
     'delay': 0.5,
     'dry/wet': 0,
     'f.back': 0.6,
   };
+
+  public type = 'delay';
+  public title = 'Delay';
   private node: DelayerNode;
 
   constructor(
@@ -30,7 +30,10 @@ export class Delay extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Delay.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentEffect;
     this.node = new DelayerNode(context);
     this.container = new SynthModule(canvas, Delay.dimensions, position, this.color);

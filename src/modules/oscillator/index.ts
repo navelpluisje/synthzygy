@@ -14,15 +14,15 @@ export class Oscillator extends ModuleBase implements ParentModule {
     height: 230,
     width: 190,
   };
-
-  public type = 'oscillator';
-  public title = 'Oscillator';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     detune: 0,
     fm: 0,
     freq: 3.0,
     octave: 3.0,
   };
+
+  public type = 'oscillator';
+  public title = 'Oscillator';
   private node: JsOscillatorNode;
 
   constructor(
@@ -31,7 +31,10 @@ export class Oscillator extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Oscillator.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentGenerator;
     this.node = new JsOscillatorNode(context);
     this.container = new SynthModule(canvas, Oscillator.dimensions, position, this.color);

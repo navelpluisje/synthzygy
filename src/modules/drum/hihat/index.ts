@@ -13,13 +13,13 @@ export class HiHat extends ModuleBase implements ParentModule {
     height: 140,
     width: 140,
   };
-
-  public type =  'hihat';
-  public title = 'Hihat';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     decay: 0.1,
     freq: 4000,
   };
+
+  public type =  'hihat';
+  public title = 'Hihat';
   private node: HiHatNode;
 
   constructor(
@@ -28,7 +28,10 @@ export class HiHat extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...HiHat.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentGenerator;
     this.node = new HiHatNode(context);
     this.container = new SynthModule(canvas, HiHat.dimensions, position, this.color);

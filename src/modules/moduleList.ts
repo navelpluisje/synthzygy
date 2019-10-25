@@ -66,6 +66,7 @@ export class ModuleList {
     if (position.x > 0) {
       this.modules[key] = new tmpModule(this.canvas, this.audio, position, {
         id: key,
+        ...moduleData.values,
       });
       this.modules[key].setId(key);
       requestAnimationFrame(this.draw);

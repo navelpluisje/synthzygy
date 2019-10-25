@@ -13,12 +13,12 @@ export class Vca extends ModuleBase implements ParentModule {
     height: 140,
     width: 130,
   };
+  private static initialValues: ModuleDefaultValues = {
+    level: 0,
+  };
 
   public type = 'vca';
   public title = 'Vca';
-  protected defaults: ModuleDefaultValues = {
-    level: 0,
-  };
   private node: VcaNode;
 
   constructor(
@@ -27,7 +27,10 @@ export class Vca extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position);
+    super(canvas, position, {
+      ...Vca.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentAudioPath;
     this.node = new VcaNode(context);
     this.container = new SynthModule(canvas, Vca.dimensions, position, this.color);

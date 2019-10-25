@@ -14,16 +14,16 @@ export class Filter extends ModuleBase implements ParentModule {
     height: 290,
     width: 170,
   };
-
-  public type = 'filter';
-  public title = 'Filter';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     'cutoff': 4,
     'cv c/o': 0,
     'cv res': 0,
     'level in': 1,
     'resonance': 0,
   };
+
+  public type = 'filter';
+  public title = 'Filter';
   private node: FilterNode;
 
   constructor(
@@ -32,7 +32,10 @@ export class Filter extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Filter.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentEffect;
     this.node = new FilterNode(context);
     this.container = new SynthModule(canvas, Filter.dimensions, position, this.color);

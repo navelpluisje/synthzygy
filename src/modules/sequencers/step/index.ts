@@ -16,15 +16,15 @@ export class Sequencer extends ModuleBase implements ParentModule {
     height: 170,
     width: 600,
   };
-
-  public type = 'sequencer';
-  public title = 'Sequencer';
-  public activeControlGroup: 'A' | 'B' = 'A';
-  protected defaults: ModuleDefaultValues = {
+  private static initialValues: ModuleDefaultValues = {
     gates: new Array(16).fill(true, 0, 16),
     stepsA: new Array(16).fill(3, 0, 16),
     stepsB: new Array(16).fill(5, 0, 16),
   };
+
+  public type = 'sequencer';
+  public title = 'Sequencer';
+  public activeControlGroup: 'A' | 'B' = 'A';
   private node: SequencerNode;
   private stepButtons: ThreeStateButton[] = [];
 
@@ -34,7 +34,10 @@ export class Sequencer extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues = {},
   ) {
-    super(canvas, position);
+    super(canvas, position, {
+      ...Sequencer.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentUtility;
     this.initNode(context, defaults);
     this.container = new SynthModule(canvas, Sequencer.dimensions, position, this.color);

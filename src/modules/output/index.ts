@@ -12,12 +12,12 @@ export class AudioOut extends ModuleBase implements ParentModule {
     height: 155,
     width: 120,
   };
+  private static initialValues: ModuleDefaultValues = {
+    gain: 0.5,
+  };
 
   public type = 'audioOut';
   public title = 'Output';
-  protected defaults: ModuleDefaultValues = {
-    gain: 0.5,
-  };
   private node: OutputNode;
 
   constructor(
@@ -26,7 +26,10 @@ export class AudioOut extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...AudioOut.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentAudioPath;
     this.node = new OutputNode(context);
     this.container = new SynthModule(canvas, AudioOut.dimensions, position, this.color);

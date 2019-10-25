@@ -12,6 +12,10 @@ export class Clock extends ModuleBase implements ParentModule {
     height: 210,
     width: 140,
   };
+  private static initialValues: ModuleDefaultValues = {
+    bpm: 120,
+    pw: 0.5,
+  };
 
   public bpm: number = 120;
   public frequency: number = 2;
@@ -19,10 +23,6 @@ export class Clock extends ModuleBase implements ParentModule {
   public type = 'clock';
   public title = 'Clock';
   public context: AudioContext;
-  protected defaults: ModuleDefaultValues = {
-    bpm: 120,
-    pw: 0.5,
-  };
   private nodes: Record<string, ClockNode> = {};
 
   constructor(
@@ -31,7 +31,10 @@ export class Clock extends ModuleBase implements ParentModule {
     position: PositionType,
     defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position, defaults);
+    super(canvas, position, {
+      ...Clock.initialValues,
+      ...defaults,
+    });
     this.accentColor = Colors.AccentUtility;
     this.context = context;
     this.container = new SynthModule(canvas, Clock.dimensions, position, this.color);
