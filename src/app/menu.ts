@@ -46,7 +46,7 @@ export class Menu {
 
   private setEventListeners() {
     document.getElementById('save').addEventListener('click', () => {
-      localStorage.setItem('saved', JSON.stringify(this.synth.getValues()));
+      localStorage.setItem('saved', JSON.stringify(this.synth.getPatchData()));
     });
 
     document.getElementById('load').addEventListener('click', () => {
