@@ -58,10 +58,10 @@ export class ModuleList {
     this.audio = audio;
   }
 
-  public addModule(group: string, name: string): void {
+  public addModule(name: string, moduleData: any = {}): void {
     const tmpModule = this.getModule(name);
-    const key = new Date().getTime().toString();
-    const position: PositionType = this.calculatePosition(tmpModule.dimensions);
+    const key =  moduleData.id || new Date().getTime().toString();
+    const position: PositionType = moduleData.position || this.calculatePosition(tmpModule.dimensions);
 
     if (position.x > 0) {
       this.modules[key] = new tmpModule(this.canvas, this.audio, position, {

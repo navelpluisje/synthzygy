@@ -46,6 +46,12 @@ export class Synth {
     };
   }
 
+  public loadPatch(patch: PatchData) {
+    Object.values(patch.modules).forEach((module) => {
+      this.modules.addModule(module.type, module);
+    })
+  }
+
   public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
     if (event.button === 0 && !event.ctrlKey) {

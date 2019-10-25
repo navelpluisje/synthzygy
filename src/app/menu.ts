@@ -50,8 +50,8 @@ export class Menu {
     });
 
     document.getElementById('load').addEventListener('click', () => {
-      const config = JSON.parse(localStorage.getItem('saved'));
-      console.log(config);
+      const patch = JSON.parse(localStorage.getItem('saved'));
+      this.synth.loadPatch(patch)
     });
   }
 }
