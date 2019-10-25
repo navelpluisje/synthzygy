@@ -48,7 +48,7 @@ export class ModuleBase implements Module {
     this.draw.bind(this);
   }
 
-  public getValues() {
+  public getModuleData() {
     // dummy method
   }
 

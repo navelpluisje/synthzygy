@@ -40,7 +40,7 @@ export class Envelope extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       attack: this.node.getAttack(),
       decay: this.node.getDecay(),

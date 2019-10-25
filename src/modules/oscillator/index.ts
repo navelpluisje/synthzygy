@@ -42,7 +42,7 @@ export class Oscillator extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       detune: this.node.getDetune(),
       fm: this.node.getFm(),

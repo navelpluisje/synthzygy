@@ -46,7 +46,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     this.addStepSliders();
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       gates: this.node.getGates(),
       stepsA: this.node.getStepsA(),

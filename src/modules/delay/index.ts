@@ -39,7 +39,7 @@ export class Delay extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       'cutoff': this.node.getFrequency(),
       'delay': this.node.getDelayTime(),

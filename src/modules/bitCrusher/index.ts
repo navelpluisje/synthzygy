@@ -39,7 +39,7 @@ export class BitCrusher extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       'degrade': this.node.getFrequencyReduction(),
       'depth': this.node.getBitDepth(),

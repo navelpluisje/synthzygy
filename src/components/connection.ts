@@ -1,5 +1,5 @@
 import { Colors } from 'src/constants/enums';
-import { InputType, OutputType } from '../types';
+import { ConnectionData, InputType, OutputType } from '../types';
 import { PositionType } from './../types';
 
 interface ConnectionColors {
@@ -24,7 +24,7 @@ export class Connection {
     end && (this.end = end);
   }
 
-  public getConnectionData() {
+  public getConnectionData(): ConnectionData {
     return {
       input: {
         module: this.end.module,

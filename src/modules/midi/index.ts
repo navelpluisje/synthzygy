@@ -39,7 +39,7 @@ export class Midi extends ModuleBase implements ParentModule {
     this.addButtonControls();
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       'clock': this.midiNode.getClockStepSize(),
       'midi port': this.midiNode.getMidiPort(),

@@ -35,7 +35,7 @@ export class Noise extends ModuleBase implements ParentModule {
     this.setup();
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       blue: this.node.getBlueNoiseGain(),
       pink: this.node.getPinkNoiseGain(),

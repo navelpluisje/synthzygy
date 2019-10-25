@@ -40,7 +40,7 @@ export class Clock extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       bpm: this.bpm,
       pw: this.pulseWidth,

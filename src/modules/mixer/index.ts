@@ -40,7 +40,7 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       'in 1': this.node.getAudio('1'),
       'in 2': this.node.getAudio('2'),

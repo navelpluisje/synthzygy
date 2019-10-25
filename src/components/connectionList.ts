@@ -1,6 +1,6 @@
 import { InputConnector, OutputConnector } from '@components/index';
 import { Synth } from 'src/app/synth';
-import { DimensionType, InputType, OutputType, PositionType } from 'src/types';
+import { ConnectionData, DimensionType, InputType, OutputType, PositionType } from 'src/types';
 import { Connection } from './connection';
 
 export class ConnectionList {
@@ -9,7 +9,7 @@ export class ConnectionList {
   public newPosition: PositionType;
   private connections: Connection[] = [];
 
-  public getConnectionsData() {
+  public getConnectionsData(): ConnectionData[] {
     return this.connections.map(connection => connection.getConnectionData());
   }
 

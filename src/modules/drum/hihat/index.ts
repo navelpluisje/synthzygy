@@ -37,7 +37,7 @@ export class HiHat extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       decay: this.node.getDecay(),
       freq: this.node.getFrequency(),

@@ -1,4 +1,5 @@
 import { InputConnector, OutputConnector } from '@components/index';
+import { ModuleData } from '@interfaces/moduleInterface';
 import { ClockNode } from '@nodes/clockNode';
 import { GateNode } from '@nodes/gateNode';
 import { GateTrigger } from 'src/types';
@@ -73,6 +74,7 @@ export interface ModuleCollectionType {
 export interface ModuleDefaultValues {
   [parameter: string]: number | string | number[] | boolean[];
 }
+
 export interface ConnectionType {
   from: {
     module: string,
@@ -93,6 +95,17 @@ export interface NewConnectionType {
   yStart: number;
   xEnd: number;
   yEnd: number;
+}
+
+export interface ConnectionData {
+  input: Record<'module' | 'name', string>;
+  output: Record<'module' | 'name', string>;
+}
+
+export interface PatchData {
+  connections: ConnectionData[];
+  modules: ModuleData;
+  // modules: Record<string, ModuleDefaultValues>;
 }
 
 export interface ActiveModuleType {

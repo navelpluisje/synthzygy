@@ -41,7 +41,7 @@ export class Oscilloscope extends ModuleBase implements ParentModule {
     this.drawWave();
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       x: this.fftSizePower,
       y: this.verticalSpread,

@@ -39,7 +39,7 @@ export class Kick extends ModuleBase implements ParentModule {
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       boost: this.node.getBoost(),
       decay: this.node.getDecay(),

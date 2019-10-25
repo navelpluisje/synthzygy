@@ -42,7 +42,7 @@ export class Filter extends ModuleBase implements ParentModule {
     this.addButtonControls();
   }
 
-  public getValues(): ModuleDefaultValues {
+  public getModuleData(): ModuleDefaultValues {
     return {
       'cutoff': this.node.getFrequency(),
       'cv c/o': this.node.getCvFrequency(),

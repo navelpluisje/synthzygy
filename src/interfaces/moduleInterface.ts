@@ -6,7 +6,7 @@ export interface Module {
   getActiveInput(): InputType;
   getActiveControl(): number;
   getSelectedInput(event: MouseEvent): InputType | null;
-  getValues(): any;
+  getModuleData(): any;
   onMouseDown(event: MouseEvent): boolean;
   onMouseMove(event: MouseEvent): void;
   onMouseUp(event: MouseEvent): void;
@@ -14,7 +14,7 @@ export interface Module {
   unset(): void;
 }
 
-export interface ModuleValues {
+export interface ModuleData {
   [id: string]: {
     id: string,
     position: PositionType,

@@ -1,7 +1,7 @@
 import { ConnectionList, Knob } from '@components/index';
 import { Slider } from '@components/slider';
 import { ModuleList } from '@modules/moduleList';
-import { DimensionType } from 'src/types';
+import { DimensionType, PatchData } from 'src/types';
 
 export class Synth {
   public static canvasDimension: DimensionType = {
@@ -39,10 +39,10 @@ export class Synth {
     window.addEventListener('resize', this.setSize);
   }
 
-  public getValues(): any {
+  public getPatchData(): PatchData {
     return {
       connections: this.connections.getConnectionsData(),
-      modules: this.modules.getValues(),
+      modules: this.modules.getAllModulesData(),
     };
   }
 

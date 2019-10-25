@@ -1,4 +1,4 @@
-import { ModuleValues } from '@interfaces/moduleInterface';
+import { ModuleData } from '@interfaces/moduleInterface';
 import { Synth } from 'src/app/synth';
 import { DimensionType, PositionType } from 'src/types';
 import { Knob } from '../components/knob';
@@ -128,7 +128,7 @@ export class ModuleList {
     });
   }
 
-  public getValues = (): ModuleValues => {
+  public getAllModulesData = (): ModuleData => {
     let values = {};
     Object.values(this.modules).forEach((module) => {
       const id = module.getId();
@@ -138,7 +138,7 @@ export class ModuleList {
           id,
           position: module.getPosition(),
           type: module.getType(),
-          values: module.getValues(),
+          values: module.getModuleData(),
         },
       };
     });
