@@ -39,7 +39,14 @@ export class Synth {
     window.addEventListener('resize', this.setSize);
   }
 
- public onMouseDown = (event: MouseEvent) => {
+  public getValues(): any {
+    return {
+      connections: this.connections.getConnectionsData(),
+      modules: this.modules.getValues(),
+    };
+  }
+
+  public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
     if (event.button === 0 && !event.ctrlKey) {
       if (this.modules.moduleSelected(event)) {

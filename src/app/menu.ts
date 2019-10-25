@@ -1,13 +1,17 @@
+import { Synth } from 'src/app/synth';
 import { AvailableModules } from 'src/constants/modules';
 
 export class Menu {
-  public callback: (category: string, name: string) => void;
-  public menuDom: HTMLElement;
+  private callback: (category: string, name: string) => void;
+  private menuDom: HTMLElement;
+  private synth: Synth;
 
-  constructor(callback: (category: string, name: string) => void) {
-    this.callback = callback;
+  constructor(synth: Synth) {
+    this.callback = synth.addModule;
+    this.synth = synth;
     this.menuDom = document.getElementById('module-list');
     this.addMenuItems();
+    this.setEventListeners();
   }
 
   public addMenuItems() {
@@ -38,5 +42,16 @@ export class Menu {
     if (!isOpen) {
       target.setAttribute('open', '');
     }
+  }
+
+  private setEventListeners() {
+    document.getElementById('save').addEventListener('click', () => {
+      localStorage.setItem('saved', JSON.stringify(this.synth.getValues()));
+    });
+
+    document.getElementById('load').addEventListener('click', () => {
+      const config = JSON.parse(localStorage.getItem('saved'));
+      console.log(config);
+    });
   }
 }

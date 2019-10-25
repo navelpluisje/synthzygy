@@ -1,3 +1,4 @@
+import { ModuleValues } from '@interfaces/moduleInterface';
 import { Synth } from 'src/app/synth';
 import { DimensionType, PositionType } from 'src/types';
 import { Knob } from '../components/knob';
@@ -46,15 +47,6 @@ interface Modules {
   [key: string]: Module;
 }
 
-interface ModuleValues {
-  [id: string]: {
-    id: string,
-    position: PositionType,
-    values: Record<string, number | number[] | boolean[]>,
-    type: string,
-  };
-}
-
 export class ModuleList {
   public canvas: CanvasRenderingContext2D;
   public audio: AudioContext;
@@ -72,7 +64,9 @@ export class ModuleList {
     const position: PositionType = this.calculatePosition(tmpModule.dimensions);
 
     if (position.x > 0) {
-      this.modules[key] = new tmpModule(this.canvas, this.audio, position, {});
+      this.modules[key] = new tmpModule(this.canvas, this.audio, position, {
+        id: key,
+      });
       this.modules[key].setId(key);
       requestAnimationFrame(this.draw);
     } else {

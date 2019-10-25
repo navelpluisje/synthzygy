@@ -24,6 +24,19 @@ export class Connection {
     end && (this.end = end);
   }
 
+  public getConnectionData() {
+    return {
+      input: {
+        module: this.end.module,
+        name: this.end.name,
+      },
+      output: {
+        module: this.start.module,
+        name: this.start.name,
+      },
+    };
+  }
+
   public setEnd(end: InputType) {
     this.end = end;
   }

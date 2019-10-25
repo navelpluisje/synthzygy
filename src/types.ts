@@ -71,7 +71,7 @@ export interface ModuleCollectionType {
 }
 
 export interface ModuleDefaultValues {
-  [parameter: string]: number | number[] | boolean[];
+  [parameter: string]: number | string | number[] | boolean[];
 }
 export interface ConnectionType {
   from: {
@@ -129,6 +129,7 @@ export interface ActiveKnobType {
 }
 
 export interface OutputType {
+  module: string;
   type: string;
   name: string;
   node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode;
@@ -137,11 +138,11 @@ export interface OutputType {
 }
 
 export interface InputType {
+  module: string;
   type: string;
   name: string;
   node?: AudioNode | AudioParam | AudioWorkletNode;
   gate?: GateTrigger;
-  cv?: AudioParam;
   component: InputConnector;
 }
 

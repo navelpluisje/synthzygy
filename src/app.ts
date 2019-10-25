@@ -12,5 +12,5 @@ new MidiSettings();
 setCssColors();
 
 const synth = new Synth();
-new Menu(synth.addModule);
+new Menu(synth);
 synth.start();

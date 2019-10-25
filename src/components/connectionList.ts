@@ -9,6 +9,10 @@ export class ConnectionList {
   public newPosition: PositionType;
   private connections: Connection[] = [];
 
+  public getConnectionsData() {
+    return this.connections.map(connection => connection.getConnectionData());
+  }
+
   public hasNewConnection(): boolean {
     return this.newConnection !== null;
   }

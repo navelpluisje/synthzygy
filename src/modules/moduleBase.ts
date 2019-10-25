@@ -42,6 +42,7 @@ export class ModuleBase implements Module {
       ...this.defaults,
       ...defaults,
     };
+    this.id = this.defaults.id as string;
     this.position = position;
     this.canvas = canvas;
     this.draw.bind(this);
@@ -204,6 +205,7 @@ export class ModuleBase implements Module {
       this.inputs.push({
         component,
         [key]: getInputConnection(input.name),
+        module: this.id,
         name: input.name,
         type: input.type,
       });
@@ -221,6 +223,7 @@ export class ModuleBase implements Module {
       this.outputs.push({
         component,
         [key]: getOutputConnection(output.name),
+        module: this.getId(),
         name: output.name,
         type: output.type,
       });
