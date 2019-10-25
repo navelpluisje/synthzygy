@@ -104,6 +104,10 @@ export class ModuleList {
     }
   }
 
+  public getModuleById(id: string): Module {
+    return Object.values(this.modules).find((module) => module.getId() === id);
+  }
+
   public draw = () => {
     const {width, height} = Synth.canvasDimension;
     this.canvas.clearRect(0, 0, width, height);

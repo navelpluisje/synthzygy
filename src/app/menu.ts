@@ -27,7 +27,7 @@ export class Menu {
         modElement.setAttribute('name', module.name);
         modElement.textContent = module.title;
         // @ts-ignore
-        modElement.addEventListener('itemclick', ({ target }) => this.callback(target.category, target.name));
+        modElement.addEventListener('itemclick', ({ target }) => this.callback(target.name));
         catElement.appendChild(modElement);
       });
     });
@@ -51,7 +51,7 @@ export class Menu {
 
     document.getElementById('load').addEventListener('click', () => {
       const patch = JSON.parse(localStorage.getItem('saved'));
-      this.synth.loadPatch(patch)
+      this.synth.loadPatch(patch);
     });
   }
 }

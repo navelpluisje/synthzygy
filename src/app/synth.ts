@@ -50,6 +50,11 @@ export class Synth {
     Object.values(patch.modules).forEach((module) => {
       this.modules.addModule(module.type, module);
     });
+    patch.connections.forEach((connection) => {
+      const input = this.modules.getModuleById(connection.input.module).getInputDataByName(connection.input.name);
+      const output = this.modules.getModuleById(connection.output.module).getOutputDataByName(connection.output.name);
+      this.connections.createConnection(input, output);
+    });
   }
 
   public onMouseDown = (event: MouseEvent) => {

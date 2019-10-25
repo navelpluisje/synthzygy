@@ -194,6 +194,14 @@ export class ModuleBase implements Module {
     this.container.unSet();
   }
 
+  public getInputDataByName(name: string) {
+    return this.inputs.find((input) => input.name === name);
+  }
+
+  public getOutputDataByName(name: string) {
+    return this.outputs.find((output) => output.name === name);
+  }
+
   protected addInputs(
     inputTypes: SynthConnectorType[],
     getInputConnection: (type: string) => GateTrigger | AudioNode,

@@ -10,7 +10,7 @@ export class ConnectionList {
   private connections: Connection[] = [];
 
   public getConnectionsData(): ConnectionData[] {
-    return this.connections.map(connection => connection.getConnectionData());
+    return this.connections.map((connection) => connection.getConnectionData());
   }
 
   public hasNewConnection(): boolean {
@@ -40,8 +40,9 @@ export class ConnectionList {
     }
   }
 
-  public createConnection(input: InputType) {
-    const connection = new Connection(this.newConnection.start, input);
+  public createConnection(input: InputType, output?: OutputType) {
+    const moduleOutput = output || this.newConnection.start;
+    const connection = new Connection(moduleOutput, input);
     connection.connect();
     this.connections.push(connection);
     this.removeNewConnection();
