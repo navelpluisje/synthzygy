@@ -19,15 +19,11 @@
         <canvas id="canvas-knob" height="600" width="1000"></canvas>
         <canvas id="canvas-connection" height="600" width="1000"></canvas>
       </main>
-      <section id="floating-menu" class="floating-menu">
-        <span class="icon-menu">
-        <!-- <span class="icon-x"> -->
-        <section class="menu-items">
-          <np-floatingmenuitem id="clear-patch" icon="refresh-cw">Clear patch</np-floatingmenuitem>
-          <np-floatingmenuitem id="save-patch" icon="upload">Save patch</np-floatingmenuitem>
-          <np-floatingmenuitem id="load-patch" icon="download">Load patch</np-floatingmenuitem>
-        </section>
-      </section>
+      <np-floatingmenu>
+        <np-floatingmenuitem id="clear-patch" icon="refresh-cw">Clear patch</np-floatingmenuitem>
+        <np-floatingmenuitem id="save-patch" icon="upload">Save patch</np-floatingmenuitem>
+        <np-floatingmenuitem id="load-patch" icon="download">Load patch</np-floatingmenuitem>
+      </np-floatingmenu>
     </section>
     <np-midisettings></np-midisettings>
     <script src="/app/index.js"></script>

@@ -1,0 +1,46 @@
+.floating-menu {
+  align-items: center;
+  background-color: hsl(0, 0%, 13%);
+  border: none;
+  border-radius: 50%;
+  bottom: 2rem;
+  color: white;
+  display: flex;
+  font-size: 1.5rem;
+  height: 3rem;
+  justify-content: center;
+  position: fixed;
+  right: 2rem;
+  text-align: center;
+  width: 3rem;
+}
+
+.floating-menu:focus {
+  outline: none;
+}
+
+span::before {
+  /* Menu icon */
+  content: "\e998";
+}
+
+.open span::before {
+  /* Cross icon */
+  content: "\ea12";
+}
+
+.menu-items {
+  bottom: 100%;
+  position: absolute;
+  right: -.125rem;
+  visibility: hidden;
+  width: auto;
+}
+
+.open .menu-items {
+  visibility: visible;
+}
+
+np-floatingmenuitem button { /* stylelint-disable-line selector-type-no-unknown */
+  opacity: 0;
+}

@@ -130,9 +130,9 @@ export class Synth {
     // requestAnimationFrame(draw)
   }
 
-  public addModule = (category: string, name: string) => {
+  public addModule = (name: string) => {
     // @ts-ignore
-    this.modules.addModule(category, name);
+    this.modules.addModule(name);
   }
 
   public async start() {

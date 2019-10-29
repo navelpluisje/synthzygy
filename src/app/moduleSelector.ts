@@ -2,16 +2,13 @@ import { Synth } from 'src/app/synth';
 import { AvailableModules } from 'src/constants/modules';
 
 export class ModuleSetector {
-  private callback: (category: string, name: string) => void;
+  private callback: (name: string) => void;
   private menuDom: HTMLElement;
-  private synth: Synth;
 
   constructor(synth: Synth) {
     this.callback = synth.addModule;
-    this.synth = synth;
     this.menuDom = document.getElementById('module-list');
     this.addMenuItems();
-    this.setEventListeners();
   }
 
   public addMenuItems() {
@@ -42,16 +39,5 @@ export class ModuleSetector {
     if (!isOpen) {
       target.setAttribute('open', '');
     }
-  }
-
-  private setEventListeners() {
-    document.getElementById('save-patch').addEventListener('click', () => {
-      localStorage.setItem('saved', JSON.stringify(this.synth.getPatchData()));
-    });
-
-    document.getElementById('load-patch').addEventListener('click', () => {
-      const patch = JSON.parse(localStorage.getItem('saved'));
-      this.synth.loadPatch(patch);
-    });
   }
 }

@@ -52,26 +52,3 @@ dl {
 dd li {
   padding: .25rem 0;
 }
-
-.floating-menu {
-  align-items: center;
-  background-color: hsl(0, 0%, 13%);
-  border-radius: 50%;
-  bottom: 2rem;
-  color: white;
-  display: flex;
-  font-size: 1.5rem;
-  height: 3rem;
-  justify-content: center;
-  position: fixed;
-  right: 2rem;
-  text-align: center;
-  width: 3rem;
-}
-
-.menu-items {
-  bottom: 100%;
-  position: absolute;
-  right: -.125rem;
-  width: auto;
-}
