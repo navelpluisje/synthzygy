@@ -1,0 +1,29 @@
+button {
+  align-items: center;
+  background-color: var(--module-background);
+  border: .25rem solid var(--module-background);
+  border-radius: 2rem;
+  color: var(--module-title);
+  display: flex;
+  float: right;
+  font-family: Raleway, sans-serif;
+  font-size: .75rem;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
+  padding-right: .1rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+button > span {
+  align-items: center;
+  background-color: var(--module-title);
+  border-radius: 50%;
+  color: var(--module-background);
+  display: flex;
+  font-size: 1rem;
+  height: 1.5rem;
+  justify-content: center;
+  margin-left: .5rem;
+  width: 1.5rem;
+}

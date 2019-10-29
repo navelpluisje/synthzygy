@@ -64,8 +64,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
-      filename: devMode ? '../style/style.css' : '../style/style.[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      filename: devMode ? '../style/[name].css' : '../style/[name].css',
+      chunkFilename: devMode ? '[id].css' : '[id].css',
     }),
   ],
 };

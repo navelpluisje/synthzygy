@@ -2,6 +2,7 @@ import { setCssColors } from '@utilities/colors';
 import { Menu } from './app/menu';
 import { ModuleSetector } from './app/moduleSelector';
 import { Synth } from './app/synth';
+import { FloatingMenuItem } from './customElements/floatingMenuItem';
 import { ListModuleGroup } from './customElements/listModuleGroup';
 import { ListModuleItem } from './customElements/listModuleItem';
 import { MidiSettings } from './customElements/midiSettings';
@@ -12,6 +13,7 @@ import './style/app.css';
   new ListModuleGroup();
   new ListModuleItem();
   new MidiSettings();
+  new FloatingMenuItem();
   setCssColors();
 
   const synth = new Synth();
