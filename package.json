@@ -2,16 +2,15 @@
   "name": "@navelpluisje/modular-js",
   "version": "0.5.0",
   "description": "A modular javascript synthesizer",
-  "main": "dist/index.js",
+  "private": true,
   "module": "dist/index.es.js",
   "files": [
     "dist"
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -cwm",
-    "lint": "run-p lint:**",
+    "build": "NODE_ENV=production webpack",
+    "dev": "webpack --progress --watch",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:md": "markdownlint 'docs/**/*.md'"
@@ -24,25 +23,26 @@
   "license": "ISC",
   "homepage": "https://github.com/navelpluisje/synthzygy/tree/develop/documentation",
   "devDependencies": {
-    "@movable/rollup-plugin-html": "^0.3.0",
-    "@navelpluisje/rollup-plugin-css": "^1.0.0",
     "@types/jest": "^24.0.15",
     "@types/webmidi": "^2.0.3",
-    "jest": "^24.8.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
     "markdownlint-cli": "^0.18.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.12.4",
-    "rollup-plugin-copy": "^3.1.0",
-    "rollup-plugin-html": "^0.2.1",
-    "rollup-plugin-typescript2": "^0.21.1",
+    "raw-loader": "^3.1.0",
+    "style-loader": "^1.0.0",
     "stylelint": "^11.1.1",
     "stylelint-color-format": "^0.2.0",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-order": "^3.1.1",
-    "ts-jest": "^24.0.2",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.20.0",
-    "typescript": "^3.7.0-beta"
+    "typescript": "^3.7.0-beta",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {}
 }

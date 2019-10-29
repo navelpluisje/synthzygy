@@ -2,7 +2,6 @@ import { InputConnector, OutputConnector } from '@components/index';
 import { ModuleData } from '@interfaces/moduleInterface';
 import { ClockNode } from '@nodes/clockNode';
 import { GateNode } from '@nodes/gateNode';
-import { GateTrigger } from 'src/types';
 
 export type KnobSizes = 'small' | 'medium' | 'large';
 

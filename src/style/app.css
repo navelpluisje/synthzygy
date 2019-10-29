@@ -1,8 +1,14 @@
+@import 'icons.css';
+
 body {
   font-family: Raleway, sans-serif;
   margin: 0;
   padding: 0;
   user-select: none;
+}
+
+canvas {
+  position: absolute;
 }
 
 .main {
@@ -47,4 +53,57 @@ dl {
 
 dd li {
   padding: .25rem 0;
+}
+
+.floating-menu {
+  align-items: center;
+  background-color: hsl(0, 0%, 13%);
+  border-radius: 50%;
+  bottom: 2rem;
+  color: white;
+  display: flex;
+  font-size: 1.5rem;
+  height: 3rem;
+  justify-content: center;
+  position: fixed;
+  right: 2rem;
+  text-align: center;
+  width: 3rem;
+}
+
+.menu-items {
+  bottom: 100%;
+  position: absolute;
+  right: -.125rem;
+  width: auto;
+}
+
+.menu-items > button {
+  align-items: center;
+  background-color: hsl(0, 0%, 13%);
+  border: .25rem solid hsl(0, 0%, 13%);
+  border-radius: 2rem;
+  color: white;
+  display: flex;
+  float: right;
+  font-family: Raleway, sans-serif;
+  font-size: .75rem;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
+  padding-right: .1rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.menu-items > button > span {
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  color: hsl(0, 0%, 13%);
+  display: flex;
+  font-size: 1rem;
+  height: 1.5rem;
+  justify-content: center;
+  margin-left: .5rem;
+  width: 1.5rem;
 }

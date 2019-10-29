@@ -1,14 +1,10 @@
 <html>
   <head>
-    <title>Canvas</title>
+    <meta charset="utf-8" />
+    <title>SYnthZYGY</title>
     <link href="https://fonts.googleapis.com/css?family=Gruppo|Raleway&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cute+Font&display=swap&text=%3C%3ESYnthZYGY" rel="stylesheet">
-    <link href="/style/app.css" rel="stylesheet">
-    <style>
-      canvas {
-        position: absolute;
-      }
-    </style>
+    <link href="/style/style.css" rel="stylesheet">
   </head>
   <body>
     <section class="main">
@@ -16,14 +12,21 @@
         <header>&gt;SY<span>nth</span>ZYGY&lt;</header>
         <dl class="modules" id="module-list">
         </dl>
-        <button id="save">📦</button>
-        <button id="load">🔈</button>
       </aside>
       <main>
         <canvas id="canvas" height="600" width="1000"></canvas>
         <canvas id="canvas-knob" height="600" width="1000"></canvas>
         <canvas id="canvas-connection" height="600" width="1000"></canvas>
       </main>
+      <section id="floating-menu" class="floating-menu">
+        <span class="icon-menu">
+        <!-- <span class="icon-x"> -->
+        <section class="menu-items">
+          <button id="clear-patch">Clear the patch  <span class="icon-refresh-cw"></span></button>
+          <button id="save-patch">Save patch  <span class="icon-upload"></span></button>
+          <button id="load-patch">Load patch  <span class="icon-download"></span></button>
+        </section>
+      </section>
     </section>
     <np-midisettings></np-midisettings>
     <script src="/app/index.js"></script>

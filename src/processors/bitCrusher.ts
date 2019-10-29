@@ -1,4 +1,3 @@
-
 export class BitCrusherProcessor extends AudioWorkletProcessor {
   public phase: number = 0;
   public lastSampleValue: number;
