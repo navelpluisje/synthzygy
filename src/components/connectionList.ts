@@ -30,6 +30,12 @@ export class ConnectionList {
     requestAnimationFrame(this.draw);
   }
 
+  public removeConnections() {
+    this.connections.forEach((connection) => connection.disconnect());
+    this.connections = [];
+    requestAnimationFrame(this.draw);
+  }
+
   public updateConnection(event: MouseEvent) {
     if (this.newConnection) {
       this.newPosition = {

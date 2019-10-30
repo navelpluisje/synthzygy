@@ -80,6 +80,11 @@ export class ModuleList {
     requestAnimationFrame(this.draw);
   }
 
+  public removeModules() {
+    Object.keys(this.modules).forEach((key: string) => delete this.modules[key]);
+    requestAnimationFrame(this.draw);
+  }
+
   public getActiveModule() {
     return this.modules[this.activeModuleId];
   }

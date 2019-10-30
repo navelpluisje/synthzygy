@@ -57,6 +57,11 @@ export class Synth {
     });
   }
 
+  public clearPatch() {
+    this.connections.removeConnections();
+    this.modules.removeModules();
+  }
+
   public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
     if (event.button === 0 && !event.ctrlKey) {

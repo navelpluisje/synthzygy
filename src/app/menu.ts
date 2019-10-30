@@ -25,7 +25,10 @@ export class Menu {
 
   private loadPatch = (name: string) => {
     const patch = this.patches[name];
-    this.synth.loadPatch(patch);
+    if (patch) {
+      this.currentPatch = name;
+      this.synth.loadPatch(patch);
+    }
   }
 
   private savePatch = () => {
@@ -61,7 +64,8 @@ export class Menu {
 }
 
   private clearPatch = () => {
-    // this.currentPatch = '';
+    this.currentPatch = '';
+    this.synth.clearPatch();
 
   }
 }
