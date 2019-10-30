@@ -7,10 +7,12 @@ import { FloatingMenuItem } from './customElements/floatingMenuItem';
 import { ListModuleGroup } from './customElements/listModuleGroup';
 import { ListModuleItem } from './customElements/listModuleItem';
 import { MidiSettings } from './customElements/midiSettings';
+import { Modal } from './customElements/modal';
 import './style/app.css';
 
 (function App() {
   /* tslint:disable */
+  new Modal();
   new ListModuleGroup();
   new ListModuleItem();
   new MidiSettings();

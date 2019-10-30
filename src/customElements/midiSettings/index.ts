@@ -1,5 +1,6 @@
 import { SetMidiDevice } from 'src/types';
 import { CustomElement } from '../CustomElement';
+import { Modal } from '../modal';
 import style from './style.css';
 import template from './template.html';
 
@@ -11,42 +12,30 @@ import template from './template.html';
 export class MidiSettings extends HTMLElement {
   public button: HTMLButtonElement;
   public select: HTMLSelectElement;
-  public overlay: HTMLDivElement;
+  public modal: Modal;
   public show: boolean;
   public clickEvent: Event;
   public options: Array<[string, string]>;
   public callback: SetMidiDevice;
+  private init: boolean = true;
 
   static get observedAttributes() { return ['show']; }
 
   public connectedCallback() {
     this.button = this.shadowRoot.querySelector('button');
     this.select = this.shadowRoot.querySelector('select');
-    this.overlay = this.shadowRoot.querySelector('.overlay');
-
-    this.setEventBindings();
-  }
-
-  public setEventBindings() {
-    this.button.addEventListener('click', () => {
-      const value = this.select.options[this.select.selectedIndex].value;
-      this.callback(value);
-      this.togglePanel(false);
-    });
+    this.modal = this.shadowRoot.querySelector('np-modal');
   }
 
   public attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
       case 'show':
-        this.togglePanel(oldValue === null);
-    }
-  }
-
-  public togglePanel(show: boolean) {
-    if (show) {
-      this.overlay.classList.remove('hidden');
-    } else {
-      this.overlay.classList.add('hidden');
+        this.modal.togglePanel(oldValue === null);
+        if (this.init) {
+          this.init = false;
+          this.modal.setActionCallback(this.setMidiDevice);
+          this.modal.setCancelCallback(this.cancelModal);
+        }
     }
   }
 
@@ -64,5 +53,16 @@ export class MidiSettings extends HTMLElement {
       document.createRange()
         .createContextualFragment(`<option ${selected} value="${value[0]}">${value[1]}</option>`),
     );
+  }
+
+  private setMidiDevice = () => {
+    const value = this.select.options[this.select.selectedIndex].value;
+    this.callback(value);
+    this.cancelModal();
+  }
+
+  private cancelModal = () => {
+    this.removeAttribute('show');
+    this.modal.hideModal();
   }
 }
