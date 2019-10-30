@@ -1,4 +1,7 @@
-<np-modal title="Save Patch" action-title="Save">
-  <label for="midi-device-select">Patch name</label>
-  <input name="patch-name" id="patch-name" type="text">
-</np-modal>
+<np-modal title="Select Patch" action-title="Load">
+  <label for="patch-select">Patch name</label>
+  <select name="patch-select" id="patch-select" size="4">
+      <slot>
+      </slot>
+    </select>
+  </np-modal>

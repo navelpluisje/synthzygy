@@ -5,23 +5,23 @@ import style from './style.css';
 import template from './template.html';
 
 @CustomElement({
-  selector: 'np-savepatch',
+  selector: 'np-loadpatch',
   style,
   template,
 })
-export class SavePatch extends HTMLElement {
-  public nameInput: HTMLInputElement;
+export class LoadPatch extends HTMLElement {
   public modal: Modal;
   public show: boolean;
   public clickEvent: Event;
   public name: string;
   public callback: SetPatchName;
+  private select: HTMLSelectElement;
   private init: boolean = true;
 
   static get observedAttributes() { return ['show']; }
 
   public connectedCallback() {
-    this.nameInput = this.shadowRoot.querySelector('input');
+    this.select = this.shadowRoot.querySelector('select');
     this.modal = this.shadowRoot.querySelector('np-modal');
   }
 
@@ -37,14 +37,21 @@ export class SavePatch extends HTMLElement {
     }
   }
 
-  public setName = (name: string, callback: SetPatchName) => {
-    this.name = name;
+  public setValues = (values: string[] = [], callback: SetPatchName) => {
     this.callback = callback;
-    this.nameInput.value = name;
+    this.select.innerHTML = '';
+    values.forEach((value) => this.addOption(value));
+  }
+
+  public addOption(value: string) {
+    this.select.appendChild(
+      document.createRange()
+        .createContextualFragment(`<option value="${value}">${value}</option>`),
+    );
   }
 
   private setPatchName = () => {
-    const value = this.nameInput.value;
+    const value = this.select.options[this.select.selectedIndex].value;
     this.callback(value);
     this.cancelModal();
   }

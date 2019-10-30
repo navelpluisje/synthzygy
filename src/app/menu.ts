@@ -1,3 +1,4 @@
+import { LoadPatch } from 'src/customElements/loadPatch';
 import { SavePatch } from 'src/customElements/savePatch';
 import { PatchData } from 'src/types';
 import { Synth } from './synth';
@@ -15,15 +16,15 @@ export class Menu {
 
   private addEventListeners() {
     // @ts-ignore
-    document.getElementById('load-patch').addEventListener('floatmenu-click', this.loadPatch);
+    document.getElementById('load-patch').addEventListener('floatmenu-click', this.showLoadPatchModal);
     // @ts-ignore
     document.getElementById('save-patch').addEventListener('floatmenu-click', this.savePatch);
     // @ts-ignore
     document.getElementById('clear-patch').addEventListener('floatmenu-click', this.clearPatch);
   }
 
-  private loadPatch = () => {
-    const patch = this.patches.new;
+  private loadPatch = (name: string) => {
+    const patch = this.patches[name];
     this.synth.loadPatch(patch);
   }
 
@@ -42,6 +43,15 @@ export class Menu {
 
     const modal: SavePatch = document.querySelector('np-savepatch');
     modal.setName('test', this.saveNamedPatch(patch));
+    modal.setAttribute('show', '');
+  }
+
+  private showLoadPatchModal = () => {
+    const dom = document.createElement('np-loadpatch');
+    document.body.appendChild(dom);
+
+    const modal: LoadPatch = document.querySelector('np-loadpatch');
+    modal.setValues(Object.keys(this.patches), this.loadPatch);
     modal.setAttribute('show', '');
   }
 
