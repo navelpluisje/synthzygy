@@ -161,3 +161,5 @@ export interface InputType {
 export type GateTrigger = (value: number) => void;
 
 export type SetMidiDevice = (id: string) => void;
+
+export type SetPatchName = (name: string) => void;

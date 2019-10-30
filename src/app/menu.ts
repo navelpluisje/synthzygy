@@ -1,3 +1,4 @@
+import { SavePatch } from 'src/customElements/savePatch';
 import { PatchData } from 'src/types';
 import { Synth } from './synth';
 
@@ -24,22 +25,33 @@ export class Menu {
   private loadPatch = () => {
     const patch = this.patches.new;
     this.synth.loadPatch(patch);
-
   }
 
   private savePatch = () => {
     const patch = this.synth.getPatchData();
     if (this.currentPatch !== '') {
-      this.patches[this.currentPatch] = patch;
+      this.saveNamedPatch(patch)(this.currentPatch);
     } else {
-      // Request for a name
-      this.patches.new = patch;
+      this.showSavePatchModal(patch);
     }
-    localStorage.setItem('patches', JSON.stringify(this.patches));
   }
 
+  private showSavePatchModal(patch: PatchData) {
+    const dom = document.createElement('np-savepatch');
+    document.body.appendChild(dom);
+
+    const modal: SavePatch = document.querySelector('np-savepatch');
+    modal.setName('test', this.saveNamedPatch(patch));
+    modal.setAttribute('show', '');
+  }
+
+  private saveNamedPatch = (patch: PatchData) => (name: string) => {
+    this.patches[name] = patch;
+    localStorage.setItem('patches', JSON.stringify(this.patches));
+}
+
   private clearPatch = () => {
-    this.currentPatch = '';
+    // this.currentPatch = '';
 
   }
 }

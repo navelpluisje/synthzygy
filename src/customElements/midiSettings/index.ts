@@ -10,7 +10,6 @@ import template from './template.html';
   template,
 })
 export class MidiSettings extends HTMLElement {
-  public button: HTMLButtonElement;
   public select: HTMLSelectElement;
   public modal: Modal;
   public show: boolean;
@@ -22,7 +21,6 @@ export class MidiSettings extends HTMLElement {
   static get observedAttributes() { return ['show']; }
 
   public connectedCallback() {
-    this.button = this.shadowRoot.querySelector('button');
     this.select = this.shadowRoot.querySelector('select');
     this.modal = this.shadowRoot.querySelector('np-modal');
   }

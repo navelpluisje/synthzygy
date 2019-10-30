@@ -8,6 +8,7 @@ import { ListModuleGroup } from './customElements/listModuleGroup';
 import { ListModuleItem } from './customElements/listModuleItem';
 import { MidiSettings } from './customElements/midiSettings';
 import { Modal } from './customElements/modal';
+import { SavePatch } from './customElements/savePatch';
 import './style/app.css';
 
 (function App() {
@@ -16,6 +17,7 @@ import './style/app.css';
   new ListModuleGroup();
   new ListModuleItem();
   new MidiSettings();
+  new SavePatch();
   new FloatingMenu();
   new FloatingMenuItem();
   setCssColors();
