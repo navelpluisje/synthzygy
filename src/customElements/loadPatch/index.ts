@@ -59,5 +59,6 @@ export class LoadPatch extends HTMLElement {
   private cancelModal = () => {
     this.removeAttribute('show');
     this.modal.hideModal();
+    document.body.removeChild(this);
   }
 }
