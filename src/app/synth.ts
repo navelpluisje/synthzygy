@@ -1,6 +1,7 @@
 import { ConnectionList, Knob } from '@components/index';
 import { Slider } from '@components/slider';
 import { ModuleList } from '@modules/moduleList';
+import { isLeftMouseClick, isRightMouseClick } from '@utilities/mouseClicks';
 import { DimensionType, PatchData } from 'src/types';
 
 export class Synth {
@@ -64,7 +65,7 @@ export class Synth {
 
   public onMouseDown = (event: MouseEvent) => {
     // Left mouse button used
-    if (event.button === 0 && !event.ctrlKey) {
+    if (isLeftMouseClick(event)) {
       if (this.modules.moduleSelected(event)) {
         const module = this.modules.getActiveModule();
         if (module && module.hasActiveOutput()) {
@@ -73,7 +74,7 @@ export class Synth {
       }
     }
     // right button clicked
-    if (event.button === 2 || (event.button === 0 && event.ctrlKey)) {
+    if (isRightMouseClick(event)) {
       this.connections.removeConnection(event);
 
       if (this.modules.moduleSelected(event)) {
@@ -89,12 +90,7 @@ export class Synth {
   }
 
   public onMouseMove = (event: MouseEvent) => {
-    // TODO: Need to make a nicer fix for this.
-    // Neeeded 'cause Chrome will not start the audio
-    if (this.init) {
-      this.init = false;
-      this.audioContext.resume();
-    }
+    this.initCheck();
     this.mooved = true;
     const module = this.modules.getActiveModule();
     if (module) {
@@ -159,6 +155,15 @@ export class Synth {
 
   private getWorklets = async () => {
     await this.audioContext.audioWorklet.addModule('/app/processors.js');
+  }
+
+  private initCheck(): void {
+    // TODO: Need to make a nicer fix for this.
+    // Neeeded 'cause Chrome will not start the audio
+    if (this.init) {
+      this.init = false;
+      this.audioContext.resume();
+    }
   }
 
   private setSize = () => {

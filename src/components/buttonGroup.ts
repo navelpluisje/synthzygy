@@ -59,8 +59,8 @@ export class ButtonGroup implements ButtonGroup {
   }
 
   public getRadius(index: number): number | {} {
-    const length = this.buttons.length - 1;
-    if (length === 0) {
+    const length = this.buttons.length;
+    if (length === 1) {
       return 5;
     }
     if (index === 0) {
@@ -68,7 +68,7 @@ export class ButtonGroup implements ButtonGroup {
         ? {tl: 5, tr: 5, br: 0, bl: 0}
         : {tl: 5, tr: 0, br: 0, bl: 5};
     }
-    if (index === length) {
+    if (index === length - 1) {
       return this.direction === 'vertical'
         ? {tl: 0, tr: 0, br: 5, bl: 5}
         : {tl: 0, tr: 5, br: 5, bl: 0};
