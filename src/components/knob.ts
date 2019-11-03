@@ -1,5 +1,6 @@
+import { STEP_KNOB } from '@constants/controlTypes';
 import { Colors } from '@constants/enums';
-import { knobSizes, STEP_KNOB } from '@constants/sizes';
+import { knobSizes } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
 import { roundByStepSize } from '@utilities/numeric';
 import { ParentModule } from 'src/interfaces';

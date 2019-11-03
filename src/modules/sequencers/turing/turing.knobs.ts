@@ -1,4 +1,5 @@
-import { LARGE_KNOB, SMALL_KNOB, STEP_KNOB } from '@constants/sizes';
+import { STEP_KNOB } from '@constants/controlTypes';
+import { LARGE_KNOB, SMALL_KNOB } from '@constants/sizes';
 import { KnobType } from 'src/types';
 
 export const knobTypes: KnobType[] = [{
