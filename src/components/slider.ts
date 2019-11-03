@@ -1,3 +1,4 @@
+import { VERTICAL_SLIDER } from '@constants/controlTypes';
 import { Colors } from '@constants/enums';
 import { sliderSizes } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
@@ -15,9 +16,11 @@ export class Slider implements SynthModuleControl {
   private valueData: any;
   private value: number;
   private label: string;
+  private showLabel: boolean;
   private color: string;
   private size: number;
   private callback: (value: number) => void;
+  private isVertical: boolean = true;
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -33,9 +36,11 @@ export class Slider implements SynthModuleControl {
     this.valueData = { min, max, log, step };
     this.value = control.value;
     this.label = control.label;
+    this.showLabel = !!control.showLabel;
     this.callback = callback;
     this.color = color;
     this.size = sliderSizes[control.size];
+    this.isVertical = control.type === VERTICAL_SLIDER;
   }
 
   public draw() {
@@ -43,7 +48,7 @@ export class Slider implements SynthModuleControl {
     this.drawSliderBase();
     this.drawSliderValue();
     this.drawSliderCap();
-    this.label && this.drawKnobLabel();
+    this.showLabel && this.drawKnobLabel();
   }
 
   public setValue(value: number) {
@@ -151,7 +156,11 @@ export class Slider implements SynthModuleControl {
     canvas.lineCap = 'round';
     canvas.beginPath();
     canvas.moveTo(xPos, yPos);
-    canvas.lineTo(xPos, yPos + this.size);
+    if (this.isVertical) {
+      canvas.lineTo(xPos, yPos + this.size);
+    } else {
+      canvas.lineTo(xPos + this.size, yPos);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();
@@ -167,8 +176,13 @@ export class Slider implements SynthModuleControl {
     canvas.lineWidth = 10;
     canvas.lineCap = 'round';
     canvas.beginPath();
-    canvas.moveTo(xPos, yPos + this.size);
-    canvas.lineTo(xPos, (yPos + this.size - valuePosition));
+    if (this.isVertical) {
+      canvas.moveTo(xPos, yPos + this.size);
+      canvas.lineTo(xPos, (yPos + this.size - valuePosition));
+    } else {
+      canvas.moveTo(xPos, yPos);
+      canvas.lineTo((xPos + valuePosition), yPos);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();
@@ -184,7 +198,11 @@ export class Slider implements SynthModuleControl {
     canvas.fillStyle = Colors.ControlBackground;
     canvas.lineWidth = 2;
     canvas.beginPath();
-    canvas.arc(xPos, (yPos + this.size - valuePosition), 8, 0, Math.PI * 2);
+    if (this.isVertical) {
+      canvas.arc(xPos, (yPos + this.size - valuePosition), 8, 0, Math.PI * 2);
+    } else {
+      canvas.arc((xPos + valuePosition), yPos, 8, 0, Math.PI * 2);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();

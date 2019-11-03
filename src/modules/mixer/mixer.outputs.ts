@@ -1,11 +1,11 @@
 import { SynthConnectorType } from 'src/types';
 
 export const outputTypes: SynthConnectorType[] = [{
-  icon: 'audio-out',
+  icon: 'audio',
   name: 'audioOut',
   position: {
-    x: 145,
-    y: 205,
+    x: 240,
+    y: 145,
   },
   showIcon: true,
   type: 'audio',

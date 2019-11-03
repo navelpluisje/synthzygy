@@ -30,10 +30,13 @@ export const drawIcon = (ctx: CanvasRenderingContext2D, iconType: string, positi
     case 'triangle':
       icon.triangle(ctx, position, color);
       break;
+    case 'number':
+      icon.number(ctx, position, color, direction);
+      break;
     default:
       console.warn(`Icon ${icon} is not available`);
   }
-  if (direction) {
+  if (direction && type !== 'number') {
     switch (direction) {
       case 'in':
         icon.arrowIn(ctx, position, color);

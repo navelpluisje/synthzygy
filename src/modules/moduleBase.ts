@@ -249,4 +249,16 @@ export class ModuleBase implements Module {
       this.controls.push(knob);
     });
   }
+
+  protected addSliders(
+    sliders: KnobType[],
+    getSliderCallbackAndDefault: any,
+  ): void {
+    sliders.forEach((sliderData) => {
+      const callback = getSliderCallbackAndDefault(sliderData.label);
+      const slider = new Slider(this.canvas, this, sliderData, callback.callback, this.accentColor);
+      slider.setValue(callback.default);
+      this.controls.push(slider);
+    });
+  }
 }

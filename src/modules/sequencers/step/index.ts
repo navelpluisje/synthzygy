@@ -18,7 +18,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     width: 600,
   };
   private static initialValues: ModuleDefaultValues = {
-    gates: new Array(16).fill(true, 0, 16),
+    gates: new Array(16).fill(false, 0, 16),
     stepsA: new Array(16).fill(3, 0, 16),
     stepsB: new Array(16).fill(5, 0, 16),
   };
@@ -196,6 +196,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
           x: 110 + i * 24,
           y: 45,
         },
+        showLabel: false,
         size: MEDIUM_SLIDER,
         step: 0.01,
         type: VERTICAL_SLIDER,
