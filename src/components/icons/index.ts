@@ -5,6 +5,7 @@ import { drawEnvelopeIcon as envelope } from './envelopeIcon';
 import { drawFmIcon as fm } from './fmIcon';
 import { drawGateIcon as gate } from './gateIcon';
 import { splitIcon } from './iconHelpers';
+import { drawNumberIcon as number } from './numberIcon';
 import { drawSawIcon as saw } from './sawIcon';
 import { drawSineIcon as sine } from './sineIcon';
 import { drawSquareIcon as square } from './squareIcon';
@@ -17,6 +18,7 @@ export {
   envelope,
   fm,
   gate,
+  number,
   saw,
   sine,
   splitIcon,

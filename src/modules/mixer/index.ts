@@ -1,17 +1,21 @@
-import { SynthModule } from '@components/index';
+import { SynthModule, ThreeStateButton } from '@components/index';
+import { THREE_STATE_BUTTON } from '@constants/controlTypes';
+import { SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { ModuleDefaultValues, PositionType } from 'src/types';
+import { KnobType, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { inputTypes } from './mixer.inputs';
 import { knobTypes } from './mixer.knobs';
+import { labels } from './mixer.labels';
 import { MixerNode } from './mixer.node';
 import { outputTypes } from './mixer.outputs';
+import { sliderTypes } from './mixer.sliders';
 
 export class Mixer extends ModuleBase implements ParentModule {
   public static dimensions = {
-    height: 245,
-    width: 165,
+    height: 165,
+    width: 260,
   };
   private static initialValues: ModuleDefaultValues = {
     'in 1': 0.5,
@@ -40,7 +44,10 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.container = new SynthModule(canvas, Mixer.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
+    this.addSliders(sliderTypes, this.getSliderCallbackAndDefault);
+    this.addMuteButtons();
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
+    this.addLabels(labels);
   }
 
   public getModuleData(): ModuleDefaultValues {
@@ -76,6 +83,17 @@ export class Mixer extends ModuleBase implements ParentModule {
   private getKnobCallbackAndDefault = (label: string): any => {
     const key = label.toLowerCase();
     switch (key) {
+      case 'out':
+        return {
+          callback: this.node.setAudio('out'),
+          default: this.defaults[key],
+        };
+    }
+  }
+
+  private getSliderCallbackAndDefault = (label: string): any => {
+    const key = label.toLowerCase();
+    switch (key) {
       case 'in 1':
         return {
           callback: this.node.setAudio('1'),
@@ -96,11 +114,28 @@ export class Mixer extends ModuleBase implements ParentModule {
           callback: this.node.setAudio('4'),
           default: this.defaults[key],
         };
-      case 'out':
-        return {
-          callback: this.node.setAudio('out'),
-          default: this.defaults[key],
-        };
+    }
+  }
+
+  private addMuteButtons() {
+    for (let i = 0; i < 4; i += 1) {
+      const button: KnobType = {
+        position: {
+          x: 175,
+          y: 55 + i * 30,
+        },
+        size: SMALL_KNOB,
+        type: THREE_STATE_BUTTON,
+      };
+
+      this.buttons.push(new ThreeStateButton(
+        this.canvas,
+        this,
+        button,
+        this.node.setMute((i + 1).toString()),
+        Colors.AccentAudioPath,
+      ));
+      this.buttons[i].setActive(false);
     }
   }
 }

@@ -32,6 +32,11 @@ export interface DimensionType {
   height: number;
 }
 
+export interface LabelType {
+  position: PositionType;
+  label: string;
+}
+
 export interface KnobType {
   type: string;
   label?: string;
@@ -40,6 +45,7 @@ export interface KnobType {
   steps?: string[];
   min?: number;
   max?: number;
+  showLabel?: boolean;
   step?: number;
   value?: number;
   log?: boolean;

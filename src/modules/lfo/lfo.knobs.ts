@@ -1,4 +1,5 @@
-import { CONTROL_KNOB, MEDIUM_KNOB } from '@constants/sizes';
+import { CONTROL_KNOB } from '@constants/controlTypes';
+import { MEDIUM_KNOB } from '@constants/sizes';
 import { KnobType } from 'src/types';
 
 export const knobTypes: KnobType[] = [{

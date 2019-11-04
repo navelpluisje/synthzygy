@@ -1,3 +1,4 @@
+import { VERTICAL_SLIDER } from '@constants/controlTypes';
 import { Colors } from '@constants/enums';
 import { sliderSizes } from '@constants/sizes';
 import { SynthModuleControl } from '@interfaces/moduleControl';
@@ -15,9 +16,11 @@ export class Slider implements SynthModuleControl {
   private valueData: any;
   private value: number;
   private label: string;
+  private showLabel: boolean;
   private color: string;
   private size: number;
   private callback: (value: number) => void;
+  private isVertical: boolean = true;
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -33,9 +36,11 @@ export class Slider implements SynthModuleControl {
     this.valueData = { min, max, log, step };
     this.value = control.value;
     this.label = control.label;
+    this.showLabel = !!control.showLabel;
     this.callback = callback;
     this.color = color;
     this.size = sliderSizes[control.size];
+    this.isVertical = control.type === VERTICAL_SLIDER;
   }
 
   public draw() {
@@ -43,7 +48,7 @@ export class Slider implements SynthModuleControl {
     this.drawSliderBase();
     this.drawSliderValue();
     this.drawSliderCap();
-    this.label && this.drawKnobLabel();
+    this.showLabel && this.drawKnobLabel();
   }
 
   public setValue(value: number) {
@@ -61,18 +66,21 @@ export class Slider implements SynthModuleControl {
 
   public isControlPressed(xPos: number, yPos: number): boolean {
     const {x, y} = this.getSliderPosition();
-    const capPosition = y + this.size - this.getValuePosition();
+    let xCap = 0;
+    let yCap = 0;
 
-    const xCap = x - 10;
-    const yCap = capPosition - 10;
+    if (this.isVertical) {
+      xCap = x - 10;
+      yCap = y + this.size - this.getValuePosition() - 10;
+    } else {
+      xCap = x + this.getValuePosition() - 10;
+      yCap = y - 10;
+    }
 
     if (xCap < xPos && xPos < (xCap + 20)) {
       if (yCap < yPos && yPos < (yCap + 20)) {
         this.active = true;
-        this.mouseStart = {
-          x,
-          y,
-        };
+        this.mouseStart = { x, y };
         return true;
       }
     }
@@ -105,10 +113,7 @@ export class Slider implements SynthModuleControl {
       // Get the rounded new Value
       newValue = roundByStepSize(
         Math.max(
-          Math.min(
-            newValue,
-            max,
-          ),
+          Math.min(newValue, max),
           min,
         ),
         step || 0.1,
@@ -138,7 +143,11 @@ export class Slider implements SynthModuleControl {
   private clearSlider(): void {
     const {x: xPos, y: yPos} = this.getSliderPosition();
 
-    Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, 20, this.size + 20);
+    if (this.isVertical) {
+      Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, 20, this.size + 20);
+    } else {
+      Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, this.size + 20, 20);
+    }
   }
 
   private drawSliderBase() {
@@ -151,7 +160,11 @@ export class Slider implements SynthModuleControl {
     canvas.lineCap = 'round';
     canvas.beginPath();
     canvas.moveTo(xPos, yPos);
-    canvas.lineTo(xPos, yPos + this.size);
+    if (this.isVertical) {
+      canvas.lineTo(xPos, yPos + this.size);
+    } else {
+      canvas.lineTo(xPos + this.size, yPos);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();
@@ -167,8 +180,13 @@ export class Slider implements SynthModuleControl {
     canvas.lineWidth = 10;
     canvas.lineCap = 'round';
     canvas.beginPath();
-    canvas.moveTo(xPos, yPos + this.size);
-    canvas.lineTo(xPos, (yPos + this.size - valuePosition));
+    if (this.isVertical) {
+      canvas.moveTo(xPos, yPos + this.size);
+      canvas.lineTo(xPos, (yPos + this.size - valuePosition));
+    } else {
+      canvas.moveTo(xPos, yPos);
+      canvas.lineTo((xPos + valuePosition), yPos);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();
@@ -184,7 +202,11 @@ export class Slider implements SynthModuleControl {
     canvas.fillStyle = Colors.ControlBackground;
     canvas.lineWidth = 2;
     canvas.beginPath();
-    canvas.arc(xPos, (yPos + this.size - valuePosition), 8, 0, Math.PI * 2);
+    if (this.isVertical) {
+      canvas.arc(xPos, (yPos + this.size - valuePosition), 8, 0, Math.PI * 2);
+    } else {
+      canvas.arc((xPos + valuePosition), yPos, 8, 0, Math.PI * 2);
+    }
     canvas.stroke();
     canvas.fill();
     canvas.restore();

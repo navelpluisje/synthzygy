@@ -1,5 +1,6 @@
 import { ButtonGroup, SynthModule, ThreeStateButton } from '@components/index';
 import { Slider } from '@components/slider';
+import { THREE_STATE_BUTTON, VERTICAL_SLIDER } from '@constants/controlTypes';
 import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
@@ -17,7 +18,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     width: 600,
   };
   private static initialValues: ModuleDefaultValues = {
-    gates: new Array(16).fill(true, 0, 16),
+    gates: new Array(16).fill(false, 0, 16),
     stepsA: new Array(16).fill(3, 0, 16),
     stepsB: new Array(16).fill(5, 0, 16),
   };
@@ -82,7 +83,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     };
 
     this.stepButtons.some((stepButton) => {
-      const position = stepButton.isControlClicked(xPos, yPos);
+      const position = stepButton.isButtonClicked(xPos, yPos);
       if (position) {
         // this.activeOutput = o
         this.drawStepButtons(true);
@@ -171,7 +172,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
           y: 150,
         },
         size: SMALL_KNOB,
-        type: 'stepButton',
+        type: THREE_STATE_BUTTON,
       };
       this.stepButtons.push(new ThreeStateButton(
         this.canvas,
@@ -195,9 +196,10 @@ export class Sequencer extends ModuleBase implements ParentModule {
           x: 110 + i * 24,
           y: 45,
         },
+        showLabel: false,
         size: MEDIUM_SLIDER,
         step: 0.01,
-        type: 'slider',
+        type: VERTICAL_SLIDER,
         value: stepData[i],
     };
       this.controls.push(new Slider(
