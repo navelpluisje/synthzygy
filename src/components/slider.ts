@@ -80,10 +80,7 @@ export class Slider implements SynthModuleControl {
     if (xCap < xPos && xPos < (xCap + 20)) {
       if (yCap < yPos && yPos < (yCap + 20)) {
         this.active = true;
-        this.mouseStart = {
-          x,
-          y,
-        };
+        this.mouseStart = { x, y };
         return true;
       }
     }
@@ -116,10 +113,7 @@ export class Slider implements SynthModuleControl {
       // Get the rounded new Value
       newValue = roundByStepSize(
         Math.max(
-          Math.min(
-            newValue,
-            max,
-          ),
+          Math.min(newValue, max),
           min,
         ),
         step || 0.1,

@@ -54,6 +54,29 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.drawMuteButtons();
   }
 
+  public onMouseDown(event: MouseEvent): boolean {
+    super.onMouseDown(event);
+
+    if (!this.active) {
+      return false;
+    }
+    const {offsetX: xPos, offsetY: yPos} = event;
+    this.offset = {
+      x: xPos - this.position.x,
+      y: yPos - this.position.y,
+    };
+
+    this.muteButtons.some((muteButton) => {
+      const position = muteButton.isControlClicked(xPos, yPos);
+      if (position) {
+        // this.activeOutput = o
+        this.drawMuteButtons(true);
+        return true;
+      }
+    });
+    return true;
+  }
+
   public getModuleData(): ModuleDefaultValues {
     return {
       'in 1': this.node.getAudio('1'),
