@@ -1,15 +1,16 @@
 import { SynthModule, ThreeStateButton } from '@components/index';
+import { THREE_STATE_BUTTON } from '@constants/controlTypes';
+import { SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { ModuleDefaultValues, PositionType, KnobType } from 'src/types';
+import { KnobType, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { inputTypes } from './mixer.inputs';
 import { knobTypes } from './mixer.knobs';
+import { labels } from './mixer.labels';
 import { MixerNode } from './mixer.node';
-import { sliderTypes } from './mixer.sliders';
 import { outputTypes } from './mixer.outputs';
-import { SMALL_KNOB } from '@constants/sizes';
-import { THREE_STATE_BUTTON } from '@constants/controlTypes';
+import { sliderTypes } from './mixer.sliders';
 
 export class Mixer extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -27,7 +28,6 @@ export class Mixer extends ModuleBase implements ParentModule {
   public type = 'mixer';
   public title = 'Mixer';
   private node: MixerNode;
-  private muteButtons: ThreeStateButton[] = [];
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -47,34 +47,7 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.addSliders(sliderTypes, this.getSliderCallbackAndDefault);
     this.addMuteButtons();
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
-  }
-
-  public draw(): void {
-    super.draw();
-    this.drawMuteButtons();
-  }
-
-  public onMouseDown(event: MouseEvent): boolean {
-    super.onMouseDown(event);
-
-    if (!this.active) {
-      return false;
-    }
-    const {offsetX: xPos, offsetY: yPos} = event;
-    this.offset = {
-      x: xPos - this.position.x,
-      y: yPos - this.position.y,
-    };
-
-    this.muteButtons.some((muteButton) => {
-      const position = muteButton.isControlClicked(xPos, yPos);
-      if (position) {
-        // this.activeOutput = o
-        this.drawMuteButtons(true);
-        return true;
-      }
-    });
-    return true;
+    this.addLabels(labels);
   }
 
   public getModuleData(): ModuleDefaultValues {
@@ -155,18 +128,14 @@ export class Mixer extends ModuleBase implements ParentModule {
         type: THREE_STATE_BUTTON,
       };
 
-      this.muteButtons.push(new ThreeStateButton(
+      this.buttons.push(new ThreeStateButton(
         this.canvas,
         this,
         button,
-        () => {},
+        this.node.setMute((i + 1).toString()),
         Colors.AccentAudioPath,
       ));
-      this.muteButtons[i].setActive(false);
+      this.buttons[i].setActive(false);
     }
-  }
-
-  private drawMuteButtons(overWrite = false): void {
-    this.muteButtons.forEach((button) => button.draw(overWrite));
   }
 }

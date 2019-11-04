@@ -5,8 +5,9 @@ import { DimensionType, PositionType } from 'src/types';
 
 export interface ButtonGroup {
   draw(overwrite?: boolean): void;
-  isButtonClicked(xPos: number, yPos: number): void;
+  isButtonClicked(xPos: number, yPos: number): boolean;
   setActiveButton(active: string | null): void;
+  setActive?(): void;
 }
 
 interface ModuleButtonType {
@@ -136,7 +137,7 @@ export class ButtonGroup implements ButtonGroup {
     };
   }
 
-  public isButtonClicked(xPos: number, yPos: number): void {
+  public isButtonClicked(xPos: number, yPos: number): boolean {
     const { x, y } = this.getPosition();
     const {width, height} = this.buttonDimension;
     let buttonX = x;
@@ -162,6 +163,7 @@ export class ButtonGroup implements ButtonGroup {
         }
       }
     });
+    return false;
   }
 
   public setActiveButton(active: string | null): void {

@@ -68,7 +68,11 @@ export class ThreeStateButton {
 
   public setActive(active: boolean): void {
     this.active = active;
-    this.draw(true);
+    requestAnimationFrame(() => this.draw(true));
+  }
+
+  public setActiveButton(active: string | null): void {
+    // Dummy methos
   }
 
   public getActive(): boolean {
@@ -79,13 +83,13 @@ export class ThreeStateButton {
     this.activeStep = active;
   }
 
-  public isControlClicked(xPos: number, yPos: number): boolean {
+  public isButtonClicked(xPos: number, yPos: number): boolean {
     const { x, y } = this.getPosition();
-
     if (xPos > x - this.size  && xPos < x + this.size) {
       if (yPos > y - this.size  && yPos < y + this.size) {
         this.active = !this.active;
         this.onClick(this.active);
+        requestAnimationFrame(this.draw.bind(this, true));
         return true;
       }
     }

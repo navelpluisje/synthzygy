@@ -83,7 +83,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     };
 
     this.stepButtons.some((stepButton) => {
-      const position = stepButton.isControlClicked(xPos, yPos);
+      const position = stepButton.isButtonClicked(xPos, yPos);
       if (position) {
         // this.activeOutput = o
         this.drawStepButtons(true);

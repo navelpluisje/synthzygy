@@ -1,4 +1,5 @@
-import { ButtonGroup, InputConnector, Knob, OutputConnector, TriggerButton } from '@components/index';
+import { ButtonGroup, InputConnector, Knob, OutputConnector, ThreeStateButton, TriggerButton } from '@components/index';
+import { Label } from '@components/label';
 import { Slider } from '@components/slider';
 import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
@@ -9,6 +10,7 @@ import {
   GateTrigger,
   InputType,
   KnobType,
+  LabelType,
   ModuleDefaultValues,
   OutputType,
   PositionType,
@@ -21,7 +23,8 @@ export class ModuleBase implements Module {
   protected inputs: InputType[] = [];
   protected outputs: OutputType[] = [];
   protected controls: Array<Knob | TriggerButton | Slider> = [];
-  protected buttons: ButtonGroup[] = [];
+  protected buttons: Array<ButtonGroup | ThreeStateButton> = [];
+  protected labels: Label[] = [];
   protected activeOutput: OutputType = null;
   protected activeInput: InputType = null;
   protected activeControl: number | null = null;
@@ -59,6 +62,7 @@ export class ModuleBase implements Module {
     this.outputs.length && this.outputs.forEach((output) => output.component.draw());
     this.controls.length && this.controls.forEach((control) => control.draw());
     this.buttons.length && this.buttons.forEach((button) => button.draw());
+    this.labels.length && this.labels.forEach((label) => label.draw());
   }
 
   public getSelectedInput(event: MouseEvent): InputType | null {
@@ -235,6 +239,15 @@ export class ModuleBase implements Module {
         name: output.name,
         type: output.type,
       });
+    });
+  }
+
+  protected addLabels(
+    labels: LabelType[],
+  ): void {
+    labels.forEach((lbl) => {
+      const label = new Label(this.canvas, this, lbl);
+      this.labels.push(label);
     });
   }
 

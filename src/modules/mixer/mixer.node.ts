@@ -1,23 +1,39 @@
 import { createGainNode } from '@utilities/createGain';
 
-interface MixerValues {
-  [key: string]: number;
+interface Channel {
+  node: GainNode;
+  mute: boolean;
+  value: number;
 }
 
 export class MixerNode {
-  public context: AudioContext;
-  public audioIn1: GainNode;
-  public audioIn2: GainNode;
-  public audioIn3: GainNode;
-  public audioIn4: GainNode;
-  public audioOut: GainNode;
-
-  public values: MixerValues = {
-    1: 0.5,
-    2: 0.5,
-    3: 0.5,
-    4: 0.5,
-    out: 0.5,
+  private context: AudioContext;
+  private audioOut: Channel = {
+    mute: false,
+    node: null,
+    value: 0.5,
+  };
+  private channels: Record<string, Channel> = {
+    1: {
+      mute: false,
+      node: null,
+      value: 0.5,
+    },
+    2: {
+      mute: false,
+      node: null,
+      value: 0.5,
+    },
+    3: {
+      mute: false,
+      node: null,
+      value: 0.5,
+    },
+    4: {
+      mute: false,
+      node: null,
+      value: 0.5,
+    },
   };
 
   constructor(
@@ -26,65 +42,58 @@ export class MixerNode {
   ) {
     this.context = context;
     this.createGainNodes();
-    this.connectNodes();
   }
 
   public createGainNodes() {
-    this.audioIn1 = createGainNode(this.context, 0.5);
-    this.audioIn2 = createGainNode(this.context, 0.5);
-    this.audioIn3 = createGainNode(this.context, 0.5);
-    this.audioIn4 = createGainNode(this.context, 0.5);
-
-    this.audioOut = createGainNode(this.context, 0.5);
+    this.audioOut.node = createGainNode(this.context, 0.5);
+    Object.values(this.channels).forEach((channel) => {
+      channel.node = createGainNode(this.context, channel.value);
+      channel.node.connect(this.audioOut.node);
+    });
   }
 
-  public connectNodes() {
-    this.audioIn1.connect(this.audioOut);
-    this.audioIn2.connect(this.audioOut);
-    this.audioIn3.connect(this.audioOut);
-    this.audioIn4.connect(this.audioOut);
-  }
-
-  public getAudioNode(index: string) {
+  public getAudioNode(index: string): GainNode {
     switch (index) {
-      case '1':
-        return this.audioIn1;
-      case '2':
-        return this.audioIn2;
-      case '3':
-        return this.audioIn3;
-      case '4':
-        return this.audioIn4;
       case 'out':
-        return this.audioOut;
+        return this.audioOut.node;
+      default :
+        return this.channels[index].node;
     }
   }
 
   public setAudio = (index: string): (value: number) => void => {
     return (value: number) => {
-      this.values[index.toString()] = value;
-      this.getAudioNode(index).gain.setTargetAtTime(value, this.context.currentTime, 0.001);
+      let newValue = value;
+      if (index === 'out') {
+        this.audioOut.value = value;
+      } else {
+        this.channels[index.toString()].value = value;
+        newValue = this.channels[index.toString()].mute ? 0 : value;
+      }
+      this.getAudioNode(index).gain.setTargetAtTime(newValue, this.context.currentTime, 0.001);
+    };
+  }
+
+  public setMute = (index: string): (mute: boolean) => void => {
+    return (mute: boolean) => {
+      this.channels[index.toString()].mute = mute;
+      this.getAudioNode(index).gain.setTargetAtTime(
+        mute ? 0 : this.channels[index.toString()].value,
+        this.context.currentTime,
+        0.001,
+      );
     };
   }
 
   public getAudio(index: string): number {
-    return this.values[index];
+    return this.channels[index].value;
   }
 
   public input(index: string): GainNode {
-    switch (index) {
-      case '1':
-        return this.audioIn1;
-      case '2':
-        return this.audioIn2;
-      case '3':
-        return this.audioIn3;
-      case '4':
-        return this.audioIn4;
-    }
+    return this.channels[index].node;
   }
 
   public output(): GainNode {
-    return this.audioOut;
+    return this.audioOut.node;
   }
 }
