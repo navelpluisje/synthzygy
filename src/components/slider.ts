@@ -66,10 +66,16 @@ export class Slider implements SynthModuleControl {
 
   public isControlPressed(xPos: number, yPos: number): boolean {
     const {x, y} = this.getSliderPosition();
-    const capPosition = y + this.size - this.getValuePosition();
+    let xCap = 0;
+    let yCap = 0;
 
-    const xCap = x - 10;
-    const yCap = capPosition - 10;
+    if (this.isVertical) {
+      xCap = x - 10;
+      yCap = y + this.size - this.getValuePosition() - 10;
+    } else {
+      xCap = x + this.getValuePosition() - 10;
+      yCap = y - 10;
+    }
 
     if (xCap < xPos && xPos < (xCap + 20)) {
       if (yCap < yPos && yPos < (yCap + 20)) {
@@ -143,7 +149,11 @@ export class Slider implements SynthModuleControl {
   private clearSlider(): void {
     const {x: xPos, y: yPos} = this.getSliderPosition();
 
-    Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, 20, this.size + 20);
+    if (this.isVertical) {
+      Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, 20, this.size + 20);
+    } else {
+      Slider.knobCanvas.clearRect(xPos - 10, yPos - 10, this.size + 20, 20);
+    }
   }
 
   private drawSliderBase() {
