@@ -48,5 +48,5 @@ A modular synthesizer made with vanilla javascript.
 ### Others
 
 * [Credits](./credits.md)
-* [Code of conduct](../code-of-conduct.md)
-* [Contributing](../contributing.md)
+* [Code of conduct](./code-of-conduct.md)
+* [Contributing](./contributing.md)
