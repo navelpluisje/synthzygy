@@ -1,13 +1,11 @@
-import { SynthModule, ThreeStateButton } from '@components/index';
-import { THREE_STATE_BUTTON } from '@constants/controlTypes';
-import { SMALL_KNOB } from '@constants/sizes';
+import { ButtonGroup, SynthModule } from '@components/index';
+import { Colors } from '@constants/enums';
 import { ParentModule } from '@interfaces/index';
-import { Colors } from 'src/constants/enums';
-import { KnobType, ModuleDefaultValues, PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
+import { buttons } from './mixer.buttons';
 import { inputTypes } from './mixer.inputs';
 import { knobTypes } from './mixer.knobs';
-import { labels } from './mixer.labels';
 import { MixerNode } from './mixer.node';
 import { outputTypes } from './mixer.outputs';
 import { sliderTypes } from './mixer.sliders';
@@ -45,9 +43,8 @@ export class Mixer extends ModuleBase implements ParentModule {
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
     this.addSliders(sliderTypes, this.getSliderCallbackAndDefault);
-    this.addMuteButtons();
+    this.addButtonControls();
     this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
-    this.addLabels(labels);
   }
 
   public getModuleData(): ModuleDefaultValues {
@@ -58,6 +55,19 @@ export class Mixer extends ModuleBase implements ParentModule {
       'in 4': this.node.getAudio('4'),
       'out': this.node.getAudio('out'),
     };
+  }
+
+  public addButtonControls() {
+    buttons.forEach((buttonGroup, index) => {
+      this.buttons.push(new ButtonGroup(
+        this.canvas,
+        this,
+        buttonGroup,
+        this.node.setMute((index + 1).toString()),
+        this.accentColor,
+        true,
+      ));
+    });
   }
 
   private getOutputConnection = (type: string): GainNode => {
@@ -114,28 +124,6 @@ export class Mixer extends ModuleBase implements ParentModule {
           callback: this.node.setAudio('4'),
           default: this.defaults[key],
         };
-    }
-  }
-
-  private addMuteButtons() {
-    for (let i = 0; i < 4; i += 1) {
-      const button: KnobType = {
-        position: {
-          x: 175,
-          y: 55 + i * 30,
-        },
-        size: SMALL_KNOB,
-        type: THREE_STATE_BUTTON,
-      };
-
-      this.buttons.push(new ThreeStateButton(
-        this.canvas,
-        this,
-        button,
-        this.node.setMute((i + 1).toString()),
-        Colors.AccentAudioPath,
-      ));
-      this.buttons[i].setActive(false);
     }
   }
 }

@@ -74,8 +74,9 @@ export class MixerNode {
     };
   }
 
-  public setMute = (index: string): (mute: boolean) => void => {
-    return (mute: boolean) => {
+  public setMute = (index: string): (button: string) => void => {
+    return (button: string) => {
+      const mute = button !== null;
       this.channels[index.toString()].mute = mute;
       this.getAudioNode(index).gain.setTargetAtTime(
         mute ? 0 : this.channels[index.toString()].value,
