@@ -23,3 +23,5 @@ If you want to help, you're welcome. Just fork and create PR's.
 > There is a [Code of conduct](./docs/code-of-conduct.md)
 >
 > More on [Contributing](./docs/contributing.md)
+
+typo
