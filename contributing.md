@@ -1,0 +1,138 @@
+# Contributing to `SYnthZYGY`
+
+I'd love for you to contribute to the source code and to make `SYnthZYGY`
+even better than it is today! Here are the guidelines I'd like you to follow:
+
+ - [Code of Conduct](#coc)
+ - [Question or Problem?](#question)
+ - [Issues and Bugs](#issue)
+ - [Feature Requests](#feature)
+ - [Documentation fixes](#docs)
+ - [Submission Guidelines](#submit)
+ - [Coding Rules](#rules)
+
+
+## <a name="coc"></a> Code of Conduct
+
+Help me keep `SYnthZYGY` open and inclusive. Please be kind to and considerate
+of other developers, as we all have the same goal: make `SYnthZYGY` as good as
+it can be. Read the full [Code Of Conduct][coc-link]
+
+## <a name="question"></a> Got a Question or Problem?
+
+If you have questions about how to use `SYnthZYGY`, please see the
+[docs][docs-link], and if you don't find the answer there, please contact
+me via [twitter][twitter-link]
+
+## <a name="issue"></a> Found an Issue?
+
+If you find a bug in the source code or a mistake in the documentation, you can
+help me by submitting [an issue][issue-link]. You can help me out even more by
+submitting a Pull Request with a fix.
+
+**Please see the [Submission Guidelines](#submit) below.**
+
+## <a name="feature"></a> Want a Feature?
+
+You can request a new feature by submitting an issue to my
+[GitHub Repository][github]. If you would like to implement a new feature then
+consider what kind of change it is:
+
+* **Major Changes** that you wish to contribute to the project should be
+  discussed first with `SYnthZYGY` contributors in an issue or pull request so
+  that we can develop a proper solution and better coordinate our efforts,
+  prevent duplication of work, and help you to craft the change so that it is
+  successfully accepted into the project.
+* **Small Changes** can be crafted and submitted to the
+  [GitHub Repository][github] as a Pull Request.
+
+## <a name="docs"></a> Want a Doc Fix?
+
+If you want to help improve the docs, it's a good idea to let others know what
+you're working on to minimize duplication of effort. Create a new issue (or
+comment on a related existing one) to let others know what
+you're working on.
+
+For large fixes, please build and test the documentation before submitting the
+PR to be sure you haven't accidentally introduced layout or formatting issues.
+
+## <a name="submit"></a> Submission Guidelines
+
+### Submitting an Issue
+Before you submit your issue search the archive, maybe your question was already
+answered.
+
+If your issue appears to be a bug, and hasn't been reported, open a new issue.
+Help me to maximize the effort I can spend fixing issues and adding new
+features by not reporting duplicate issues. Providing the following information
+will increase the chances of your issue being dealt with quickly:
+
+* **Overview of the Issue** - if an error is being thrown a non-minified stack
+  trace helps
+* **Motivation for or Use Case** - explain why this is a bug for you
+* **Browser and version** - is this a problem with all browsers or
+  only specific ones?
+* **Reproduce the Error** - provide an isolated code snippet or an unambiguous
+  set of steps.
+* **Related Issues** - has a similar issue been reported before?
+* **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point
+  to what might be causing the problem (line of code or commit)
+
+**If you get help, help others. Good karma rules!**
+
+### Submitting a Pull Request
+Before you submit your pull request consider the following guidelines:
+
+* Search [GitHub][github] for an open or closed Pull Request that relates to
+  your submission. You don't want to duplicate effort.
+* Make your changes in a new git branch for a bug:
+
+    ```shell
+    git checkout -b bugfix/my-fix-branch develop
+    ```
+
+* Make your changes in a new git branch for a feature:
+
+    ```shell
+    git checkout -b feature/my-fix-branch develop
+    ```
+
+* Create your patch, **including appropriate test cases**.
+* Commit your changes using a descriptive commit message.
+
+    ```shell
+    git commit -a
+    ```
+  Note: the optional commit `-a` command line option will automatically "add"
+  and "rm" edited files.
+
+* Push your branch to GitHub:
+
+    ```shell
+    git push origin my-fix-branch
+    ```
+
+In GitHub, send a pull request to `synthzygy:develop`.
+If I suggest changes, then:
+
+* Make the required updates.
+* Commit your changes to your branch (e.g. `my-fix-branch`).
+* Push the changes to your GitHub repository (this will update your Pull Request).
+
+That's it! Thank you for your contribution!
+
+#### After your pull request is merged
+
+After your pull request is merged, you can safely delete your branch and pull
+the changes from the main (upstream) repository.
+
+## <a name="rules"></a> Coding Rules
+
+`WIP`
+
+
+[coc-link]: ./code-of-conduct.md
+[docs-link]: ./docs/index.md
+[twitter-link]: https://twitter.com/navelpluisje_nl
+[issue-link]: https://github.com/navelpluisje/synthzygy/issues/new
+[github]: https://github.com/navelpluisje/synthzygy

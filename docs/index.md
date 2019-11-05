@@ -41,7 +41,12 @@ A modular synthesizer made with vanilla javascript.
 * [Midi :: Utility module](./utilities/midi.md)
 * [Turing Machine :: Utility module](./utilities/turing.md)
 
+### Audio Modules
+
+* [Mixer :: Audio module](./audio/mixer.md)
+
 ### Others
 
 * [Credits](./credits.md)
-* [Code of conduct](./code-of-conduct.md)
+* [Code of conduct](../code-of-conduct.md)
+* [Contributing](../contributing.md)
