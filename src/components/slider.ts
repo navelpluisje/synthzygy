@@ -48,7 +48,7 @@ export class Slider implements SynthModuleControl {
     this.drawSliderBase();
     this.drawSliderValue();
     this.drawSliderCap();
-    this.showLabel && this.drawKnobLabel();
+    this.showLabel && this.drawSliderLabel();
   }
 
   public setValue(value: number) {
@@ -212,16 +212,17 @@ export class Slider implements SynthModuleControl {
     canvas.restore();
   }
 
-  private drawKnobLabel() {
+  private drawSliderLabel() {
     const {x: xPos, y: yPos} = this.getSliderPosition();
     const yLabel = yPos + 36;
 
+    this.canvas.save();
     this.canvas.font = '13px Raleway, sans-serif';
     this.canvas.textAlign = 'center';
     this.canvas.textBaseline = 'middle';
     this.canvas.fillStyle = Colors.ControlLabel;
-    const rectHeight = 16;
-    this.canvas.fillText(this.label, xPos, yLabel + (rectHeight / 2));
+    this.canvas.fillText(this.label, xPos, yLabel + 60);
+    this.canvas.restore();
   }
 
   private getValuePosition(): number {

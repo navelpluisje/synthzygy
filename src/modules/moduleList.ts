@@ -10,6 +10,7 @@ import {
   Envelope,
   Filter,
   GateTrigger,
+  HarmonicOscillator,
   HiHat,
   Kick,
   Lfo,
@@ -31,6 +32,7 @@ type Module = AudioOut
   | Envelope
   | Filter
   | GateTrigger
+  | HarmonicOscillator
   | HiHat
   | Kick
   | Lfo
@@ -173,6 +175,8 @@ export class ModuleList {
       case 'gate':
       case 'gateTrigger':
         return GateTrigger;
+      case 'harmonic':
+        return HarmonicOscillator;
       case 'hihat':
         return HiHat;
       case 'kick':

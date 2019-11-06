@@ -3,6 +3,9 @@ export const AvailableModules = [{
     name: 'oscillator',
     title: 'Oscillator',
   }, {
+    name: 'harmonic',
+    title: 'Harmonic Oscillator',
+  }, {
     name: 'noise',
     title: 'Noise',
   }, {

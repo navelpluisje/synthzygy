@@ -7,6 +7,7 @@ import { Snare } from './drum/snare';
 import { Envelope } from './envelope';
 import { Filter } from './filter';
 import { GateTrigger } from './gateTrigger';
+import { HarmonicOscillator } from './harmonicOscillator';
 import { Lfo } from './lfo';
 import { Midi } from './midi';
 import { Mixer } from './mixer';
@@ -26,6 +27,7 @@ export {
   Envelope,
   Filter,
   GateTrigger,
+  HarmonicOscillator,
   HiHat,
   Midi,
   Kick,

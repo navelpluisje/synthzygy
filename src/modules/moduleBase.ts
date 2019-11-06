@@ -208,7 +208,7 @@ export class ModuleBase implements Module {
 
   protected addInputs(
     inputTypes: SynthConnectorType[],
-    getInputConnection: (type: string) => GateTrigger | AudioNode,
+    getInputConnection: (type: string) => GateTrigger | AudioNode | AudioParam,
   ): void {
     inputTypes.forEach((input) => {
       const component = new InputConnector(this.canvas, this, input, this.accentColor);
