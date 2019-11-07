@@ -74,7 +74,7 @@ export class Filter extends ModuleBase implements ParentModule {
 
   private getOutputConnection = (type: string): GainNode => {
     switch (type) {
-      case 'Output':
+      case 'audioOut':
         return this.node.output();
     }
   }
