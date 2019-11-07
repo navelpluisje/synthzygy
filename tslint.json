@@ -15,7 +15,7 @@
       "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
     },
     "no-unused-expression": [true, "allow-fast-null-checks"],
-    "no-unused-variables": true,
+    "no-unused-variable": true,
     "quotemark": [true, "single"]
   }
 }
