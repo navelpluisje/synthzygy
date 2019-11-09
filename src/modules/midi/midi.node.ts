@@ -1,29 +1,21 @@
 import { GateNode } from '@nodes/gateNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
-import { Transport } from 'src/constants/enums';
+import {
+  ControlChanges,
+  MidiEvents,
+  MidiSystemMessages,
+  Transport,
+ } from 'src/constants/enums';
 import { notes } from 'src/midinotes';
 import { GateTrigger } from 'src/types';
-
-const NOTE_OFF = '8';
-const NOTE_ON = '9';
-const CONTROL_CHANGE = 'b';
-const AFTERTOUCH = 'd';
-const PITCHBEND = 'e';
-// const NOTE_OFF = '8'
-const MODULATION = 1;
-
-const TIMING_CLOCK = '248';
-const CONTROL_START = '250';
-const CONTROL_CONTINUE = '251';
-const CONTROL_STOP = '252';
 
 export class MidiNode {
 
   public static substractCommand(command: number) {
-    const [cmd, port] = command.toString(16);
+    const [event, message] = command.toString(16);
     return {
-      cmd,
-      port,
+      event,
+      message,
     };
   }
   private context: AudioContext;
@@ -176,57 +168,53 @@ export class MidiNode {
 
   private handleMidiMessage = (message: WebMidi.MIDIMessageEvent) => {
     const [cmd, key, value] = message.data;
-    let command = {
-      cmd: cmd.toString(),
-      port: '0',
-    };
+    const command = MidiNode.substractCommand(cmd);
 
-    if (key && value) {
-      command = MidiNode.substractCommand(cmd);
-    }
-
-    // console.l  og({cmd, key, value})
-    if (this.port !== null && command.port !== this.port) {
+    if (this.port !== null && command.message !== this.port) {
       return false;
     }
 
-    switch (command.cmd) {
-      case NOTE_OFF:
+    switch (command.event) {
+      case MidiEvents.NoteOff:
         this.handleNoteOff(key);
         break;
 
-      case NOTE_ON:
+      case MidiEvents.NoteOn:
         this.handleNoteOn(key);
         break;
 
-      case CONTROL_CHANGE:
-        if (key === MODULATION) {
+      case MidiEvents.ControlChange:
+        if (key === ControlChanges.Modulation) {
           this.setModulation(value);
         }
         break;
 
-      case AFTERTOUCH:
+      case MidiEvents.ChannelPressure:
         this.setAfterTouch(key);
         break;
 
-      case PITCHBEND:
+      case MidiEvents.PitchBend:
         this.setPitch(value);
         break;
 
-      case TIMING_CLOCK:
-        this.handleTimingClock();
-        break;
+      case MidiEvents.SystemMessages:
+        switch (command.message) {
+          case MidiSystemMessages.TimingClock:
+            this.handleTimingClock();
+            break;
 
-      case CONTROL_START:
-        this.handleTransport(Transport.Start);
-        break;
+          case MidiSystemMessages.Start:
+            this.handleTransport(Transport.Start);
+            break;
 
-      case CONTROL_CONTINUE:
-        this.handleTransport(Transport.Continue);
-        break;
+          case MidiSystemMessages.Continue:
+            this.handleTransport(Transport.Continue);
+            break;
 
-      case CONTROL_STOP:
-        this.handleTransport(Transport.Stop);
+          case MidiSystemMessages.Stop:
+            this.handleTransport(Transport.Stop);
+            break;
+        }
         break;
     }
   }

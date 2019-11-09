@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  mode: 'development',
+  devtool: 'source-map',
   entry: {
     index: './src/app.ts',
     processors: './src/processors/index.ts',

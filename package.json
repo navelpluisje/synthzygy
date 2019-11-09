@@ -9,8 +9,8 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
-    "dev": "webpack --progress --watch",
+    "build": "NODE_ENV=production webpack --mode=production",
+    "dev": "webpack --progress --watch --mode=development",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:md": "markdownlint 'docs/**/*.md'"

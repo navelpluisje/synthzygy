@@ -27,3 +27,27 @@ export enum NoiseTypes {
   Pink = 'pink',
   Blue = 'blue',
 }
+
+/**
+ * More info on midi messages con be found:
+ * https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message
+ */
+export enum MidiEvents {
+  NoteOff = '8',
+  NoteOn = '9',
+  ControlChange = 'b',
+  ChannelPressure = 'd',
+  PitchBend = 'e',
+  SystemMessages = 'f',
+}
+
+export enum MidiSystemMessages {
+  TimingClock = '8',
+  Start = 'a',
+  Continue = 'b',
+  Stop = 'c',
+}
+
+export enum ControlChanges {
+  Modulation = 1,
+}
