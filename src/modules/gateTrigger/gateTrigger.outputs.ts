@@ -9,5 +9,5 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 110,
   },
   showIcon: true,
-  type: 'gate',
+  type: 'audio',
 }];
