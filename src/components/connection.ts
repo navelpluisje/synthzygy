@@ -87,7 +87,7 @@ export class Connection {
   public connect() {
     switch (this.start.type) {
       case 'data':
-        this.start.gate.connect(this.end.gate, this.id);
+        this.start.data.connect(this.end.data, this.id);
         break;
       case 'audio':
         this.start.node.connect(this.end.node as AudioNode);

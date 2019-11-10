@@ -150,7 +150,7 @@ export interface OutputType {
   type: string;
   name: string;
   node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode | ConstantSourceNode;
-  gate?: GateNode;
+  data?: GateNode;
   component: OutputConnector;
 }
 
@@ -159,7 +159,7 @@ export interface InputType {
   type: string;
   name: string;
   node?: AudioNode | AudioParam | AudioWorkletNode;
-  gate?: GateTrigger;
+  data?: GateTrigger;
   component: InputConnector;
 }
 
