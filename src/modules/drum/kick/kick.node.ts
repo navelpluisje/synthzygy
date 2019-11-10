@@ -1,7 +1,7 @@
+import { GateInputNode } from '@nodes/gateInputNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
 import { createGainNode } from '@utilities/createGain';
 import { createOscillatorNode } from '@utilities/createOscillator';
-import { GateTrigger } from 'src/types';
 
 export class KickNode {
   private decay: number = .3;
@@ -9,6 +9,7 @@ export class KickNode {
   private boost: number;
   private sweep: number;
   private context: AudioContext;
+  private gateInput: GateInputNode;
   private triangle: OscillatorNode;
   private triangleBoost: GainNode;
   private sine: OscillatorNode;
@@ -24,6 +25,7 @@ export class KickNode {
   ) {
     this.context = context;
     this.sweep = .5;
+    this.gateInput = new GateInputNode(this.context, this.trigger);
     this.createKickNode();
   }
 
@@ -61,8 +63,8 @@ export class KickNode {
     return this.boost;
   }
 
-  public inputGate(): GateTrigger {
-    return this.trigger;
+  public inputGate(): GainNode {
+    return this.gateInput.input();
   }
 
   public output(): GainNode {

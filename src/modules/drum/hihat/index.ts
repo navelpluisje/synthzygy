@@ -2,7 +2,7 @@ import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { inputTypes } from './hihat.inputs';
 import { knobTypes } from './hihat.knobs';
 import { HiHatNode } from './hihat.node';
@@ -47,7 +47,7 @@ export class HiHat extends ModuleBase implements ParentModule {
     };
   }
 
-  private getInputConnection = (type: string): GateTrigger => {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Gate':
         return this.node.inputGate();

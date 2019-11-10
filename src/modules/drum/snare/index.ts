@@ -2,7 +2,7 @@ import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { inputTypes } from './snare.inputs';
 import { knobTypes } from './snare.knobs';
 import { SnareNode } from './snare.node';
@@ -49,7 +49,7 @@ export class Snare extends ModuleBase implements ParentModule {
     };
   }
 
-  private getInputConnection = (type: string): GateTrigger => {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Gate':
         return this.node.inputGate();
