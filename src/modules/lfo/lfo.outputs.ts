@@ -8,7 +8,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 50,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'square',
   name: 'squareWave',
@@ -17,7 +17,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 80,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'sine',
   name: 'sineWave',
@@ -26,7 +26,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 110,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'triangle',
   name: 'triangleWave',
@@ -35,5 +35,5 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 140,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }];

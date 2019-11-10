@@ -15,5 +15,5 @@ export const inputTypes: SynthConnectorType[] = [{
     y: 150,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'gate',
 }];

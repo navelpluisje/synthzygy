@@ -9,6 +9,7 @@ interface ConnectionColors {
 export class Connection {
   public static connectionColors: ConnectionColors = {
     audio: 'hsla(347, 65%, 57%, .7)',
+    cv: 'hsla(77, 65%, 57%, .7)',
     data: 'hsla(257, 65%, 57%, .7)',
     gate: 'hsla(167, 65%, 57%, .7)',
   };

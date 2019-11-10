@@ -8,7 +8,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 50,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   name: 'Pitch',
   position: {
@@ -16,7 +16,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 80,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   name: 'Mod',
   position: {
@@ -24,7 +24,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 110,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   name: 'Press',
   position: {
@@ -32,7 +32,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 140,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'gate-out',
   name: 'Gate',
@@ -41,7 +41,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 170,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'gate',
 }, {
   name: 'Clock',
   position: {
@@ -49,7 +49,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 200,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'gate',
 }, {
   name: 'Transport',
   position: {
