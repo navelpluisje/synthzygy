@@ -1,10 +1,10 @@
 import { SynthModule, TriggerButton } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
+import { GateOutputNode } from '@nodes/gateOutputNode';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, PositionType } from 'src/types';
 import { knobTypes } from './gateTrigger.knobs';
-import { GateOutputNode } from './gateTrigger.node';
 import { outputTypes } from './gateTrigger.outputs';
 
 export class GateTrigger extends ModuleBase implements ParentModule {
