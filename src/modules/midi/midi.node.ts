@@ -61,7 +61,7 @@ export class MidiNode {
     }
   }
 
-  public getMidiInputs() {
+  public getMidiInputs(): Array<[string, string]> {
     return this.midiInputs.map((input) => ([
       input.id,
       input.name,
@@ -146,7 +146,6 @@ export class MidiNode {
   }
 
   private setNote(midiNote: number) {
-    // @ts-ignore
     const note = notes[midiNote].value;
     this.cvNoteNode.offset.setTargetAtTime(note, this.context.currentTime, 0.001);
   }

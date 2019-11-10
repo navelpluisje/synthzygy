@@ -2,6 +2,7 @@ import { ButtonGroup, SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
+import { MidiSettings } from 'src/customElements/midiSettings';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { buttons } from './midi.buttons';
 import { knobTypes } from './midi.knobs';
@@ -21,7 +22,7 @@ export class Midi extends ModuleBase implements ParentModule {
   public type =  'midi';
   public title = 'Midi';
   private midiNode: MidiNode;
-  private settingsPanel: HTMLElement;
+  private settingsPanel: MidiSettings;
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -66,7 +67,6 @@ export class Midi extends ModuleBase implements ParentModule {
     if (this.settingsPanel.hasAttribute('show')) {
       this.settingsPanel.removeAttribute('show');
     } else {
-      // @ts-ignore
       this.settingsPanel.setValues(
         this.midiNode.getMidiInputs(),
         this.midiNode.getActiveInput(),

@@ -15,11 +15,8 @@ export class Menu {
   }
 
   private addEventListeners() {
-    // @ts-ignore
     document.getElementById('load-patch').addEventListener('floatmenu-click', this.showLoadPatchModal);
-    // @ts-ignore
     document.getElementById('save-patch').addEventListener('floatmenu-click', this.savePatch);
-    // @ts-ignore
     document.getElementById('clear-patch').addEventListener('floatmenu-click', this.clearPatch);
   }
 
