@@ -93,7 +93,7 @@ export class Midi extends ModuleBase implements ParentModule {
       case 'Press':
         return this.midiNode.aftertouchOutput();
       case 'Gate':
-        return this.midiNode;
+        return this.midiNode.gateOuptput();
       case 'Clock':
         return this.midiNode.clockNode();
       case 'Transport':

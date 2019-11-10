@@ -41,7 +41,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 170,
   },
   showIcon: true,
-  type: 'gate',
+  type: 'audio',
 }, {
   name: 'Clock',
   position: {
@@ -49,7 +49,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 200,
   },
   showLabel: true,
-  type: 'gate',
+  type: 'audio',
 }, {
   name: 'Transport',
   position: {
