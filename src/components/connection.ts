@@ -98,7 +98,7 @@ export class Connection {
   public disconnect() {
     switch (this.start.type) {
       case 'data':
-        this.start.gate.disconnect(this.id);
+        this.start.data.disconnect(this.id);
         break;
       case 'audio':
         this.start.node.disconnect(this.end.node as AudioNode);
