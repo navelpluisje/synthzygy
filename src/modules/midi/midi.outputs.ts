@@ -57,5 +57,5 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 230,
   },
   showLabel: true,
-  type: 'gate',
+  type: 'data',
 }];

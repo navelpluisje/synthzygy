@@ -6,7 +6,6 @@ import { Kick } from './drum/kick';
 import { Snare } from './drum/snare';
 import { Envelope } from './envelope';
 import { Filter } from './filter';
-import { GateTest } from './gateTest';
 import { GateTrigger } from './gateTrigger';
 import { HarmonicOscillator } from './harmonicOscillator';
 import { Lfo } from './lfo';
@@ -27,7 +26,6 @@ export {
   Delay,
   Envelope,
   Filter,
-  GateTest,
   GateTrigger,
   HarmonicOscillator,
   HiHat,

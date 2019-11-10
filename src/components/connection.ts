@@ -9,6 +9,7 @@ interface ConnectionColors {
 export class Connection {
   public static connectionColors: ConnectionColors = {
     audio: 'hsla(347, 65%, 57%, .7)',
+    data: 'hsla(257, 65%, 57%, .7)',
     gate: 'hsla(167, 65%, 57%, .7)',
   };
 
@@ -21,7 +22,10 @@ export class Connection {
     this.start = start;
     this.type = start.type;
     this.id = new Date().getTime();
-    end && (this.end = end);
+    if (end) {
+      this.end = end;
+      this.type = end.type;
+    }
   }
 
   public getConnectionData(): ConnectionData {
@@ -39,6 +43,7 @@ export class Connection {
 
   public setEnd(end: InputType) {
     this.end = end;
+    this.type = end.type;
   }
 
   public draw(canvas: CanvasRenderingContext2D, endPosition?: PositionType) {
@@ -80,7 +85,7 @@ export class Connection {
 
   public connect() {
     switch (this.start.type) {
-      case 'gate':
+      case 'data':
         this.start.gate.connect(this.end.gate, this.id);
         break;
       case 'audio':
@@ -91,7 +96,7 @@ export class Connection {
 
   public disconnect() {
     switch (this.start.type) {
-      case 'gate':
+      case 'data':
         this.start.gate.disconnect(this.id);
         break;
       case 'audio':

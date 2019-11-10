@@ -49,6 +49,7 @@ export class ConnectionList {
   public createConnection(input: InputType, output?: OutputType) {
     const moduleOutput = output || this.newConnection.start;
     const connection = new Connection(moduleOutput, input);
+    console.log(connection);
     connection.connect();
     this.connections.push(connection);
     this.removeNewConnection();

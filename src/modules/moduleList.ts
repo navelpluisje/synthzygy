@@ -9,7 +9,6 @@ import {
   Delay,
   Envelope,
   Filter,
-  GateTest,
   GateTrigger,
   HarmonicOscillator,
   HiHat,
@@ -32,7 +31,6 @@ type Module = AudioOut
   | Delay
   | Envelope
   | Filter
-  | GateTest
   | GateTrigger
   | HarmonicOscillator
   | HiHat
@@ -177,8 +175,6 @@ export class ModuleList {
       case 'gate':
       case 'gateTrigger':
         return GateTrigger;
-      case 'gateTest':
-        return GateTest;
       case 'harmonic':
         return HarmonicOscillator;
       case 'hihat':

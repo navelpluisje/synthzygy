@@ -3,7 +3,6 @@ import { Label } from '@components/label';
 import { Slider } from '@components/slider';
 import { SynthModule } from '@components/synthModule';
 import { Module } from '@interfaces/index';
-import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
 import {
   DimensionType,
@@ -212,7 +211,7 @@ export class ModuleBase implements Module {
   ): void {
     inputTypes.forEach((input) => {
       const component = new InputConnector(this.canvas, this, input, this.accentColor);
-      const key = input.type === 'gate' ? 'gate' : 'node';
+      const key = input.type === 'data' ? 'data' : 'node';
 
       this.inputs.push({
         component,
@@ -226,11 +225,11 @@ export class ModuleBase implements Module {
 
   protected addOutputs(
     outputTypes: SynthConnectorType[],
-    getOutputConnection?: (type: string) => AudioNode | MidiNode | {} | ClockNode,
+    getOutputConnection?: (type: string) => AudioNode | MidiNode | {},
   ): void {
     outputTypes.forEach((output) => {
       const component = new OutputConnector(this.canvas, this, output, this.accentColor);
-      const key = output.type === 'gate' ? 'gate' : 'node';
+      const key = output.type === 'data' ? 'data' : 'node';
 
       this.outputs.push({
         component,

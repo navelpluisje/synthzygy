@@ -1,6 +1,5 @@
 import { InputConnector, OutputConnector } from '@components/index';
 import { ModuleData } from '@interfaces/moduleInterface';
-import { ClockNode } from '@nodes/clockNode';
 import { GateNode } from '@nodes/gateNode';
 
 export type KnobSizes = 'small' | 'medium' | 'large';
@@ -54,7 +53,7 @@ export interface KnobType {
 export interface SynthConnectorType {
   name: string;
   icon?: string;
-  type: 'audio' | 'cv' | 'gate';
+  type: 'audio' | 'cv' | 'gate' | 'data';
   showIcon?: boolean;
   showLabel?: boolean;
   position: PositionType;
@@ -150,8 +149,8 @@ export interface OutputType {
   module: string;
   type: string;
   name: string;
-  node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode;
-  gate?: GateNode | ClockNode;
+  node?: AudioNode | OscillatorNode | GainNode | AudioWorkletNode | ConstantSourceNode;
+  gate?: GateNode;
   component: OutputConnector;
 }
 
