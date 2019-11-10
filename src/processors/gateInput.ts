@@ -16,8 +16,10 @@ export class GateInputProcessor extends AudioWorkletProcessor {
       for (let i = 0; i < channel.length; i += 1) {
         if (this.up && channel[i] < 0.5) {
           this.up = false;
+          this.port.postMessage(0);
         } else if (!this.up && channel[i] > 0.8) {
           this.up = true;
+          this.port.postMessage(1);
         }
 
         output[channelId][i] = Number(this.up);

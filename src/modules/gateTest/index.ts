@@ -4,7 +4,7 @@ import { Colors } from 'src/constants/enums';
 import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { inputTypes } from './gateTest.inputs';
-import { GateNode } from './gateTest.node';
+import { GateInputNode } from '@nodes/gateInputNode';
 import { outputTypes } from './gateTest.outputs';
 
 export class GateTest extends ModuleBase implements ParentModule {
@@ -18,7 +18,7 @@ export class GateTest extends ModuleBase implements ParentModule {
 
   public type = 'gateTest';
   public title = 'Gate';
-  private node: GateNode;
+  private node: GateInputNode;
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -31,20 +31,20 @@ export class GateTest extends ModuleBase implements ParentModule {
       ...defaults,
     });
     this.accentColor = Colors.AccentAudioPath;
-    this.node = new GateNode(context);
+    this.node = new GateInputNode(context, (x: number) => { console.log(x) });
     this.container = new SynthModule(canvas, GateTest.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
   }
 
-  private getInputConnection = (type: string): AudioWorkletNode => {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'cvGain':
-        return this.node.input  ();
+        return this.node.input();
     }
   }
 
-  private getOutputConnection = (type: string): AudioWorkletNode => {
+  private getOutputConnection = (type: string): GainNode => {
     switch (type) {
       case 'audioOut':
         return this.node.output();
