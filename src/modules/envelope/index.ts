@@ -1,7 +1,7 @@
 import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { Colors } from 'src/constants/enums';
-import { GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
+import { ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { inputTypes } from './envelope.inputs';
 import { knobTypes } from './envelope.knobs';
@@ -53,7 +53,7 @@ export class Envelope extends ModuleBase implements ParentModule {
     };
   }
 
-  private getInputConnection = (type: string): GateTrigger => {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'gateIn':
         return this.node.inputGate();

@@ -8,7 +8,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 180,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'gate-out',
   name: 'Trigger',

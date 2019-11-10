@@ -17,7 +17,7 @@ export const inputTypes: SynthConnectorType[] = [{
     x: 20,
     y: 145,
   },
-  type: 'audio',
+  type: 'cv',
 }, {
   connection: [{
     x: 35,
@@ -32,5 +32,5 @@ export const inputTypes: SynthConnectorType[] = [{
     x: 20,
     y: 175,
   },
-  type: 'audio',
+  type: 'cv',
 }];

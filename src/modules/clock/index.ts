@@ -1,10 +1,10 @@
 import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
-import { ClockNode } from '@nodes/clockNode';
 import { Colors } from 'src/constants/enums';
 import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { knobTypes } from './clock.knobs';
+import { ClockNode } from './clock.node';
 import { outputTypes } from './clock.outputs';
 
 export class Clock extends ModuleBase implements ParentModule {
@@ -23,7 +23,7 @@ export class Clock extends ModuleBase implements ParentModule {
   public type = 'clock';
   public title = 'Clock';
   public context: AudioContext;
-  private nodes: Record<string, ClockNode> = {};
+  private node: ClockNode;
 
   constructor(
     canvas: CanvasRenderingContext2D,
@@ -56,18 +56,14 @@ export class Clock extends ModuleBase implements ParentModule {
   }
 
   private createNodes() {
-    this.nodes['2'] = new ClockNode(this.context);
-    this.nodes['/1'] = new ClockNode(this.context);
-    this.nodes['/2'] = new ClockNode(this.context);
-    this.nodes['/4'] = new ClockNode(this.context);
-    this.nodes['/8'] = new ClockNode(this.context);
+    this.node = new ClockNode(this.context);
 
     this.setBPM(this.bpm);
-    this.setPulseWidth(this.pulseWidth);
+    this.node.setPulseWidth(this.pulseWidth);
   }
 
-  private getOutputConnection = (type: string): ClockNode => {
-    return this.nodes[type];
+  private getOutputConnection = (type: string): ConstantSourceNode => {
+    return this.node.output(type);
   }
 
   private getKnobCallbackAndDefault = (label: string): any => {
@@ -80,7 +76,7 @@ export class Clock extends ModuleBase implements ParentModule {
         };
       case 'pw':
         return {
-          callback: this.setPulseWidth,
+          callback: this.node.setPulseWidth,
           default: this.defaults[key],
         };
     }
@@ -88,20 +84,8 @@ export class Clock extends ModuleBase implements ParentModule {
 
   private setBPM = (bpm: number): void => {
     this.bpm = bpm;
-    this.frequency = bpm / 60;
-
-    Object.values(this.nodes).forEach((node, index) => {
-      const value = this.frequency * (2 ** (index - 1));
-      node.setFrequency(value);
-      },
-    );
-
     this.drawBPMDisplay(true);
-  }
-
-  private setPulseWidth = (pw: number) => {
-    this.pulseWidth = pw;
-    Object.values(this.nodes).forEach((node) => node.setPulseWidth(this.pulseWidth));
+    this.node.setBPM(bpm);
   }
 
   private drawBPMDisplay(reset: boolean = false): void {

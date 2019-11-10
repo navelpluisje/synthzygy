@@ -1,4 +1,5 @@
 import { GateNode } from '@nodes/gateNode';
+import { GateOutputNode } from '@nodes/gateOutputNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
 import {
   ControlChanges,
@@ -21,7 +22,8 @@ export class MidiNode {
   private context: AudioContext;
   private trigger: Record<number, GateTrigger> = {};
   private transportTriggerNode: GateNode;
-  private clockTriggerNode: GateNode;
+  private clockTriggerNode: GateOutputNode;
+  private gateOutputNode: GateOutputNode;
   private cvNoteNode: ConstantSourceNode;
   private cvPitchNode: ConstantSourceNode;
   private cvModulationNode: ConstantSourceNode;
@@ -38,7 +40,8 @@ export class MidiNode {
     this.context = context;
     this.port = null;
     this.transportTriggerNode = new GateNode();
-    this.clockTriggerNode = new GateNode();
+    this.clockTriggerNode = new GateOutputNode(this.context);
+    this.gateOutputNode = new GateOutputNode(this.context);
     this.createCvNodes();
     this.getAccess();
   }
@@ -61,7 +64,7 @@ export class MidiNode {
     }
   }
 
-  public getMidiInputs() {
+  public getMidiInputs(): Array<[string, string]> {
     return this.midiInputs.map((input) => ([
       input.id,
       input.name,
@@ -92,8 +95,12 @@ export class MidiNode {
     return Math.log(this.noteLength) / Math.log(2);
   }
 
-  public clockNode(): GateNode {
-    return this.clockTriggerNode;
+  public clockNode(): ConstantSourceNode {
+    return this.clockTriggerNode.output();
+  }
+
+  public gateOuptput(): ConstantSourceNode {
+    return this.gateOutputNode.output();
   }
 
   public transportNode(): GateNode {
@@ -146,7 +153,6 @@ export class MidiNode {
   }
 
   private setNote(midiNote: number) {
-    // @ts-ignore
     const note = notes[midiNote].value;
     this.cvNoteNode.offset.setTargetAtTime(note, this.context.currentTime, 0.001);
   }
@@ -223,12 +229,12 @@ export class MidiNode {
     if (this.noteStep === this.noteLength - 1) {
       this.noteStep = -1;
       this.clockOn = true;
-      this.clockTriggerNode && this.clockTriggerNode.trigger(1);
+      this.clockTriggerNode.setLevel(1);
     }
     this.noteStep += 1;
     if (this.clockOn && this.noteStep * 2 >= this.noteLength) {
       this.clockOn = false;
-      this.clockTriggerNode && this.clockTriggerNode.trigger(1);
+      this.clockTriggerNode.setLevel(0);
     }
   }
 
@@ -239,14 +245,12 @@ export class MidiNode {
   private handleNoteOn(key: number) {
     this.activeNote = key;
     this.setNote(key);
-    this.trigger && (
-      Object.values(this.trigger).forEach((trigger) => trigger(1))
-    );
+    this.gateOutputNode.setLevel(1);
   }
 
   private handleNoteOff(key: number) {
-    this.trigger && key === this.activeNote && (
-      Object.values(this.trigger).forEach((trigger) => trigger(0))
-    );
+    this.trigger
+    && key === this.activeNote
+    && this.gateOutputNode.setLevel(0);
   }
 }

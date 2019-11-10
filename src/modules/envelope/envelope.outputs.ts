@@ -8,5 +8,5 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 190,
   },
   showIcon: true,
-  type: 'audio',
+  type: 'cv',
 }];

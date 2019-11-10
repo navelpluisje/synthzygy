@@ -1,4 +1,10 @@
-export const notes = {
+export interface MidiNote {
+  freq: number;
+  note: string;
+  value: number;
+}
+
+export const notes: Record<number, MidiNote> = {
   12: {
     freq: 16.35,
     note: 'C0',
