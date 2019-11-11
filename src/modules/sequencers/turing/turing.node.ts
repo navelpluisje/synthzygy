@@ -1,6 +1,6 @@
-import { GateNode } from '@nodes/gateNode';
+import { GateInputNode } from '@nodes/gateInputNode';
+import { GateOutputNode } from '@nodes/gateOutputNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
-import { GateTrigger } from 'src/types';
 
 const BIT_2 = 2;
 const BIT_3 = 4;
@@ -19,8 +19,9 @@ export class TuringMachineNode {
   private length: Lengths = '16';
   private lengths: Lengths[] = ['2', '3', '4', '6', '8', '12', '16'];
   private context: AudioContext;
-  private gateOutput: GateNode;
-  private pulsesOutputs: Record<string, GateNode>;
+  private gateInput: GateInputNode;
+  private gateOutput: GateOutputNode;
+  private pulsesOutputs: Record<string, GateOutputNode>;
   private cvOutputNode: ConstantSourceNode;
   private binData: number;
   private value: number;
@@ -54,16 +55,16 @@ export class TuringMachineNode {
     return this.probability;
   }
 
-  public outputPulse(pulse: string): GateNode {
-    return this.pulsesOutputs[pulse];
+  public outputPulse(pulse: string): ConstantSourceNode {
+    return this.pulsesOutputs[pulse].output();
   }
 
-  public inputClock(): GateTrigger {
-    return this.trigger;
+  public inputClock(): GainNode {
+    return this.gateInput.input();
   }
 
-  public outputGate(): GateNode {
-    return this.gateOutput;
+  public outputGate(): ConstantSourceNode {
+    return this.gateOutput.output();
   }
 
   public output(): ConstantSourceNode {
@@ -73,7 +74,8 @@ export class TuringMachineNode {
   private createNodes() {
     this.cvOutputNode = createConstantSourceNode(this.context);
     this.setCvOutput(this.value);
-    this.gateOutput = new GateNode();
+    this.gateInput = new GateInputNode(this.context, this.trigger);
+    this.gateOutput = new GateOutputNode(this.context);
   }
 
   private setCvOutput(value: number): void {
@@ -95,12 +97,12 @@ export class TuringMachineNode {
 
   private createPulsesOutputs() {
     this.pulsesOutputs = {
-      '2': new GateNode(),
-      '2+4': new GateNode(),
-      '2+6': new GateNode(),
-      '4': new GateNode(),
-      '6': new GateNode(),
-      '8': new GateNode(),
+      '2': new GateOutputNode(this.context),
+      '2+4': new GateOutputNode(this.context),
+      '2+6': new GateOutputNode(this.context),
+      '4': new GateOutputNode(this.context),
+      '6': new GateOutputNode(this.context),
+      '8': new GateOutputNode(this.context),
     };
   }
 
@@ -110,11 +112,10 @@ export class TuringMachineNode {
 
   private trigger = (value: number): void => {
     this.setCvOutput(this.value);
+    this.gateOutput.setLevel(value);
     if (value === 1) {
-      this.gateOutput.onKeyDown();
       this.triggerPulses();
     } else {
-      this.gateOutput.onKeyUp();
       this.unTriggerPulses();
     }
 
@@ -144,27 +145,27 @@ export class TuringMachineNode {
     let two = false;
     if (this.overFlow['2'] === 1) {
       two = true;
-      this.pulsesOutputs['2'].trigger(1);
+      this.pulsesOutputs['2'].setLevel(1);
     }
     if (this.overFlow['4'] === 1) {
-      this.pulsesOutputs['4'].trigger(1);
-      two && this.pulsesOutputs['2+4'].trigger(1);
+      this.pulsesOutputs['4'].setLevel(1);
+      two && this.pulsesOutputs['2+4'].setLevel(1);
     }
     if (this.overFlow['6'] === 1) {
-      this.pulsesOutputs['6'].trigger(1);
-      two && this.pulsesOutputs['2+6'].trigger(1);
+      this.pulsesOutputs['6'].setLevel(1);
+      two && this.pulsesOutputs['2+6'].setLevel(1);
     }
     if (this.overFlow['8'] === 1) {
-      this.pulsesOutputs['8'].trigger(1);
+      this.pulsesOutputs['8'].setLevel(1);
     }
   }
 
   private unTriggerPulses() {
-    this.pulsesOutputs['2'].trigger(0);
-    this.pulsesOutputs['4'].trigger(0);
-    this.pulsesOutputs['6'].trigger(0);
-    this.pulsesOutputs['8'].trigger(0);
-    this.pulsesOutputs['2+4'].trigger(0);
-    this.pulsesOutputs['2+6'].trigger(0);
+    this.pulsesOutputs['2'].setLevel(0);
+    this.pulsesOutputs['4'].setLevel(0);
+    this.pulsesOutputs['6'].setLevel(0);
+    this.pulsesOutputs['8'].setLevel(0);
+    this.pulsesOutputs['2+4'].setLevel(0);
+    this.pulsesOutputs['2+6'].setLevel(0);
   }
 }

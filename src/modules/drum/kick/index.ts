@@ -2,7 +2,7 @@ import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { ModuleBase } from '@modules/moduleBase';
 import { Colors } from 'src/constants/enums';
-import { DimensionType, GateTrigger, ModuleDefaultValues, PositionType } from 'src/types';
+import { DimensionType, ModuleDefaultValues, PositionType } from 'src/types';
 import { inputTypes } from './kick.inputs';
 import { knobTypes } from './kick.knobs';
 import { KickNode } from './kick.node';
@@ -51,7 +51,7 @@ export class Kick extends ModuleBase implements ParentModule {
     };
   }
 
-  private getInputConnection = (type: string): GateTrigger => {
+  private getInputConnection = (type: string): GainNode => {
     switch (type) {
       case 'Gate':
         return this.node.inputGate();

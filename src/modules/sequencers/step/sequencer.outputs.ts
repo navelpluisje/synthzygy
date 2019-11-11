@@ -8,7 +8,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 90,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'envelope-out',
   name: 'cv B',
@@ -17,7 +17,7 @@ export const outputTypes: SynthConnectorType[] = [{
     y: 120,
   },
   showLabel: true,
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'gate-out',
   name: 'gateOut',

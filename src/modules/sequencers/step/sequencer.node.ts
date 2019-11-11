@@ -1,5 +1,6 @@
 import { Transport } from '@constants/enums';
-import { GateNode } from '@nodes/gateNode';
+import { GateInputNode } from '@nodes/gateInputNode';
+import { GateOutputNode } from '@nodes/gateOutputNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
 import { GateTrigger, ModuleDefaultValues } from 'src/types';
 
@@ -13,7 +14,8 @@ export class SequencerNode {
   private context: AudioContext;
   private cvOutputNodeA: ConstantSourceNode;
   private cvOutputNodeB: ConstantSourceNode;
-  private gateOutput: GateNode;
+  private gateOutput: GateOutputNode;
+  private gateInput: GateInputNode;
   private transportCallback: GateTrigger;
   private stepChangeCallback: (step: number) => void;
 
@@ -26,7 +28,8 @@ export class SequencerNode {
     this.setStepsA(initialData.stepsA as number[]);
     this.setStepsB(initialData.stepsB as number[]);
     this.setGates(initialData.gates as boolean[]);
-    this.gateOutput = new GateNode();
+    this.gateInput = new GateInputNode(this.context, this.trigger);
+    this.gateOutput = new GateOutputNode(this.context);
     this.createCvOutputNodes();
     this.stepChangeCallback = stepChangeCallback;
   }
@@ -143,8 +146,8 @@ export class SequencerNode {
     return this.triggerTransport;
   }
 
-  public inputGate(): GateTrigger {
-    return this.trigger;
+  public inputGate(): GainNode {
+    return this.gateInput.input();
   }
 
   public outputA(): ConstantSourceNode {
@@ -155,8 +158,8 @@ export class SequencerNode {
     return this.cvOutputNodeB;
   }
 
-  public outputGate(): GateNode {
-    return this.gateOutput;
+  public outputGate(): ConstantSourceNode {
+    return this.gateOutput.output();
   }
 
   private createCvOutputNodes() {
@@ -192,11 +195,7 @@ export class SequencerNode {
       );
     }
     if (this.gates[this.currentStep]) {
-      if (value === 1) {
-        this.gateOutput.onKeyDown();
-      } else {
-        this.gateOutput.onKeyUp();
-      }
+      this.gateOutput.setLevel(value);
     }
   }
 }

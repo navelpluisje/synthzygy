@@ -11,7 +11,7 @@ export const inputTypes: SynthConnectorType[] = [{
     x: 20,
     y: 65,
   },
-  type: 'audio',
+  type: 'cv',
 }, {
   icon: 'audio-in',
   name: 'audioIn',

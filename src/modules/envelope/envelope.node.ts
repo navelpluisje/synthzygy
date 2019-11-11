@@ -1,5 +1,5 @@
+import { GateInputNode } from '@nodes/gateInputNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
-import { GateTrigger } from 'src/types';
 
 export class EnvelopeNode {
   private attack: number;
@@ -9,11 +9,14 @@ export class EnvelopeNode {
   private level: number;
   private context: AudioContext;
   private cvOutputNode: ConstantSourceNode;
+  private gateInput: GateInputNode;
 
+  // TODO: default values and getValues method for storing data
   constructor(
     context: AudioContext,
     ) {
     this.context = context;
+    this.gateInput = new GateInputNode(this.context, this.trigger);
     this.setAttack(.3);
     this.setDecay(.3);
     this.setSustain(.5);
@@ -62,8 +65,8 @@ export class EnvelopeNode {
     return this.level;
   }
 
-  public inputGate(): GateTrigger {
-    return this.trigger;
+  public inputGate(): GainNode {
+    return this.gateInput.input();
   }
 
   public output(): ConstantSourceNode {

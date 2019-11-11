@@ -23,8 +23,7 @@ export class ModuleSetector {
         modElement.setAttribute('group', category.name);
         modElement.setAttribute('name', module.name);
         modElement.textContent = module.title;
-        // @ts-ignore
-        modElement.addEventListener('itemclick', ({ target }) => this.callback(target.name));
+        modElement.addEventListener('itemclick', ({ target }) => this.callback((target as HTMLButtonElement).name));
         catElement.appendChild(modElement);
       });
     });

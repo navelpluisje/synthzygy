@@ -1,7 +1,7 @@
 import { NoiseTypes } from '@constants/enums';
+import { GateInputNode } from '@nodes/gateInputNode';
 import { NoiseNode } from '@nodes/noiseNode';
 import { createGainNode } from '@utilities/createGain';
-import { GateTrigger } from 'src/types';
 
 export class HiHatNode {
   private volume: number = .5;
@@ -9,6 +9,7 @@ export class HiHatNode {
   private frequency: number = .1;
   private context: AudioContext;
   private hihatGain: GainNode;
+  private gateInput: GateInputNode;
   private outputNode: GainNode;
   private noiseNode: NoiseNode;
   private noise: GainNode;
@@ -18,6 +19,7 @@ export class HiHatNode {
     context: AudioContext,
   ) {
     this.context = context;
+    this.gateInput = new GateInputNode(this.context, this.trigger);
     this.createHiHatNode();
   }
 
@@ -43,8 +45,8 @@ export class HiHatNode {
     return this.frequency;
   }
 
-  public inputGate(): GateTrigger {
-    return this.trigger;
+  public inputGate(): GainNode {
+    return this.gateInput.input();
   }
 
   public output(): GainNode {

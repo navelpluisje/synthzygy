@@ -132,7 +132,6 @@ export class Synth {
   }
 
   public addModule = (name: string) => {
-    // @ts-ignore
     this.modules.addModule(name);
   }
 

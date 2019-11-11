@@ -4,7 +4,6 @@ import { THREE_STATE_BUTTON, VERTICAL_SLIDER } from '@constants/controlTypes';
 import { Colors, Transport } from '@constants/enums';
 import { MEDIUM_SLIDER, SMALL_KNOB } from '@constants/sizes';
 import { ParentModule } from '@interfaces/index';
-import { GateNode } from '@nodes/gateNode';
 import { GateTrigger, KnobType, ModuleDefaultValues, PositionType } from 'src/types';
 import { ModuleBase } from '../../moduleBase';
 import { buttons } from './sequencer.buttons';
@@ -101,7 +100,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     this.node = new SequencerNode(context, this.onStepChange, initialData);
   }
 
-  private getInputConnection = (type: string): GateTrigger => {
+  private getInputConnection = (type: string): GateTrigger | GainNode => {
     switch (type) {
       case 'gateIn':
         return this.node.inputGate();
@@ -110,7 +109,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     }
   }
 
-  private getOutputConnection = (type: string): GateNode | ConstantSourceNode => {
+  private getOutputConnection = (type: string): ConstantSourceNode => {
     switch (type) {
       case 'cv A':
         return this.node.outputA();

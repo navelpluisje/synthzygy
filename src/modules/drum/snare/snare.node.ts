@@ -1,9 +1,9 @@
 import { NoiseTypes } from '@constants/enums';
+import { GateInputNode } from '@nodes/gateInputNode';
 import { NoiseNode } from '@nodes/noiseNode';
 import { createConstantSourceNode } from '@utilities/createConstantSource';
 import { createGainNode } from '@utilities/createGain';
 import { createOscillatorNode } from '@utilities/createOscillator';
-import { GateTrigger } from 'src/types';
 
 export class SnareNode {
   private volume: number = .5;
@@ -12,6 +12,7 @@ export class SnareNode {
   private head: number;
   private snare: number;
   private context: AudioContext;
+  private gateInput: GateInputNode;
   private oscillator1Node: OscillatorNode;
   private oscillator2Node: OscillatorNode;
   private oscillator1Gain: GainNode;
@@ -27,6 +28,7 @@ export class SnareNode {
     context: AudioContext,
   ) {
     this.context = context;
+    this.gateInput = new GateInputNode(this.context, this.trigger);
     this.createSnareNode();
   }
 
@@ -62,8 +64,8 @@ export class SnareNode {
     return this.decay;
   }
 
-  public inputGate(): GateTrigger {
-    return this.trigger;
+  public inputGate(): GainNode {
+    return this.gateInput.input();
   }
 
   public output(): GainNode {
