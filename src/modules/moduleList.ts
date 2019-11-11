@@ -14,6 +14,7 @@ import {
   HiHat,
   Kick,
   Lfo,
+  LogicAnd,
   Midi,
   Mixer,
   Noise,
@@ -37,6 +38,7 @@ type Module = AudioOut
   | HiHat
   | Kick
   | Lfo
+  | LogicAnd
   | Midi
   | Mixer
   | Noise
@@ -164,6 +166,8 @@ export class ModuleList {
     switch (name) {
       case 'audioOut':
         return AudioOut;
+      case 'and':
+        return LogicAnd;
       case 'bitCrusher':
         return BitCrusher;
       case 'clock':

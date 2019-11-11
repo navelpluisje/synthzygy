@@ -54,6 +54,9 @@ export const AvailableModules = [{
     name: 'sequencer',
     title: 'Sequencer',
   }, {
+    name: 'and',
+    title: '(N)and',
+  }, {
     name: 'turinger',
     title: 'Turing Machine',
   }, {
