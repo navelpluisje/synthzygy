@@ -23,7 +23,7 @@ export class RingModulator extends ModuleBase implements ParentModule {
     position: PositionType,
   ) {
     super(canvas, position);
-    this.accentColor = Colors.AccentUtility;
+    this.accentColor = Colors.AccentModulator;
     this.node = createGainNode(context, 1);
     this.container = new SynthModule(canvas, RingModulator.dimensions, position, this.color);
     this.addInputs(inputTypes, this.getInputConnection);
@@ -58,14 +58,14 @@ export class RingModulator extends ModuleBase implements ParentModule {
     this.canvas.translate(x + 65, y + 85);
     this.canvas.rotate(45 * Math.PI / 180);
     this.canvas.translate(-(x + 65), -(y + 85));
-    this.canvas.strokeStyle = Colors.AccentUtility;
+    this.canvas.strokeStyle = this.accentColor;
     this.canvas.fillStyle = 'transparent';
     this.canvas.beginPath();
     this.canvas.arc(x + 65, y + 85, 20, 2 * Math.PI, 0);
-    this.canvas.moveTo(x + 45, y + 85);
-    this.canvas.lineTo(x + 85, y + 85);
-    this.canvas.moveTo(x + 65, y + 65);
-    this.canvas.lineTo(x + 65, y + 105);
+    this.canvas.moveTo(x + 55, y + 85);
+    this.canvas.lineTo(x + 75, y + 85);
+    this.canvas.moveTo(x + 65, y + 75);
+    this.canvas.lineTo(x + 65, y + 95);
 
     this.canvas.translate(x + 65, y + 85);
     this.canvas.rotate(-45 * Math.PI / 180);

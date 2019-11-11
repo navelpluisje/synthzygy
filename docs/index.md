@@ -27,8 +27,9 @@ A modular synthesizer made with vanilla javascript.
 
 ### Modulator Modules
 
-* [LFO :: Modulator module](./modulators/lfo.md)
 * [Envelope :: Modulator module](./modulators/envelope.md)
+* [LFO :: Modulator module](./modulators/lfo.md)
+* [Ring Modulator :: Modulator module](./modulators/ringmodulator.md)
 
 ### Effect Modules
 

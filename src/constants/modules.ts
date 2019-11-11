@@ -27,6 +27,9 @@ export const AvailableModules = [{
   }, {
     name: 'lfo',
     title: 'Lfo',
+  }, {
+    name: 'ringModulator',
+    title: 'Ring Modulator',
   }],
   name: 'modulators',
   title: 'Modulators',
@@ -47,9 +50,6 @@ export const AvailableModules = [{
   modules: [{
     name: 'gate',
     title: 'Gate trigger',
-  }, {
-    name: 'ringModulator',
-    title: 'Ring Modulator',
   }, {
     name: 'sequencer',
     title: 'Sequencer',
