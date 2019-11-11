@@ -19,6 +19,7 @@ import {
   Noise,
   Oscillator,
   Oscilloscope,
+  RingModulator,
   Sequencer,
   Snare,
   TuringMachine,
@@ -41,6 +42,7 @@ type Module = AudioOut
   | Noise
   | Oscillator
   | Oscilloscope
+  | RingModulator
   | TuringMachine
   | Sequencer
   | Snare
@@ -195,6 +197,8 @@ export class ModuleList {
         return Oscilloscope;
       case 'sequencer':
         return Sequencer;
+      case 'ringModulator':
+        return RingModulator;
       case 'snare':
         return Snare;
       case 'turinger':

@@ -15,6 +15,7 @@ import { Noise } from './noise';
 import { Oscillator } from './oscillator';
 import { Oscilloscope } from './oscilloscope';
 import { AudioOut } from './output';
+import { RingModulator } from './ringModulator';
 import { Sequencer } from './sequencers/step';
 import { TuringMachine } from './sequencers/turing';
 import { Vca } from './vca';
@@ -36,6 +37,7 @@ export {
   Noise,
   Oscillator,
   Oscilloscope,
+  RingModulator,
   TuringMachine,
   Sequencer,
   Snare,

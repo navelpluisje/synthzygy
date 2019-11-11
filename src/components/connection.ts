@@ -84,6 +84,8 @@ export class Connection {
         this.start.gate.connect(this.end.gate, this.id);
         break;
       case 'audio':
+      case 'gate':
+      case 'cv':
         this.start.node.connect(this.end.node as AudioNode);
         break;
     }
@@ -95,6 +97,8 @@ export class Connection {
         this.start.gate.disconnect(this.id);
         break;
       case 'audio':
+      case 'gate':
+      case 'cv':
         this.start.node.disconnect(this.end.node as AudioNode);
         break;
     }
