@@ -2,7 +2,7 @@ import { SynthConnectorType } from 'src/types';
 
 export const outputTypes: SynthConnectorType[] = [{
   icon: 'envelope-out',
-  name: 'cv A',
+  name: 'A',
   position: {
     x: 580,
     y: 90,
@@ -11,7 +11,7 @@ export const outputTypes: SynthConnectorType[] = [{
   type: 'cv',
 }, {
   icon: 'envelope-out',
-  name: 'cv B',
+  name: 'B',
   position: {
     x: 580,
     y: 120,

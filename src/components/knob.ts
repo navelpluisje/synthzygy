@@ -17,6 +17,7 @@ export class Knob implements SynthModuleControl {
   private parent: ParentModule;
   private valueData: any;
   private value: number;
+  private showValue: boolean;
   private label: string;
   private color: string;
   private callback: (value: number) => void;
@@ -37,6 +38,7 @@ export class Knob implements SynthModuleControl {
     this.valueData = { min, max, log, step };
     this.value = control.value;
     this.label = control.label;
+    this.showValue = !!control.showValue;
     this.type = control.type;
     this.callback = callback;
     this.color = color;
@@ -48,6 +50,7 @@ export class Knob implements SynthModuleControl {
     this.drawKnobBase();
     this.drawKnobValue();
     this.label && this.drawKnobLabel();
+    this.showValue && this.drawKnobValueLabel();
   }
 
   public setValue(value: number) {
@@ -154,6 +157,16 @@ export class Knob implements SynthModuleControl {
     this.canvas.fillStyle = Colors.ControlLabel;
     const rectHeight = 16;
     this.canvas.fillText(this.label, xPos, yLabel + (rectHeight / 2));
+  }
+
+  public drawKnobValueLabel() {
+    const {x: xPos, y: yPos} = this.getKnobPosition();
+
+    this.canvas.font = '13px Raleway, sans-serif';
+    this.canvas.textAlign = 'center';
+    this.canvas.textBaseline = 'middle';
+    this.canvas.fillStyle = Colors.ControlLabel;
+    this.canvas.fillText(this.value.toString(), xPos, yPos);
   }
 
   public isControlPressed(xPos: number, yPos: number): boolean {

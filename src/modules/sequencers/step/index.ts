@@ -8,6 +8,7 @@ import { GateTrigger, KnobType, ModuleDefaultValues, PositionType } from 'src/ty
 import { ModuleBase } from '../../moduleBase';
 import { buttons } from './sequencer.buttons';
 import { inputTypes } from './sequencer.inputs';
+import { knobTypes } from './sequencer.knobs';
 import { SequencerNode } from './sequencer.node';
 import { outputTypes } from './sequencer.outputs';
 
@@ -18,6 +19,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
   };
   private static initialValues: ModuleDefaultValues = {
     gates: new Array(16).fill(false, 0, 16),
+    length: 16,
     stepsA: new Array(16).fill(3, 0, 16),
     stepsB: new Array(16).fill(5, 0, 16),
   };
@@ -44,6 +46,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
     this.draw();
     this.addInputs(inputTypes, this.getInputConnection);
     this.addOutputs(outputTypes, this.getOutputConnection);
+    this.addKnobs(knobTypes, this.getKnobCallbackAndDefault);
     this.addButtonControls();
     this.addStepButtons();
     this.addStepSliders();
@@ -52,6 +55,7 @@ export class Sequencer extends ModuleBase implements ParentModule {
   public getModuleData(): ModuleDefaultValues {
     return {
       gates: this.node.getGates(),
+      length: this.node.getLength(),
       stepsA: this.node.getStepsA(),
       stepsB: this.node.getStepsB(),
     };
@@ -111,12 +115,23 @@ export class Sequencer extends ModuleBase implements ParentModule {
 
   private getOutputConnection = (type: string): ConstantSourceNode => {
     switch (type) {
-      case 'cv A':
+      case 'A':
         return this.node.outputA();
-      case 'cv B':
+      case 'B':
         return this.node.outputB();
       case 'gateOut':
         return this.node.outputGate();
+    }
+  }
+
+  private getKnobCallbackAndDefault = (label: string) => {
+    const key = label.toLowerCase();
+    switch (key) {
+      case 'length':
+        return {
+          callback: this.node.setLength,
+          default: this.defaults[key],
+        };
     }
   }
 

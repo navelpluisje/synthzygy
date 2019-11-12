@@ -45,6 +45,7 @@ export interface KnobType {
   min?: number;
   max?: number;
   showLabel?: boolean;
+  showValue?: boolean;
   step?: number;
   value?: number;
   log?: boolean;

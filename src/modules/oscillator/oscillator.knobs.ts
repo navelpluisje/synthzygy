@@ -24,6 +24,7 @@ export const knobTypes: KnobType[] = [{
     x: 40,
     y: 65,
   },
+  showValue: true,
   size: SMALL_KNOB,
   step: 1,
   type: STEP_KNOB,

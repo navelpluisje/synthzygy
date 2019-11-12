@@ -8,7 +8,7 @@ export class SequencerNode {
   private stepsA: Float32Array;
   private stepsB: Float32Array;
   private gates: boolean[];
-  private length: number = 16;
+  private length: number;
   private running: boolean = false;
   private currentStep: number = -1;
   private context: AudioContext;
@@ -34,8 +34,12 @@ export class SequencerNode {
     this.stepChangeCallback = stepChangeCallback;
   }
 
-  public setLength(length: number): void {
+  public setLength = (length: number): void => {
     this.length = length;
+  }
+
+  public getLength(): number {
+    return this.length;
   }
 
   public setStepsA(value: number[]) {
@@ -61,7 +65,7 @@ export class SequencerNode {
     return this.getStepsA();
   }
 
-  public setGates(value: boolean[]) {
+  public setGates(value: boolean[]): void {
     this.gates = value;
   }
 
@@ -168,7 +172,10 @@ export class SequencerNode {
   }
 
   private setNextStep() {
-    if (this.currentStep === this.length - 1) {
+    if (
+      this.currentStep === this.length - 1
+      || this.currentStep === 15
+    ) {
       this.currentStep = 0;
     } else {
       this.currentStep += 1;

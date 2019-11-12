@@ -19,7 +19,8 @@ export class Label {
     this.label = control.label;
   }
 
-  public draw() {
+  public draw(label?: string) {
+    this.label = label || this.label;
     const {x: xPos, y: yPos} = this.getLabelPosition();
     const yLabel = yPos;
 
