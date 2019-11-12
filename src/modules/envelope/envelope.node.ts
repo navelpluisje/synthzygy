@@ -11,7 +11,6 @@ export class EnvelopeNode {
   private cvOutputNode: ConstantSourceNode;
   private gateInput: GateInputNode;
 
-  // TODO: default values and getValues method for storing data
   constructor(
     context: AudioContext,
     ) {

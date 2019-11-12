@@ -1,6 +1,5 @@
 import { SynthConnectorType } from 'src/types';
 
-// TODO: This needs to be a connection in stead of an icon
 export const outputTypes: SynthConnectorType[] = [{
   icon: 'gate-out',
   name: '2',
