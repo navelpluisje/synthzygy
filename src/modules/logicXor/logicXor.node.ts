@@ -1,7 +1,7 @@
 import { GateInputNode } from '@nodes/gateInputNode';
 import { GateOutputNode } from '@nodes/gateOutputNode';
 
-export class AndNode {
+export class XorNode {
   private valueA: number;
   private valueB: number;
   private gateA: GateInputNode;
@@ -34,9 +34,9 @@ export class AndNode {
   }
 
   private handleLogic() {
-    const andValue = this.valueA & this.valueB;
-    this.outAnd.setLevel(andValue);
-    this.outNand.setLevel(1 - andValue);
+    const xorValue = this.valueA ^ this.valueB;
+    this.outAnd.setLevel(xorValue);
+    this.outNand.setLevel(1 - xorValue);
   }
 
   private triggerA = (value: number) => {

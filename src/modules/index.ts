@@ -10,6 +10,8 @@ import { GateTrigger } from './gateTrigger';
 import { HarmonicOscillator } from './harmonicOscillator';
 import { Lfo } from './lfo';
 import { LogicAnd } from './logicAnd';
+import { LogicOr } from './logicOr';
+import { LogicXor } from './logicXor';
 import { Midi } from './midi';
 import { Mixer } from './mixer';
 import { Noise } from './noise';
@@ -35,6 +37,8 @@ export {
   Kick,
   Lfo,
   LogicAnd,
+  LogicOr,
+  LogicXor,
   Mixer,
   Noise,
   Oscillator,

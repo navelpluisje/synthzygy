@@ -15,6 +15,8 @@ import {
   Kick,
   Lfo,
   LogicAnd,
+  LogicOr,
+  LogicXor,
   Midi,
   Mixer,
   Noise,
@@ -39,6 +41,8 @@ type Module = AudioOut
   | Kick
   | Lfo
   | LogicAnd
+  | LogicOr
+  | LogicXor
   | Midi
   | Mixer
   | Noise
@@ -195,6 +199,8 @@ export class ModuleList {
         return Mixer;
       case 'noise':
         return Noise;
+      case 'or':
+        return LogicOr;
       case 'oscillator':
         return Oscillator;
       case 'oscilloscope':
@@ -209,7 +215,9 @@ export class ModuleList {
         return TuringMachine;
       case 'vca':
         return Vca;
-    }
+      case 'xor':
+        return LogicXor;
+      }
   }
 
   private doesCollide = (module: Module, position: PositionType, dimensions: DimensionType): boolean => {

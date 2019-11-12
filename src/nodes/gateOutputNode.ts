@@ -17,7 +17,7 @@ export class GateOutputNode {
   }
 
   public setLevel = (level: number): void => {
-    if (this.level !== level) {
+    if (!isNaN(level) && this.level !== level) {
       this.level = level;
       this.gateNode.offset.setValueAtTime(this.level, this.context.currentTime);
     }

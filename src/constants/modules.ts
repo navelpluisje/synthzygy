@@ -57,6 +57,12 @@ export const AvailableModules = [{
     name: 'and',
     title: '(N)and',
   }, {
+    name: 'or',
+    title: '(N)or',
+  }, {
+    name: 'xor',
+    title: 'X(n)or',
+  }, {
     name: 'turinger',
     title: 'Turing Machine',
   }, {
