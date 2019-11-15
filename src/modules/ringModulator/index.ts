@@ -2,7 +2,7 @@ import { SynthModule } from '@components/index';
 import { ParentModule } from '@interfaces/index';
 import { createGainNode } from '@utilities/createGain';
 import { Colors } from 'src/constants/enums';
-import { PositionType } from 'src/types';
+import { PositionType, ModuleDefaultValues } from 'src/types';
 import { ModuleBase } from '../moduleBase';
 import { inputTypes } from './ringModulator.inputs';
 import { outputTypes } from './ringModulator.outputs';
@@ -21,8 +21,11 @@ export class RingModulator extends ModuleBase implements ParentModule {
     canvas: CanvasRenderingContext2D,
     context: AudioContext,
     position: PositionType,
+    defaults: ModuleDefaultValues,
   ) {
-    super(canvas, position);
+    super(canvas, position, {
+      ...defaults,
+    });
     this.accentColor = Colors.AccentModulator;
     this.node = createGainNode(context, 1);
     this.container = new SynthModule(canvas, RingModulator.dimensions, position, this.color);

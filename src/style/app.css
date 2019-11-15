@@ -18,9 +18,23 @@ canvas {
 }
 
 aside {
-  background: var(--module-background);
+  background-color: var(--module-background);
   color: var(--module-title);
   grid-area: sidebar;
+  position: relative;
+}
+
+aside::after {
+  background-image: url('/assets/images/fascist-killer-small.png');
+  bottom: 2.5rem;
+  content: '';
+  display: block;
+  height: 50px;
+  left: -.25rem;
+  position: absolute;
+  transform: rotate(5deg);
+  width: 130px;
+  z-index: 1;
 }
 
 aside > header {
