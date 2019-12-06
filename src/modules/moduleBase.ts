@@ -47,7 +47,7 @@ export class ModuleBase implements Module {
     this.id = this.defaults.id as string;
     this.position = position;
     this.canvas = canvas;
-    this.draw.bind(this);
+    this.draw = this.draw.bind(this);
   }
 
   public getModuleData() {
@@ -115,7 +115,7 @@ export class ModuleBase implements Module {
     if (!this.active) { return; }
     if (this.activeControl !== null) {
       this.controls[this.activeControl].onMouseMove(event);
-      requestAnimationFrame(this.draw.bind(this));
+      requestAnimationFrame(this.draw);
     } else if (this.activeOutput === null) {
 
       this.position.x = event.offsetX - this.offset.x;

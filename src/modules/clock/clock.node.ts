@@ -1,11 +1,4 @@
-import { GateInputNode } from '@nodes/gateInputNode';
-import { GateOutputNode } from '@nodes/gateOutputNode';
-
-interface GateOutput {
-  node: GateOutputNode;
-  steps: number;
-  step: number;
-}
+import { createGainNode } from '@utilities/createGain';
 
 export class ClockNode {
   private pulseWidth: number;
@@ -13,8 +6,8 @@ export class ClockNode {
   private frequency: number;
   private context: AudioContext;
   private clock: AudioWorkletNode;
-  private gateInput: GateInputNode;
-  private gateOutputs: Record<string, GateOutput> = {};
+  // private gateInput: GateInputNode;
+  private gateOutputs: Record<string, GainNode> = {};
 
   constructor(
     context: AudioContext,
@@ -40,43 +33,25 @@ export class ClockNode {
     return this.pulseWidth;
   }
 
-  public output(id: string): ConstantSourceNode {
-    return this.gateOutputs[id].node.output();
-  }
-
-  private createGateOuput(steps: number): GateOutput {
-    return {
-      node: new GateOutputNode(this.context),
-      step: 0,
-      steps,
-    };
-  }
-
-  private trigger = (value: number): void => {
-    if (value === 1) {
-      Object.values(this.gateOutputs).forEach((output) => {
-        output.step += 1;
-        if (output.step === output.steps) {
-          output.node.setLevel(1);
-          output.step = 0;
-        }
-      });
-    } else {
-      Object.values(this.gateOutputs).forEach((output) => {
-        output.node.setLevel(0);
-      });
-    }
+  public output(id: string): GainNode {
+    return this.gateOutputs[id];
   }
 
   private createNodes(): void {
-    this.clock = new AudioWorkletNode(this.context, 'clock-processor');
-    this.gateInput = new GateInputNode(this.context, this.trigger);
-    this.gateOutputs['2'] = this.createGateOuput(16);
-    this.gateOutputs['/1'] = this.createGateOuput(8);
-    this.gateOutputs['/2'] = this.createGateOuput(4);
-    this.gateOutputs['/4'] = this.createGateOuput(2);
-    this.gateOutputs['/8'] = this.createGateOuput(1);
+    this.clock = new AudioWorkletNode(this.context, 'clock-processor', {
+      numberOfOutputs: 5,
+    });
+    // this.gateInput = new GateInputNode(this.context, this.trigger);
+    this.gateOutputs['2'] = createGainNode(this.context, 1);
+    this.gateOutputs['/1'] = createGainNode(this.context, 1);
+    this.gateOutputs['/2'] = createGainNode(this.context, 1);
+    this.gateOutputs['/4'] = createGainNode(this.context, 1);
+    this.gateOutputs['/8'] = createGainNode(this.context, 1);
 
-    this.clock.connect(this.gateInput.input());
+    this.clock.connect(this.gateOutputs['2'], 0);
+    this.clock.connect(this.gateOutputs['/1'], 1);
+    this.clock.connect(this.gateOutputs['/2'], 2);
+    this.clock.connect(this.gateOutputs['/4'], 3);
+    this.clock.connect(this.gateOutputs['/8'], 4);
   }
 }

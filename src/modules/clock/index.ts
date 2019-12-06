@@ -62,7 +62,7 @@ export class Clock extends ModuleBase implements ParentModule {
     this.node.setPulseWidth(this.pulseWidth);
   }
 
-  private getOutputConnection = (type: string): ConstantSourceNode => {
+  private getOutputConnection = (type: string): GainNode => {
     return this.node.output(type);
   }
 
