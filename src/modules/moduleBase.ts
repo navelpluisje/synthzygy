@@ -262,6 +262,10 @@ export class ModuleBase implements Module {
     });
   }
 
+  protected getKnobByIndex(index: number) {
+    return this.controls[index];
+  }
+
   protected addSliders(
     sliders: KnobType[],
     getSliderCallbackAndDefault: any,

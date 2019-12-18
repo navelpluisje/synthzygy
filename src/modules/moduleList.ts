@@ -25,6 +25,7 @@ import {
   RingModulator,
   Sequencer,
   Snare,
+  TriggerSequencer,
   TuringMachine,
   Vca,
  } from './index';
@@ -49,9 +50,10 @@ type Module = AudioOut
   | Oscillator
   | Oscilloscope
   | RingModulator
-  | TuringMachine
   | Sequencer
   | Snare
+  | TuringMachine
+  | TriggerSequencer
   | Vca;
 interface Modules {
   [key: string]: Module;
@@ -205,12 +207,14 @@ export class ModuleList {
         return Oscillator;
       case 'oscilloscope':
         return Oscilloscope;
-      case 'sequencer':
-        return Sequencer;
       case 'ringModulator':
         return RingModulator;
+      case 'sequencer':
+        return Sequencer;
       case 'snare':
         return Snare;
+      case 'trigger-sequencer':
+        return TriggerSequencer;
       case 'turinger':
         return TuringMachine;
       case 'vca':

@@ -41,7 +41,7 @@ export class ThreeStateButton {
     this.canvas.beginPath();
     this.canvas.lineWidth = 2;
     this.canvas.strokeStyle = this.color;
-    this.canvas.fillStyle = this.activeStep ? Colors.ControlRing : Colors.TransWhite;
+    this.canvas.fillStyle = this.activeStep ? Colors.ControlRing : Colors.ModuleBackground;
     this.canvas.arc(x, y, this.size, 0, 2 * Math.PI);
     this.canvas.fill();
     this.canvas.stroke();

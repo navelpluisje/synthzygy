@@ -20,6 +20,7 @@ import { Oscilloscope } from './oscilloscope';
 import { AudioOut } from './output';
 import { RingModulator } from './ringModulator';
 import { Sequencer } from './sequencers/step';
+import { TriggerSequencer } from './sequencers/trigger';
 import { TuringMachine } from './sequencers/turing';
 import { Vca } from './vca';
 
@@ -44,8 +45,9 @@ export {
   Oscillator,
   Oscilloscope,
   RingModulator,
-  TuringMachine,
   Sequencer,
   Snare,
+  TuringMachine,
+  TriggerSequencer,
   Vca,
 };

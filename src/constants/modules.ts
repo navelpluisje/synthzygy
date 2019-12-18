@@ -51,6 +51,9 @@ export const AvailableModules = [{
     name: 'gate',
     title: 'Gate trigger',
   }, {
+    name: 'trigger-sequencer',
+    title: 'Trigger Sequencer',
+  }, {
     name: 'sequencer',
     title: 'Sequencer',
   }, {
