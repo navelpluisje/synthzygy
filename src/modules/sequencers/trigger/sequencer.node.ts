@@ -1,36 +1,56 @@
 import { Transport } from '@constants/enums';
 import { GateInputNode } from '@nodes/gateInputNode';
 import { GateOutputNode } from '@nodes/gateOutputNode';
-import { createConstantSourceNode } from '@utilities/createConstantSource';
 import { GateTrigger, ModuleDefaultValues } from 'src/types';
+import { CurrentSteps, StepId } from './types';
+
+interface GateGroup {
+  stepLength: number;
+  values: boolean[];
+  currentStep: number;
+  currentStepProgress: number;
+}
 
 export class SequencerNode {
-  private stepsA: Float32Array;
-  private stepsB: Float32Array;
-  private gates: boolean[];
+  private gates: Record<number, GateGroup> = {
+    [StepId.ONE]: {
+      currentStep: -1,
+      currentStepProgress: 0,
+      stepLength: 1,
+      values: [],
+    },
+    [StepId.TWO]: {
+      currentStep: -1,
+      currentStepProgress: 0,
+      stepLength: 1,
+      values: [],
+    },
+    [StepId.THREE]: {
+      currentStep: -1,
+      currentStepProgress: 0,
+      stepLength: 1,
+      values: [],
+    },
+  };
   private length: number;
   private running: boolean = false;
-  private currentStep: number = -1;
   private context: AudioContext;
-  private cvOutputNodeA: ConstantSourceNode;
-  private cvOutputNodeB: ConstantSourceNode;
-  private gateOutput: GateOutputNode;
+  private gateOutputs: Record<string, GateOutputNode>;
   private gateInput: GateInputNode;
   private transportCallback: GateTrigger;
-  private stepChangeCallback: (step: number) => void;
+  private stepChangeCallback: (step: CurrentSteps) => void;
 
   constructor(
     context: AudioContext,
-    stepChangeCallback: (step: number) => void,
+    stepChangeCallback: (step: CurrentSteps) => void,
     initialData: ModuleDefaultValues,
-    ) {
+  ) {
     this.context = context;
-    this.setStepsA(initialData.stepsA as number[]);
-    this.setStepsB(initialData.stepsB as number[]);
-    this.setGates(initialData.gates as boolean[]);
+    this.setGates(initialData.steps1 as boolean[], 1);
+    this.setGates(initialData.steps2 as boolean[], 2);
+    this.setGates(initialData.steps3 as boolean[], 3);
     this.gateInput = new GateInputNode(this.context, this.trigger);
-    this.gateOutput = new GateOutputNode(this.context);
-    this.createCvOutputNodes();
+    this.createOutputNodes();
     this.stepChangeCallback = stepChangeCallback;
   }
 
@@ -38,38 +58,28 @@ export class SequencerNode {
     this.length = length;
   }
 
+  public setStepLength(groupId: StepId) {
+    return (length: number) => {
+      if (this.gates[groupId].currentStepProgress >= length) {
+        this.gates[groupId].currentStepProgress = 0;
+      }
+      this.gates[groupId].stepLength = length;
+    };
+  }
+
   public getLength(): number {
     return this.length;
   }
 
-  public setStepsA(value: number[]) {
-    this.stepsA = new Float32Array(value);
+  public getStepDataByGroupId(groupId: StepId): number {
+    return this.gates[groupId].currentStep;
   }
 
-  public getStepsA(): number[] {
-    return Object.values(this.stepsA);
+  public setGates(values: boolean[], group: StepId): void {
+    this.gates[group].values = values;
   }
 
-  public setStepsB(value: number[]) {
-    this.stepsB = new Float32Array(value);
-  }
-
-  public getStepsB(): number[] {
-    return Object.values(this.stepsB);
-  }
-
-  public getStepDataByGroupId(group: 'A' | 'B') {
-    if (group === 'B') {
-      return this.getStepsB();
-    }
-    return this.getStepsA();
-  }
-
-  public setGates(value: boolean[]): void {
-    this.gates = value;
-  }
-
-  public getGates(): boolean[] {
+  public getGates(): Record<number, GateGroup> {
     return this.gates;
   }
 
@@ -82,24 +92,13 @@ export class SequencerNode {
   }
 
   public reset(): void {
-    this.currentStep = -1;
+    Object.values(this.gates).forEach((gate) => {
+      gate.currentStep = -1;
+    });
   }
 
-  public setStepValue(index: number, group: 'A' | 'B', value: number) {
-    switch (group) {
-      case 'A':
-        this.stepsA[index] = value;
-        break;
-      case 'B':
-        this.stepsB[index] = value;
-        break;
-      default:
-        this.stepsA[index] = value;
-    }
-  }
-
-  public setGateStep(group: number, index: number, value: boolean) {
-    this.gates[index] = value;
+  public setGateStep(group: StepId, index: number, value: boolean) {
+    this.gates[group].values[index] = value;
   }
 
   public handleTransportClick = (value: string) => {
@@ -134,15 +133,8 @@ export class SequencerNode {
     this.transportCallback(mode);
   }
 
-  public getStepValues(group: 'A' | 'B'): Float32Array {
-    switch (group) {
-      case 'A':
-        return this.stepsA;
-      case 'B':
-        return this.stepsB;
-      default:
-        return this.stepsA;
-    }
+  public getStepValues(group: StepId): boolean[] {
+    return this.gates[group].values;
   }
 
   public cvStartStop(transportCallback: GateTrigger): GateTrigger {
@@ -154,33 +146,46 @@ export class SequencerNode {
     return this.gateInput.input();
   }
 
-  public outputA(): ConstantSourceNode {
-    return this.cvOutputNodeA;
+  public outputGate(key: string | StepId): ConstantSourceNode {
+    return this.gateOutputs[key].output();
   }
 
-  public outputB(): ConstantSourceNode {
-    return this.cvOutputNodeB;
-  }
-
-  public outputGate(): ConstantSourceNode {
-    return this.gateOutput.output();
-  }
-
-  private createCvOutputNodes() {
-    this.cvOutputNodeA = createConstantSourceNode(this.context, 0);
-    this.cvOutputNodeB = createConstantSourceNode(this.context, 0);
+  private createOutputNodes() {
+    this.gateOutputs = {
+      and: new GateOutputNode(this.context),
+      [StepId.ONE]: new GateOutputNode(this.context),
+      [StepId.TWO]: new GateOutputNode(this.context),
+      [StepId.THREE]: new GateOutputNode(this.context),
+      xor: new GateOutputNode(this.context),
+    };
   }
 
   private setNextStep() {
-    if (
-      this.currentStep === this.length - 1
-      || this.currentStep === 15
-    ) {
-      this.currentStep = 0;
-    } else {
-      this.currentStep += 1;
-    }
-    this.stepChangeCallback(this.currentStep);
+    Object.values(this.gates).forEach((gate) => {
+      if (gate.currentStepProgress >= gate.stepLength) {
+        gate.currentStepProgress = 0;
+      }
+      gate.currentStepProgress += 1;
+
+      if (gate.currentStepProgress !== 1) {
+        return;
+      }
+
+      if (
+        gate.currentStep === this.length - 1
+        || gate.currentStep === 15
+      ) {
+        gate.currentStep = 0;
+      } else {
+        gate.currentStep += 1;
+      }
+    });
+
+    this.stepChangeCallback({
+      [StepId.ONE]: this.gates[StepId.ONE].currentStep,
+      [StepId.TWO]: this.gates[StepId.TWO].currentStep,
+      [StepId.THREE]: this.gates[StepId.THREE].currentStep,
+    });
   }
 
   private trigger = (value: number) => {
@@ -188,21 +193,35 @@ export class SequencerNode {
       return;
     }
 
+    if (value === 0) {
+      this.gateOutputs[StepId.ONE].setLevel(0);
+      this.gateOutputs[StepId.TWO].setLevel(0);
+      this.gateOutputs[StepId.THREE].setLevel(0);
+      this.gateOutputs.xor.setLevel(0);
+      this.gateOutputs.and.setLevel(0);
+      return;
+    }
+
     if (value === 1) {
       this.setNextStep();
-      this.cvOutputNodeA.offset.setTargetAtTime(
-        this.stepsA[this.currentStep],
-        this.context.currentTime,
-        0.001,
-      );
-      this.cvOutputNodeB.offset.setTargetAtTime(
-        this.stepsB[this.currentStep],
-        this.context.currentTime,
-        0.001,
-      );
-    }
-    if (this.gates[this.currentStep]) {
-      this.gateOutput.setLevel(value);
+      if (
+        this.gates[StepId.ONE].currentStepProgress === 1
+        && this.gates[StepId.ONE].values[this.gates[StepId.ONE].currentStep]
+      ) {
+        this.gateOutputs[StepId.ONE].setLevel(1);
+      }
+      if (
+        this.gates[StepId.TWO].currentStepProgress === 1
+        && this.gates[StepId.TWO].values[this.gates[StepId.TWO].currentStep]
+      ) {
+        this.gateOutputs[StepId.TWO].setLevel(1);
+      }
+      if (
+        this.gates[StepId.THREE].currentStepProgress === 1
+        && this.gates[StepId.THREE].values[this.gates[StepId.THREE].currentStep]
+      ) {
+        this.gateOutputs[StepId.THREE].setLevel(1);
+      }
     }
   }
 }

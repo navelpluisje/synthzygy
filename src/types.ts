@@ -77,7 +77,7 @@ export interface ModuleCollectionType {
 }
 
 export interface ModuleDefaultValues {
-  [parameter: string]: number | string | number[] | boolean[];
+  [parameter: string]: number | string | number[] | boolean[] | Record<number, boolean[]>;
 }
 
 export interface ConnectionType {

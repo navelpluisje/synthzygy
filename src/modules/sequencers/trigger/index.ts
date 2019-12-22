@@ -10,23 +10,9 @@ import { inputTypes } from './sequencer.inputs';
 import { knobTypes } from './sequencer.knobs';
 import { SequencerNode } from './sequencer.node';
 import { outputTypes } from './sequencer.outputs';
+import { CurrentSteps, StepGroup, StepId, Steps } from './types';
 
-const enum StepId {
-  'ONE' = 1,
-  'TWO' = 2,
-  'THREE' = 3,
-}
-
-interface StepGroup {
-  positions: PositionType[];
-  threeStateButtons: ThreeStateButton[];
-}
-
-interface Steps {
-  [StepId.ONE]: StepGroup;
-  [StepId.TWO]: StepGroup;
-  [StepId.THREE]: StepGroup;
-}
+type X = [string, StepGroup];
 
 export class TriggerSequencer extends ModuleBase implements ParentModule {
   public static dimensions = {
@@ -38,9 +24,9 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
     steps1: new Array(16).fill(false, 0, 16),
     steps2: new Array(16).fill(false, 0, 16),
     steps3: new Array(16).fill(false, 0, 16),
-    stepsLength1: 1,
-    stepsLength2: 1,
-    stepsLength3: 1,
+    [StepId.ONE]: 1,
+    [StepId.TWO]: 1,
+    [StepId.THREE]: 1,
   };
 
   public type = 'trigger-sequencer';
@@ -51,15 +37,15 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
     y: 164,
   };
   private steps: Steps = {
-    1: {
+    [StepId.ONE]: {
       positions: [],
       threeStateButtons: [],
     },
-    2: {
+    [StepId.TWO]: {
       positions: [],
       threeStateButtons: [],
     },
-    3: {
+    [StepId.THREE]: {
       positions: [],
       threeStateButtons: [],
     },
@@ -89,10 +75,10 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
 
   public getModuleData(): ModuleDefaultValues {
     return {
-      gates: this.node.getGates(),
-      length: this.node.getLength(),
-      stepsA: this.node.getStepsA(),
-      stepsB: this.node.getStepsB(),
+      // gates: this.node.getGates(),
+      // length: this.node.getLength(),
+      // stepsA: this.node.getStepsA(),
+      // stepsB: this.node.getStepsB(),
     };
   }
 
@@ -144,12 +130,16 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
 
   private getOutputConnection = (type: string): ConstantSourceNode => {
     switch (type) {
-      case 'A':
-        return this.node.outputA();
-      case 'B':
-        return this.node.outputB();
-      case 'gateOut':
-        return this.node.outputGate();
+      case 'gate-1':
+        return this.node.outputGate(StepId.ONE);
+      case 'gate-2':
+        return this.node.outputGate(StepId.TWO);
+      case 'gate-3':
+        return this.node.outputGate(StepId.THREE);
+      case 'gateXor':
+        return this.node.outputGate('xor');
+      case 'gateAnd':
+        return this.node.outputGate('and');
     }
   }
 
@@ -163,18 +153,18 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
         };
       case '1':
         return {
-          callback: this.node.setLength,
-          default: this.defaults[key],
+          callback: this.node.setStepLength(StepId.ONE),
+          default: this.defaults[StepId.ONE],
         };
       case '2':
         return {
-          callback: this.node.setLength,
-          default: this.defaults[key],
+          callback: this.node.setStepLength(StepId.TWO),
+          default: this.defaults[StepId.TWO],
         };
       case '3':
         return {
-          callback: this.node.setLength,
-          default: this.defaults[key],
+          callback: this.node.setStepLength(StepId.THREE),
+          default: this.defaults[StepId.THREE],
         };
     }
   }
@@ -219,8 +209,8 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
       for (let i = 0; i < 16; i += 1) {
         const button: KnobType = {
           position: {
-            x: positions[i].x - 10,
-            y: positions[i].y - 10,
+            x: positions[i].x,
+            y: positions[i].y,
           },
           size: SMALL_KNOB,
           type: THREE_STATE_BUTTON,
@@ -229,7 +219,7 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
           this.canvas,
           this,
           button,
-          this.setGateValue(group, i),
+          this.setGateValue(group + 1, i),
           Colors.AccentUtility,
         ));
         // this.stepButtons[i].setActive(gateData[i]);
@@ -237,10 +227,12 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
     });
   }
 
-  private onStepChange = (step: number) => {
-    Object.values(this.steps).forEach(({ threeStateButtons }: StepGroup) => {
+  private onStepChange = (step: CurrentSteps): void => {
+    const steps: X[] = Object.entries(this.steps);
+    steps.forEach(([key, { threeStateButtons }]: X) => {
       threeStateButtons.forEach((button, index) => {
-        button.setActiveStep(step === index);
+        // @ts-ignore
+        button.setActiveStep(step[key] === index);
         button.draw(true);
       });
     });
@@ -263,18 +255,18 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
   }
 
   private calculateStepPositions() {
-    const {centerX, centerY } = this.getCircleCenter();
+    const {x: centerX, y: centerY } = this.stepsCirclePosition;
 
     for (let i = 1; i < 17; i += 1) {
-      this.steps[1].positions.push({
+      this.steps[StepId.ONE].positions.push({
         x: centerX + 66 * Math.cos(Math.PI / 8 * i),
         y: centerY + 66 * Math.sin(Math.PI / 8 * i),
       });
-      this.steps[2].positions.push({
+      this.steps[StepId.TWO].positions.push({
         x: centerX + 91 * Math.cos(Math.PI / 8 * i),
         y: centerY + 91 * Math.sin(Math.PI / 8 * i),
       });
-      this.steps[3].positions.push({
+      this.steps[StepId.THREE].positions.push({
         x: centerX + 116 * Math.cos(Math.PI / 8 * i),
         y: centerY + 116 * Math.sin(Math.PI / 8 * i),
       });
@@ -300,7 +292,10 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
 
     for (let i = 0; i < 16; i += 1) {
       this.canvas.beginPath();
-      this.canvas.moveTo(this.steps[2].positions[i].x + x - 10, this.steps[2].positions[i].y + y - 10);
+      this.canvas.moveTo(
+        this.steps[StepId.TWO].positions[i].x + x,
+        this.steps[StepId.TWO].positions[i].y + y,
+      );
       this.canvas.lineTo(centerX, centerY);
       this.canvas.stroke();
     }
@@ -309,9 +304,9 @@ export class TriggerSequencer extends ModuleBase implements ParentModule {
   }
 
   private drawStepButtons(overWrite = false): void {
-    this.steps[1].threeStateButtons.forEach((button) => button.draw(overWrite));
-    this.steps[2].threeStateButtons.forEach((button) => button.draw(overWrite));
-    this.steps[3].threeStateButtons.forEach((button) => button.draw(overWrite));
+    this.steps[StepId.ONE].threeStateButtons.forEach((button) => button.draw(overWrite));
+    this.steps[StepId.TWO].threeStateButtons.forEach((button) => button.draw(overWrite));
+    this.steps[StepId.THREE].threeStateButtons.forEach((button) => button.draw(overWrite));
   }
 
   // private setStepValue = (index: number) => (value: number) => {
